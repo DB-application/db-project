@@ -1,0 +1,12 @@
+
+.container {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.label {
+    font-family: Roboto;
+    margin-left: 5px;
+    cursor: pointer;
+}

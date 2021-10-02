@@ -1,0 +1,53 @@
+input {
+    outline: none;
+    border: none;
+}
+
+.fieldContainer {
+    width: 100%;
+    position: relative;
+    background-color: #e6e6e6;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+.input {
+    font-family: Roboto;
+    color: #403866;
+    line-height: 1.2;
+    font-size: 18px;
+    display: block;
+    width: 100%;
+    background: 0 0;
+    height: 62px;
+    padding: 0 20px 0 38px;
+    box-sizing: border-box;
+}
+
+@keyframes fade-in-error-text {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes fade-in-error-border {
+    0% {
+        border: 1px solid transparent;
+    }
+    100% {
+        border: 1px solid #c80000;
+    }
+}
+
+.errorText {
+    color: #c80000;
+    position: absolute;
+    animation: fade-in-error 0.15s ease-in-out;
+}
+
+.inputError {
+    border: 1px solid #c80000;
+    animation: fade-in-error-border 0.15s ease-in-out;
+}

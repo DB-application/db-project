@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@reatom/core": "^2.0.0-rc12",
-    "@reatom/react": "^2.0.0-rc4",
+    "@reatom/core": "^1.1.5",
+    "@reatom/react": "^1.1.4",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -49,6 +49,7 @@
     "@types/jest": "^27.0.1",
     "@types/node": "^16.9.2",
     "@types/react": "^17.0.21",
-    "@types/react-dom": "^17.0.9"
+    "@types/react-dom": "^17.0.9",
+    "react-preloaders": "^3.0.3"
   }
 }

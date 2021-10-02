@@ -1,0 +1,83 @@
+.button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background: #2972E0;
+    border-radius: 6px;
+    outline: none;
+    border: none;
+    transition: all 0.15s ease-in-out;
+    position: relative;
+}
+
+.text {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    color: #FFFFFF;
+}
+
+.leftIcon,
+.rightIcon {
+    color: #FFFFFF;
+    width: 20px;
+    height: 20px;
+}
+
+.leftIcon {
+    margin-right: 8px;
+}
+
+.rightIcon {
+    margin-left: 8px;
+}
+
+.button:hover:not(:disabled):not(.buttonPreloader) {
+    background: #2068D5;
+    cursor: pointer;
+}
+
+.button:active:not(:disabled) {
+    background: #1D5FC3;
+}
+
+.button:disabled {
+    background: #C4C7CA;
+}
+
+.button:focus:not(:disabled) {
+    background: #2972E0;
+    box-shadow: 0 0 0 2px rgba(41, 114, 224, 0.4);
+}
+
+.buttonSmall {
+    padding: 10px 12px;
+    height: 32px;
+}
+
+.buttonSmall .text {
+    font-size: 13px;
+    line-height: 16px;
+}
+
+.buttonMedium {
+    padding: 10px 16px;
+    height: 40px;
+}
+
+.buttonMedium .text {
+    font-size: 15px;
+    line-height: 20px;
+}
+
+.buttonLarge {
+    padding: 10px 20px;
+    height: 48px;
+}
+
+.buttonLarge .text {
+    font-size: 16px;
+    line-height: 22px;
+}
+

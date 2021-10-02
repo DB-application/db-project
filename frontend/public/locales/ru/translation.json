@@ -12,6 +12,11 @@
     "NicknameRequired": "Поле nickname обязательно",
     "NicknameInvalidFormat": "Невалидный формат nickname-а",
     "ShowPassword": "Показать пароль",
-    "LoginLabel": "Вход"
+    "LoginLabel": "Вход",
+    "Login": "Войти",
+    "RegistrationLabel": "Регистрация",
+    "Registration": "Зарегистрироваться",
+    "DontHaveAccount": "Еще нет аккаунта?",
+    "HaveAccount": "Уже есть аккаунт?"
   }
 }
