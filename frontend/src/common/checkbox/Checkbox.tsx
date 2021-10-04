@@ -3,9 +3,10 @@ import {BxCheckboxSquareIcon} from "../../icons/BxCheckboxSquareIcon";
 import {BxCheckboxIcon} from "../../icons/BxCheckboxIcon";
 import styles from "./Checkbox.module.css"
 import {joinClassNames} from "../../core/styles/joinClassNames";
+import {BxCheckIcon} from "../../icons/BxCheckIcon";
 
 type CheckboxProps = {
-    checked: boolean|null,
+    checked: boolean,
     onCheckedChange: (value: boolean) => void,
     className?: string,
 }
@@ -18,20 +19,20 @@ function Checkbox({
     function _onClick() {
         onCheckedChange(!checked)
     }
-
-    const binding = checked
-        ? <BxCheckboxCheckedIcon/>
-        : checked == null
-            ? <BxCheckboxSquareIcon/>
-            : <BxCheckboxIcon/>
-
     return (
         <div
             onClick={_onClick}
             className={joinClassNames(className, styles.checkbox)}
-            tabIndex={0}
         >
-            {binding}
+            <input
+                type="checkbox"
+                checked={checked}
+                className={styles.input}
+                tabIndex={0}
+            />
+            {checked && <div className={styles.icon}>
+                <BxCheckIcon/>
+            </div>}
         </div>
     )
 }

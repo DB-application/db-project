@@ -3,7 +3,7 @@ import styles from "./Checkbox_WithLabel.module.css"
 import {joinClassNames} from "../../core/styles/joinClassNames";
 
 type Checkbox_WithLabelProps = {
-    checked: boolean|null,
+    checked: boolean,
     onCheckedChange: (value: boolean) => void,
     label: string,
     className?: string,

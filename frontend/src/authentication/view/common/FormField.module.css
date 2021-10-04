@@ -6,8 +6,6 @@ input {
 .fieldContainer {
     width: 100%;
     position: relative;
-    background-color: #e6e6e6;
-    border: 1px solid transparent;
     border-radius: 3px;
 }
 
@@ -18,10 +16,20 @@ input {
     font-size: 18px;
     display: block;
     width: 100%;
-    background: 0 0;
     height: 62px;
     padding: 0 20px 0 38px;
     box-sizing: border-box;
+    border: 1px solid #d0d0d1;
+    border-radius: 6px;
+    transition: all .15s ease;
+}
+
+.input:focus {
+    box-shadow: 0 0 0 2px #003DAE;
+}
+
+.input:hover:not(.inputError) {
+    border-color: #373537;
 }
 
 @keyframes fade-in-error-text {
@@ -43,11 +51,10 @@ input {
 
 .errorText {
     color: #c80000;
-    position: absolute;
     animation: fade-in-error 0.15s ease-in-out;
 }
 
-.inputError {
+.inputError:not(:focus) {
     border: 1px solid #c80000;
     animation: fade-in-error-border 0.15s ease-in-out;
 }

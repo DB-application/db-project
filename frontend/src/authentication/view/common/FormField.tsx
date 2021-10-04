@@ -1,6 +1,7 @@
 import styles from './FormField.module.css'
 import {useRef} from "react";
 import {joinClassNames} from "../../../core/styles/joinClassNames";
+import {getStylesWithMods} from "../../../core/styles/getStylesWithMods";
 
 type FormFieldProps = {
     value: string,
@@ -29,17 +30,17 @@ function FormField({
         }
     }
 
-    const fieldContainerStyle = errorText
-        ? joinClassNames(styles.fieldContainer, styles.inputError)
-        : styles.fieldContainer
+    const inputClassNames = getStylesWithMods(styles.input, {
+        [styles.inputError]: !!errorText,
+    })
 
     return (
         <div
-            className={joinClassNames(fieldContainerStyle, className)}
+            className={joinClassNames(styles.fieldContainer, className)}
         >
             <input
                 ref={ref}
-                className={styles.input}
+                className={inputClassNames}
                 onBlur={onBlur}
                 onInput={_onInput}
                 type={type}
