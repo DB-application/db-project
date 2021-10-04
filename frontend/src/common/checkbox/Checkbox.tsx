@@ -21,12 +21,12 @@ function Checkbox({
     }
     return (
         <div
-            onClick={_onClick}
             className={joinClassNames(className, styles.checkbox)}
         >
             <input
                 type="checkbox"
                 checked={checked}
+                onChange={_onClick}
                 className={styles.input}
                 tabIndex={0}
             />
