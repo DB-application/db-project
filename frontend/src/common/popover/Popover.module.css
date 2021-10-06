@@ -1,0 +1,12 @@
+.popoverLayer {
+    width: 100vw;
+}
+
+.popoverContainer,
+.controlLayer {
+    position: absolute;
+}
+
+.controlLayer:hover {
+    cursor: pointer;
+}

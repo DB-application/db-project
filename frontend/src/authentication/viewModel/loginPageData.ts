@@ -78,7 +78,7 @@ const submitForm = declareAction(
         store.dispatch(setNicknameError(isValidNickname(nickname)))
         store.dispatch(setPasswordError(isValidPassword(password)))
         if (!emailError && !nicknameError && !passwordError) {
-            if (mode == 'login') {
+            if (mode === 'login') {
                 store.dispatch(loginAction({
                     login: email,
                     password,

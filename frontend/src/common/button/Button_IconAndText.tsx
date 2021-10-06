@@ -1,4 +1,5 @@
 import {Button_Base, Button_Size_Type, Button_State_Type} from "./Button_Base";
+import React, {ForwardedRef} from "react";
 
 type Button_IconAndTextProps = {
     icon: JSX.Element,
@@ -9,23 +10,17 @@ type Button_IconAndTextProps = {
     state?: Button_State_Type,
 }
 
-function Button_IconAndText({
-    icon,
-    text,
-    onClick,
-    className,
-    size,
-    state,
-}: Button_IconAndTextProps) {
+const Button_IconAndText = React.forwardRef((props: Button_IconAndTextProps, ref: ForwardedRef<HTMLButtonElement>) => {
     return <Button_Base
-        leftIcon={icon}
-        text={text}
-        className={className}
-        size={size}
-        state={state}
-        onClick={onClick}
+        ref={ref}
+        leftIcon={props.icon}
+        text={props.text}
+        className={props.className}
+        size={props.size}
+        state={props.state}
+        onClick={props.onClick}
     />
-}
+})
 
 export {
     Button_IconAndText,

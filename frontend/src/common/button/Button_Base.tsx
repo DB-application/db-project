@@ -2,6 +2,8 @@ import styles from './Button_Base.module.css'
 import {joinClassNames} from "../../core/styles/joinClassNames"
 import { Preloader } from '../preloader/Preloader'
 import { getStylesWithMods } from '../../core/styles/getStylesWithMods'
+import {ForwardedRef} from "react";
+import React from 'react';
 
 type Button_Size_Type = 'small' | 'medium' | 'large'
 
@@ -32,25 +34,25 @@ function _Icon({
     )
 }
 
-function Button_Base({
-    leftIcon,
-    text,
-    rightIcon,
-    onClick,
-    className,
-    size = 'medium',
-    state = 'normal',
-}: Button_BaseProps) {
-
+const Button_Base = React.forwardRef((props: Button_BaseProps, ref: ForwardedRef<HTMLButtonElement>) => {
+    const {
+        leftIcon,
+        text,
+        rightIcon,
+        onClick,
+        className,
+        size = 'medium',
+        state = 'normal',
+    } = props
     function _onClick() {
         onClick()
     }
 
     const buttonClassName = getStylesWithMods(styles.button, {
-        [styles.buttonSmall]: size == 'small',
-        [styles.buttonMedium]: size == 'medium',
-        [styles.buttonLarge]: size == 'large',
-        [styles.buttonPreloader]: state == 'preloader',
+        [styles.buttonSmall]: size === 'small',
+        [styles.buttonMedium]: size === 'medium',
+        [styles.buttonLarge]: size === 'large',
+        [styles.buttonPreloader]: state === 'preloader',
     })
 
     return(
@@ -58,14 +60,15 @@ function Button_Base({
             onClick={_onClick}
             className={joinClassNames(buttonClassName, className)}
             disabled={state === 'disabled'}
+            ref={ref}
         >
-            {state == 'preloader' && <Preloader />}
+            {state === 'preloader' && <Preloader />}
             {state !== 'preloader' && leftIcon && <_Icon icon={leftIcon} className={styles.leftIcon}/>}
             {state !== 'preloader' && text && <_Text text={text} />}
             {state !== 'preloader' && rightIcon && <_Icon icon={rightIcon} className={styles.rightIcon}/>}
         </button>
     )
-}
+})
 
 export {
     Button_Base,

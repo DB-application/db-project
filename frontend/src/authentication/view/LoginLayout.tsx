@@ -72,11 +72,11 @@ function LoginLayout() {
         <div className={styles.loginLayout}>
             <div className={styles.formContainer}>
                 <div className={styles.label}>
-                    {mode == 'login'
+                    {mode === 'login'
                         ? t('LoginForm.LoginLabel')
                         : t('LoginForm.RegistrationLabel')}
                 </div>
-                {mode == 'registration' && <FormField
+                {mode === 'registration' && <FormField
                     value={nickname}
                     onChange={handleSetNickname}
                     onBlur={() => handleSetNicknameError(isValidNickname(nickname))}
@@ -108,22 +108,22 @@ function LoginLayout() {
                     className={styles.showPasswordCheckbox}
                 />
                 <Button_Text
-                    text={ mode == 'login'
+                    text={ mode === 'login'
                         ? t('LoginForm.Login')
                         : t('LoginForm.Registration')
                     }
                     onClick={() => {
                         handleSetEmailError(isValidEmail(email))
                         handleSetPasswordError(isValidPassword(password))
-                        mode == 'registration' && handleSetPasswordError(isValidPassword(password))
+                        mode === 'registration' && handleSetPasswordError(isValidPassword(password))
                         handleSubmitForm()
                     }}
                     className={styles.submitButton}
                     size={'large'}
                     state={submitButtonState}
                 />
-                {mode == 'login' && <GotoRegistrationLabel />}
-                {mode == 'registration' && <GotoLoginLabel />}
+                {mode === 'login' && <GotoRegistrationLabel />}
+                {mode === 'registration' && <GotoLoginLabel />}
             </div>
         </div>
     )

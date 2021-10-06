@@ -1,5 +1,6 @@
 function verify<T>(statement: T|null|undefined) {
-    return <T>statement;
+    console.assert(statement)
+    return <T>statement
 }
 
 export {

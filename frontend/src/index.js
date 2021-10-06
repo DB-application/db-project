@@ -7,8 +7,13 @@ import i18n from "./i18n"
 import { context } from '@reatom/react';
 import {createStore, } from "@reatom/core";
 import {userAtom} from "./authentication/viewModel/userAtom";
+import {initExternalLayer} from "./core/layers/externalLayers";
 
 const store = createStore(userAtom);
+
+initExternalLayer("popup")
+initExternalLayer("popover")
+initExternalLayer("tooltip")
 
 ReactDOM.render(
     <React.StrictMode>

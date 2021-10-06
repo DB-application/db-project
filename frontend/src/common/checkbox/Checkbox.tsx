@@ -1,6 +1,3 @@
-import {BxCheckboxCheckedIcon} from "../../icons/BxCheckboxCheckedIcon";
-import {BxCheckboxSquareIcon} from "../../icons/BxCheckboxSquareIcon";
-import {BxCheckboxIcon} from "../../icons/BxCheckboxIcon";
 import styles from "./Checkbox.module.css"
 import {joinClassNames} from "../../core/styles/joinClassNames";
 import {BxCheckIcon} from "../../icons/BxCheckIcon";
