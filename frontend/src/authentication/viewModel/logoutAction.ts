@@ -1,15 +1,16 @@
 import {declareAction} from "@reatom/core";
 import { AuthenticationApi } from "../../api/authenticationApi";
+import {userActions} from "./userAtom";
+import {processStandardError} from "../../core/error/processStandardError";
 
 
 const logoutAction = declareAction(
     (payload, store) => {
         AuthenticationApi.logOut()
             .then((resp) => {
-                console.log(resp);
-                // dispatch(setUserUnitialized());
+                store.dispatch(userActions.setUserUnauthorized())
             })
-            .catch((err) => console.log(err));
+            .catch(processStandardError)
     }
 )
 

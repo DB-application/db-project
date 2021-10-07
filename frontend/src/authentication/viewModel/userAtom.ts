@@ -5,23 +5,35 @@ const userMockData: UserModel = {
     isAuthUser: false,
 };
 
-const setUserDataAction = declareAction<UserModel>()
-const setEmailAction = declareAction<string>()
-const setFirstnameAction = declareAction<string>()
-const setLastnameAction = declareAction<string>()
+const setUserData = declareAction<UserModel>()
+const setEmail = declareAction<string>()
+const setFirstname = declareAction<string>()
+const setLastname = declareAction<string>()
+const setUserPhone = declareAction<string>()
+const setAvatarUrl = declareAction<string>()
+const setNickName = declareAction<string>()
+const setUserUnauthorized = declareAction()
 
 const userAtom = declareAtom<UserModel>(userMockData, (on) => [
-    on(setUserDataAction, (_, payload) => payload),
-    on(setEmailAction, (state, email) => ({...state, email})),
-    on(setFirstnameAction, (state, firstname) => ({...state, firstname})),
-    on(setLastnameAction, (state, lastname) => ({...state, lastname})),
+    on(setUserData, (_, payload) => payload),
+    on(setEmail, (state, email) => ({...state, email})),
+    on(setFirstname, (state, firstname) => ({...state, firstname})),
+    on(setLastname, (state, lastname) => ({...state, lastname})),
+    on(setUserPhone, (state, phone) => ({...state, phone})),
+    on(setAvatarUrl, (state, avatarUrl) => ({...state, avatarUrl})),
+    on(setNickName, (state, nickname) => ({...state, nickname})),
+    on(setUserUnauthorized, () => ({isAuthUser: false})),
 ]);
 
 const userActions = {
-    setUserDataAction,
-    setEmailAction,
-    setFirstnameAction,
-    setLastnameAction,
+    setUserData,
+    setEmail,
+    setFirstname,
+    setLastname,
+    setUserPhone,
+    setAvatarUrl,
+    setNickName,
+    setUserUnauthorized,
 }
 
 export { userActions, userAtom };

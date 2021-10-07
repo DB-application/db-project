@@ -1,11 +1,14 @@
 export type UserModel = AuthenticatedUserModel | UnautenticatedUserModel;
 
 type AuthenticatedUserModel = {
-    id: string;
     isAuthUser: true;
-    email: string;
-    firstname: string;
-    lastname: string;
+    id: string,
+    email: string,
+    nickname: string,
+    avatarUrl: string,
+    phone: string,
+    firstName: string,
+    lastName: string,
 };
 
 type UnautenticatedUserModel = {

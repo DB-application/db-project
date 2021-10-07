@@ -15,13 +15,7 @@ const registrationAction = declareAction<RegistrationActionPayload>(
     async ({email, password, nickname}, store) => {
         AuthenticationApi.registration(email, password, nickname)
             .then((resp) => {
-                switch (resp.status) {
-                    case 200:
-                        toast.success('Регистрация прошла успешно');
-                        break
-                    default:
-                        processStandardError()
-                }
+                toast.success('Регистрация прошла успешно')
             })
             .catch(processStandardError)
             .finally(() => {
