@@ -1,20 +1,26 @@
 
 function registration(email: string, password: string, nickname: string): Promise<Response> {
-    const promise = new Promise<any>((resolve, reject) => {
-        setTimeout(() => {
-            resolve({ code: 200 });
-        }, 2000);
+    const promise = fetch('http://localhost/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            username: nickname,
+            password,
+            email,
+        }),
     });
 
     promise
-        .then((resp) => resp.json())
-        .then((data) => {
-            if (data.token) {
-                saveToken(data.token);
+        .then((resp) => {
+            if (resp.status == 200) {
+                console.log('success')
             }
+            console.log('error code', resp.status)
         })
         .catch((err) => {
-            // ошибка
+            console.log('error', err)
         });
 
     return promise;
