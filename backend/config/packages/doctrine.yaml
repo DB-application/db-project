@@ -12,4 +12,6 @@ doctrine:
         mappings:
             App:
                 type: xml
-                dir: @App../config/doctrine
+                dir: '%kernel.project_dir%/config/doctrine'
+                prefix: 'App'
+                alias: App

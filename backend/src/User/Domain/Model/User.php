@@ -15,8 +15,10 @@ class User
     private $username;
     /** @var string */
     private $password;
+    /** @var string */
+    private $loginKey;
     /** @var string|null */
-    private $name;
+    private $firstName;
     /** @var string|null */
     private $lastName;
     /** @var string|null */
@@ -24,16 +26,17 @@ class User
     /** @var string|null */
     private $avatarUrl;
 
-    public function __construct(Uuid $userId, Email $email, Password $password, string $username, ?string $name = null, ?string $lastName = null, ?string $phone = null, ?string $avatarUrl = null)
+    public function __construct(Uuid $userId, Email $email, Password $password, string $username, ?string $firstName = null, ?string $lastName = null, ?string $phone = null, ?string $avatarUrl = null)
     {
         $this->userId = $userId;
         $this->email = $email;
         $this->password = $password;
-        $this->name = $name;
+        $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->username = $username;
         $this->phone = $phone;
         $this->avatarUrl = $avatarUrl;
+        $this->loginKey = $this->buildLoginKey();
     }
 
     public function getUserId(): Uuid
@@ -61,14 +64,14 @@ class User
         $this->password = $password;
     }
 
-    public function getName(): ?string
+    public function getFirstName(): ?string
     {
-        return $this->name;
+        return $this->firstName;
     }
 
-    public function setName(?string $name): void
+    public function setFirstName(?string $firstName): void
     {
-        $this->name = $name;
+        $this->firstName = $firstName;
     }
 
     public function getLastName(): ?string
@@ -109,5 +112,15 @@ class User
     public function setAvatarUrl(?string $avatarUrl): void
     {
         $this->avatarUrl = $avatarUrl;
+    }
+
+    public function getLoginKey(): string
+    {
+        return $this->loginKey;
+    }
+
+    private function buildLoginKey(): string
+    {
+        return md5($this->email . ':' . $this->password);
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\User\App\Service;
 
 use App\Common\Domain\UuidGenerator;
+use App\User\App\Data\GetUserRequestInterface;
 use App\User\Domain\Exception\InvalidUserEmail;
 use App\User\Domain\Model\Email;
 use App\User\Domain\Model\Password;
@@ -30,10 +31,25 @@ class UserAppService
     {
         // TODO: обернуть в транзакцию
         $user = $this->repository->findUserByEmail($email);
-        if ($user === null) {
+        if ($user !== null)
+        {
             throw new InvalidUserEmail('User with this email already exist');
         }
-        $user = new User(UuidGenerator::generateUuid(), new Email($email), new Password($password), $username);
+        $user = new User(UuidGenerator::generateUuid(), new Email($email), new Password(md5($password)), $username);
         $this->repository->add($user);
+    }
+
+    public function getUser(GetUserRequestInterface $request): void
+    {
+        $email = $request->getEmail();
+        $password = $request->getPassword();
+        $login = $request->getLogin();
+        if ($email !== null)
+        {
+            $this->repository->findUserByEmailAndPassword($email, $password);
+        } else if ($login !== null)
+        {
+            $this->repository->findUserByUsernameAndPassword($login, $password);
+        }
     }
 }

@@ -1,6 +1,6 @@
 
 function registration(email: string, password: string, nickname: string): Promise<Response> {
-    const promise = fetch('http://localhost/register', {
+    const promise = fetch('http://localhost:8000/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
