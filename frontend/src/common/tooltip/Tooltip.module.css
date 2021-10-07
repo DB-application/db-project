@@ -11,17 +11,6 @@
     animation: flip .15s ease-in-out;
 }
 
-.tooltipContainer::after {
-    content: '';
-    border-style: solid;
-    border-width: 0 7.5px 10px 7.5px;
-    border-color: transparent transparent #333 transparent;
-    position: absolute;
-    left: 50%;
-    top: -5px;
-    transform: translateX(-50%);
-}
-
 @keyframes flip {
     0% {
         transform: translate(-50%, 10px);
