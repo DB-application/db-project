@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\User\Infrastructure\Query\Table;
 
+use App\Common\Infrastructure\Query\TypeConverter;
+
 class UserTable
 {
     public const USER_ID = 'user_id';
@@ -14,4 +16,16 @@ class UserTable
     public const LAST_NAME = 'last_name';
     public const PHONE = 'phone';
     public const AVATAR_URL = 'avatar_url';
+
+    public static $typeMap = [
+        self::USER_ID => TypeConverter::STRING,
+        self::EMAIL => TypeConverter::STRING,
+        self::PASSWORD => TypeConverter::STRING,
+        self::USERNAME => TypeConverter::STRING,
+        self::LOGIN_KEY => TypeConverter::STRING,
+        self::FIRST_NAME => TypeConverter::STRING,
+        self::LAST_NAME => TypeConverter::STRING,
+        self::PHONE => TypeConverter::STRING,
+        self::AVATAR_URL => TypeConverter::STRING,
+    ];
 }

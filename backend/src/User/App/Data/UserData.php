@@ -13,6 +13,8 @@ class UserData
     private $username;
     /** @var string */
     private $password;
+    /** @var string */
+    private $loginKey;
     /** @var string|null */
     private $firstName;
     /** @var string|null */
@@ -22,11 +24,12 @@ class UserData
     /** @var string|null */
     private $avatarUrl;
 
-    public function __construct(string $userId, string $email, string $password, string $username, ?string $firstName = null, ?string $lastName = null, ?string $phone = null, ?string $avatarUrl = null)
+    public function __construct(string $userId, string $email, string $password, string $username, string $loginKey, ?string $firstName = null, ?string $lastName = null, ?string $phone = null, ?string $avatarUrl = null)
     {
         $this->userId = $userId;
         $this->email = $email;
         $this->password = $password;
+        $this->loginKey = $loginKey;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->username = $username;
@@ -72,5 +75,10 @@ class UserData
     public function getAvatarUrl(): ?string
     {
         return $this->avatarUrl;
+    }
+
+    public function getLoginKey(): string
+    {
+        return $this->loginKey;
     }
 }
