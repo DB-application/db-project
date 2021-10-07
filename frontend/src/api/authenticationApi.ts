@@ -13,15 +13,7 @@ function registration(email: string, password: string, nickname: string): Promis
     });
 
     promise
-        .then((resp) => {
-            if (resp.status == 200) {
-                console.log('success')
-            }
-            console.log('error code', resp.status)
-        })
-        .catch((err) => {
-            console.log('error', err)
-        });
+        .then(resp => resp)
 
     return promise;
 }

@@ -95,9 +95,11 @@ const submitForm = declareAction(
     }
 )
 
+const setIsLoading = declareAction<boolean>()
 const isLoadingAtom = declareAtom<boolean>(false, on => [
     on(loginAction, () => true),
     on(registrationAction, () => true),
+    on(setIsLoading, (_, value) => value),
 ])
 
 const submitButtonStateAtom = map(
@@ -139,6 +141,7 @@ const loginPageActions = {
     setNickName,
     setNicknameError,
     submitForm,
+    setIsLoading,
 }
 
 export {
