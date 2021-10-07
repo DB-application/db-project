@@ -45,7 +45,9 @@ const Button_Base = React.forwardRef((props: Button_BaseProps, ref: ForwardedRef
         state = 'normal',
     } = props
     function _onClick() {
-        onClick()
+        if (state === 'normal') {
+            onClick()
+        }
     }
 
     const buttonClassName = getStylesWithMods(styles.button, {
