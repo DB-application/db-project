@@ -6,7 +6,7 @@ import {FormField} from "./common/FormField";
 import {isValidEmail, isValidNickname, isValidPassword} from "./common/validation";
 import {Checkbox_WithLabel} from "../../common/checkbox/Checkbox_WithLabel";
 import {Button_Text} from "../../common/button/Button_Text";
-import {getEmailErrorText, getNicknameErrorText, getPasswordErrorText } from './common/getErrorText';
+import {getEmailErrorText, getNicknameErrorText, getPasswordErrorText} from './common/getErrorText';
 
 
 function GotoRegistrationLabel() {
