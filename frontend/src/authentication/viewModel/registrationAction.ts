@@ -2,6 +2,7 @@ import {declareAction} from "@reatom/core";
 import { toast } from "react-toastify";
 import {AuthenticationApi} from "../../api/authenticationApi";
 import {loginPageActions} from "./loginPageData";
+import {processStandardError} from "../../core/error/processStandardError";
 
 
 type RegistrationActionPayload = {
@@ -19,10 +20,10 @@ const registrationAction = declareAction<RegistrationActionPayload>(
                         toast.success('Регистрация прошла успешно');
                         break
                     default:
-                        toast.error('Упс, что-то пошло не так. Попробуйте еще раз')
+                        processStandardError()
                 }
             })
-            .catch(() => toast.error('Упс, что-то пошло не так. Попробуйте еще раз'))
+            .catch(processStandardError)
             .finally(() => {
                 store.dispatch(loginPageActions.setIsLoading(false))
             })

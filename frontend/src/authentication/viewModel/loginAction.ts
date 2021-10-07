@@ -1,6 +1,7 @@
 import {declareAction} from "@reatom/core";
 import {AuthenticationApi} from "../../api/authenticationApi";
 import {initUserDataAction} from "./initUser";
+import {loginPageActions} from "./loginPageData";
 
 type LoginActionPayload = {
     login: string;
@@ -19,7 +20,10 @@ const loginAction = declareAction<LoginActionPayload>(
             })
             .catch((err) => {
                 // ошибка
-            });
+            })
+            .finally(() => {
+                store.dispatch(loginPageActions.setIsLoading(false))
+            })
     }
 )
 

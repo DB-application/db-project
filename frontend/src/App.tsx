@@ -6,7 +6,12 @@ function App() {
     return (
         <div>
             <LoginLayout/>
-            <ToastContainer/>
+            <ToastContainer
+                position='bottom-center'
+                draggable={false}
+                pauseOnHover={false}
+                hideProgressBar={false}
+            />
         </div>
     )
 }
