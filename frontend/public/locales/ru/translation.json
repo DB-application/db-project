@@ -17,6 +17,7 @@
     "RegistrationLabel": "Регистрация",
     "Registration": "Зарегистрироваться",
     "DontHaveAccount": "Еще нет аккаунта?",
-    "HaveAccount": "Уже есть аккаунт?"
+    "HaveAccount": "Уже есть аккаунт?",
+    "RememberMe": "Запомнить меня"
   }
 }

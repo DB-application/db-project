@@ -15,7 +15,13 @@ const loginAction = declareAction<LoginActionPayload>(
             .then(resp => {
                 toast.success('Вход произведен успешно')
             })
-            .catch(processStandardError)
+            .catch(err => {
+                if (err.status && err.status == 401) {
+                    toast.error('Введен неверный логин или пароль')
+                    return
+                }
+                processStandardError()
+            })
             .finally(() => store.dispatch(loginPageActions.setIsLoading(false)))
     }
 )
