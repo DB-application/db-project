@@ -36,7 +36,7 @@ function logIn(login: string, password: string): Promise<Response> {
                 case 200:
                     return Promise.resolve(response)
                 default:
-                    return Promise.reject(response.status)
+                    return Promise.reject(response)
             }
         })
 }
