@@ -1,4 +1,4 @@
-import {EmailErrorType, NicknameErrorType, PasswordErrorType} from "../../viewModel/loginPageData";
+import {EmailErrorType, NicknameErrorType, PasswordErrorType} from "../../viewModel/field/FieldErrorTypes";
 
 
 function isValidEmail(email: string): EmailErrorType|null {

@@ -1,7 +1,7 @@
 import { declareAction } from "@reatom/core";
-import { AuthenticationApi } from "../../api/authenticationApi";
-import {userActions} from "./userAtom";
-import {processStandardError} from "../../core/error/processStandardError";
+import { AuthenticationApi } from "../../../api/authenticationApi";
+import {userActions} from "../userAtom";
+import {processStandardError} from "../../../core/error/processStandardError";
 
 const initUserDataAction = declareAction((_, store) => {
     AuthenticationApi.getUserData()

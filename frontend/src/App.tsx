@@ -1,12 +1,12 @@
 import './App.css';
-import {LoginLayout} from "./authentication/view/LoginLayout";
+import {AuthLayout} from "./authentication/view/AuthLayout";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     return (
         <div>
-            <LoginLayout/>
+            <AuthLayout/>
             <ToastContainer
                 position='bottom-center'
                 draggable={false}
