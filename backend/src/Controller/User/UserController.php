@@ -5,6 +5,7 @@ namespace App\Controller\User;
 
 use App\User\Api\ApiInterface;
 use App\User\Api\Input\CreateUserInput;
+use App\User\Api\Input\GetUserInput;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,9 +26,27 @@ class UserController extends AbstractController
      */
     public function registerUser(Request $request): Response
     {
+        //TODO: добавить md5() шифрование пароля
         $requestData = json_decode($request->getContent(), true);
-        $input = new CreateUserInput($requestData['email'], $requestData['password'], $requestData['username']);
+        $input = new CreateUserInput($requestData['email'], md5($requestData['password']), $requestData['username']);
         $this->userApi->createUser($input);
+
+        return new Response();
+    }
+
+    /**
+     * @Route("/login")
+     */
+    public function loginUser(Request $request): Response
+    {
+        //TODO: добавить md5() шифрование пароля
+        $requestData = json_decode($request->getContent(), true);
+        $input = new GetUserInput(md5($requestData['password']), $requestData['login']);
+        $output = $this->userApi->getUser($input);
+        if ($output->getUserData() === null)
+        {
+            return new Response(null, Response::HTTP_UNAUTHORIZED);
+        }
 
         return new Response();
     }

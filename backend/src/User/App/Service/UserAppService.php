@@ -5,6 +5,8 @@ namespace App\User\App\Service;
 
 use App\Common\Domain\UuidGenerator;
 use App\User\App\Data\GetUserRequestInterface;
+use App\User\App\Data\UserData;
+use App\User\App\Query\UserQueryServiceInterface;
 use App\User\Domain\Exception\InvalidUserEmail;
 use App\User\Domain\Model\Email;
 use App\User\Domain\Model\Password;
@@ -15,10 +17,13 @@ class UserAppService
 {
     /** @var UserRepositoryInterface */
     private $repository;
+    /** @var UserQueryServiceInterface */
+    private $userQueryService;
 
-    public function __construct(UserRepositoryInterface $repository)
+    public function __construct(UserRepositoryInterface $repository, UserQueryServiceInterface $userQueryService)
     {
         $this->repository = $repository;
+        $this->userQueryService = $userQueryService;
     }
 
     /**
@@ -30,26 +35,23 @@ class UserAppService
     public function createUser(string $email, string $password, string $username): void
     {
         // TODO: обернуть в транзакцию
-        $user = $this->repository->findUserByEmail($email);
+        $user = $this->repository->findUserByEmailAndUserName($email, $username);
         if ($user !== null)
         {
             throw new InvalidUserEmail('User with this email already exist');
         }
-        $user = new User(UuidGenerator::generateUuid(), new Email($email), new Password(md5($password)), $username);
+        $user = new User(UuidGenerator::generateUuid(), new Email($email), new Password($password), $username);
         $this->repository->add($user);
     }
 
-    public function getUser(GetUserRequestInterface $request): void
+    public function getUser(GetUserRequestInterface $request): ?UserData
     {
-        $email = $request->getEmail();
+        $login = $request->getUsernameOrEmail();
         $password = $request->getPassword();
-        $login = $request->getLogin();
-        if ($email !== null)
+        $userdata = $this->userQueryService->getUserDataByEmailAndPassword($login, $password);
+        if ($userdata === null)
         {
-            $this->repository->findUserByEmailAndPassword($email, $password);
-        } else if ($login !== null)
-        {
-            $this->repository->findUserByUsernameAndPassword($login, $password);
+            return $this->userQueryService->getUserDataByUsernameAndPassword($login, $password);
         }
     }
 }
