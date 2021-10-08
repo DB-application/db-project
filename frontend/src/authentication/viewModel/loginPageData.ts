@@ -63,6 +63,11 @@ const showPasswordAtom = declareAtom<boolean>(false, on => [
     on(setShowPassword, (_, value) => value),
 ])
 
+const setRememberMe = declareAction<boolean>()
+const rememberMeAtom  = declareAtom<boolean>(false, on => [
+    on(setRememberMe, (_, value) => value)
+])
+
 const submitForm = declareAction(
     (_, store) => {
         const {
@@ -75,8 +80,10 @@ const submitForm = declareAction(
             passwordError,
         } = store.getState(loginPageDataAtom)
         store.dispatch(setEmailError(isValidEmail(email)))
-        store.dispatch(setNicknameError(isValidNickname(nickname)))
         store.dispatch(setPasswordError(isValidPassword(password)))
+        if (mode == 'registration') {
+            store.dispatch(setNicknameError(isValidNickname(nickname)))
+        }
         if (!emailError && !nicknameError && !passwordError) {
             if (mode === 'login') {
                 store.dispatch(loginAction({
@@ -110,6 +117,7 @@ const submitButtonStateAtom = map(
         isLoading: isLoadingAtom,
     }),
     ({emailError, nicknameError, passwordError, isLoading}) => {
+        console.log(emailError, nicknameError, passwordError)
         return isLoading
             ? 'preloader'
             : !!emailError || !!nicknameError || !!passwordError
@@ -127,6 +135,7 @@ const loginPageDataAtom = combine({
     emailError: emailErrorAtom,
     passwordError: passwordErrorAtom,
     nicknameError: nicknameErrorAtom,
+    rememberMe: rememberMeAtom,
     submitButtonState: submitButtonStateAtom,
 })
 
@@ -142,6 +151,7 @@ const loginPageActions = {
     setNicknameError,
     submitForm,
     setIsLoading,
+    setRememberMe,
 }
 
 export {

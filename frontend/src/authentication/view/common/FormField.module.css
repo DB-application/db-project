@@ -24,6 +24,22 @@ input {
     transition: all .15s ease;
 }
 
+.inputContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.showPasswordIcon {
+    width: 25px;
+    height: 25px;
+    margin: 0 5px 0 15px;
+    color: #636E6E;
+}
+
+.showPasswordIcon:hover {
+    color: #454E4E;
+}
+
 .input:focus {
     box-shadow: 0 0 0 2px #003DAE;
 }

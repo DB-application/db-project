@@ -57,7 +57,8 @@ function LoginLayout() {
         mode,
         nicknameError,
         nickname,
-        submitButtonState
+        submitButtonState,
+        rememberMe,
     } = useAtom(loginPageDataAtom)
     const handleSetEmail = useAction(loginPageActions.setEmail)
     const handleSetPassword = useAction(loginPageActions.setPassword)
@@ -66,6 +67,7 @@ function LoginLayout() {
     const handleSetShowPassword = useAction(loginPageActions.setShowPassword)
     const handleSetNickname= useAction(loginPageActions.setNickName)
     const handleSetNicknameError = useAction(loginPageActions.setNicknameError)
+    const handleSetRememberMe = useAction(loginPageActions.setRememberMe)
     const handleSubmitForm = useAction(loginPageActions.submitForm)
 
     return (
@@ -77,6 +79,7 @@ function LoginLayout() {
                         : t('LoginForm.RegistrationLabel')}
                 </div>
                 {mode === 'registration' && <FormField
+                    type={'text'}
                     value={nickname}
                     onChange={handleSetNickname}
                     onBlur={() => handleSetNicknameError(isValidNickname(nickname))}
@@ -85,6 +88,7 @@ function LoginLayout() {
                     className={styles.nickNameField}
                 />}
                 <FormField
+                    type={'text'}
                     onBlur={() => handleSetEmailError(isValidEmail(email))}
                     value={email}
                     onChange={value => handleSetEmail(value)}
@@ -93,18 +97,20 @@ function LoginLayout() {
                     className={styles.emailField}
                 />
                 <FormField
+                    type={'password'}
+                    showPassword={showPassword}
+                    onChangeShowPassword={handleSetShowPassword}
                     value={password}
                     onChange={value => handleSetPassword(value)}
                     onBlur={() => handleSetPasswordError(isValidPassword(password))}
                     errorText={passwordError && getPasswordErrorText(t, passwordError)}
                     placeholder={t('LoginForm.PasswordPlaceholder')}
-                    type={showPassword ? 'text' : 'password'}
                     className={styles.passwordField}
                 />
                 <Checkbox_WithLabel
-                    checked={showPassword}
-                    onCheckedChange={handleSetShowPassword}
-                    label={t('LoginForm.ShowPassword')}
+                    checked={rememberMe}
+                    onCheckedChange={handleSetRememberMe}
+                    label={t('LoginForm.RememberMe')}
                     className={styles.showPasswordCheckbox}
                 />
                 <Button_Text
@@ -115,7 +121,9 @@ function LoginLayout() {
                     onClick={() => {
                         handleSetEmailError(isValidEmail(email))
                         handleSetPasswordError(isValidPassword(password))
-                        mode === 'registration' && handleSetPasswordError(isValidPassword(password))
+                        if (mode === 'registration') {
+                            handleSetNicknameError(isValidNickname(nickname))
+                        }
                         handleSubmitForm()
                     }}
                     className={styles.submitButton}
