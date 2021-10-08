@@ -5,7 +5,6 @@ namespace App\User\Domain\Service;
 
 class UserService
 {
-
     public function __construct()
     {
     }

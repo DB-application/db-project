@@ -17,7 +17,7 @@ class UserTable
     public const PHONE = 'phone';
     public const AVATAR_URL = 'avatar_url';
 
-    public static $typeMap = [
+    public const USER_FIELDS = [
         self::USER_ID => TypeConverter::STRING,
         self::EMAIL => TypeConverter::STRING,
         self::PASSWORD => TypeConverter::STRING,

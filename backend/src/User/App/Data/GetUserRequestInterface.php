@@ -7,12 +7,7 @@ interface GetUserRequestInterface
     /**
      * @return string|null
      */
-    public function getEmail(): ?string;
-
-    /**
-     * @return string|null
-     */
-    public function getLogin(): ?string;
+    public function getUsernameOrEmail(): string;
 
     /**
      * @return string

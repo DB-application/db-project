@@ -38,7 +38,8 @@ class Api implements ApiInterface
     {
         try
         {
-            $this->userService->getUser($input);
+            $user = $this->userService->getUser($input);
+            return new GetUserOutput($user);
         } catch (\Exception $e)
         {
             $this->convertException($e);

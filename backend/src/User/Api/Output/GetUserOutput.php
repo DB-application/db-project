@@ -7,15 +7,15 @@ use App\User\App\Data\UserData;
 
 class GetUserOutput
 {
-    /** @var UserData */
+    /** @var UserData|null */
     private $userData;
 
-    public function __construct(UserData $userData)
+    public function __construct(?UserData $userData)
     {
         $this->userData = $userData;
     }
 
-    public function getUserData(): UserData
+    public function getUserData(): ?UserData
     {
         return $this->userData;
     }
