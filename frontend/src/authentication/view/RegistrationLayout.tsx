@@ -32,7 +32,6 @@ function RegistrationLayout() {
         password,
         passwordError,
         emailError,
-        showPassword,
         nicknameError,
         nickname,
         submitButtonState,
@@ -41,7 +40,6 @@ function RegistrationLayout() {
     const handleSetPassword = useAction(loginPageActions.setPassword)
     const handleSetEmailError = useAction(loginPageActions.setEmailError)
     const handleSetPasswordError = useAction(loginPageActions.setPasswordError)
-    const handleSetShowPassword = useAction(loginPageActions.setShowPassword)
     const handleSetNickname= useAction(loginPageActions.setNickName)
     const handleSetNicknameError = useAction(loginPageActions.setNicknameError)
     const handleSubmitForm = useAction(loginPageActions.submitRegistrationForm)
@@ -72,8 +70,6 @@ function RegistrationLayout() {
                 />
                 <FormField
                     type={'password'}
-                    showPassword={showPassword}
-                    onChangeShowPassword={handleSetShowPassword}
                     value={password}
                     onChange={value => handleSetPassword(value)}
                     onBlur={() => handleSetPasswordError(isValidPassword(password))}

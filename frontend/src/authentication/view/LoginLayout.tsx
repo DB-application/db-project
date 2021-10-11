@@ -35,7 +35,6 @@ function LoginLayout() {
         password,
         passwordError,
         emailError,
-        showPassword,
         submitButtonState,
         rememberMe,
     } = useAtom(loginPageDataAtom)
@@ -43,7 +42,6 @@ function LoginLayout() {
     const handleSetPassword = useAction(loginPageActions.setPassword)
     const handleSetEmailError = useAction(loginPageActions.setEmailError)
     const handleSetPasswordError = useAction(loginPageActions.setPasswordError)
-    const handleSetShowPassword = useAction(loginPageActions.setShowPassword)
     const handleSetRememberMe = useAction(loginPageActions.setRememberMe)
     const handleSubmitForm = useAction(loginPageActions.submitLogin)
 
@@ -58,14 +56,12 @@ function LoginLayout() {
                     onBlur={() => handleSetEmailError(isValidEmail(email))}
                     value={email}
                     onChange={value => handleSetEmail(value)}
-                    placeholder={t('LoginForm.EmailPlaceholder')}
+                    placeholder={t('LoginForm.LoginPlaceholder')}
                     errorText={emailError && getEmailErrorText(t, emailError)}
                     className={styles.emailField}
                 />
                 <FormField
                     type={'password'}
-                    showPassword={showPassword}
-                    onChangeShowPassword={handleSetShowPassword}
                     value={password}
                     onChange={value => handleSetPassword(value)}
                     onBlur={() => handleSetPasswordError(isValidPassword(password))}

@@ -1,11 +1,12 @@
 import styles from './FormField.module.css'
-import {useRef} from "react";
+import {useRef, useState} from "react";
 import {joinClassNames} from "../../../core/styles/joinClassNames";
 import {getStylesWithMods} from "../../../core/styles/getStylesWithMods";
 import {EyeIcon} from "../../../icons/EyeIcon";
 import {EyeSlashIcon} from "../../../icons/EyeSlashIcon";
 
-type FormFieldDefaultProps = {
+type FormFieldProps = {
+    type: 'text' | 'password',
     value: string,
     onChange: (value: string) => void,
     onBlur: () => void,
@@ -14,13 +15,14 @@ type FormFieldDefaultProps = {
     className?: string,
 }
 
-type FormFieldProps = FormFieldDefaultProps & ({
-    type: 'text',
-} | {
-    type: 'password',
-    showPassword: boolean,
-    onChangeShowPassword: (show: boolean) => void,
-})
+type FieldProps = {
+    value: string,
+    onChange: (value: string) => void,
+    onBlur: () => void,
+    errorText: string | null,
+    placeholder: string,
+    className?: string,
+}
 
 type ShowPasswordIconProps = {
     showPassword: boolean,
@@ -38,25 +40,22 @@ function ShowPasswordIcon({
         >
             {
                 showPassword
-                    ? <EyeSlashIcon />
-                    : <EyeIcon />
+                    ? <EyeIcon />
+                    : <EyeSlashIcon />
             }
         </div>
     )
 }
 
-function FormField(props: FormFieldProps) {
+function PasswordField({
+    value,
+    onChange,
+    onBlur,
+    className,
+    placeholder,
+}: FieldProps) {
     const ref = useRef<HTMLInputElement>(null)
-
-    const {
-        type,
-        onChange,
-        onBlur,
-        errorText,
-        value,
-        placeholder,
-        className,
-    } = props
+    const [showPassword, setShowPassword] = useState<boolean>(false)
 
     function _onInput() {
         if (ref.current) {
@@ -64,39 +63,94 @@ function FormField(props: FormFieldProps) {
         }
     }
 
+    return (
+        <div className={styles.inputContainer}>
+            <input
+                ref={ref}
+                className={className}
+                onBlur={onBlur}
+                onInput={_onInput}
+                type={showPassword
+                    ? 'text'
+                    : 'password'}
+                value={value}
+                placeholder={placeholder}
+            />
+            <ShowPasswordIcon
+                showPassword={showPassword}
+                onClick={() => setShowPassword(!showPassword)}
+            />
+        </div>
+    )
+}
+
+function TextField({
+    value,
+    onChange,
+    onBlur,
+    className,
+    placeholder,
+}: FieldProps) {
+    const ref = useRef<HTMLInputElement>(null)
+
+    function _onInput() {
+        if (ref.current) {
+            onChange(ref.current.value)
+        }
+    }
+    return(
+        <div className={styles.inputContainer}>
+            <input
+                ref={ref}
+                className={className}
+                onBlur={onBlur}
+                onInput={_onInput}
+                type={'text'}
+                value={value}
+                placeholder={placeholder}
+            />
+        </div>
+    )
+}
+
+function FormField(props: FormFieldProps) {
+    const {
+        errorText,
+        className,
+        type,
+        onBlur,
+        placeholder,
+        value,
+        onChange
+    } = props
+
     const inputClassNames = getStylesWithMods(styles.input, {
         [styles.inputError]: !!errorText,
     })
+
+    const fieldProps: FieldProps = {
+        errorText,
+        onChange,
+        onBlur,
+        value,
+        placeholder,
+        className: inputClassNames,
+    }
 
     return (
         <div
             className={joinClassNames(styles.fieldContainer, className)}
         >
-            <div className={styles.inputContainer}>
-                <input
-                    ref={ref}
-                    className={inputClassNames}
-                    onBlur={onBlur}
-                    onInput={_onInput}
-                    type={type == 'password'
-                        ? props.showPassword
-                            ? 'password'
-                            : 'text'
-                        : 'text'
-                    }
-                    value={value}
-                    placeholder={placeholder}
-                />
-                {
-                    type === 'password' && <ShowPasswordIcon
-                        showPassword={props.showPassword}
-                        onClick={() => props.onChangeShowPassword(!props.showPassword)}
-                    />
-                }
-            </div>
-            {errorText && <div className={styles.errorText}>
-                {errorText}
-            </div>}
+            {
+                type === 'text'
+                    ? <TextField {...fieldProps} />
+                    : <PasswordField {...fieldProps} />
+            }
+            {
+                errorText && <div className={styles.errorText}>
+                    {errorText}
+                </div>
+            }
         </div>
     )
 }

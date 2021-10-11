@@ -52,11 +52,6 @@ const nicknameErrorAtom = declareAtom<NicknameErrorType|null>(null, on => [
     on(loginFormModeAtom, () => null),
 ])
 
-const setShowPassword = declareAction<boolean>()
-const showPasswordAtom = declareAtom<boolean>(false, on => [
-    on(setShowPassword, (_, value) => value),
-])
-
 const setRememberMe = declareAction<boolean>()
 const rememberMeAtom  = declareAtom<boolean>(false, on => [
     on(setRememberMe, (_, value) => value)
@@ -126,7 +121,6 @@ const loginPageDataAtom = combine({
     mode: loginFormModeAtom,
     email: emailAtom,
     password: passwordAtom,
-    showPassword: showPasswordAtom,
     nickname: nicknameAtom,
     emailError: emailErrorAtom,
     passwordError: passwordErrorAtom,
@@ -141,7 +135,6 @@ const loginPageActions = {
     setEmail,
     setPassword,
     setPasswordError,
-    setShowPassword,
     setEmailError,
     setNickName,
     setNicknameError,
