@@ -4,6 +4,7 @@ import {joinClassNames} from "../../core/styles/joinClassNames";
 
 type PreloaderProps = {
     className?: string,
+    preloaderColor?: string,
 }
 
 function PreloaderIcon() {
@@ -15,10 +16,11 @@ function PreloaderIcon() {
 }
 
 function Preloader({
-    className
+    className,
+    preloaderColor = 'black'
 }: PreloaderProps) {
     return (
-        <div className={joinClassNames(styles.Spinner, className)}>
+        <div className={joinClassNames(styles.Spinner, className)} style={{color: preloaderColor}}>
             <PreloaderIcon />
         </div>
     );

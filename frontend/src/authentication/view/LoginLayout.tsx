@@ -1,5 +1,4 @@
-import {useTranslation} from "react-i18next";
-import {useAction, useAtom} from "@reatom/react";
+import {useAction} from "@reatom/react";
 import {loginPageActions, loginPageDataAtom} from "../viewModel/loginPageData";
 import styles from "./LoginLayout.module.css";
 import {FormField} from "./common/FormField";
@@ -7,22 +6,23 @@ import {isValidEmail, isValidPassword} from "./common/validation";
 import {getEmailErrorText, getPasswordErrorText} from "./common/getErrorText";
 import {Checkbox_WithLabel} from "../../common/checkbox/Checkbox_WithLabel";
 import {Button_Text} from "../../common/button/Button_Text";
+import {I18n_get} from "../../i18n/i18n_get";
+import {useAtomWithSelector} from "../../core/reatom/useAtomWithSelector";
 
 
 function GotoRegistrationLabel() {
-    const {t} = useTranslation()
     const handleGotoRegistration = useAction(loginPageActions.gotoRegistration)
 
     return(
         <div className={styles.switchMode}>
             <div>
-                {t('LoginForm.DontHaveAccount')}
+                {I18n_get('LoginForm.DontHaveAccount')}
             </div>
             <div
                 onClick={handleGotoRegistration}
                 className={styles.switchModeButton}
             >
-                {t("LoginForm.Registration")}
+                {I18n_get("LoginForm.Registration")}
             </div>
         </div>
     )
@@ -30,14 +30,13 @@ function GotoRegistrationLabel() {
 
 
 function LoginLayout() {
-    const {t} = useTranslation()
-    const {email,
-        password,
-        passwordError,
-        emailError,
-        submitButtonState,
-        rememberMe,
-    } = useAtom(loginPageDataAtom)
+    const email = useAtomWithSelector(loginPageDataAtom, x => x.email)
+    const password = useAtomWithSelector(loginPageDataAtom, x => x.password)
+    const passwordError = useAtomWithSelector(loginPageDataAtom, x => x.passwordError)
+    const emailError = useAtomWithSelector(loginPageDataAtom, x => x.emailError)
+    const submitButtonState = useAtomWithSelector(loginPageDataAtom, x => x.submitButtonState)
+    const rememberMe = useAtomWithSelector(loginPageDataAtom, x => x.rememberMe)
+
     const handleSetEmail = useAction(loginPageActions.setEmail)
     const handleSetPassword = useAction(loginPageActions.setPassword)
     const handleSetEmailError = useAction(loginPageActions.setEmailError)
@@ -49,15 +48,15 @@ function LoginLayout() {
         <div className={styles.loginLayout}>
             <div className={styles.formContainer}>
                 <div className={styles.label}>
-                    { t('LoginForm.LoginLabel')}
+                    {I18n_get('LoginForm.LoginLabel')}
                 </div>
                 <FormField
                     type={'text'}
                     onBlur={() => handleSetEmailError(isValidEmail(email))}
                     value={email}
                     onChange={value => handleSetEmail(value)}
-                    placeholder={t('LoginForm.LoginPlaceholder')}
-                    errorText={emailError && getEmailErrorText(t, emailError)}
+                    placeholder={I18n_get('LoginForm.LoginPlaceholder')}
+                    errorText={emailError && getEmailErrorText(emailError)}
                     className={styles.emailField}
                 />
                 <FormField
@@ -65,18 +64,18 @@ function LoginLayout() {
                     value={password}
                     onChange={value => handleSetPassword(value)}
                     onBlur={() => handleSetPasswordError(isValidPassword(password))}
-                    errorText={passwordError && getPasswordErrorText(t, passwordError)}
-                    placeholder={t('LoginForm.PasswordPlaceholder')}
+                    errorText={passwordError && getPasswordErrorText(passwordError)}
+                    placeholder={I18n_get('LoginForm.PasswordPlaceholder')}
                     className={styles.passwordField}
                 />
                 <Checkbox_WithLabel
                     checked={rememberMe}
                     onCheckedChange={handleSetRememberMe}
-                    label={t('LoginForm.RememberMe')}
+                    label={I18n_get('LoginForm.RememberMe')}
                     className={styles.showPasswordCheckbox}
                 />
                 <Button_Text
-                    text={t('LoginForm.Login')}
+                    text={I18n_get('LoginForm.Login')}
                     onClick={() => {
                         handleSetEmailError(isValidEmail(email))
                         handleSetPasswordError(isValidPassword(password))

@@ -1,15 +1,22 @@
 import React, {Suspense} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import {App} from './App';
 import reportWebVitals from './reportWebVitals';
-import i18n from "./i18n"
-import { context } from '@reatom/react';
-import {createStore, } from "@reatom/core";
+import {context} from '@reatom/react';
+import {combine, createStore,} from "@reatom/core";
 import {userAtom} from "./authentication/viewModel/userAtom";
 import {initExternalLayer} from "./core/layers/externalLayers";
+import {BrowserRouter as Router} from 'react-router-dom';
+import {isLoadingAppAtom} from "./appLayout/isLoadingApp";
+import {AppWrapper} from "./appLayout/AppWrapper";
+import i18n from "./i18n";
 
-const store = createStore(userAtom);
+const store = createStore(
+    combine({
+        userAtom,
+        isLoadingAppAtom,
+    })
+);
 
 initExternalLayer("popup")
 initExternalLayer("popover")
@@ -19,7 +26,9 @@ ReactDOM.render(
     <React.StrictMode>
         <Suspense fallback="loading">
             <context.Provider value={store}>
-                <App />
+                <Router>
+                    <AppWrapper />
+                </Router>
             </context.Provider>
         </Suspense>
     </React.StrictMode>,

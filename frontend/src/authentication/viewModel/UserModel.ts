@@ -1,4 +1,4 @@
-export type UserModel = AuthenticatedUserModel | UnautenticatedUserModel;
+type UserModel = AuthenticatedUserModel | UnautenticatedUserModel;
 
 type AuthenticatedUserModel = {
     isAuthUser: true;
@@ -14,3 +14,9 @@ type AuthenticatedUserModel = {
 type UnautenticatedUserModel = {
     isAuthUser: false;
 };
+
+export type {
+    AuthenticatedUserModel,
+    UnautenticatedUserModel,
+    UserModel,
+}

@@ -57,24 +57,10 @@ type GetUserDataType = {
     lastName: string,
 };
 
-function getUserData(): Promise<GetUserDataType> {
-    return  fetch('http://localhost:8000/get/user', {
-        method: 'POST',
-    })
-        .then(response => {
-            switch (response.status) {
-                case 200:
-                    return response.json()
-                default:
-                    return Promise.reject(response.status)
-            }
-        })
-}
 
 const AuthenticationApi = {
     logIn,
     logOut,
-    getUserData,
     registration,
 };
 
