@@ -1,13 +1,7 @@
 import {combine, declareAction, declareAtom, map} from "@reatom/core";
-import {loginAction} from "./loginAction";
-import {registrationAction} from "./registrationAction";
-import {isValidEmail, isValidNickname, isValidPassword} from "../view/common/validation";
-
-type EmailErrorType = 'invalid_format' | 'empty' | 'taken' | 'unknown_email'
-type PasswordErrorType = 'invalid_format' | 'empty' | 'wrong_password' | 'too_easy'
-type NicknameErrorType = 'invalid_format' | 'empty' | 'taken'
-
-type FormFieldErrorType = EmailErrorType | PasswordErrorType | NicknameErrorType
+import {loginAction} from "./actions/loginAction";
+import {registrationAction} from "./actions/registrationAction";
+import {EmailErrorType, NicknameErrorType, PasswordErrorType} from "./field/FieldErrorTypes";
 
 type LoginFormMode = 'login' | 'registration'
 
@@ -58,20 +52,31 @@ const nicknameErrorAtom = declareAtom<NicknameErrorType|null>(null, on => [
     on(loginFormModeAtom, () => null),
 ])
 
-const setShowPassword = declareAction<boolean>()
-const showPasswordAtom = declareAtom<boolean>(false, on => [
-    on(setShowPassword, (_, value) => value),
-])
-
 const setRememberMe = declareAction<boolean>()
 const rememberMeAtom  = declareAtom<boolean>(false, on => [
     on(setRememberMe, (_, value) => value)
 ])
 
-const submitForm = declareAction(
+const submitLogin = declareAction(
     (_, store) => {
         const {
-            mode,
+            password,
+            email,
+            emailError,
+            passwordError,
+        } = store.getState(loginPageDataAtom)
+        if (!emailError && !passwordError) {
+            store.dispatch(loginAction({
+                login: email,
+                password,
+            }))
+        }
+    }
+)
+
+const submitRegistrationForm = declareAction(
+    (_, store) => {
+        const {
             password,
             email,
             emailError,
@@ -79,25 +84,12 @@ const submitForm = declareAction(
             nicknameError,
             passwordError,
         } = store.getState(loginPageDataAtom)
-        store.dispatch(setEmailError(isValidEmail(email)))
-        store.dispatch(setPasswordError(isValidPassword(password)))
-        if (mode == 'registration') {
-            store.dispatch(setNicknameError(isValidNickname(nickname)))
-        }
         if (!emailError && !nicknameError && !passwordError) {
-            if (mode === 'login') {
-                store.dispatch(loginAction({
-                    login: email,
-                    password,
-                }))
-            }
-            else {
-                store.dispatch(registrationAction({
-                    nickname,
-                    email,
-                    password,
-                }))
-            }
+            store.dispatch(registrationAction({
+                nickname,
+                email,
+                password,
+            }))
         }
     }
 )
@@ -117,7 +109,6 @@ const submitButtonStateAtom = map(
         isLoading: isLoadingAtom,
     }),
     ({emailError, nicknameError, passwordError, isLoading}) => {
-        console.log(emailError, nicknameError, passwordError)
         return isLoading
             ? 'preloader'
             : !!emailError || !!nicknameError || !!passwordError
@@ -130,7 +121,6 @@ const loginPageDataAtom = combine({
     mode: loginFormModeAtom,
     email: emailAtom,
     password: passwordAtom,
-    showPassword: showPasswordAtom,
     nickname: nicknameAtom,
     emailError: emailErrorAtom,
     passwordError: passwordErrorAtom,
@@ -145,11 +135,11 @@ const loginPageActions = {
     setEmail,
     setPassword,
     setPasswordError,
-    setShowPassword,
     setEmailError,
     setNickName,
     setNicknameError,
-    submitForm,
+    submitLogin,
+    submitRegistrationForm,
     setIsLoading,
     setRememberMe,
 }
@@ -160,8 +150,5 @@ export {
 }
 
 export type {
-    FormFieldErrorType,
-    EmailErrorType,
-    PasswordErrorType,
-    NicknameErrorType,
+    LoginFormMode,
 }

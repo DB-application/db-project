@@ -3,60 +3,68 @@ import {useAction, useAtom} from "@reatom/react";
 import {loginPageActions, loginPageDataAtom} from "../viewModel/loginPageData";
 import styles from "./LoginLayout.module.css";
 import {FormField} from "./common/FormField";
-import {isValidEmail, isValidPassword} from "./common/validation";
-import {getEmailErrorText, getPasswordErrorText} from "./common/getErrorText";
-import {Checkbox_WithLabel} from "../../common/checkbox/Checkbox_WithLabel";
+import {isValidEmail, isValidNickname, isValidPassword} from "./common/validation";
+import {getEmailErrorText, getNicknameErrorText, getPasswordErrorText} from "./common/getErrorText";
 import {Button_Text} from "../../common/button/Button_Text";
 
-
-function GotoRegistrationLabel() {
+function GotoLoginLabel() {
     const {t} = useTranslation()
-    const handleGotoRegistration = useAction(loginPageActions.gotoRegistration)
+    const handleGotoLogin = useAction(loginPageActions.gotoLogin)
 
     return(
         <div className={styles.switchMode}>
             <div>
-                {t('LoginForm.DontHaveAccount')}
+                {t('LoginForm.HaveAccount')}
             </div>
             <div
-                onClick={handleGotoRegistration}
+                onClick={handleGotoLogin}
                 className={styles.switchModeButton}
             >
-                {t("LoginForm.Registration")}
+                {t("LoginForm.Login")}
             </div>
         </div>
     )
 }
 
-
-function LoginLayout() {
+function RegistrationLayout() {
     const {t} = useTranslation()
     const {email,
         password,
         passwordError,
         emailError,
+        nicknameError,
+        nickname,
         submitButtonState,
-        rememberMe,
     } = useAtom(loginPageDataAtom)
     const handleSetEmail = useAction(loginPageActions.setEmail)
     const handleSetPassword = useAction(loginPageActions.setPassword)
     const handleSetEmailError = useAction(loginPageActions.setEmailError)
     const handleSetPasswordError = useAction(loginPageActions.setPasswordError)
-    const handleSetRememberMe = useAction(loginPageActions.setRememberMe)
-    const handleSubmitForm = useAction(loginPageActions.submitLogin)
+    const handleSetNickname= useAction(loginPageActions.setNickName)
+    const handleSetNicknameError = useAction(loginPageActions.setNicknameError)
+    const handleSubmitForm = useAction(loginPageActions.submitRegistrationForm)
 
     return (
         <div className={styles.loginLayout}>
             <div className={styles.formContainer}>
                 <div className={styles.label}>
-                    { t('LoginForm.LoginLabel')}
+                    {t('LoginForm.RegistrationLabel')}
                 </div>
+                <FormField
+                    type={'text'}
+                    value={nickname}
+                    onChange={handleSetNickname}
+                    onBlur={() => handleSetNicknameError(isValidNickname(nickname))}
+                    errorText={nicknameError && getNicknameErrorText(t, nicknameError)}
+                    placeholder={t('LoginForm.NicknamePlaceholder')}
+                    className={styles.nickNameField}
+                />
                 <FormField
                     type={'text'}
                     onBlur={() => handleSetEmailError(isValidEmail(email))}
                     value={email}
                     onChange={value => handleSetEmail(value)}
-                    placeholder={t('LoginForm.LoginPlaceholder')}
+                    placeholder={t('LoginForm.EmailPlaceholder')}
                     errorText={emailError && getEmailErrorText(t, emailError)}
                     className={styles.emailField}
                 />
@@ -69,29 +77,24 @@ function LoginLayout() {
                     placeholder={t('LoginForm.PasswordPlaceholder')}
                     className={styles.passwordField}
                 />
-                <Checkbox_WithLabel
-                    checked={rememberMe}
-                    onCheckedChange={handleSetRememberMe}
-                    label={t('LoginForm.RememberMe')}
-                    className={styles.showPasswordCheckbox}
-                />
                 <Button_Text
-                    text={t('LoginForm.Login')}
+                    text={t('LoginForm.Registration')}
                     onClick={() => {
                         handleSetEmailError(isValidEmail(email))
                         handleSetPasswordError(isValidPassword(password))
+                        handleSetNicknameError(isValidNickname(nickname))
                         handleSubmitForm()
                     }}
                     className={styles.submitButton}
                     size={'large'}
                     state={submitButtonState}
                 />
-                <GotoRegistrationLabel />
+                <GotoLoginLabel />
             </div>
         </div>
     )
 }
 
 export {
-    LoginLayout,
+    RegistrationLayout,
 }

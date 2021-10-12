@@ -1,8 +1,8 @@
 import {declareAction} from "@reatom/core";
 import { toast } from "react-toastify";
-import {AuthenticationApi} from "../../api/authenticationApi";
-import {loginPageActions} from "./loginPageData";
-import {processStandardError} from "../../core/error/processStandardError";
+import {AuthenticationApi} from "../../../api/authenticationApi";
+import {loginPageActions} from "../loginPageData";
+import {processStandardError} from "../../../core/error/processStandardError";
 
 
 type RegistrationActionPayload = {
