@@ -1,5 +1,5 @@
 function registration(email: string, password: string, nickname: string): Promise<Response> {
-    return fetch('http://localhost:8000/register', {
+    return fetch('http://localhost:8080/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ function registration(email: string, password: string, nickname: string): Promis
 }
 
 function logIn(login: string, password: string): Promise<Response> {
-    return fetch('http://localhost:8000/login', {
+    return fetch('http://localhost:8080/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ function logIn(login: string, password: string): Promise<Response> {
 }
 
 function logOut(): Promise<Response> {
-    return fetch('http://localhost:8000/logout', {
+    return fetch('http://localhost:8080/logout', {
         method: 'POST',
     })
 }

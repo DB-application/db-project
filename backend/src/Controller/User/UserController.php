@@ -26,7 +26,6 @@ class UserController extends AbstractController
      */
     public function registerUser(Request $request): Response
     {
-        //TODO: добавить md5() шифрование пароля
         $requestData = json_decode($request->getContent(), true);
         $input = new CreateUserInput($requestData['email'], md5($requestData['password']), $requestData['username']);
         $this->userApi->createUser($input);
@@ -39,7 +38,6 @@ class UserController extends AbstractController
      */
     public function loginUser(Request $request): Response
     {
-        //TODO: добавить md5() шифрование пароля
         $requestData = json_decode($request->getContent(), true);
         $input = new GetUserInput(md5($requestData['password']), $requestData['login']);
         $output = $this->userApi->getUser($input);
@@ -47,6 +45,7 @@ class UserController extends AbstractController
         {
             return new Response(null, Response::HTTP_UNAUTHORIZED);
         }
+        // генерировать сессию и сохранять в redis?
 
         return new Response();
     }
