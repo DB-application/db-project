@@ -1,11 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\User\Api\Input;
+namespace App\User\App\Data;
 
-use App\User\App\Data\GetUserRequestInterface;
-
-class GetUserInput implements GetUserRequestInterface
+class AuthenticateUserRequest implements AuthenticateUserRequestInterface
 {
     /** @var string|null */
     private $login;

@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace App\User\Api;
 
+use App\User\Api\Input\AuthenticateUserInput;
 use App\User\Api\Input\CreateUserInput;
-use App\User\Api\Input\GetUserInput;
-use App\User\Api\Output\GetUserOutput;
+use App\User\Api\Output\AuthenticateUserOutput;
+use App\User\App\Data\UserData;
 use App\User\App\Service\UserAppService;
 use App\User\Domain\Exception\InvalidUserEmail;
 
@@ -34,12 +35,23 @@ class Api implements ApiInterface
         }
     }
 
-    public function getUser(GetUserInput $input): GetUserOutput
+    public function authenticateUser(AuthenticateUserInput $input): AuthenticateUserOutput
     {
         try
         {
-            $user = $this->userService->getUser($input);
-            return new GetUserOutput($user);
+            $user = $this->userService->authenticateUser($input);
+            return new AuthenticateUserOutput($user);
+        } catch (\Exception $e)
+        {
+            $this->convertException($e);
+        }
+    }
+
+    public function getUserData(string $userId): ?UserData
+    {
+        try
+        {
+            return $this->userService->getUserData($userId);
         } catch (\Exception $e)
         {
             $this->convertException($e);

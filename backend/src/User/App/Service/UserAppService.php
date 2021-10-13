@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\User\App\Service;
 
 use App\Common\Domain\UuidGenerator;
-use App\User\App\Data\GetUserRequestInterface;
+use App\User\App\Data\AuthenticateUserRequestInterface;
 use App\User\App\Data\UserData;
 use App\User\App\Query\UserQueryServiceInterface;
 use App\User\Domain\Exception\InvalidUserEmail;
@@ -44,7 +44,12 @@ class UserAppService
         $this->repository->add($user);
     }
 
-    public function getUser(GetUserRequestInterface $request): ?UserData
+    public function getUserData(string $userId): ?UserData
+    {
+        return $this->userQueryService->getUserDataById($userId);
+    }
+
+    public function authenticateUser(AuthenticateUserRequestInterface $request): ?UserData
     {
         $login = $request->getUsernameOrEmail();
         $password = $request->getPassword();

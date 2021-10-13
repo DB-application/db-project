@@ -5,7 +5,7 @@ namespace App\User\Api\Output;
 
 use App\User\App\Data\UserData;
 
-class GetUserOutput
+class AuthenticateUserOutput
 {
     /** @var UserData|null */
     private $userData;

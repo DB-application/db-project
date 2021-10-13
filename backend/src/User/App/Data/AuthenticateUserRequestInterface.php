@@ -2,7 +2,7 @@
 
 namespace App\User\App\Data;
 
-interface GetUserRequestInterface
+interface AuthenticateUserRequestInterface
 {
     /**
      * @return string|null
