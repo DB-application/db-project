@@ -4,7 +4,7 @@ type AuthenticatedUserModel = {
     isAuthUser: true;
     id: string,
     email: string,
-    nickname: string,
+    username: string,
     avatarUrl: string,
     phone: string,
     firstName: string,

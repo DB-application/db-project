@@ -11,7 +11,7 @@ const setFirstname = declareAction<string>()
 const setLastname = declareAction<string>()
 const setUserPhone = declareAction<string>()
 const setAvatarUrl = declareAction<string>()
-const setNickName = declareAction<string>()
+const setUserName = declareAction<string>()
 const setUserUnauthorized = declareAction()
 
 const userAtom = declareAtom<UserModel>(userMockData, (on) => [
@@ -21,7 +21,7 @@ const userAtom = declareAtom<UserModel>(userMockData, (on) => [
     on(setLastname, (state, lastname) => ({...state, lastname})),
     on(setUserPhone, (state, phone) => ({...state, phone})),
     on(setAvatarUrl, (state, avatarUrl) => ({...state, avatarUrl})),
-    on(setNickName, (state, nickname) => ({...state, nickname})),
+    on(setUserName, (state, username) => ({...state, username})),
     on(setUserUnauthorized, () => ({isAuthUser: false})),
 ])
 
@@ -36,7 +36,7 @@ const userActions = {
     setLastname,
     setUserPhone,
     setAvatarUrl,
-    setNickName,
+    setUserName,
     setUserUnauthorized,
 }
 

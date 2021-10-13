@@ -13,7 +13,7 @@ function useInitProfileSettings() {
 
     useLayoutEffect(() => {
         if (userInfo.isAuthUser) {
-            handleSetNickName(userInfo.nickname)
+            handleSetNickName(userInfo.username)
             handleSetEmail(userInfo.email)
             handleSetFirstname(userInfo.firstName)
             handleSetLastname(userInfo.lastName)

@@ -1,16 +1,14 @@
-import {GetUserDataType} from "./authenticationApi";
-
 type Api_UserInfo = {
     userId: string,
     firstName: string,
     lastName: string,
     email: string,
-    nickname: string,
+    username: string,
     phoneNumber: string
 }
 
 function setUserInfo(userInfo: Api_UserInfo): Promise<Response> {
-    return fetch('http://localhost:8000/update/user_data', {
+    return fetch('/update/user_data', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -34,7 +32,7 @@ type ChangePasswordBody = {
 }
 
 function changePassword(body: ChangePasswordBody): Promise<Response> {
-    return fetch('http://localhost:8000/update/password', {
+    return fetch('/update/password', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -51,30 +49,28 @@ function changePassword(body: ChangePasswordBody): Promise<Response> {
         })
 }
 
+type GetUserDataType = {
+    id: string,
+    email: string,
+    username: string,
+    avatarUrl: string,
+    phone: string,
+    firstName: string,
+    lastName: string,
+};
 
 function getUserData(): Promise<GetUserDataType> {
-    return new Promise<GetUserDataType>((resolve, reject) => {
-        resolve({
-            email: 'email@mail.ru',
-            nickname: 'Fenomen',
-            lastName: 'Мухаметханов',
-            firstName: 'Эльдар',
-            phone: '+79021025370',
-            avatarUrl: '',
-            id: '1',
-        })
+    return  fetch('/get/user', {
+        method: 'POST',
     })
-    // return  fetch('http://localhost:8000/get/user', {
-    //     method: 'POST',
-    // })
-    //     .then(response => {
-    //         switch (response.status) {
-    //             case 200:
-    //                 return response.json()
-    //             default:
-    //                 return Promise.reject(response.status)
-    //         }
-    //     })
+        .then(response => {
+            switch (response.status) {
+                case 200:
+                    return response.json()
+                default:
+                    return Promise.reject(response.status)
+            }
+        })
 }
 
 
@@ -90,4 +86,5 @@ export {
 export type {
     Api_UserInfo,
     ChangePasswordBody,
+    GetUserDataType,
 }

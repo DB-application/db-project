@@ -24,13 +24,13 @@ function setUserInfo(store: Store, {
         phoneNumber,
         email,
         userId: user.id,
-        nickname
+        username: nickname,
     })
         .then(response => {
             if (response.status == 200) {
                 store.dispatch(userActions.setUserData({
                     ...user,
-                    nickname,
+                    username: nickname,
                     email,
                     firstName,
                     lastName,

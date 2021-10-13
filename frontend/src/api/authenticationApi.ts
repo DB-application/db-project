@@ -47,17 +47,6 @@ function logOut(): Promise<Response> {
     })
 }
 
-type GetUserDataType = {
-    id: string,
-    email: string,
-    nickname: string,
-    avatarUrl: string,
-    phone: string,
-    firstName: string,
-    lastName: string,
-};
-
-
 const AuthenticationApi = {
     logIn,
     logOut,
@@ -66,7 +55,4 @@ const AuthenticationApi = {
 
 export {
     AuthenticationApi,
-}
-export type {
-    GetUserDataType,
 }
