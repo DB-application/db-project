@@ -12,6 +12,8 @@ services:
       MYSQL_PASSWORD: symfony
     ports:
       - '4306:3306'
+    volumes:
+      - ./mysql:/var/lib/mysql
   nginx:
     container_name: nginx
     image: nginx:1.19.0-alpine
@@ -22,7 +24,7 @@ services:
     ports:
       - '8080:80'
     depends_on:
-      - php
+      - php_backend
   php_backend:
     container_name: backend
     build:
@@ -36,6 +38,8 @@ services:
     env_file:
       - backend/.env
     user: 1000:1000
+    depends_on:
+      - database
   frontend:
     container_name: frontend
     build:
