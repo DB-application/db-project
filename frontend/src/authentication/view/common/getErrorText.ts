@@ -1,45 +1,45 @@
-import {TFunction} from "react-i18next";
 import {EmailErrorType, NicknameErrorType, PasswordErrorType} from "../../viewModel/field/FieldErrorTypes";
+import {I18n_get} from "../../../i18n/i18n_get";
 
 
-function getEmailErrorText(t: TFunction, emailError: EmailErrorType): string | null {
+function getEmailErrorText(emailError: EmailErrorType): string | null {
     switch (emailError) {
         case 'invalid_format':
-            return t('LoginForm.EmailInvalidFormat')
+            return I18n_get('LoginForm.EmailInvalidFormat')
         case 'empty':
-            return t('LoginForm.EmailRequired')
+            return I18n_get('LoginForm.EmailRequired')
         case "taken":
-            return t('LoginForm.EmailExist')
+            return I18n_get('LoginForm.EmailExist')
         case "unknown_email":
-            return t('LoginForm.UnknownEmail')
+            return I18n_get('LoginForm.UnknownEmail')
         default:
             return null
     }
 }
 
-function getPasswordErrorText(t: TFunction, passwordError: PasswordErrorType): string | null {
+function getPasswordErrorText(passwordError: PasswordErrorType): string | null {
     switch (passwordError) {
         case 'invalid_format':
-            return t('LoginForm.PasswordInvalidFormat')
+            return I18n_get('LoginForm.PasswordInvalidFormat')
         case 'empty':
-            return t('LoginForm.PasswordRequired')
+            return I18n_get('LoginForm.PasswordRequired')
         case "wrong_password":
-            return t('LoginForm.WrongPassword')
+            return I18n_get('LoginForm.WrongPassword')
         case "too_easy":
-            return t('LoginForm.TooEasyPassword')
+            return I18n_get('LoginForm.TooEasyPassword')
         default:
             return null
     }
 }
 
-function getNicknameErrorText(t: TFunction, passwordError: NicknameErrorType): string | null {
+function getNicknameErrorText(passwordError: NicknameErrorType): string | null {
     switch (passwordError) {
         case 'invalid_format':
-            return t('LoginForm.NicknameInvalidFormat')
+            return I18n_get('LoginForm.NicknameInvalidFormat')
         case 'empty':
-            return t('LoginForm.NicknameRequired')
+            return I18n_get('LoginForm.NicknameRequired')
         case "taken":
-            return t('LoginForm.NicknameExist')
+            return I18n_get('LoginForm.NicknameExist')
         default:
             return null
     }

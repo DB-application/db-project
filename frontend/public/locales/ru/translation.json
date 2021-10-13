@@ -20,5 +20,23 @@
     "DontHaveAccount": "Еще нет аккаунта?",
     "HaveAccount": "Уже есть аккаунт?",
     "RememberMe": "Запомнить меня"
+  },
+  "ProfileSettings": {
+    "ProfileLabel": "Профиль",
+    "FirstnameLabel": "Имя",
+    "LastnameLabel": "Фамилия",
+    "NicknameLabel": "Nickname",
+    "EmailLabel": "Электронная почта",
+    "SaveInfo": "Сохранить",
+    "PhoneLabel": "Номер телефона",
+    "InfoSuccessUpdate": "Данные успешно обновлены",
+    "OldPassword": "Текущий пароль",
+    "NewPassword": "Новый пароль",
+    "ConfirmPassword": "Подтвердить пароль",
+    "PasswordLabel": "Изменение пароля",
+    "PasswordChangeButton": "Изменить",
+    "PasswordMustBeDifferent": "Новый пароль должен отличаться от старого",
+    "PasswordIsDifferent": "Пароли отличаются",
+    "SuccessChangePassword": "Пароль успешно изменен"
   }
 }

@@ -1,0 +1,8 @@
+.pageContainer {
+    min-width: 300px;
+    max-width: 400px;
+}
+
+.label {
+    font: 500 24px/32px Roboto;
+}

@@ -5,7 +5,6 @@ import {RegistrationLayout} from "./RegistrationLayout";
 
 function AuthLayout() {
     const {mode} = useAtom(loginPageDataAtom)
-
     return mode === 'login'
         ? <LoginLayout/>
         : <RegistrationLayout/>

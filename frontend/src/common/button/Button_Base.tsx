@@ -64,7 +64,7 @@ const Button_Base = React.forwardRef((props: Button_BaseProps, ref: ForwardedRef
             disabled={state === 'disabled'}
             ref={ref}
         >
-            {state === 'preloader' && <Preloader />}
+            {state === 'preloader' && <Preloader preloaderColor={'white'} />}
             {state !== 'preloader' && leftIcon && <_Icon icon={leftIcon} className={styles.leftIcon}/>}
             {state !== 'preloader' && text && <_Text text={text} />}
             {state !== 'preloader' && rightIcon && <_Icon icon={rightIcon} className={styles.rightIcon}/>}
