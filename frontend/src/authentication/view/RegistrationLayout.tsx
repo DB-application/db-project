@@ -1,5 +1,4 @@
 import {useAction} from "@reatom/react";
-import {loginPageActions, loginPageDataAtom} from "../viewModel/loginPageData";
 import styles from "./LoginLayout.module.css";
 import {FormField} from "./common/FormField";
 import {isValidEmail, isValidNickname, isValidPassword} from "./common/validation";
@@ -7,9 +6,11 @@ import {getEmailErrorText, getNicknameErrorText, getPasswordErrorText} from "./c
 import {Button_Text} from "../../common/button/Button_Text";
 import {I18n_get} from "../../i18n/i18n_get";
 import {useAtomWithSelector} from "../../core/reatom/useAtomWithSelector";
+import {registrationPageAction, registrationPageAtom} from "../viewModel/registrationPageData";
+import {loginFormActions} from "../viewModel/loginFormMode";
 
 function GotoLoginLabel() {
-    const handleGotoLogin = useAction(loginPageActions.gotoLogin)
+    const handleGotoLogin = useAction(loginFormActions.gotoLogin)
 
     return(
         <div className={styles.switchMode}>
@@ -27,21 +28,21 @@ function GotoLoginLabel() {
 }
 
 function RegistrationLayout() {
-    const nicknameError = useAtomWithSelector(loginPageDataAtom, x => x.nicknameError)
-    const nickname = useAtomWithSelector(loginPageDataAtom, x => x.nickname)
-    const email = useAtomWithSelector(loginPageDataAtom, x => x.email)
-    const password = useAtomWithSelector(loginPageDataAtom, x => x.password)
-    const passwordError = useAtomWithSelector(loginPageDataAtom, x => x.passwordError)
-    const emailError = useAtomWithSelector(loginPageDataAtom, x => x.emailError)
-    const submitButtonState = useAtomWithSelector(loginPageDataAtom, x => x.submitButtonState)
+    const nicknameError = useAtomWithSelector(registrationPageAtom, x => x.nicknameError)
+    const nickname = useAtomWithSelector(registrationPageAtom, x => x.nickname)
+    const email = useAtomWithSelector(registrationPageAtom, x => x.email)
+    const password = useAtomWithSelector(registrationPageAtom, x => x.password)
+    const passwordError = useAtomWithSelector(registrationPageAtom, x => x.passwordError)
+    const emailError = useAtomWithSelector(registrationPageAtom, x => x.emailError)
+    const submitButtonState = useAtomWithSelector(registrationPageAtom, x => x.submitButtonState)
 
-    const handleSetEmail = useAction(loginPageActions.setEmail)
-    const handleSetPassword = useAction(loginPageActions.setPassword)
-    const handleSetEmailError = useAction(loginPageActions.setEmailError)
-    const handleSetPasswordError = useAction(loginPageActions.setPasswordError)
-    const handleSetNickname= useAction(loginPageActions.setNickName)
-    const handleSetNicknameError = useAction(loginPageActions.setNicknameError)
-    const handleSubmitForm = useAction(loginPageActions.submitRegistrationForm)
+    const handleSetEmail = useAction(registrationPageAction.setEmail)
+    const handleSetPassword = useAction(registrationPageAction.setPassword)
+    const handleSetEmailError = useAction(registrationPageAction.setEmailError)
+    const handleSetPasswordError = useAction(registrationPageAction.setPasswordError)
+    const handleSetNickname= useAction(registrationPageAction.setNickName)
+    const handleSetNicknameError = useAction(registrationPageAction.setNicknameError)
+    const handleSubmitForm = useAction(registrationPageAction.submitRegistrationForm)
 
     return (
         <div className={styles.loginLayout}>

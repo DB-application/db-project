@@ -1,10 +1,10 @@
 import {useAtom} from "@reatom/react";
-import {loginPageDataAtom} from "../viewModel/loginPageData";
 import {LoginLayout} from "./LoginLayout";
 import {RegistrationLayout} from "./RegistrationLayout";
+import {loginFormAtom} from "../viewModel/loginFormMode";
 
 function AuthLayout() {
-    const {mode} = useAtom(loginPageDataAtom)
+    const {mode} = useAtom(loginFormAtom)
     return mode === 'login'
         ? <LoginLayout/>
         : <RegistrationLayout/>

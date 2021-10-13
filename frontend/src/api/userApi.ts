@@ -53,17 +53,28 @@ function changePassword(body: ChangePasswordBody): Promise<Response> {
 
 
 function getUserData(): Promise<GetUserDataType> {
-    return  fetch('http://localhost:8000/get/user', {
-        method: 'POST',
-    })
-        .then(response => {
-            switch (response.status) {
-                case 200:
-                    return response.json()
-                default:
-                    return Promise.reject(response.status)
-            }
+    return new Promise<GetUserDataType>((resolve, reject) => {
+        resolve({
+            email: 'email@mail.ru',
+            nickname: 'Fenomen',
+            lastName: 'Мухаметханов',
+            firstName: 'Эльдар',
+            phone: '+79021025370',
+            avatarUrl: '',
+            id: '1',
         })
+    })
+    // return  fetch('http://localhost:8000/get/user', {
+    //     method: 'POST',
+    // })
+    //     .then(response => {
+    //         switch (response.status) {
+    //             case 200:
+    //                 return response.json()
+    //             default:
+    //                 return Promise.reject(response.status)
+    //         }
+    //     })
 }
 
 

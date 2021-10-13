@@ -2,16 +2,17 @@ import {useAction} from "@reatom/react";
 import {loginPageActions, loginPageDataAtom} from "../viewModel/loginPageData";
 import styles from "./LoginLayout.module.css";
 import {FormField} from "./common/FormField";
-import {isValidEmail, isValidPassword} from "./common/validation";
-import {getEmailErrorText, getPasswordErrorText} from "./common/getErrorText";
+import {isValidLogin, isValidPassword} from "./common/validation";
+import {getLoginErrorText, getPasswordErrorText} from "./common/getErrorText";
 import {Checkbox_WithLabel} from "../../common/checkbox/Checkbox_WithLabel";
 import {Button_Text} from "../../common/button/Button_Text";
 import {I18n_get} from "../../i18n/i18n_get";
 import {useAtomWithSelector} from "../../core/reatom/useAtomWithSelector";
+import {loginFormActions} from "../viewModel/loginFormMode";
 
 
 function GotoRegistrationLabel() {
-    const handleGotoRegistration = useAction(loginPageActions.gotoRegistration)
+    const handleGotoRegistration = useAction(loginFormActions.gotoRegistration)
 
     return(
         <div className={styles.switchMode}>
@@ -30,16 +31,16 @@ function GotoRegistrationLabel() {
 
 
 function LoginLayout() {
-    const email = useAtomWithSelector(loginPageDataAtom, x => x.email)
+    const login = useAtomWithSelector(loginPageDataAtom, x => x.login)
     const password = useAtomWithSelector(loginPageDataAtom, x => x.password)
     const passwordError = useAtomWithSelector(loginPageDataAtom, x => x.passwordError)
-    const emailError = useAtomWithSelector(loginPageDataAtom, x => x.emailError)
+    const loginError = useAtomWithSelector(loginPageDataAtom, x => x.loginError)
     const submitButtonState = useAtomWithSelector(loginPageDataAtom, x => x.submitButtonState)
     const rememberMe = useAtomWithSelector(loginPageDataAtom, x => x.rememberMe)
 
-    const handleSetEmail = useAction(loginPageActions.setEmail)
+    const handleSetLogin = useAction(loginPageActions.setLogin)
     const handleSetPassword = useAction(loginPageActions.setPassword)
-    const handleSetEmailError = useAction(loginPageActions.setEmailError)
+    const handleSetLoginError = useAction(loginPageActions.setLoginError)
     const handleSetPasswordError = useAction(loginPageActions.setPasswordError)
     const handleSetRememberMe = useAction(loginPageActions.setRememberMe)
     const handleSubmitForm = useAction(loginPageActions.submitLogin)
@@ -52,11 +53,11 @@ function LoginLayout() {
                 </div>
                 <FormField
                     type={'text'}
-                    onBlur={() => handleSetEmailError(isValidEmail(email))}
-                    value={email}
-                    onChange={value => handleSetEmail(value)}
+                    onBlur={() => handleSetLoginError(isValidLogin(login))}
+                    value={login}
+                    onChange={value => handleSetLogin(value)}
                     placeholder={I18n_get('LoginForm.LoginPlaceholder')}
-                    errorText={emailError && getEmailErrorText(emailError)}
+                    errorText={loginError && getLoginErrorText(loginError)}
                     className={styles.emailField}
                 />
                 <FormField
@@ -77,7 +78,7 @@ function LoginLayout() {
                 <Button_Text
                     text={I18n_get('LoginForm.Login')}
                     onClick={() => {
-                        handleSetEmailError(isValidEmail(email))
+                        handleSetLoginError(isValidLogin(login))
                         handleSetPasswordError(isValidPassword(password))
                         handleSubmitForm()
                     }}

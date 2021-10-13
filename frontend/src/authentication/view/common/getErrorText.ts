@@ -1,4 +1,9 @@
-import {EmailErrorType, NicknameErrorType, PasswordErrorType} from "../../viewModel/field/FieldErrorTypes";
+import {
+    EmailErrorType,
+    LoginErrorType,
+    NicknameErrorType,
+    PasswordErrorType
+} from "../../viewModel/field/FieldErrorTypes";
 import {I18n_get} from "../../../i18n/i18n_get";
 
 
@@ -10,10 +15,19 @@ function getEmailErrorText(emailError: EmailErrorType): string | null {
             return I18n_get('LoginForm.EmailRequired')
         case "taken":
             return I18n_get('LoginForm.EmailExist')
-        case "unknown_email":
-            return I18n_get('LoginForm.UnknownEmail')
         default:
             return null
+    }
+}
+
+function getLoginErrorText(loginError: LoginErrorType): string | null {
+    switch (loginError) {
+        case 'invalid_format':
+            return I18n_get('LoginForm.EmailInvalidFormat')
+        case 'empty':
+            return I18n_get('LoginForm.EmailRequired')
+        case "unknown_login":
+            return I18n_get('LoginForm.UnknownEmail')
     }
 }
 
@@ -49,4 +63,5 @@ export {
     getNicknameErrorText,
     getPasswordErrorText,
     getEmailErrorText,
+    getLoginErrorText,
 }
