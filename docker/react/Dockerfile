@@ -1,5 +1,5 @@
 # pull official base image
-FROM node:latest
+FROM node:slim
 
 # set working directory
 WORKDIR /usr/src/frontend
