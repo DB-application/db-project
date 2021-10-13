@@ -60,7 +60,7 @@ type GetUserDataType = {
 };
 
 function getUserData(): Promise<GetUserDataType> {
-    return  fetch('/get/user', {
+    return fetch('/get/user_data', {
         method: 'POST',
     })
         .then(response => {
