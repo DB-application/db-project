@@ -1,6 +1,7 @@
 import {Store} from "@reatom/core";
 import {UserApi} from "../api/userApi";
 import {authorizedUser, userActions} from "../authentication/viewModel/userAtom";
+import { HttpStatus } from "../core/http/HttpStatus";
 
 type SetUserInfoPayload = {
     email: string,
@@ -27,7 +28,7 @@ function setUserInfo(store: Store, {
         username: nickname,
     })
         .then(response => {
-            if (response.status == 200) {
+            if (response.status == HttpStatus.OK) {
                 store.dispatch(userActions.setUserData({
                     ...user,
                     username: nickname,

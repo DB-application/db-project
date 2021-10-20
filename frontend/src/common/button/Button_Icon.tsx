@@ -6,20 +6,22 @@ type Button_IconProps = {
     icon: JSX.Element,
     onClick: () => void,
     className?: string,
+    tooltipText?: string,
     size?: Button_Size_Type,
     state?: Button_State_Type,
 }
 
-const Button_Icon = React.forwardRef((props: Button_IconProps, ref: ForwardedRef<HTMLButtonElement>) => {
+function Button_Icon(props: Button_IconProps) {
+
     return <Button_Base
-        ref={ref}
         leftIcon={props.icon}
         className={props.className}
         size={props.size}
         state={props.state}
         onClick={props.onClick}
+        tooltipText={props.tooltipText}
     />
-})
+}
 
 export {
     Button_Icon,

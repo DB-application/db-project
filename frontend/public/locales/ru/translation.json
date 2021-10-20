@@ -38,5 +38,10 @@
     "PasswordMustBeDifferent": "Новый пароль должен отличаться от старого",
     "PasswordIsDifferent": "Пароли отличаются",
     "SuccessChangePassword": "Пароль успешно изменен"
+  },
+  "Workspace": {
+    "SettingButtonTooltip": "Настройки",
+    "CalendarButtonTooltip": "Календарь",
+    "ChatButtonTooltip": "Сообщения"
   }
 }

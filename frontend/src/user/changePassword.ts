@@ -1,6 +1,7 @@
 import { Store } from "@reatom/core"
 import { UserApi } from "../api/userApi";
 import {authorizedUser, userAtom} from "../authentication/viewModel/userAtom";
+import { HttpStatus } from "../core/http/HttpStatus";
 
 type ChangePasswordPayload = {
     oldPassword: string,
@@ -33,7 +34,7 @@ async function changePassword(store: Store, {
     })
 
     switch (response.status) {
-        case 200:
+        case HttpStatus.OK:
             return 'Success'
         default:
             return "OldPasswordIncorrect"

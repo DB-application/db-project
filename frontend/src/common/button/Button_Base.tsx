@@ -2,8 +2,9 @@ import styles from './Button_Base.module.css'
 import {joinClassNames} from "../../core/styles/joinClassNames"
 import { Preloader } from '../preloader/Preloader'
 import { getStylesWithMods } from '../../core/styles/getStylesWithMods'
-import {ForwardedRef} from "react";
+import {ForwardedRef, RefObject, useRef} from "react";
 import React from 'react';
+import {useTooltip} from "../../core/hooks/useTooltip";
 
 type Button_Size_Type = 'small' | 'medium' | 'large'
 
@@ -16,7 +17,8 @@ type Button_BaseProps = {
     onClick: () => void,
     className?: string,
     size?: Button_Size_Type,
-    state?: Button_State_Type
+    state?: Button_State_Type,
+    tooltipText?: string,
 }
 
 function _Text({text}: {text: string}) {
@@ -34,7 +36,8 @@ function _Icon({
     )
 }
 
-const Button_Base = React.forwardRef((props: Button_BaseProps, ref: ForwardedRef<HTMLButtonElement>) => {
+function Button_Base(props: Button_BaseProps) {
+    const ref = useRef<HTMLButtonElement|null>(null)
     const {
         leftIcon,
         text,
@@ -43,12 +46,19 @@ const Button_Base = React.forwardRef((props: Button_BaseProps, ref: ForwardedRef
         className,
         size = 'medium',
         state = 'normal',
+        tooltipText,
     } = props
     function _onClick() {
         if (state === 'normal') {
             onClick()
         }
     }
+
+    useTooltip({
+        elementRef: ref,
+        showTooltip: !!tooltipText,
+        text: tooltipText || '',
+    })
 
     const buttonClassName = getStylesWithMods(styles.button, {
         [styles.buttonSmall]: size === 'small',
@@ -70,7 +80,7 @@ const Button_Base = React.forwardRef((props: Button_BaseProps, ref: ForwardedRef
             {state !== 'preloader' && rightIcon && <_Icon icon={rightIcon} className={styles.rightIcon}/>}
         </button>
     )
-})
+}
 
 export {
     Button_Base,

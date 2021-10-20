@@ -16,7 +16,7 @@ function getAvatarSize(size: AvatarSize) {
         case "xSmall":
             return '25px'
         case "small":
-            return '30px'
+            return '32px'
         case "normal":
             return '50px'
         case "large":

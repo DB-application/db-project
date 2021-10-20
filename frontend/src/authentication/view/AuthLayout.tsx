@@ -10,7 +10,7 @@ function AuthLayout() {
     const {mode} = useAtom(loginFormAtom)
 
     if (user.isAuthUser) {
-        return <Redirect to="/profile" />
+        return <Redirect to="/workspace" />
     }
     return mode === 'login'
         ? <LoginLayout/>

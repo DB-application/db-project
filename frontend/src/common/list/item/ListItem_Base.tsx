@@ -57,7 +57,10 @@ function ListItem_Base({
     return (
         <div
             className={itemClassName}
-            onClick={() => onClick && onClick()}
+            onClick={() => {
+                console.log('click1')
+                onClick && onClick()
+            }}
             ref={itemRef}
         >
             {iconLeft && <_ItemIcon binding={iconLeft} className={styles.iconLeft}/>}

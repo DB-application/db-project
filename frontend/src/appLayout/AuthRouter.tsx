@@ -1,6 +1,6 @@
 import {useAtom} from "@reatom/react";
 import {userAtom} from "../authentication/viewModel/userAtom";
-import {Redirect} from "react-router-dom";
+import {Redirect, Switch} from "react-router-dom";
 
 
 function AuthRouter() {
@@ -8,7 +8,11 @@ function AuthRouter() {
 
     if (!user.isAuthUser) return <Redirect to='/auth' />
 
-    return <Redirect to='/profile' />
+    return (
+        <Switch>
+            <Redirect exact from='/auth' to='/workspace' />
+        </Switch>
+    )
 }
 
 export {
