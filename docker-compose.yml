@@ -13,7 +13,7 @@ services:
     ports:
       - '4306:3306'
     volumes:
-      - ./mysql:/var/lib/mysql
+      - './mysql:/var/lib/mysql'
   nginx:
     container_name: nginx
     image: nginx:1.19.0-alpine
@@ -40,6 +40,9 @@ services:
     user: 1000:1000
     depends_on:
       - database
+    environment:
+      XDEBUG_CONFIG: "remote_host=host.docker.internal remote_enable=1"
+      PHP_IDE_CONFIG: "serverName=Docker"
   frontend:
     container_name: frontend
     build:
@@ -59,7 +62,7 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - '$PWD/redis-data:/var/lib/redis'
+      - './redis-data:/var/lib/redis'
       - './docker/redis/redis.conf:/usr/local/etc/redis/redis.conf'
     environment:
       - REDIS_REPLICATION_MODE=master

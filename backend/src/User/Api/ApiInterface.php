@@ -2,9 +2,10 @@
 
 namespace App\User\Api;
 
+use App\User\Api\Input\AuthenticateUserInput;
 use App\User\Api\Input\CreateUserInput;
-use App\User\Api\Input\GetUserInput;
-use App\User\Api\Output\GetUserOutput;
+use App\User\Api\Output\AuthenticateUserOutput;
+use App\User\App\Data\UserData;
 use App\User\Domain\Exception\InvalidUserEmail;
 
 interface ApiInterface
@@ -16,8 +17,14 @@ interface ApiInterface
     public function createUser(CreateUserInput $input): void;
 
     /**
-     * @param GetUserInput $input
-     * @return GetUserOutput
+     * @param AuthenticateUserInput $input
+     * @return AuthenticateUserOutput
      */
-    public function getUser(GetUserInput $input): GetUserOutput;
+    public function authenticateUser(AuthenticateUserInput $input): AuthenticateUserOutput;
+
+    /**
+     * @param string $userId
+     * @return UserData|null
+     */
+    public function getUserData(string $userId): ?UserData;
 }

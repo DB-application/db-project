@@ -15,16 +15,30 @@ class UserQueryService implements UserQueryServiceInterface
 {
     /** @var Connection */
     private $conn;
-    /** @var EntityManagerInterface */
-    private $em;
     /** @var UserDataHydrator */
     private $hydrator;
 
     public function __construct(EntityManagerInterface $em, UserDataHydrator $hydrator)
     {
         $this->conn = $em->getConnection();
-        $this->em = $em;
         $this->hydrator = $hydrator;
+    }
+
+    public function getUserDataById(string $userId): ?UserData
+    {
+        $const = static function (string $value)
+        {
+            return $value;
+        };
+
+        $qb = $this->conn->createQueryBuilder();
+        $qb->from('user', 'u');
+        $this->addUserFieldSelect($qb);
+        $qb->where("{$const(UserTable::USER_ID)} = ':userId'");
+        $query = $qb->getSQL();
+        $result = $this->conn->executeQuery($query, ['userId' => $userId])->fetchOne();
+
+        return $result ? $this->hydrator->hydrateAll($result) : null;
     }
 
     public function getUserDataByEmailAndPassword(string $email, string $password): ?UserData

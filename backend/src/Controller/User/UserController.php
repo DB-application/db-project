@@ -4,11 +4,12 @@ declare(strict_types=1);
 namespace App\Controller\User;
 
 use App\User\Api\ApiInterface;
+use App\User\Api\Input\AuthenticateUserInput;
 use App\User\Api\Input\CreateUserInput;
-use App\User\Api\Input\GetUserInput;
 use App\User\App\Data\UserData;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -16,10 +17,13 @@ class UserController extends AbstractController
 {
     /** @var ApiInterface */
     private $userApi;
+    /** @var RequestStack */
+    private $requestStack;
 
-    public function __construct(ApiInterface $userApi)
+    public function __construct(ApiInterface $userApi, RequestStack $requestStack)
     {
         $this->userApi = $userApi;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -40,13 +44,14 @@ class UserController extends AbstractController
     public function loginUser(Request $request): Response
     {
         $requestData = json_decode($request->getContent(), true);
-        $input = new GetUserInput(md5($requestData['password']), $requestData['login']);
-        $output = $this->userApi->getUser($input);
+        $input = new AuthenticateUserInput(md5($requestData['password']), $requestData['login']);
+        $output = $this->userApi->authenticateUser($input);
         if ($output->getUserData() === null)
         {
             return new Response(null, Response::HTTP_UNAUTHORIZED);
         }
-        // генерировать сессию и сохранять в redis?
+        $session = $this->requestStack->getSession();
+        $session->set('user_id', $output->getUserData()->getUserId());
 
         return new Response();
     }
@@ -56,17 +61,15 @@ class UserController extends AbstractController
      */
     public function getUserData(Request $request): Response
     {
-        $requestData = json_decode($request->getContent(), true);
-        // Сделать проверку сессии
-//        $output = $this->userApi->getUser($input);
-//        if ($output->getUserData() === null)
-//        {
-        $dummyUser = $this->buildDummyUser();
-        return new Response($this->serializeUserData($dummyUser));
-//        }
-        // генерировать сессию и сохранять в redis?
+        $userId = $this->getUserId();
+        if ($userId === null)
+        {
+            $dummyUser = $this->buildDummyUser();
+            return new Response($this->serializeUserData($dummyUser));
+        }
+        $userData = $this->userApi->getUserData($userId);
 
-//        return new Response();
+        return new Response($this->serializeUserData($userData));
     }
 
     private function serializeUserData(UserData $userData): string
@@ -97,6 +100,12 @@ class UserController extends AbstractController
             '+79123456789',
             'https://google.com'
         );
+    }
+
+    private function getUserId(): ?string
+    {
+        $session = $this->requestStack->getSession();
+        return $session->get('user_id');
     }
 //    private function handleException()
 }
