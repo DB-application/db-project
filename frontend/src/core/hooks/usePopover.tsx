@@ -22,12 +22,11 @@ function usePopover({
 }: PropsType) {
     const root = verify(document.getElementById('root'))
 
-    // useHtmlElementEventHandler('mousedown', root,  (event) => {
-    //     if (!event.defaultPrevented) {
-    //         console.log('click2')
-    //         setShow(false)
-    //     }
-    // })
+    useHtmlElementEventHandler('mousedown', root,  (event) => {
+        if (!event.defaultPrevented && show) {
+            setShow(false)
+        }
+    })
 
     useExternalLayer({
         layerType: 'popover',
