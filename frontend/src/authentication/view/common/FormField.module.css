@@ -38,6 +38,7 @@ input {
 
 .showPasswordIcon:hover {
     color: #454E4E;
+    cursor: pointer;
 }
 
 .input:focus {

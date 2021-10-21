@@ -15,6 +15,7 @@ const loginAction = declareAction<LoginActionPayload>(
         AuthenticationApi.logIn(login, password)
             .then(resp => {
                 toast.success('Вход произведен успешно')
+                store.dispatch(loginPageActions.setIsLoading(false))
                 setTimeout(() => goToUrl('/workspace'), 1000)
             })
             .catch(err => {
@@ -22,6 +23,7 @@ const loginAction = declareAction<LoginActionPayload>(
                     toast.error('Введен неверный логин или пароль')
                     return
                 }
+                store.dispatch(loginPageActions.setIsLoading(false))
                 processStandardError()
             })
             .finally(() => store.dispatch(loginPageActions.setIsLoading(false)))
