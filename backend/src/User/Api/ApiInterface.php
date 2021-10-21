@@ -4,7 +4,6 @@ namespace App\User\Api;
 
 use App\User\Api\Input\AuthenticateUserInput;
 use App\User\Api\Input\CreateUserInput;
-use App\User\Api\Output\AuthenticateUserOutput;
 use App\User\App\Data\UserData;
 use App\User\Domain\Exception\InvalidUserEmail;
 
@@ -18,9 +17,8 @@ interface ApiInterface
 
     /**
      * @param AuthenticateUserInput $input
-     * @return AuthenticateUserOutput
      */
-    public function authenticateUser(AuthenticateUserInput $input): AuthenticateUserOutput;
+    public function authenticateUser(AuthenticateUserInput $input): void;
 
     /**
      * @param string $userId

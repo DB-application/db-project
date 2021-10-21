@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller\User;
 
+use App\Common\Security\SecurityContextInterface;
 use App\User\Api\ApiInterface;
 use App\User\Api\Input\AuthenticateUserInput;
 use App\User\Api\Input\CreateUserInput;
@@ -19,11 +20,14 @@ class UserController extends AbstractController
     private $userApi;
     /** @var RequestStack */
     private $requestStack;
+    /** @var SecurityContextInterface */
+    private $securityContext;
 
-    public function __construct(ApiInterface $userApi, RequestStack $requestStack)
+    public function __construct(ApiInterface $userApi, RequestStack $requestStack, SecurityContextInterface $securityContext)
     {
         $this->userApi = $userApi;
         $this->requestStack = $requestStack;
+        $this->securityContext = $securityContext;
     }
 
     /**
@@ -45,14 +49,13 @@ class UserController extends AbstractController
     {
         $requestData = json_decode($request->getContent(), true);
         $input = new AuthenticateUserInput(md5($requestData['password']), $requestData['login']);
-        $output = $this->userApi->authenticateUser($input);
-        if ($output->getUserData() === null)
+        try
+        {
+            $this->userApi->authenticateUser($input);
+        } catch (\Exception $e)
         {
             return new Response(null, Response::HTTP_UNAUTHORIZED);
         }
-        $session = $this->requestStack->getSession();
-        $session->set('user_id', $output->getUserData()->getUserId());
-
         return new Response();
     }
 
@@ -61,14 +64,13 @@ class UserController extends AbstractController
      */
     public function getUserData(Request $request): Response
     {
-        $userId = $this->getUserId();
+        $userId = $this->securityContext->getAuthenticateUserId();
         if ($userId === null)
         {
             $dummyUser = $this->buildDummyUser();
             return new Response($this->serializeUserData($dummyUser));
         }
         $userData = $this->userApi->getUserData($userId);
-
         return new Response($this->serializeUserData($userData));
     }
 
@@ -101,11 +103,4 @@ class UserController extends AbstractController
             'https://google.com'
         );
     }
-
-    private function getUserId(): ?string
-    {
-        $session = $this->requestStack->getSession();
-        return $session->get('user_id');
-    }
-//    private function handleException()
 }
