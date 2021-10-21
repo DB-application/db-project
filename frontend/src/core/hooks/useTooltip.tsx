@@ -1,7 +1,7 @@
-import {RefObject, useEffect, useState} from "react";
-import { Tooltip } from "../../common/tooltip/Tooltip";
-import { useEventHandler } from "./useEventHandler";
-import { useExternalLayer } from "./useExternalLayer";
+import {RefObject, useState} from "react";
+import {Tooltip} from "../../common/tooltip/Tooltip";
+import {useEventHandler} from "./useEventHandler";
+import {useExternalLayer} from "./useExternalLayer";
 import {getExternalLayer} from "../layers/externalLayers";
 
 type PropsType = {

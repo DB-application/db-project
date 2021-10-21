@@ -16,7 +16,7 @@ const loginAction = declareAction<LoginActionPayload>(
                 toast.success('Вход произведен успешно')
             })
             .catch(err => {
-                if (err.status && err.status == 401) {
+                if (err.status && err.status === 401) {
                     toast.error('Введен неверный логин или пароль')
                     return
                 }

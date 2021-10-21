@@ -28,7 +28,7 @@ function setUserInfo(store: Store, {
         username: nickname,
     })
         .then(response => {
-            if (response.status == HttpStatus.OK) {
+            if (response.status === HttpStatus.OK) {
                 store.dispatch(userActions.setUserData({
                     ...user,
                     username: nickname,

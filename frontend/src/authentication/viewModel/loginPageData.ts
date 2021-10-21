@@ -1,34 +1,22 @@
-import {combine, declareAction, declareAtom, map} from "@reatom/core";
+import {combine, declareAction, map} from "@reatom/core";
 import {loginAction} from "./actions/loginAction";
 import {LoginErrorType, PasswordErrorType} from "./field/FieldErrorTypes";
+import {declareAtomWithSetter} from "../../core/reatom/declareAtomWithSetter";
 
 
-const setLogin = declareAction<string>()
-const loginAtom = declareAtom<string>('', on => [
-    on(setLogin, (_, login) => login),
-])
+const [loginAtom, setLogin] = declareAtomWithSetter<string>('loginPage.login', '')
 
-const setLoginError = declareAction<LoginErrorType|null>()
-const loginErrorAtom = declareAtom<LoginErrorType|null>(null, on => [
-    on(setLoginError, (_, value) => value),
+const [loginErrorAtom, setLoginError] = declareAtomWithSetter<LoginErrorType|null>('loginPage.loginErrorAtom', null, on => [
     on(setLogin, () => null),
 ])
 
-const setPassword = declareAction<string>()
-const passwordAtom = declareAtom<string>('', on => [
-    on(setPassword, (_, password) => password),
-])
+const [passwordAtom, setPassword] = declareAtomWithSetter<string>('loginPage.password', '')
 
-const setPasswordError = declareAction<PasswordErrorType|null>()
-const passwordErrorAtom = declareAtom<PasswordErrorType|null>(null, on => [
-    on(setPasswordError, (_, value) => value),
+const [passwordErrorAtom, setPasswordError] = declareAtomWithSetter<PasswordErrorType|null>('loginPage.passwordError', null, on => [
     on(setPassword, () => null),
 ])
 
-const setRememberMe = declareAction<boolean>()
-const rememberMeAtom  = declareAtom<boolean>(false, on => [
-    on(setRememberMe, (_, value) => value)
-])
+const [rememberMeAtom, setRememberMe]  = declareAtomWithSetter<boolean>('loginPage.rememberMe', false)
 
 const submitLogin = declareAction(
     (_, store) => {
@@ -47,10 +35,8 @@ const submitLogin = declareAction(
     }
 )
 
-const setIsLoading = declareAction<boolean>()
-const isLoadingAtom = declareAtom<boolean>(false, on => [
+const [isLoadingAtom, setIsLoading] = declareAtomWithSetter<boolean>('loginPage.isLoadingAtom', false, on => [
     on(loginAction, () => true),
-    on(setIsLoading, (_, value) => value),
 ])
 
 const submitButtonStateAtom = map(

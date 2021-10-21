@@ -1,7 +1,7 @@
-import { Store } from "@reatom/core"
-import { UserApi } from "../api/userApi";
-import {authorizedUser, userAtom} from "../authentication/viewModel/userAtom";
-import { HttpStatus } from "../core/http/HttpStatus";
+import {Store} from "@reatom/core"
+import {UserApi} from "../api/userApi";
+import {authorizedUser} from "../authentication/viewModel/userAtom";
+import {HttpStatus} from "../core/http/HttpStatus";
 
 type ChangePasswordPayload = {
     oldPassword: string,
@@ -24,7 +24,7 @@ async function changePassword(store: Store, {
     if (confirmPassword !== newPassword) {
         return 'ConfirmPasswordMismatch'
     }
-    if (newPassword == oldPassword) {
+    if (newPassword === oldPassword) {
         return 'NewPasswordSame'
     }
     const response = await UserApi.changePassword({

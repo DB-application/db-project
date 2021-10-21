@@ -20,7 +20,7 @@ function useExternalLayer({
             ReactDOM.unmountComponentAtNode(layer)
         }
         hideLowerLayers(layerType)
-    }, [layer])
+    }, [layer, layerType])
 
     useEffect(() => cleanup, [cleanup])
 

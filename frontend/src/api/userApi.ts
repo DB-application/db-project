@@ -76,6 +76,9 @@ function getUserData(): Promise<GetUserDataType> {
             switch (response.status) {
                 case HttpStatus.OK:
                     return response.json()
+                case HttpStatus.UNAUTHORIZED:
+                    goToUrl('/auth')
+                    return Promise.resolve(response)
                 default:
                     return Promise.reject(response.status)
             }

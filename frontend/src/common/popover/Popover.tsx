@@ -55,7 +55,7 @@ function Popover({
         const controlHTML = control.current as HTMLElement
         const controlBounds = controlHTML.getBoundingClientRect()
         return getPositionByAlign(controlBounds, align)
-    }, [control])
+    }, [control, align])
 
     const controlLayerStyle = useMemo(() => {
         const controlHTML = control.current as HTMLElement
