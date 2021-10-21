@@ -12,7 +12,6 @@ class SecurityContext implements SecurityContextInterface
     /** @var Security */
     private $security;
 
-
     public function __construct(Security $security)
     {
         $this->security = $security;
@@ -22,7 +21,7 @@ class SecurityContext implements SecurityContextInterface
      * @return string|null
      * @throws UserNotAuthenticated
      */
-    public function getAuthenticateUserId(): ?string
+    public function getAuthenticatedUserId(): ?string
     {
         $authorizationUser = $this->security->getUser();
         if (!$authorizationUser)

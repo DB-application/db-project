@@ -2,7 +2,13 @@
 
 namespace App\Common\Security;
 
+use App\Common\Exception\UserNotAuthenticated;
+
 interface SecurityContextInterface
 {
-    public function getAuthenticateUserId(): ?string;
+    /**
+     * @return string|null
+     * @throws UserNotAuthenticated
+     */
+    public function getAuthenticatedUserId(): ?string;
 }

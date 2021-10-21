@@ -33,7 +33,7 @@ class UserProvider implements UserProviderInterface
             throw new UnsupportedUserException(sprintf('Invalid user class "%s".', get_class($user)));
         }
 
-        return new SecurityUser($user->getUserId(), $user->getUsername(), []);
+        return new SecurityUser($user->getUserId());
     }
 
     public function supportsClass($class)

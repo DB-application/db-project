@@ -3,31 +3,36 @@ declare(strict_types=1);
 
 namespace App\Controller\User;
 
+use App\Common\Exception\UserNotAuthenticated;
 use App\Common\Security\SecurityContextInterface;
+use App\Security\UserAuthenticator;
 use App\User\Api\ApiInterface;
 use App\User\Api\Input\AuthenticateUserInput;
 use App\User\Api\Input\CreateUserInput;
 use App\User\App\Data\UserData;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class UserController extends AbstractController
 {
     /** @var ApiInterface */
     private $userApi;
-    /** @var RequestStack */
-    private $requestStack;
     /** @var SecurityContextInterface */
     private $securityContext;
+    /** @var TokenStorageInterface */
+    private $tokenStorage;
+    /** @var UserAuthenticator */
+    private $authenticator;
 
-    public function __construct(ApiInterface $userApi, RequestStack $requestStack, SecurityContextInterface $securityContext)
+    public function __construct(ApiInterface $userApi, TokenStorageInterface $tokenStorage, SecurityContextInterface $securityContext, UserAuthenticator $authenticator)
     {
         $this->userApi = $userApi;
-        $this->requestStack = $requestStack;
+        $this->tokenStorage = $tokenStorage;
         $this->securityContext = $securityContext;
+        $this->authenticator = $authenticator;
     }
 
     /**
@@ -40,6 +45,14 @@ class UserController extends AbstractController
         $this->userApi->createUser($input);
 
         return new Response();
+    }
+
+    /**
+     * @Route("/logout")
+     */
+    public function logout(Request $request): void
+    {
+        $this->authenticator->logout($request);
     }
 
     /**
@@ -64,11 +77,12 @@ class UserController extends AbstractController
      */
     public function getUserData(Request $request): Response
     {
-        $userId = $this->securityContext->getAuthenticateUserId();
-        if ($userId === null)
+        try
         {
-            $dummyUser = $this->buildDummyUser();
-            return new Response($this->serializeUserData($dummyUser));
+            $userId = $this->securityContext->getAuthenticatedUserId();
+        } catch (UserNotAuthenticated $e)
+        {
+            return new Response(null, Response::HTTP_UNAUTHORIZED);
         }
         $userData = $this->userApi->getUserData($userId);
         return new Response($this->serializeUserData($userData));

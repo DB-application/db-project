@@ -34,9 +34,9 @@ class UserQueryService implements UserQueryServiceInterface
         $qb = $this->conn->createQueryBuilder();
         $qb->from('user', 'u');
         $this->addUserFieldSelect($qb);
-        $qb->where("{$const(UserTable::USER_ID)} = ':userId'");
+        $qb->where("{$const(UserTable::USER_ID)} = :userId");
         $query = $qb->getSQL();
-        $result = $this->conn->executeQuery($query, ['userId' => $userId])->fetchOne();
+        $result = $this->conn->executeQuery($query, ['userId' => $userId])->fetchAssociative();
 
         return $result ? $this->hydrator->hydrateAll($result) : null;
     }

@@ -20,6 +20,6 @@ class UserDataHydrator
         $lastName = TypeConverter::hydrateValue($data[UserTable::LAST_NAME], UserTable::USER_FIELDS[UserTable::LAST_NAME]);
         $phone = TypeConverter::hydrateValue($data[UserTable::PHONE], UserTable::USER_FIELDS[UserTable::PHONE]);
         $avatarUrl = TypeConverter::hydrateValue($data[UserTable::AVATAR_URL], UserTable::USER_FIELDS[UserTable::AVATAR_URL]);
-        return new UserData($userId, $email, $password, $loginKey, $username, $firstName, $lastName, $phone, $avatarUrl);
+        return new UserData($userId, $email, $password, $username, $loginKey, $firstName, $lastName, $phone, $avatarUrl);
     }
 }

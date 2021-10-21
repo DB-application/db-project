@@ -31,7 +31,7 @@ services:
       context: .
       dockerfile: docker/php/Dockerfile
     volumes:
-      - './backend/:/usr/src/backend'
+      - './backend/src:/usr/src/backend/src'
     ports:
       - '9000:9000'
     restart: on-failure
@@ -50,7 +50,6 @@ services:
       dockerfile: docker/react/Dockerfile
     volumes:
       - './frontend:/usr/src/frontend'
-      - '/app/node_modules'
     ports:
       - '80:3000'
     environment:

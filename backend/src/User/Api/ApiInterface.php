@@ -2,6 +2,7 @@
 
 namespace App\User\Api;
 
+use App\Common\Exception\UserNotAuthenticated;
 use App\User\Api\Input\AuthenticateUserInput;
 use App\User\Api\Input\CreateUserInput;
 use App\User\App\Data\UserData;
@@ -17,6 +18,7 @@ interface ApiInterface
 
     /**
      * @param AuthenticateUserInput $input
+     * @throws UserNotAuthenticated
      */
     public function authenticateUser(AuthenticateUserInput $input): void;
 
