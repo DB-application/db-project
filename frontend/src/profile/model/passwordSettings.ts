@@ -1,29 +1,18 @@
-import {combine, declareAction, declareAtom} from "@reatom/core";
+import {combine, declareAction} from "@reatom/core";
 import {toast} from "react-toastify";
 import {Button_State_Type} from "../../common/button/Button_Base";
 import {changePassword} from "../../user/changePassword";
 import {I18n_get} from "../../i18n/i18n_get";
+import {declareAtomWithSetter} from "../../core/reatom/declareAtomWithSetter";
 
 
-const setOldPassword = declareAction<string>()
-const oldPasswordAtom = declareAtom('passwordSettings.oldPassword', '', on => [
-    on(setOldPassword, (_, value) => value),
-])
+const [oldPasswordAtom, setOldPassword] = declareAtomWithSetter('passwordSettings.oldPassword', '')
 
-const setNewPassword = declareAction<string>()
-const newPasswordAtom = declareAtom('passwordSettings.newPassword', '', on => [
-    on(setNewPassword, (_, value) => value),
-])
+const [newPasswordAtom, setNewPassword] = declareAtomWithSetter('passwordSettings.newPassword', '')
 
-const setConfirmPassword = declareAction<string>()
-const confirmPasswordAtom = declareAtom('passwordSettings.confirmPassword', '', on => [
-    on(setConfirmPassword, (_, value) => value),
-])
+const [confirmPasswordAtom, setConfirmPassword] = declareAtomWithSetter('passwordSettings.confirmPassword', '')
 
-const setSaveButtonState = declareAction<Button_State_Type>()
-const saveButtonStateAtom = declareAtom<Button_State_Type>('passwordSettings.saveButtonState', 'normal', on => [
-    on(setSaveButtonState, (_, value) => value),
-])
+const [saveButtonStateAtom, setSaveButtonState] = declareAtomWithSetter<Button_State_Type>('passwordSettings.saveButtonState', 'normal')
 
 const submitChangePassword = declareAction(
     async(_, store) => {

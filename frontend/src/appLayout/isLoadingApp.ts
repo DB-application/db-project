@@ -1,10 +1,6 @@
-import {declareAction, declareAtom} from "@reatom/core";
+import {declareAtomWithSetter} from "../core/reatom/declareAtomWithSetter";
 
-
-const setIsLoadingApp = declareAction<boolean>()
-const isLoadingAppAtom = declareAtom('app.isLoading', true, on => [
-    on(setIsLoadingApp, (_, value) => value),
-])
+const [isLoadingAppAtom, setIsLoadingApp] = declareAtomWithSetter('app.isLoading', true)
 
 export {
     isLoadingAppAtom,

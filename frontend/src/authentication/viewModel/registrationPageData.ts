@@ -1,44 +1,28 @@
-import {combine, declareAction, declareAtom, map} from "@reatom/core";
+import {combine, declareAction, map} from "@reatom/core";
 import {EmailErrorType, NicknameErrorType, PasswordErrorType} from "./field/FieldErrorTypes";
 import {registrationAction} from "./actions/registrationAction";
+import {declareAtomWithSetter} from "../../core/reatom/declareAtomWithSetter";
 
-const setEmail = declareAction<string>()
-const emailAtom = declareAtom<string>('', on => [
-    on(setEmail, (_, email) => email),
-])
+const [emailAtom, setEmail] = declareAtomWithSetter<string>('registration.email', '')
 
-const setEmailError = declareAction<EmailErrorType|null>()
-const emailErrorAtom = declareAtom<EmailErrorType|null>(null, on => [
-    on(setEmailError, (_, value) => value),
+const [emailErrorAtom, setEmailError] = declareAtomWithSetter<EmailErrorType|null>('registration.emailError' , null, on => [
     on(setEmail, () => null),
 ])
 
-const setPassword = declareAction<string>()
-const passwordAtom = declareAtom<string>('', on => [
-    on(setPassword, (_, password) => password),
-])
+const [passwordAtom, setPassword] = declareAtomWithSetter<string>('registration.password', '')
 
-const setPasswordError = declareAction<PasswordErrorType|null>()
-const passwordErrorAtom = declareAtom<PasswordErrorType|null>(null, on => [
-    on(setPasswordError, (_, value) => value),
+const [passwordErrorAtom, setPasswordError] = declareAtomWithSetter<PasswordErrorType|null>('registration.passwordError', null, on => [
     on(setPassword, () => null),
 ])
 
-const setNickName = declareAction<string>()
-const nicknameAtom = declareAtom<string>('', on => [
-    on(setNickName, (_, value) => value),
-])
+const [nicknameAtom, setNickName] = declareAtomWithSetter<string>('registration.nickname', '')
 
-const setNicknameError = declareAction<NicknameErrorType|null>()
-const nicknameErrorAtom = declareAtom<NicknameErrorType|null>(null, on => [
-    on(setNicknameError, (_, value) => value),
+const [nicknameErrorAtom, setNicknameError] = declareAtomWithSetter<NicknameErrorType|null>('registration.nicknameError',null, on => [
     on(setNickName, () => null),
 ])
 
-const setIsLoading = declareAction<boolean>()
-const isLoadingAtom = declareAtom<boolean>(false, on => [
+const [isLoadingAtom, setIsLoading] = declareAtomWithSetter<boolean>('registration.isLoading', false, on => [
     on(registrationAction, () => true),
-    on(setIsLoading, (_, value) => value),
 ])
 
 const submitButtonStateAtom = map(

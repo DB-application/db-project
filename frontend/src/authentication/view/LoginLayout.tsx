@@ -1,4 +1,4 @@
-import {useAction, useAtom} from "@reatom/react";
+import {useAction} from "@reatom/react";
 import {loginPageActions, loginPageDataAtom} from "../viewModel/loginPageData";
 import styles from "./LoginLayout.module.css";
 import {FormField} from "./common/FormField";

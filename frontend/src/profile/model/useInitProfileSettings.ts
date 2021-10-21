@@ -19,7 +19,7 @@ function useInitProfileSettings() {
             handleSetLastname(userInfo.lastName)
             handleSetPhoneNumber(userInfo.phone)
         }
-    }, [handleSetFirstname,handleSetLastname,handleSetEmail,handleSetNickName,userInfo])
+    }, [handleSetPhoneNumber,handleSetFirstname,handleSetLastname,handleSetEmail,handleSetNickName,userInfo])
 }
 
 export {

@@ -1,11 +1,11 @@
-import {declareAction, declareAtom, map} from '@reatom/core'
+import {declareAction, map} from '@reatom/core'
 import {AuthenticatedUserModel, UserModel} from './UserModel';
+import {declareAtomWithSetter} from "../../core/reatom/declareAtomWithSetter";
 
 const userMockData: UserModel = {
     isAuthUser: false,
 };
 
-const setUserData = declareAction<UserModel>()
 const setEmail = declareAction<string>()
 const setFirstname = declareAction<string>()
 const setLastname = declareAction<string>()
@@ -14,8 +14,7 @@ const setAvatarUrl = declareAction<string>()
 const setUserName = declareAction<string>()
 const setUserUnauthorized = declareAction()
 
-const userAtom = declareAtom<UserModel>(userMockData, (on) => [
-    on(setUserData, (_, payload) => payload),
+const [userAtom, setUserData] = declareAtomWithSetter<UserModel>('currentUserAtom', userMockData, (on) => [
     on(setEmail, (state, email) => ({...state, email})),
     on(setFirstname, (state, firstname) => ({...state, firstname})),
     on(setLastname, (state, lastname) => ({...state, lastname})),
@@ -26,7 +25,7 @@ const userAtom = declareAtom<UserModel>(userMockData, (on) => [
 ])
 
 const authorizedUser = map(userAtom, (user) => (
-    <AuthenticatedUserModel>(user)
+    user as AuthenticatedUserModel
 ))
 
 const userActions = {
