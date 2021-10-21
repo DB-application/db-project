@@ -16,6 +16,7 @@ const registrationAction = declareAction<RegistrationActionPayload>(
         AuthenticationApi.registration(email, password, nickname)
             .then((resp) => {
                 toast.success('Регистрация прошла успешно')
+                setTimeout(() => window.location.reload(), 1000)
             })
             .catch(processStandardError)
             .finally(() => {

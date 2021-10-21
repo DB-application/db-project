@@ -3,6 +3,7 @@ import {AuthenticationApi} from "../../../api/authenticationApi";
 import {loginPageActions} from "../loginPageData";
 import {toast} from "react-toastify";
 import {processStandardError} from "../../../core/error/processStandardError";
+import {goToUrl} from "../../../core/link/goToUrl";
 
 type LoginActionPayload = {
     login: string;
@@ -14,6 +15,7 @@ const loginAction = declareAction<LoginActionPayload>(
         AuthenticationApi.logIn(login, password)
             .then(resp => {
                 toast.success('Вход произведен успешно')
+                setTimeout(() => goToUrl('/workspace'), 1000)
             })
             .catch(err => {
                 if (err.status && err.status === 401) {
