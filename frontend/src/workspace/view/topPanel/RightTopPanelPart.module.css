@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+}
+.buttonsGroup {
+    display: flex;
+    margin-right: 25px;
+}
+
+.buttonsGroupButton:not(:last-child) {
+    margin-right: 8px;
+}

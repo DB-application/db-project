@@ -10,6 +10,7 @@
     width: 25px;
     height: 25px;
     color: rgba(66,72,78,0.6);
+    flex-shrink: 0;
 }
 
 .iconLeft {
@@ -25,4 +26,5 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    font: 15px/18px Roboto;
 }

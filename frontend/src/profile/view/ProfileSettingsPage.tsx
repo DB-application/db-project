@@ -5,7 +5,6 @@ import {UserInfoBlock} from "./UserInfoBlock";
 
 import styles from './ProfileSettingsPage.module.css'
 
-
 function ProfileSettingsPage() {
     useInitProfileSettings()
 

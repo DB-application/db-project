@@ -9,7 +9,6 @@
     border: none;
     transition: all 0.15s ease-in-out;
     position: relative;
-    min-width: 100px;
 }
 
 .text {
@@ -26,14 +25,10 @@
     height: 20px;
 }
 
-.leftIcon {
+.leftIcon ~ text,
+.text ~ .rightIcon {
     margin-right: 8px;
 }
-
-.rightIcon {
-    margin-left: 8px;
-}
-
 .button:hover:not(:disabled):not(.buttonPreloader) {
     background: #2068D5;
     cursor: pointer;

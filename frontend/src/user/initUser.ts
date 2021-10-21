@@ -10,7 +10,10 @@ const initUserDataAction = declareAction((_, store) => {
             store.dispatch(userActions.setUserData({ ...data, isAuthUser: true }));
             store.dispatch(setIsLoadingApp(false))
         })
-        .catch(processStandardError)
+        .catch(() => {
+            store.dispatch(setIsLoadingApp(false))
+            processStandardError()
+        })
         .finally(() => {});
 });
 

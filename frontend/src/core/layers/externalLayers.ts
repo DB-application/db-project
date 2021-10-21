@@ -1,4 +1,5 @@
 import ReactDOM from "react-dom";
+import {verify} from "../verify";
 
 type LayerType = 'popup'|'popover'|'tooltip'
 
@@ -14,7 +15,8 @@ function initExternalLayer(layerType: LayerType) {
     layer.setAttribute('id', layerType)
     layer.className = 'external-layer'
     layers[layerType] = layer
-    document.body.append(layer)
+    const root = verify(document.getElementById('root'))
+    root.append(layer)
 }
 
 function getExternalLayer(layerType: LayerType) {

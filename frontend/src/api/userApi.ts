@@ -1,3 +1,6 @@
+import { HttpStatus } from "../core/http/HttpStatus"
+import {goToUrl} from "../core/link/goToUrl";
+
 type Api_UserInfo = {
     userId: string,
     firstName: string,
@@ -17,7 +20,10 @@ function setUserInfo(userInfo: Api_UserInfo): Promise<Response> {
     })
         .then(response => {
             switch (response.status) {
-                case 200:
+                case HttpStatus.OK:
+                    return Promise.resolve(response)
+                case HttpStatus.UNAUTHORIZED:
+                    goToUrl('/auth')
                     return Promise.resolve(response)
                 default:
                     return Promise.reject(response)
@@ -41,7 +47,10 @@ function changePassword(body: ChangePasswordBody): Promise<Response> {
     })
         .then(response => {
             switch (response.status) {
-                case 200:
+                case HttpStatus.OK:
+                    return Promise.resolve(response)
+                case HttpStatus.UNAUTHORIZED:
+                    goToUrl('/auth')
                     return Promise.resolve(response)
                 default:
                     return Promise.reject(response)
@@ -65,7 +74,7 @@ function getUserData(): Promise<GetUserDataType> {
     })
         .then(response => {
             switch (response.status) {
-                case 200:
+                case HttpStatus.OK:
                     return response.json()
                 default:
                     return Promise.reject(response.status)

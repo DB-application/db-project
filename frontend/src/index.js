@@ -5,7 +5,6 @@ import reportWebVitals from './reportWebVitals';
 import {context} from '@reatom/react';
 import {combine, createStore,} from "@reatom/core";
 import {userAtom} from "./authentication/viewModel/userAtom";
-import {initExternalLayer} from "./core/layers/externalLayers";
 import {BrowserRouter as Router} from 'react-router-dom';
 import {isLoadingAppAtom} from "./appLayout/isLoadingApp";
 import {AppWrapper} from "./appLayout/AppWrapper";
@@ -17,10 +16,6 @@ const store = createStore(
         isLoadingAppAtom,
     })
 );
-
-initExternalLayer("popup")
-initExternalLayer("popover")
-initExternalLayer("tooltip")
 
 ReactDOM.render(
     <React.StrictMode>

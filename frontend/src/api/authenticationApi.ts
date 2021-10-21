@@ -1,3 +1,5 @@
+import {HttpStatus} from "../core/http/HttpStatus";
+
 function registration(email: string, password: string, nickname: string): Promise<Response> {
     return fetch('/register', {
         method: 'POST',
@@ -12,7 +14,7 @@ function registration(email: string, password: string, nickname: string): Promis
     })
         .then(response => {
             switch (response.status) {
-                case 200:
+                case HttpStatus.OK:
                     return Promise.resolve(response)
                 default:
                     return Promise.reject(response.status)
@@ -33,7 +35,7 @@ function logIn(login: string, password: string): Promise<Response> {
     })
         .then(response => {
             switch (response.status) {
-                case 200:
+                case HttpStatus.OK:
                     return Promise.resolve(response)
                 default:
                     return Promise.reject(response)
