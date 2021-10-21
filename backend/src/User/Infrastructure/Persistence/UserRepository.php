@@ -7,10 +7,12 @@ use App\User\Domain\Model\User;
 use App\User\Domain\Model\UserRepositoryInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\Persistence\ObjectRepository;
 
 class UserRepository implements UserRepositoryInterface
 {
-    /** @var \Doctrine\ORM\EntityRepository|\Doctrine\Persistence\ObjectRepository */
+    /** @var EntityRepository|ObjectRepository */
     private $repo;
     /** @var EntityManager */
     private $em;

@@ -13,8 +13,8 @@ framework:
       # NULL means that Symfony uses PHP default session mechanism
       handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler
       # improves the security of the cookies used for sessions
-      cookie_secure: 'auto'
-      cookie_samesite: 'lax'
+      cookie_secure: auto
+      cookie_samesite: lax
 
     #esi: true
     #fragments: true

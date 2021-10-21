@@ -5,7 +5,6 @@ namespace App\User\Api;
 
 use App\User\Api\Input\AuthenticateUserInput;
 use App\User\Api\Input\CreateUserInput;
-use App\User\Api\Output\AuthenticateUserOutput;
 use App\User\App\Data\UserData;
 use App\User\App\Service\UserAppService;
 use App\User\Domain\Exception\InvalidUserEmail;
@@ -35,12 +34,15 @@ class Api implements ApiInterface
         }
     }
 
-    public function authenticateUser(AuthenticateUserInput $input): AuthenticateUserOutput
+    /**
+     * @param AuthenticateUserInput $input
+     * @throws \Exception
+     */
+    public function authenticateUser(AuthenticateUserInput $input): void
     {
         try
         {
-            $user = $this->userService->authenticateUser($input);
-            return new AuthenticateUserOutput($user);
+            $this->userService->authenticateUser($input);
         } catch (\Exception $e)
         {
             $this->convertException($e);

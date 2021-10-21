@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\User\App\Service;
 
 use App\Common\Domain\UuidGenerator;
+use App\Common\Exception\UserNotAuthenticated;
+use App\Security\UserAuthenticator;
 use App\User\App\Data\AuthenticateUserRequestInterface;
 use App\User\App\Data\UserData;
 use App\User\App\Query\UserQueryServiceInterface;
@@ -19,9 +21,12 @@ class UserAppService
     private $repository;
     /** @var UserQueryServiceInterface */
     private $userQueryService;
+    /** @var UserAuthenticator */
+    private $authenticator;
 
-    public function __construct(UserRepositoryInterface $repository, UserQueryServiceInterface $userQueryService)
+    public function __construct(UserRepositoryInterface $repository, UserQueryServiceInterface $userQueryService, UserAuthenticator $authenticator)
     {
+        $this->authenticator = $authenticator;
         $this->repository = $repository;
         $this->userQueryService = $userQueryService;
     }
@@ -49,14 +54,22 @@ class UserAppService
         return $this->userQueryService->getUserDataById($userId);
     }
 
-    public function authenticateUser(AuthenticateUserRequestInterface $request): ?UserData
+    /**
+     * @throws UserNotAuthenticated
+     */
+    public function authenticateUser(AuthenticateUserRequestInterface $request): void
     {
         $login = $request->getUsernameOrEmail();
         $password = $request->getPassword();
         $userdata = $this->userQueryService->getUserDataByEmailAndPassword($login, $password);
         if ($userdata === null)
         {
-            return $this->userQueryService->getUserDataByUsernameAndPassword($login, $password);
+            $userdata = $this->userQueryService->getUserDataByUsernameAndPassword($login, $password);
         }
+        if ($userdata === null)
+        {
+            throw new UserNotAuthenticated();
+        }
+        $this->authenticator->authenticateUserById($userdata->getUserId());
     }
 }
