@@ -45,6 +45,12 @@ function Popover({
     useEventHandler('mousedown', ref, e => {
         e.preventDefault()
     })
+    useEventHandler('click', ref, e => {
+        if (e.defaultPrevented) {
+            closePopover()
+        }
+        e.preventDefault()
+    })
     useEventHandler('mousedown', popoverLayerRef, e => {
         if (!e.defaultPrevented) {
             e.preventDefault()

@@ -2,6 +2,7 @@ import styles from './ListItem_Base.module.css'
 import {useRef} from "react";
 import {useTooltip} from "../../../core/hooks/useTooltip";
 import {joinClassNames} from "../../../core/styles/joinClassNames";
+import {useEventHandler} from "../../../core/hooks/useEventHandler";
 
 type ListItem_BaseProps = {
     iconLeft?: JSX.Element,
@@ -54,13 +55,14 @@ function ListItem_Base({
 
     const itemClassName = joinClassNames(styles.item, className)
 
+    useEventHandler('click', itemRef, e => {
+        e.preventDefault()
+        onClick && onClick()
+    })
+
     return (
         <div
             className={itemClassName}
-            onClick={() => {
-                console.log('click1')
-                onClick && onClick()
-            }}
             ref={itemRef}
         >
             {iconLeft && <_ItemIcon binding={iconLeft} className={styles.iconLeft}/>}

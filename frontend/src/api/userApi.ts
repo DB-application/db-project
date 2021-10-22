@@ -24,7 +24,7 @@ function setUserInfo(userInfo: Api_UserInfo): Promise<Response> {
                     return Promise.resolve(response)
                 case HttpStatus.UNAUTHORIZED:
                     // goToUrl('/auth')
-                    return Promise.reject(response.status)
+                    return Promise.reject(response)
                 default:
                     return Promise.reject(response)
             }
@@ -51,7 +51,7 @@ function changePassword(body: ChangePasswordBody): Promise<Response> {
                     return Promise.resolve(response)
                 case HttpStatus.UNAUTHORIZED:
                     goToUrl('/auth')
-                    return Promise.reject(response.status)
+                    return Promise.reject(response)
                 default:
                     return Promise.reject(response)
             }
@@ -78,7 +78,7 @@ function getUserData(): Promise<GetUserDataType> {
                     return response.json()
                 case HttpStatus.UNAUTHORIZED:
                     // goToUrl('/auth')
-                    return Promise.reject(response.status)
+                    return Promise.reject(response)
                 default:
                     return Promise.reject(response.status)
             }

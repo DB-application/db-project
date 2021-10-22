@@ -11,7 +11,7 @@ function App() {
         <div>
             <AuthRouter />
             <Switch>
-                {/*<Redirect exact from={'/'} to={'/auth'}/>*/}
+                <Redirect exact from={'/'} to={'/auth'}/>
                 <Route exact path={["/auth"]} >
                     <AuthLayout />
                 </Route>
