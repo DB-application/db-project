@@ -1,6 +1,6 @@
-import {useRouteMatch, Switch, Route} from 'react-router-dom'
-
+import {Route, Switch, useRouteMatch} from 'react-router-dom'
 import styles from './WorkArea.module.css'
+import {CalendarWrapper} from "../calendar/CalendarWrapper";
 
 function WorkArea() {
     const { path } = useRouteMatch();
@@ -9,7 +9,7 @@ function WorkArea() {
         <div className={styles.areaContainer}>
             <Switch>
                 <Route path={`${path}/calendar`}>
-                    Календарь
+                    <CalendarWrapper />
                 </Route>
                 <Route path={`${path}/note`}>
                     Заметка

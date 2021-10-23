@@ -33,7 +33,7 @@ function getPositionByAlign(elementRect: DOMRect, align: PopoverAlign): CSSPrope
     }
 }
 
-function Popover({
+function PopoverContainer({
     control,
     content,
     closePopover,
@@ -89,7 +89,7 @@ function Popover({
 }
 
 export {
-    Popover,
+    PopoverContainer,
 }
 
 export type {

@@ -1,5 +1,6 @@
 import ReactDOM from "react-dom";
 import {verify} from "../verify";
+import {joinClassNames} from "../styles/joinClassNames";
 
 type LayerType = 'popup'|'popover'|'tooltip'
 
@@ -9,11 +10,16 @@ type LayersType = {
 
 const layers: LayersType = {}
 const layersOrder: Array<LayerType> = ['tooltip', 'popover', 'popup']
+const layerTypeToClassname = {
+    'tooltip': 'tooltip-layer',
+    'popup': 'popup-layer',
+    'popover': 'popover-layer',
+}
 
 function initExternalLayer(layerType: LayerType) {
     const layer = document.createElement('div')
     layer.setAttribute('id', layerType)
-    layer.className = 'external-layer'
+    layer.className = joinClassNames('external-layer', layerTypeToClassname[layerType])
     layers[layerType] = layer
     const root = verify(document.getElementById('root'))
     root.append(layer)

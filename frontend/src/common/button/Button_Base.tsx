@@ -1,10 +1,9 @@
 import styles from './Button_Base.module.css'
 import {joinClassNames} from "../../core/styles/joinClassNames"
-import { Preloader } from '../preloader/Preloader'
-import { getStylesWithMods } from '../../core/styles/getStylesWithMods'
-import {ForwardedRef, RefObject, useRef} from "react";
-import React from 'react';
-import {useTooltip} from "../../core/hooks/useTooltip";
+import {Preloader} from '../preloader/Preloader'
+import {getStylesWithMods} from '../../core/styles/getStylesWithMods'
+import React, {useRef} from "react";
+import {TooltipPortal} from "../../core/portal/TooltipPortal";
 
 type Button_Size_Type = 'small' | 'medium' | 'large'
 
@@ -53,13 +52,6 @@ function Button_Base(props: Button_BaseProps) {
             onClick()
         }
     }
-
-    useTooltip({
-        elementRef: ref,
-        showTooltip: !!tooltipText,
-        text: tooltipText || '',
-    })
-
     const buttonClassName = getStylesWithMods(styles.button, {
         [styles.buttonSmall]: size === 'small',
         [styles.buttonMedium]: size === 'medium',
@@ -78,6 +70,11 @@ function Button_Base(props: Button_BaseProps) {
             {state !== 'preloader' && leftIcon && <_Icon icon={leftIcon} className={styles.leftIcon}/>}
             {state !== 'preloader' && text && <_Text text={text} />}
             {state !== 'preloader' && rightIcon && <_Icon icon={rightIcon} className={styles.rightIcon}/>}
+            <TooltipPortal
+                elementRef={ref}
+                showTooltip={!!tooltipText}
+                text={tooltipText || ''}
+            />
         </button>
     )
 }

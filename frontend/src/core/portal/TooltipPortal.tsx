@@ -1,8 +1,7 @@
 import {RefObject, useState} from "react";
+import {useEventHandler} from "../hooks/useEventHandler";
+import {Portal} from "./Portal";
 import {Tooltip} from "../../common/tooltip/Tooltip";
-import {useEventHandler} from "./useEventHandler";
-import {useExternalLayer} from "./useExternalLayer";
-import {getExternalLayer} from "../layers/externalLayers";
 
 type PropsType = {
     elementRef: RefObject<any>,
@@ -10,7 +9,7 @@ type PropsType = {
     text: string,
 }
 
-function useTooltip({
+function TooltipPortal({
     elementRef,
     showTooltip,
     text,
@@ -32,18 +31,21 @@ function useTooltip({
     useEventHandler('mouseleave', elementRef, closeTooltip)
     useEventHandler('click', elementRef, closeTooltip)
 
-    useExternalLayer({
-        layerType: 'tooltip',
-        layer: getExternalLayer('tooltip'),
-        createBinding: () => <Tooltip
-            text={text}
-            elementRef={elementRef}
-        />,
-        show: show && showTooltip,
-    })
+    if (!show || !showTooltip) {
+        return null
+    }
+
+    return (
+        <Portal
+            parentId={'tooltip'}
+            children={<Tooltip
+                text={text}
+                elementRef={elementRef}
+            />}
+        />
+    )
 }
 
 export {
-    useTooltip,
+    TooltipPortal,
 }
-
