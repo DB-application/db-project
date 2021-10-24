@@ -4,10 +4,11 @@ declare(strict_types=1);
 namespace App\User\Api;
 
 use App\User\Api\Input\AuthenticateUserInput;
+use App\User\Api\Input\ChangeUserPasswordInput;
 use App\User\Api\Input\CreateUserInput;
 use App\User\App\Data\UserData;
 use App\User\App\Service\UserAppService;
-use App\User\Domain\Exception\InvalidUserEmail;
+use App\User\Domain\Exception\InvalidUserEmailException;
 
 class Api implements ApiInterface
 {
@@ -21,14 +22,27 @@ class Api implements ApiInterface
 
     /**
      * @param CreateUserInput $input
-     * @throws InvalidUserEmail
+     * @throws InvalidUserEmailException
      */
     public function createUser(CreateUserInput $input): void
     {
         try
         {
             $this->userService->createUser($input->getEmail(), $input->getPassword(), $input->getUsername());
-        } catch (\Exception $e)
+        }
+        catch (\Exception $e)
+        {
+            $this->convertException($e);
+        }
+    }
+
+    public function changeUserPassword(ChangeUserPasswordInput $input): void
+    {
+        try
+        {
+            $this->userService->changeUserPassword($input->getUserId(), $input->getNewPassword(), $input->getOldPassword());
+        }
+        catch (\Exception $e)
         {
             $this->convertException($e);
         }
@@ -43,7 +57,8 @@ class Api implements ApiInterface
         try
         {
             $this->userService->authenticateUser($input);
-        } catch (\Exception $e)
+        }
+        catch (\Exception $e)
         {
             $this->convertException($e);
         }
@@ -54,13 +69,26 @@ class Api implements ApiInterface
         try
         {
             return $this->userService->getUserData($userId);
-        } catch (\Exception $e)
+        }
+        catch (\Exception $e)
         {
             $this->convertException($e);
         }
     }
 
-    public function convertException(\Exception $e)
+    public function updateUserData(UserData $userData): void
+    {
+        try
+        {
+            $this->userService->updateUserData($userData);
+        }
+        catch (\Exception $e)
+        {
+            $this->convertException($e);
+        }
+    }
+
+    private function convertException(\Exception $e)
     {
         // TODO: сделать обработку исключений
         throw $e;

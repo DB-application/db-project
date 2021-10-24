@@ -11,10 +11,6 @@ class UserData
     private $email;
     /** @var string */
     private $username;
-    /** @var string */
-    private $password;
-    /** @var string */
-    private $loginKey;
     /** @var string|null */
     private $firstName;
     /** @var string|null */
@@ -24,12 +20,10 @@ class UserData
     /** @var string|null */
     private $avatarUrl;
 
-    public function __construct(string $userId, string $email, string $password, string $username, string $loginKey, ?string $firstName = null, ?string $lastName = null, ?string $phone = null, ?string $avatarUrl = null)
+    public function __construct(string $userId, string $email, string $username, ?string $firstName = null, ?string $lastName = null, ?string $phone = null, ?string $avatarUrl = null)
     {
         $this->userId = $userId;
         $this->email = $email;
-        $this->password = $password;
-        $this->loginKey = $loginKey;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->username = $username;
@@ -52,11 +46,6 @@ class UserData
         return $this->username;
     }
 
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
     public function getFirstName(): ?string
     {
         return $this->firstName;
@@ -77,8 +66,33 @@ class UserData
         return $this->avatarUrl;
     }
 
-    public function getLoginKey(): string
+    public function setEmail(string $email): void
     {
-        return $this->loginKey;
+        $this->email = $email;
+    }
+
+    public function setUsername(string $username): void
+    {
+        $this->username = $username;
+    }
+
+    public function setFirstName(?string $firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+    public function setLastName(?string $lastName): void
+    {
+        $this->lastName = $lastName;
+    }
+
+    public function setPhone(?string $phone): void
+    {
+        $this->phone = $phone;
+    }
+
+    public function setAvatarUrl(?string $avatarUrl): void
+    {
+        $this->avatarUrl = $avatarUrl;
     }
 }

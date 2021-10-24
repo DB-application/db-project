@@ -8,13 +8,14 @@ use App\Common\Security\SecurityContextInterface;
 use App\Security\UserAuthenticator;
 use App\User\Api\ApiInterface;
 use App\User\Api\Input\AuthenticateUserInput;
+use App\User\Api\Input\ChangeUserPasswordInput;
 use App\User\Api\Input\CreateUserInput;
 use App\User\App\Data\UserData;
+use App\User\Domain\Exception\InvalidUserPasswordException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class UserController extends AbstractController
 {
@@ -22,15 +23,12 @@ class UserController extends AbstractController
     private $userApi;
     /** @var SecurityContextInterface */
     private $securityContext;
-    /** @var TokenStorageInterface */
-    private $tokenStorage;
     /** @var UserAuthenticator */
     private $authenticator;
 
-    public function __construct(ApiInterface $userApi, TokenStorageInterface $tokenStorage, SecurityContextInterface $securityContext, UserAuthenticator $authenticator)
+    public function __construct(ApiInterface $userApi, SecurityContextInterface $securityContext, UserAuthenticator $authenticator)
     {
         $this->userApi = $userApi;
-        $this->tokenStorage = $tokenStorage;
         $this->securityContext = $securityContext;
         $this->authenticator = $authenticator;
     }
@@ -75,17 +73,77 @@ class UserController extends AbstractController
     /**
      * @Route("/get/user_data")
      */
-    public function getUserData(Request $request): Response
+    public function getUserData(): Response
     {
         try
         {
             $userId = $this->securityContext->getAuthenticatedUserId();
-        } catch (UserNotAuthenticated $e)
+        }
+        catch (UserNotAuthenticated $e)
         {
             return new Response(null, Response::HTTP_UNAUTHORIZED);
         }
         $userData = $this->userApi->getUserData($userId);
         return new Response($this->serializeUserData($userData));
+    }
+
+    /**
+     * @Route("/update/user_data")
+     */
+    public function updateUserData(Request $request): Response
+    {
+        $requestData = json_decode($request->getContent(), true);
+        try
+        {
+            $userId = $this->securityContext->getAuthenticatedUserId();
+        }
+        catch (UserNotAuthenticated $e)
+        {
+            return new Response(null, Response::HTTP_UNAUTHORIZED);
+        }
+        $userData = $this->userApi->getUserData($userId);
+        if ($userData === null)
+        {
+            return new Response(null, Response::HTTP_BAD_REQUEST);
+        }
+        $userData->setEmail($requestData['email']);
+        $userData->setFirstName($requestData['firstName']);
+        $userData->setLastName($requestData['lastName']);
+        $userData->setUsername($requestData['username']);
+        $userData->setPhone($requestData['phoneNumber']);
+        $this->userApi->updateUserData($userData);
+        return new Response();
+    }
+
+    /**
+     * @Route("/update/password")
+     */
+    public function updatePassword(Request $request): Response
+    {
+        $requestData = json_decode($request->getContent(), true);
+        try
+        {
+            $userId = $this->securityContext->getAuthenticatedUserId();
+        }
+        catch (UserNotAuthenticated $e)
+        {
+            return new Response(null, Response::HTTP_UNAUTHORIZED);
+        }
+        $userData = $this->userApi->getUserData($userId);
+        if ($userData === null)
+        {
+            return new Response(null, Response::HTTP_NOT_FOUND);
+        }
+        $input = new ChangeUserPasswordInput($requestData['userId'], md5($requestData['newPassword']), md5($requestData['oldPassword']));
+        try
+        {
+            $this->userApi->changeUserPassword($input);
+        }
+        catch (InvalidUserPasswordException $e)
+        {
+            return new Response(null, Response::HTTP_BAD_REQUEST);
+        }
+        return new Response();
     }
 
     private function serializeUserData(UserData $userData): string
@@ -108,9 +166,7 @@ class UserController extends AbstractController
         return new UserData(
             'testUild',
             'owner@mail.ru',
-            '12345Q',
             'owner',
-            'owner:12345Q',
             'owner',
             'jopa',
             '+79123456789',
