@@ -33,10 +33,19 @@ class UserRepository implements UserRepositoryInterface
         return $this->repo->findOneBy(['email' => $email, 'username' => $username]);
     }
 
+    public function findUserById(string $userId): User
+    {
+        return $this->repo->findOneBy(['userId' => $userId]);
+    }
 
     public function add(User $user): void
     {
         $this->em->persist($user);
+        $this->em->flush();
+    }
+
+    public function update(): void
+    {
         $this->em->flush();
     }
 }

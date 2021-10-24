@@ -34,6 +34,7 @@ class User
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->username = $username;
+        $this->assertPhoneValid($phone);
         $this->phone = $phone;
         $this->avatarUrl = $avatarUrl;
         $this->loginKey = $this->buildLoginKey();
@@ -117,6 +118,11 @@ class User
     public function getLoginKey(): string
     {
         return $this->loginKey;
+    }
+
+    private function assertPhoneValid(string $phone): void
+    {
+        //TODO сделать валидацию телефона
     }
 
     private function buildLoginKey(): string

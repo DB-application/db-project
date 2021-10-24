@@ -7,8 +7,8 @@ use App\Common\Exception\UserNotAuthenticated;
 interface SecurityContextInterface
 {
     /**
-     * @return string|null
+     * @return string
      * @throws UserNotAuthenticated
      */
-    public function getAuthenticatedUserId(): ?string;
+    public function getAuthenticatedUserId(): string;
 }
