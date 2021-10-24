@@ -32,6 +32,7 @@ services:
       dockerfile: docker/php/Dockerfile
     volumes:
       - './backend/src:/usr/src/backend/src'
+      - './backend/migrations:/usr/src/backend/migrations'
     ports:
       - '9000:9000'
     restart: on-failure

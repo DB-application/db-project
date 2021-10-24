@@ -94,7 +94,8 @@ class UserAppService
         {
             $user->setPassword(new Password($newPassword));
             $this->repository->update();
-        } else
+        }
+        else
         {
             throw new InvalidUserPasswordException();
         }
