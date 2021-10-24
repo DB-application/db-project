@@ -1,36 +1,14 @@
-import {CSSProperties, RefObject, useMemo, useRef} from "react"
+import {CSSProperties, RefObject, useEffect, useMemo, useRef} from "react"
 import {useEventHandler} from "../../core/hooks/useEventHandler"
+import {getPopoverPosition, PopoverAlign, PopoverSide} from "./getPopoverPosition"
 import styles from './Popover.module.css'
-
-type PopoverAlign = 'center' | 'left' | 'right'
 
 type PropsType = {
     control: RefObject<any>,
     content: JSX.Element,
     closePopover: () => void,
-    align?: PopoverAlign
-}
-
-function getPositionByAlign(elementRect: DOMRect, align: PopoverAlign): CSSProperties|undefined {
-    switch (align) {
-        case "left":
-            return {
-                left: elementRect.left + 5,
-                top: elementRect.bottom + 5,
-            }
-        case "center":
-            return {
-                left: (elementRect.left + elementRect.right) / 2,
-                top: elementRect.bottom + 5,
-                transform: 'translateX(-50%)',
-            }
-        case "right":
-            return {
-                left: elementRect.right - 5,
-                top: elementRect.bottom + 5,
-                transform: 'translateX(-100%)',
-            }
-    }
+    align?: PopoverAlign,
+    side?: PopoverSide,
 }
 
 function PopoverContainer({
@@ -38,17 +16,12 @@ function PopoverContainer({
     content,
     closePopover,
     align = 'left',
+    side = 'bottom',
 }: PropsType) {
     const ref = useRef<HTMLDivElement|null>(null)
     const popoverLayerRef = useRef<HTMLDivElement|null>(null)
 
     useEventHandler('mousedown', ref, e => {
-        e.preventDefault()
-    })
-    useEventHandler('click', ref, e => {
-        if (e.defaultPrevented) {
-            closePopover()
-        }
         e.preventDefault()
     })
     useEventHandler('mousedown', popoverLayerRef, e => {
@@ -57,41 +30,30 @@ function PopoverContainer({
         }
     })
 
-    const popoverStyle = useMemo(() => {
+    useEffect(() => {
         const controlHTML = control.current as HTMLElement
         const controlBounds = controlHTML.getBoundingClientRect()
-        return getPositionByAlign(controlBounds, align)
-    }, [control, align])
-
-    const controlLayerStyle = useMemo(() => {
-        const controlHTML = control.current as HTMLElement
-        const controlBounds = controlHTML.getBoundingClientRect()
-        return {
-            left: controlBounds.left,
-            top: controlBounds.top,
-            height: controlBounds.height,
-            width: controlBounds.width,
+        const popoverHTML = ref.current
+        if (popoverHTML) {
+            const popoverRect = popoverHTML.getBoundingClientRect()
+            const position = getPopoverPosition(controlBounds, popoverRect, side, align)
+            popoverHTML.style.top = `${position.top}px`
+            popoverHTML.style.left = `${position.left}px`
         }
-    }, [control])
+    }, [control.current, ref.current, side, align])
 
     return(
         <div className={styles.popoverLayer} ref={popoverLayerRef}>
             <div
                 className={styles.popoverContainer}
-                style={popoverStyle}
                 ref={ref}
             >
                 {content}
             </div>
-            <div style={controlLayerStyle} className={styles.controlLayer}/>
         </div>
     )
 }
 
 export {
     PopoverContainer,
-}
-
-export type {
-    PopoverAlign,
 }

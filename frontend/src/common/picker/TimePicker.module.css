@@ -1,0 +1,68 @@
+.container {
+    display: flex;
+    width: 100px;
+}
+
+.input {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    color: #000000d9;
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5715;
+    list-style: none;
+    font-feature-settings: "tnum";
+    padding: 4px 11px;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    transition: border .3s,box-shadow .3s;
+}
+
+.input:hover {
+    border-color: #40a9ff;
+}
+
+.input:focus {
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, .2);
+}
+
+.timeListsContainer {
+    display: flex;
+    height: 165px;
+}
+
+.timeList {
+    overflow: hidden;
+}
+
+.timeList:last-child {
+    border-left: 1px solid #f0f0f0;
+}
+
+.timeList:hover {
+    overflow: auto;
+}
+
+.bottomPanel {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 12px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.listItem {
+    padding-left: 14px;
+}
+
+.selectedItem {
+    background-color: #e6f7ff;
+}
+
+.submitButton {
+    margin-left: 5px;
+}

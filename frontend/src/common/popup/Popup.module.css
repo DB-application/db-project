@@ -2,7 +2,7 @@
     width: 100vw;
     height: 100vh;
     background: rgba(0,0,0,.3);
-    animation: fade-in .15s ease-in-out;
+    animation: fade-in .2s ease-in-out;
 }
 
 .popupContainer {
@@ -15,7 +15,7 @@
     flex-direction: column;
     background: #ffffff;
     border-radius: 5px;
-    animation: flip-up .15s ease-in-out;
+    animation: flip-up .2s ease-in-out;
 }
 
 .popupTitle {

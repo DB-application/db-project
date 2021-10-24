@@ -6,6 +6,7 @@ import {declareAtomWithSetter} from "../../../core/reatom/declareAtomWithSetter"
 type CalendarEvent  = {
     eventId: string,
     title: string;
+    description: string,
     start: Date;
     end: Date;
     invitedUsers: Array<UserType>;
@@ -45,6 +46,10 @@ const calendarActions = {
     setCalendarLoading,
 }
 
+export type {
+    CalendarEvent,
+    CalendarEvents,
+}
 export {
     calendarAtom,
     calendarActions,

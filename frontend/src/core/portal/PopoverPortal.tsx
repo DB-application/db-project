@@ -1,8 +1,9 @@
 import React, {RefObject} from "react";
 import {Portal} from "./Portal";
-import {PopoverContainer, PopoverAlign} from "../../common/popover/PopoverContainer";
+import {PopoverContainer} from "../../common/popover/PopoverContainer";
 import {verify} from "../verify";
 import {useHtmlElementEventHandler} from "../hooks/useHtmlElementEventHandler";
+import {PopoverAlign, PopoverSide} from "../../common/popover/getPopoverPosition";
 
 interface IProps {
     elementRef: RefObject<any>,
@@ -10,6 +11,7 @@ interface IProps {
     setShow: (show: boolean) => void,
     content: JSX.Element,
     align?: PopoverAlign,
+    side?: PopoverSide,
 }
 
 function PopoverPortal({
@@ -18,6 +20,7 @@ function PopoverPortal({
     setShow,
     content,
     align,
+    side,
 }: IProps ) {
     const root = verify(document.getElementById('root'))
 
@@ -38,6 +41,7 @@ function PopoverPortal({
                 content={content}
                 closePopover={() => setShow(false)}
                 align={align}
+                side={side}
             />}
             parentId={'popover'}
         />

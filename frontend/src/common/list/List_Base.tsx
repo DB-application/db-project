@@ -1,4 +1,5 @@
 import styles from './List_Base.module.css'
+import {joinClassNames} from "../../core/styles/joinClassNames";
 
 
 type ListItemProps = {
@@ -8,6 +9,7 @@ type ListItemProps = {
 
 type ListProps = {
     items: Array<ListItemProps|null>,
+    className?: string,
 }
 
 function Delimiter() {
@@ -28,6 +30,7 @@ function ListItemWrapper({
 
 function List_Base({
     items,
+    className,
 }: ListProps) {
     const listBind: Array<JSX.Element> = items.map((item, index) => item
         ? <ListItemWrapper key={index} binding={item.createBindingFn()} />
@@ -36,7 +39,7 @@ function List_Base({
 
     return (
         <div
-            className={styles.list}
+            className={joinClassNames(styles.list, className)}
         >
             {listBind}
         </div>

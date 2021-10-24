@@ -14,10 +14,12 @@ import {PopoverPortal} from "../../../../core/portal/PopoverPortal";
 
 type UserMenuPopoverProps = {
     onLogout: () => void,
+    onClick: () => void,
 }
 
 function UserMenuPopover({
     onLogout,
+    onClick,
 }: UserMenuPopoverProps) {
     const items: Array<ListItemProps|null> = [
         {
@@ -25,7 +27,11 @@ function UserMenuPopover({
             createBindingFn: () => <ListItem_IconAndText
                 icon={<ProfileIcon />}
                 text={'Профиль пользователя'}
-                onClick={() => goToUrl('/profile')}
+                onClick={() => {
+                    goToUrl('/profile')
+                    onClick()
+                }}
+                className={styles.listItem}
             />,
         },
         {
@@ -33,7 +39,11 @@ function UserMenuPopover({
             createBindingFn: () => <ListItem_IconAndText
                 icon={<HelpCircleOutlineIcon/>}
                 text={'Помощь'}
-                onClick={() => goToUrl('/help')}
+                onClick={() => {
+                    goToUrl('/help')
+                    onClick()
+                }}
+                className={styles.listItem}
             />,
         },
         null,
@@ -42,7 +52,11 @@ function UserMenuPopover({
             createBindingFn: () => <ListItem_IconAndText
                 icon={<LogoutIcon />}
                 text={'Выйти'}
-                onClick={onLogout}
+                onClick={() => {
+                    onLogout()
+                    onClick()
+                }}
+                className={styles.listItem}
             />,
         },
     ]
@@ -67,7 +81,7 @@ function UserMenu() {
         <div
             ref={ref}
             className={styles.userMenu}
-            onClick={() => setPopoverOpened(true)}
+            onClick={() => setPopoverOpened(!popoverOpened)}
         >
             <AvatarWrapper
                 label={user.username}
@@ -81,6 +95,7 @@ function UserMenu() {
                 setShow={setPopoverOpened}
                 content={<UserMenuPopover
                     onLogout={logout}
+                    onClick={() => setPopoverOpened(false)}
                 />}
                 align={'right'}
             />
@@ -90,4 +105,5 @@ function UserMenu() {
 
 export {
     UserMenu,
+    UserMenuPopover,
 }

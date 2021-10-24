@@ -43,5 +43,17 @@
     "SettingButtonTooltip": "Настройки",
     "CalendarButtonTooltip": "Календарь",
     "ChatButtonTooltip": "Сообщения"
+  },
+  "EditEventPopup": {
+    "TitleEdit": "Редактирование события",
+    "TitleAdd": "Создание события",
+    "TitleField": "Название события",
+    "DescriptionField": "Описание события",
+    "StartField": "Начало",
+    "EndField": "Конец",
+    "DateLabel": "Дата:",
+    "TimeLabel": "Время:",
+    "SubmitButtonEdit": "Изменить",
+    "SubmitButtonCreate": "Создать"
   }
 }

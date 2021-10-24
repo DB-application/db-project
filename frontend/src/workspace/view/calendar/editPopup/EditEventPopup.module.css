@@ -1,4 +1,49 @@
 .container {
-    height: 500px;
+    min-height: 300px;
+    max-height: 600px;
+    overflow: auto;
     width: 500px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 45px;
+}
+
+.dateContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.dateFieldDescription {
+    font: 16px Roboto;
+}
+
+.calendarInput {
+    width: 100px;
+}
+
+.contentBlock:not(:last-child) {
+    margin-bottom: 15px;
+}
+
+.dateRow {
+    display: flex;
+    align-items: center;
+}
+
+.datePickerLabel {
+    margin-right: 10px;
+}
+
+.timePickerLabel {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.datePicker {
+
+}
+
+.timePicker {
+    flex-shrink: 0;
 }
