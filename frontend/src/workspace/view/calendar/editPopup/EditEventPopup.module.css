@@ -15,7 +15,8 @@
 }
 
 .dateFieldDescription {
-    font: 16px Roboto;
+    font: 18px Roboto;
+    margin-bottom: 10px;
 }
 
 .calendarInput {

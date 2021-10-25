@@ -11,6 +11,7 @@ import {joinClassNames} from "../../../../core/styles/joinClassNames";
 import "react-datepicker/dist/react-datepicker.css";
 import ReactDatePicker from 'react-datepicker';
 import {useAtomWithSelector} from "../../../../core/reatom/useAtomWithSelector";
+import {TextArea} from "../../../../common/textArea/TextArea";
 
 type DateBlockProps = {
     fieldName: string,
@@ -79,7 +80,7 @@ function Content() {
                 onChange={handleSetTitle}
                 className={styles.contentBlock}
             />
-            <TextField
+            <TextArea
                 description={I18n_get('EditEventPopup.DescriptionField')}
                 value={description}
                 onChange={handleSetDescription}

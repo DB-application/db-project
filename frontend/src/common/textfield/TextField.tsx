@@ -11,7 +11,6 @@ type TextFieldProps = {
     onChange: (value: string) => void,
     onBlur?: (value: string) => void,
     onFocus?: () => void,
-    getValue?: () => string,
     description?: string,
     errorText?: string,
     placeholder?: string,

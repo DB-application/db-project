@@ -23,6 +23,12 @@
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
+    font: 19px Roboto;
+}
+
+.popupHeader,
+.popupFooter {
+    background: #dddada5e;
 }
 
 .popupHeader {
@@ -31,7 +37,6 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    background: #e5dbdb;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     padding: 5px 10px;
@@ -44,7 +49,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #e5dbdb;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     padding: 5px 10px;

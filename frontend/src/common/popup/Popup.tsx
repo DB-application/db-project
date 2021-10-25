@@ -40,7 +40,6 @@ function Popup({
                         icon={<CrossIcon/>}
                         size={'small'}
                         onClick={closePopup}
-                        tooltipText={'Закрыть'}
                     />
                 </div>
                 {content}
