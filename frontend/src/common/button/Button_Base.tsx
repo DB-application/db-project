@@ -1,6 +1,6 @@
 import styles from './Button_Base.module.css'
 import {joinClassNames} from "../../core/styles/joinClassNames"
-import {Preloader} from '../preloader/Preloader'
+import {Preloader, PreloaderIcon} from '../preloader/Preloader'
 import {getStylesWithMods} from '../../core/styles/getStylesWithMods'
 import React, {useRef} from "react";
 import {TooltipPortal} from "../../core/portal/TooltipPortal";
@@ -66,7 +66,7 @@ function Button_Base(props: Button_BaseProps) {
             disabled={state === 'disabled'}
             ref={ref}
         >
-            {state === 'preloader' && <Preloader preloaderColor={'white'} />}
+            {state === 'preloader' && <PreloaderIcon className={styles.preloader} />}
             {state !== 'preloader' && leftIcon && <_Icon icon={leftIcon} className={styles.leftIcon}/>}
             {state !== 'preloader' && text && <_Text text={text} />}
             {state !== 'preloader' && rightIcon && <_Icon icon={rightIcon} className={styles.rightIcon}/>}
@@ -74,6 +74,7 @@ function Button_Base(props: Button_BaseProps) {
                 elementRef={ref}
                 showTooltip={!!tooltipText}
                 text={tooltipText || ''}
+                align={'center'}
             />
         </button>
     )

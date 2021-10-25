@@ -7,9 +7,15 @@ type PreloaderProps = {
     preloaderColor?: string,
 }
 
-function PreloaderIcon() {
+type PreloaderIconProps = {
+    className?: string,
+}
+
+function PreloaderIcon({
+    className,
+}: PreloaderIconProps) {
     return (
-        <div>
+        <div className={joinClassNames(styles.spinner, className)}>
             <BxLoaderAltIcon/>
         </div>
     )
@@ -20,7 +26,7 @@ function Preloader({
     preloaderColor = 'black'
 }: PreloaderProps) {
     return (
-        <div className={joinClassNames(styles.Spinner, className)} style={{color: preloaderColor}}>
+        <div className={joinClassNames(styles.spinnerContainer, className)} style={{color: preloaderColor}}>
             <PreloaderIcon />
         </div>
     );
@@ -28,4 +34,5 @@ function Preloader({
 
 export {
     Preloader,
+    PreloaderIcon,
 }

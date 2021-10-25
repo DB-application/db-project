@@ -3,7 +3,6 @@
     max-width: 140px;
     background-color: #333;
     color: #fff;
-    transform: translateX(-50%);
     border-radius: 5px;
     text-align: center;
     padding: 5px;
@@ -13,11 +12,11 @@
 
 @keyframes flip {
     0% {
-        transform: translate(-50%, 10px);
+        transform: translateY(10px);
         opacity: 0;
     }
     100% {
-        transform: translate(-50%, 0);
+        transform: translateY(0);
         opacity: 1;
     }
 }

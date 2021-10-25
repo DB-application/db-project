@@ -48,7 +48,7 @@
 }
 
 .buttonSmall {
-    padding: 10px 12px;
+    padding: 0 12px;
     height: 32px;
 }
 
@@ -58,7 +58,7 @@
 }
 
 .buttonMedium {
-    padding: 10px 16px;
+    padding: 0 16px;
     height: 40px;
 }
 
@@ -68,7 +68,7 @@
 }
 
 .buttonLarge {
-    padding: 10px 20px;
+    padding: 0 20px;
     height: 48px;
 }
 
@@ -77,3 +77,8 @@
     line-height: 22px;
 }
 
+.preloader {
+    color: white;
+    width: 20px;
+    height: 20px;
+}
