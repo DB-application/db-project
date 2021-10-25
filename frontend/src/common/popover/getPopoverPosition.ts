@@ -104,6 +104,10 @@ function getPopoverPosition(elementRect: DOMRect, popoverRect: DOMRect, side: Po
     throw new Error(`unknown side ${side}`)
 }
 
+function invertPopoverSide() {
+
+}
+
 export type {
     PopoverAlign,
     PopoverSide,

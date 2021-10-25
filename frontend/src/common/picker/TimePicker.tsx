@@ -1,6 +1,6 @@
 import styles from './TimePicker.module.css'
 import {joinClassNames} from "../../core/styles/joinClassNames";
-import {useMemo, useRef, useState} from "react";
+import {useCallback, useMemo, useRef, useState} from "react";
 import {Button_Text} from "../button/Button_Text";
 import {ListItem_Text} from "../list/item/ListItem_Text";
 import {List_Base, ListItemProps} from "../list/List_Base";
@@ -8,6 +8,8 @@ import {useEventHandler} from "../../core/hooks/useEventHandler";
 import {PopoverPortal} from "../../core/portal/PopoverPortal";
 import {getStylesWithMods} from "../../core/styles/getStylesWithMods";
 import {serializeNumber} from './converters';
+import {parsePickerValue, validTimePickerValue} from "./validation";
+import {verify} from "../../core/verify";
 
 
 type TimeType = {
@@ -76,12 +78,13 @@ function TimePickerPopover({
     minutesStep = 1,
     hoursStep = 1,
 }: TimePickerPopover) {
-    const setHour = (hour: number) => {
+    const setHour = useCallback((hour: number) => {
         setCurrentTime({...currentTime, hours: hour})
-    }
-    const setMinute = (minute: number) => {
+    }, [setCurrentTime, currentTime])
+
+    const setMinute = useCallback((minute: number) => {
         setCurrentTime({...currentTime, minutes: minute})
-    }
+    }, [setCurrentTime, currentTime])
 
     const hours = useMemo(() => generateDigits(hoursStep, 24), [hoursStep])
     const minutes = useMemo(() => generateDigits(minutesStep, 60), [minutesStep])
@@ -123,6 +126,10 @@ function TimePickerPopover({
     )
 }
 
+function getTimeString(time: TimeType) {
+    return `${serializeNumber(time.hours)}:${serializeNumber(time.minutes)}`
+}
+
 function TimePicker({
     time,
     minutesStep,
@@ -131,14 +138,32 @@ function TimePicker({
     className,
 }: TimePickerProps) {
     const ref = useRef<HTMLInputElement|null>(null)
+    const [inputValue, setInputValue] = useState<string>(getTimeString(time))
     const [popoverOpened, setPopoverOpened] = useState<boolean>(false)
 
     useEventHandler('click', ref, () => {
         setPopoverOpened(true)
     })
 
-    const getTimeString = () => {
-        return `${serializeNumber(time.hours)}:${serializeNumber(time.minutes)}`
+    const onBlur = useCallback(() => {
+        const inputValue = verify(ref.current).value
+        const result = validTimePickerValue(inputValue)
+        if (result) {
+            setInputValue(inputValue)
+            onChange(result)
+        }
+        else {
+            setInputValue(getTimeString(time))
+        }
+    }, [ref, setInputValue])
+
+    const onInput = useCallback(() => {
+        setInputValue(verify(ref.current).value)
+    }, [ref, setInputValue])
+
+    const getTimePickerValue = () => {
+        const value = ref.current && parsePickerValue(ref.current.value)
+        return value || {hours: 0, minutes: 0}
     }
 
     return (
@@ -146,16 +171,21 @@ function TimePicker({
             <input
                 ref={ref}
                 type={'text'}
-                value={getTimeString()}
-                defaultValue={getTimeString()}
+                value={inputValue}
+                onInput={onInput}
+                defaultValue={inputValue}
+                onBlur={onBlur}
                 className={styles.input}
             />
 
             <PopoverPortal
                 content={<TimePickerPopover
                     onSubmit={() => setPopoverOpened(false)}
-                    currentTime={time}
-                    setCurrentTime={onChange}
+                    currentTime={getTimePickerValue()}
+                    setCurrentTime={currentTime => {
+                        setInputValue(getTimeString(currentTime))
+                        onChange(currentTime)
+                    }}
                     hoursStep={hoursStep}
                     minutesStep={minutesStep}
                 />}

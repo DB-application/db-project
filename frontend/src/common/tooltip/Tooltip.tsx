@@ -28,7 +28,7 @@ function Tooltip({
             popoverHTML.style.top = `${position.top}px`
             popoverHTML.style.left = `${position.left}px`
         }
-    }, [elementRef.current, popoverRef.current, side, align])
+    }, [elementRef, popoverRef.current, side, align])
 
     return(
         <div

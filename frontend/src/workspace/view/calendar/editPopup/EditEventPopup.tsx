@@ -107,18 +107,15 @@ function EditEventPopup() {
     const handleSubmit = useAction(editEventActions.submit)
 
     return <Popup
-        headerText={mode == 'edit'
+        headerText={mode === 'edit'
             ? I18n_get('EditEventPopup.TitleEdit')
             : I18n_get('EditEventPopup.TitleAdd')}
         content={<Content />}
         acceptButton={<Button_Text
-            text={mode == 'edit'
+            text={mode === 'edit'
                 ? I18n_get('EditEventPopup.SubmitButtonEdit')
                 : I18n_get('EditEventPopup.SubmitButtonCreate')}
-            onClick={() => {
-                handleSubmit()
-                handleClosePopup()
-            }}
+            onClick={handleSubmit}
         />}
         closePopup={handleClosePopup}
     />

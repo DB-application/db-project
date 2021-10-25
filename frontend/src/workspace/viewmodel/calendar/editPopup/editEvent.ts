@@ -54,6 +54,7 @@ const submit = declareAction('editEvent.submit',
             description,
             invitedUsers: [],
         }))
+        store.dispatch(editEventActions.close())
     }
 )
 

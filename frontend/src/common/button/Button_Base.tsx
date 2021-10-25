@@ -1,6 +1,6 @@
 import styles from './Button_Base.module.css'
 import {joinClassNames} from "../../core/styles/joinClassNames"
-import {Preloader, PreloaderIcon} from '../preloader/Preloader'
+import {PreloaderIcon} from '../preloader/Preloader'
 import {getStylesWithMods} from '../../core/styles/getStylesWithMods'
 import React, {useRef} from "react";
 import {TooltipPortal} from "../../core/portal/TooltipPortal";

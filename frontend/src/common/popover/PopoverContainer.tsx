@@ -1,4 +1,4 @@
-import {CSSProperties, RefObject, useEffect, useMemo, useRef} from "react"
+import {RefObject, useEffect, useRef} from "react"
 import {useEventHandler} from "../../core/hooks/useEventHandler"
 import {getPopoverPosition, PopoverAlign, PopoverSide} from "./getPopoverPosition"
 import styles from './Popover.module.css'
@@ -40,7 +40,7 @@ function PopoverContainer({
             popoverHTML.style.top = `${position.top}px`
             popoverHTML.style.left = `${position.left}px`
         }
-    }, [control.current, ref.current, side, align])
+    }, [control, ref.current, side, align])
 
     return(
         <div className={styles.popoverLayer} ref={popoverLayerRef}>
