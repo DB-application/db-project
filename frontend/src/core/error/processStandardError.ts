@@ -1,7 +1,8 @@
 import {toast} from "react-toastify";
+import {I18n_get} from "../../i18n/i18n_get";
 
 function processStandardError(error?: any) {
-    toast.error('Упс, что-то пошло не так. Попробуйте еще раз')
+    toast.error(I18n_get('Errors.StandardError'))
 }
 
 export {

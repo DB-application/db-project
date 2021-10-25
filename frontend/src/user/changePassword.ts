@@ -36,8 +36,10 @@ async function changePassword(store: Store, {
     switch (response.status) {
         case HttpStatus.OK:
             return 'Success'
-        default:
+        case HttpStatus.BAD_REQUEST:
             return "OldPasswordIncorrect"
+        default:
+            return 'UnknownError'
     }
 }
 

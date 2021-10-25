@@ -49,6 +49,8 @@ function changePassword(body: ChangePasswordBody): Promise<Response> {
             switch (response.status) {
                 case HttpStatus.OK:
                     return Promise.resolve(response)
+                case HttpStatus.BAD_REQUEST:
+                    return Promise.resolve(response)
                 case HttpStatus.UNAUTHORIZED:
                     goToUrl('/auth')
                     return Promise.reject(response)

@@ -4,6 +4,7 @@ import {Button_State_Type} from "../../common/button/Button_Base";
 import {changePassword} from "../../user/changePassword";
 import {I18n_get} from "../../i18n/i18n_get";
 import {declareAtomWithSetter} from "../../core/reatom/declareAtomWithSetter";
+import {processStandardError} from "../../core/error/processStandardError";
 
 
 const [oldPasswordAtom, setOldPassword] = declareAtomWithSetter('passwordSettings.oldPassword', '')
@@ -38,6 +39,11 @@ const submitChangePassword = declareAction(
             case "NewPasswordSame":
                 toast.error(I18n_get('ProfileSettings.PasswordMustBeDifferent'))
                 break
+            case "OldPasswordIncorrect":
+                toast.error(I18n_get('ProfileSettings.OldPasswordIsIncorrect'))
+                break
+            default:
+                processStandardError()
         }
     }
 )
