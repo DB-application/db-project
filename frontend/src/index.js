@@ -19,15 +19,13 @@ const store = createStore(
 );
 
 ReactDOM.render(
-    <React.StrictMode>
-        <Suspense fallback="loading">
-            <context.Provider value={store}>
-                <Router>
-                    <AppWrapper />
-                </Router>
-            </context.Provider>
-        </Suspense>
-    </React.StrictMode>,
+    <Suspense fallback="loading">
+        <context.Provider value={store}>
+            <Router>
+                <AppWrapper />
+            </Router>
+        </context.Provider>
+    </Suspense>,
     document.getElementById('root')
 );
 
