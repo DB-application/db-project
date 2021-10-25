@@ -10,6 +10,7 @@ import {getStylesWithMods} from "../../core/styles/getStylesWithMods";
 import {serializeNumber} from './converters';
 import {parsePickerValue, validTimePickerValue} from "./validation";
 import {verify} from "../../core/verify";
+import {TextField} from "../textfield/TextField";
 
 
 type TimeType = {
@@ -137,16 +138,11 @@ function TimePicker({
     onChange,
     className,
 }: TimePickerProps) {
-    const ref = useRef<HTMLInputElement|null>(null)
+    const ref = useRef<HTMLDivElement|null>(null)
     const [inputValue, setInputValue] = useState<string>(getTimeString(time))
     const [popoverOpened, setPopoverOpened] = useState<boolean>(false)
 
-    useEventHandler('click', ref, () => {
-        setPopoverOpened(true)
-    })
-
-    const onBlur = useCallback(() => {
-        const inputValue = verify(ref.current).value
+    const onBlur = useCallback(inputValue => {
         const result = validTimePickerValue(inputValue)
         if (result) {
             setInputValue(inputValue)
@@ -155,36 +151,34 @@ function TimePicker({
         else {
             setInputValue(getTimeString(time))
         }
-    }, [ref, setInputValue])
+    }, [onChange])
 
-    const onInput = useCallback(() => {
-        setInputValue(verify(ref.current).value)
-    }, [ref, setInputValue])
-
-    const getTimePickerValue = () => {
-        const value = ref.current && parsePickerValue(ref.current.value)
+    const timePickerValue = useMemo(() => {
+        const value = parsePickerValue(inputValue)
         return value || {hours: 0, minutes: 0}
-    }
+    }, [inputValue])
 
     return (
         <div className={joinClassNames(styles.container, className)}>
-            <input
-                ref={ref}
-                type={'text'}
-                value={inputValue}
-                onInput={onInput}
-                defaultValue={inputValue}
-                onBlur={onBlur}
-                className={styles.input}
-            />
+            <div ref={ref}>
+                <TextField
+                    value={inputValue}
+                    onFocus={() => setPopoverOpened(true)}
+                    onChange={value => {
+                        setInputValue(value)
+                    }}
+                    onBlur={onBlur}
+                    inputClassName={styles.input}
+                />
+            </div>
 
             <PopoverPortal
                 content={<TimePickerPopover
                     onSubmit={() => setPopoverOpened(false)}
-                    currentTime={getTimePickerValue()}
+                    currentTime={timePickerValue}
                     setCurrentTime={currentTime => {
-                        setInputValue(getTimeString(currentTime))
                         onChange(currentTime)
+                        setInputValue(getTimeString(currentTime))
                     }}
                     hoursStep={hoursStep}
                     minutesStep={minutesStep}

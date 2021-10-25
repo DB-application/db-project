@@ -21,10 +21,12 @@
 
 @keyframes fade-in {
     0% {
+        pointer-events: none;
         transform: translateY(-20px);
         opacity: 0;
     }
     100% {
+        pointer-events: all;
         opacity: 1;
     }
 }

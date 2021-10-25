@@ -9,30 +9,38 @@ type TextFieldProps = {
     type?: 'text' | 'password' | 'tel',
     value: string,
     onChange: (value: string) => void,
-    onBlur?: () => void,
+    onBlur?: (value: string) => void,
+    onFocus?: () => void,
+    getValue?: () => string,
     description?: string,
     errorText?: string,
     placeholder?: string,
     className?: string,
+    inputClassName?: string,
 }
 
 function TextField({
     description,
     type = 'text',
     onBlur,
+    onFocus,
     placeholder,
     value,
     onChange,
     errorText,
-    className
+    className,
+    inputClassName,
 }: TextFieldProps) {
     const ref = useRef<HTMLInputElement|null>(null)
 
     function _onInput() {
         onChange(verify(ref.current).value)
     }
+    function _onBlur() {
+        onBlur && onBlur(verify(ref.current).value)
+    }
 
-    const inputClassName = getStylesWithMods(styles.input, {
+    const inputStyles = getStylesWithMods(styles.input, {
         [styles.inputError]: !!errorText,
     })
 
@@ -48,9 +56,10 @@ function TextField({
                 <input
                     ref={ref}
                     type={type}
-                    className={inputClassName}
+                    className={joinClassNames(inputStyles, inputClassName)}
+                    onFocus={onFocus}
                     onChange={_onInput}
-                    onBlur={onBlur}
+                    onBlur={_onBlur}
                     value={value}
                     placeholder={placeholder}
                 />
