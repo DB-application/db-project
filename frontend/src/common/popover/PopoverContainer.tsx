@@ -1,6 +1,6 @@
 import {RefObject, useEffect, useRef} from "react"
 import {useEventHandler} from "../../core/hooks/useEventHandler"
-import {getPopoverPosition, PopoverAlign, PopoverSide} from "./getPopoverPosition"
+import {getPopoverPosition, invertPopoverSide, PopoverAlign, PopoverSide} from "./getPopoverPosition"
 import styles from './Popover.module.css'
 
 type PropsType = {
@@ -36,7 +36,9 @@ function PopoverContainer({
         const popoverHTML = ref.current
         if (popoverHTML) {
             const popoverRect = popoverHTML.getBoundingClientRect()
-            const position = getPopoverPosition(controlBounds, popoverRect, side, align)
+            const popoverInfo = {side, align}
+            invertPopoverSide(controlBounds, popoverRect, popoverInfo)
+            const position = getPopoverPosition(controlBounds, popoverRect, popoverInfo.side, popoverInfo.align)
             popoverHTML.style.top = `${position.top}px`
             popoverHTML.style.left = `${position.left}px`
         }

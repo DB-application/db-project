@@ -104,8 +104,31 @@ function getPopoverPosition(elementRect: DOMRect, popoverRect: DOMRect, side: Po
     throw new Error(`unknown side ${side}`)
 }
 
-function invertPopoverSide() {
-
+function invertPopoverSide(elementRect: DOMRect, popoverRect: DOMRect, positionInfo: {side: PopoverSide, align: PopoverAlign}) {
+    const windowHeight = window.innerHeight
+    const windowWidth = window.innerWidth
+    switch (positionInfo.side) {
+        case "bottom":
+            if (elementRect.bottom + popoverRect.height + 5 >= windowHeight) {
+                positionInfo.side = 'top'
+            }
+            break
+        case 'top':
+            if (elementRect.top - popoverRect.height - 5 <= 0) {
+                positionInfo.side = 'bottom'
+            }
+            break
+        case 'left':
+            if (elementRect.left - popoverRect.width - 5 <= 0) {
+                positionInfo.side = 'right'
+            }
+            break
+        case 'right':
+            if (elementRect.right + popoverRect.width + 5 >= windowWidth) {
+                positionInfo.side = 'left'
+            }
+            break
+    }
 }
 
 export type {
@@ -116,4 +139,5 @@ export type {
 
 export {
     getPopoverPosition,
+    invertPopoverSide,
 }

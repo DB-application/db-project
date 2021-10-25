@@ -190,7 +190,6 @@ function TimePicker({
                     minutesStep={minutesStep}
                 />}
                 align={'center'}
-                side={'top'}
                 show={popoverOpened}
                 setShow={setPopoverOpened}
                 elementRef={ref}
