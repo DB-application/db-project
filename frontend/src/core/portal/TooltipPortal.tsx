@@ -2,17 +2,22 @@ import {RefObject, useState} from "react";
 import {useEventHandler} from "../hooks/useEventHandler";
 import {Portal} from "./Portal";
 import {Tooltip} from "../../common/tooltip/Tooltip";
+import {PopoverAlign, PopoverSide} from "../../common/popover/getPopoverPosition";
 
 type PropsType = {
     elementRef: RefObject<any>,
     showTooltip: boolean,
     text: string,
+    side?: PopoverSide,
+    align?: PopoverAlign,
 }
 
 function TooltipPortal({
     elementRef,
     showTooltip,
     text,
+    side,
+    align,
 }: PropsType) {
     const [show, setShow] = useState(false)
 
@@ -41,6 +46,8 @@ function TooltipPortal({
             children={<Tooltip
                 text={text}
                 elementRef={elementRef}
+                align={align}
+                side={side}
             />}
         />
     )
