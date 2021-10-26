@@ -118,6 +118,7 @@ function EditEventPopup() {
     const handleSubmit = useAction(editEventActions.submit)
 
     return <Popup
+        type={'withHeaderAndFooter'}
         headerText={mode === 'edit'
             ? I18n_get('EditEventPopup.TitleEdit')
             : I18n_get('EditEventPopup.TitleAdd')}

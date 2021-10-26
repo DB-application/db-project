@@ -5,19 +5,74 @@ import {Button_Icon} from "../button/Button_Icon";
 import {CrossIcon} from "../../icons/CrossIcon";
 import {useEventHandler} from "../../core/hooks/useEventHandler";
 
-type PropsType = {
+type PopupWithHeaderProps = {
+    type: 'withHeader',
+    headerText: string,
+    content: JSX.Element,
+    closePopup: () => void,
+}
+
+type PopupWithFooterProps = {
+    type: 'withFooter',
+    content: JSX.Element,
+    acceptButton: JSX.Element,
+    closePopup: () => void,
+}
+
+type PopupWithHeaderAndFooterProps = {
+    type: 'withHeaderAndFooter',
     headerText: string,
     content: JSX.Element,
     acceptButton: JSX.Element,
     closePopup: () => void,
 }
 
-function Popup({
+type PropsType = PopupWithHeaderProps | PopupWithFooterProps | PopupWithHeaderAndFooterProps
+
+type PopupHeaderProps = {
+    headerText: string,
+    closePopup: () => void,
+}
+
+type PopupFooterProps = {
+    acceptButton: JSX.Element,
+    closePopup: () => void,
+}
+
+function PopupHeader({
+    headerText,
+    closePopup,
+}: PopupHeaderProps) {
+    return (
+        <div className={styles.popupHeader}>
+            <div className={styles.popupTitle}>{headerText}</div>
+            <Button_Icon
+                icon={<CrossIcon/>}
+                size={'small'}
+                onClick={closePopup}
+                style={'secondary'}
+            />
+        </div>
+    )
+}
+
+function PopupFooter({
     closePopup,
     acceptButton,
-    headerText,
-    content,
-}: PropsType) {
+}: PopupFooterProps) {
+    return (
+        <div className={styles.popupFooter}>
+            <Button_Text
+                onClick={closePopup}
+                text={'Отмена'}
+                style={'secondary'}
+            />
+            {acceptButton}
+        </div>
+    )
+}
+
+function Popup(props: PropsType) {
     const popupRef = useRef<HTMLDivElement|null>(null)
     const popupLayerRef = useRef<HTMLDivElement|null>(null)
 
@@ -26,32 +81,28 @@ function Popup({
     })
     useEventHandler('click', popupLayerRef, event => {
         if (!event.defaultPrevented) {
-            closePopup()
+            props.closePopup()
             event.preventDefault()
         }
     })
 
+    const withHeader = props.type === 'withHeader' || props.type === 'withHeaderAndFooter'
+    const withFooter = props.type === 'withHeaderAndFooter' || props.type === 'withFooter'
+
     return(
         <div ref={popupLayerRef} className={styles.popupLayer}>
             <div className={styles.popupContainer} ref={popupRef}>
-                <div className={styles.popupHeader}>
-                    <div className={styles.popupTitle}>{headerText}</div>
-                    <Button_Icon
-                        icon={<CrossIcon/>}
-                        size={'small'}
-                        onClick={closePopup}
-                        style={'secondary'}
-                    />
-                </div>
-                {content}
-                <div className={styles.popupFooter}>
-                    <Button_Text
-                        onClick={closePopup}
-                        text={'Отмена'}
-                        style={'secondary'}
-                    />
-                    {acceptButton}
-                </div>
+                {withHeader
+                    && <PopupHeader
+                        closePopup={props.closePopup}
+                        headerText={props.headerText}
+                    />}
+                {props.content}
+                {withFooter
+                    && <PopupFooter
+                        closePopup={props.closePopup}
+                        acceptButton={props.acceptButton}
+                    />}
             </div>
         </div>
     )
