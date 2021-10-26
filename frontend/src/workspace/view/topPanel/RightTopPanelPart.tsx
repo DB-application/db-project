@@ -20,6 +20,7 @@ function RightTopPanelPart() {
                         onClick={() => {}}
                         tooltipText={I18n_get('Workspace.ChatButtonTooltip')}
                         size={'small'}
+                        style={'link'}
                     />}
                     path={`${path}/chat`}
                     className={styles.buttonsGroupButton}
@@ -30,6 +31,7 @@ function RightTopPanelPart() {
                         onClick={() => {}}
                         tooltipText={I18n_get('Workspace.CalendarButtonTooltip')}
                         size={'small'}
+                        style={'link'}
                     />}
                     path={`${path}/calendar`}
                     className={styles.buttonsGroupButton}
@@ -40,6 +42,7 @@ function RightTopPanelPart() {
                     tooltipText={I18n_get('Workspace.SettingButtonTooltip')}
                     className={styles.buttonsGroupButton}
                     size={'small'}
+                    style={'link'}
                 />
             </div>
             <UserMenu />

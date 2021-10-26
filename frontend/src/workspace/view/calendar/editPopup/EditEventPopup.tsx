@@ -66,11 +66,13 @@ function Content() {
         start,
         end,
         description,
+        mode,
     } = useAtom(editEventAtom)
     const handleSetTitle = useAction(editEventActions.setTitle)
     const handleSetStart = useAction(editEventActions.setStart)
     const handleSetEnd = useAction(editEventActions.setEnd)
     const handleSetDescription = useAction(editEventActions.setDescription)
+    const handleRemove = useAction(editEventActions.removeEvent)
 
     return (
         <div className={styles.container}>
@@ -98,6 +100,14 @@ function Content() {
                 setDate={handleSetEnd}
                 className={styles.contentBlock}
             />
+            {
+                mode == 'edit'
+                    && <Button_Text
+                        text={I18n_get('EditEventPopup.RemoveButton')}
+                        onClick={handleRemove}
+                        style={'danger'}
+                    />
+            }
         </div>
     )
 }
@@ -117,6 +127,7 @@ function EditEventPopup() {
                 ? I18n_get('EditEventPopup.SubmitButtonEdit')
                 : I18n_get('EditEventPopup.SubmitButtonCreate')}
             onClick={handleSubmit}
+            style={'primary'}
         />}
         closePopup={handleClosePopup}
     />

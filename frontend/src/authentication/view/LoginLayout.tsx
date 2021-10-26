@@ -85,6 +85,7 @@ function LoginLayout() {
                     className={styles.submitButton}
                     size={'large'}
                     state={submitButtonState}
+                    style={'primary'}
                 />
                 <GotoRegistrationLabel />
             </div>

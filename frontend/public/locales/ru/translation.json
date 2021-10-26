@@ -55,7 +55,8 @@
     "DateLabel": "Дата:",
     "TimeLabel": "Время:",
     "SubmitButtonEdit": "Изменить",
-    "SubmitButtonCreate": "Создать"
+    "SubmitButtonCreate": "Создать",
+    "RemoveButton": "Удалить событие"
   },
   "Errors": {
     "StandardError": "Упс, что-то пошло не так. Попробуйте еще раз"

@@ -63,6 +63,7 @@ function MainInfoBlock() {
                 onClick={handleSaveInfo}
                 className={styles.saveButton}
                 state={saveProfileInfoState}
+                style={'primary'}
             />
         </div>
     )

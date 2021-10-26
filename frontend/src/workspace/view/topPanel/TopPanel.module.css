@@ -5,11 +5,13 @@
     height: 64px;
     box-sizing: border-box;
     align-items: center;
-    background-color: #b7a8b4;
     grid-column-start: 1;
     grid-column-end: 3;
     justify-content: space-between;
     padding: 0 16px;
+    background: #fff;
+    box-shadow: 0px 0px 4px rgb(66 72 78 / 12%), 0px 1px 2px rgb(66 72 78 / 8%), 0px 0px 1px rgb(66 72 78 / 8%);
+    z-index: 2;
 }
 
 .logoContainer {

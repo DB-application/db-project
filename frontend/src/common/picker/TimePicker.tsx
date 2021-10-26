@@ -114,13 +114,17 @@ function TimePickerPopover({
                             minutes: now.getMinutes(),
                         })
                     }}
+                    spacing={false}
                     size={'small'}
+                    style={'link'}
                 />
                 <Button_Text
                     text={'Ok'}
                     size={'small'}
                     onClick={onSubmit}
                     className={styles.submitButton}
+                    spacing={false}
+                    style={'primary'}
                 />
             </div>
         </div>

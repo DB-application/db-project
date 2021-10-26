@@ -48,6 +48,7 @@ function PasswordBlock() {
                 text={I18n_get("ProfileSettings.PasswordChangeButton")}
                 onClick={handleSubmitChange}
                 className={styles.saveButton}
+                style={'primary'}
             />
         </div>
     )

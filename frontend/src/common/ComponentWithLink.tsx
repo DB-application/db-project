@@ -13,7 +13,7 @@ function ComponentWithLink({
     className,
 }: ComponentWithLinkProps) {
     return (
-        <NavLink className={className} to={path}>
+        <NavLink tabIndex={-1} className={className} to={path}>
             {component}
         </NavLink>
     )

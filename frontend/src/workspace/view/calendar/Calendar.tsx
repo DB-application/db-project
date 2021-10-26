@@ -25,7 +25,7 @@ function EventsCalendar() {
             event: {
                 start: slotInfo.start,
                 end: slotInfo.end,
-                description: 'desription',
+                description: '',
                 title: '',
                 eventId: uid,
                 invitedUsers: [],

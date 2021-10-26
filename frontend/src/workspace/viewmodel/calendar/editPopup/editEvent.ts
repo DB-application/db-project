@@ -58,6 +58,14 @@ const submit = declareAction('editEvent.submit',
     }
 )
 
+const removeEvent = declareAction('editEvent.remove',
+    (_, store) => {
+        const eventId = store.getState(eventIdAtom)
+        store.dispatch(calendarActions.removeEvent(eventId))
+        store.dispatch(editEventActions.close())
+    }
+)
+
 const editEventAtom = combine({
     show: showAtom,
     mode: modeAtom,
@@ -77,6 +85,7 @@ const editEventActions = {
     setStart,
     setTitle,
     submit,
+    removeEvent,
 }
 
 export {

@@ -9,6 +9,8 @@ type Button_Size_Type = 'small' | 'medium' | 'large'
 
 type Button_State_Type = 'normal' | 'disabled' | 'preloader'
 
+type Button_Style_Type = 'primary' | 'secondary' | 'link' | 'danger'
+
 type Button_BaseProps = {
     leftIcon?: JSX.Element,
     text?: string,
@@ -18,6 +20,8 @@ type Button_BaseProps = {
     size?: Button_Size_Type,
     state?: Button_State_Type,
     tooltipText?: string,
+    style: Button_Style_Type,
+    spacing?: boolean,
 }
 
 function _Text({text}: {text: string}) {
@@ -46,6 +50,8 @@ function Button_Base(props: Button_BaseProps) {
         size = 'medium',
         state = 'normal',
         tooltipText,
+        style,
+        spacing = true,
     } = props
     function _onClick() {
         if (state === 'normal') {
@@ -57,6 +63,13 @@ function Button_Base(props: Button_BaseProps) {
         [styles.buttonMedium]: size === 'medium',
         [styles.buttonLarge]: size === 'large',
         [styles.buttonPreloader]: state === 'preloader',
+        [styles.buttonPrimary]: style === 'primary',
+        [styles.buttonSecondary]: style === 'secondary',
+        [styles.buttonDanger]: style === 'danger',
+        [styles.buttonLink]: style === 'link',
+        [styles.buttonMinWidth]: !!text,
+        [styles.buttonSpacingNone]: !spacing,
+        [styles.buttonIconOnly]: !text && (!!leftIcon || !!rightIcon),
     })
 
     return(
@@ -88,4 +101,5 @@ export type {
     Button_Size_Type,
     Button_BaseProps,
     Button_State_Type,
+    Button_Style_Type,
 }

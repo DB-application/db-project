@@ -40,6 +40,7 @@ function Popup({
                         icon={<CrossIcon/>}
                         size={'small'}
                         onClick={closePopup}
+                        style={'secondary'}
                     />
                 </div>
                 {content}
@@ -47,6 +48,7 @@ function Popup({
                     <Button_Text
                         onClick={closePopup}
                         text={'Отмена'}
+                        style={'secondary'}
                     />
                     {acceptButton}
                 </div>
