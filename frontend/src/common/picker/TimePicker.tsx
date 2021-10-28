@@ -147,6 +147,7 @@ function TimePicker({
     const [popoverOpened, setPopoverOpened] = useState<boolean>(false)
 
     const onBlur = useCallback(inputValue => {
+        setPopoverOpened(false)
         const result = validTimePickerValue(inputValue)
         if (result) {
             setInputValue(inputValue)
