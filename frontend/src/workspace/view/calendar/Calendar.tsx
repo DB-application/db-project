@@ -8,18 +8,19 @@ import {useAction} from "@reatom/react";
 import {calendarAtom, CalendarEvent} from "../../viewmodel/calendar/calendar";
 import {useAtomWithSelector} from "../../../core/reatom/useAtomWithSelector";
 import {editEventActions} from "../../viewmodel/calendar/editPopup/editEvent";
+import {viewEventActions} from "../../viewmodel/calendar/viewPopup/viewEvent";
 
 
 function EventsCalendar() {
     const events = useAtomWithSelector(calendarAtom, x => x.events)
     const handleOpenEditEventPopup = useAction(editEventActions.open)
+    const handleOpenViewEventPopup = useAction(viewEventActions.open)
 
     function handleSelect(slotInfo: SlotInfo) {
         if (typeof slotInfo.start == "string" || typeof slotInfo.end == "string") {
             return
         }
         const uid = generateUuid()
-
         handleOpenEditEventPopup({
             mode: 'create',
             event: {
@@ -34,6 +35,9 @@ function EventsCalendar() {
     }
 
     function onSelectEvent(event: CalendarEvent, e: React.SyntheticEvent<HTMLElement>) {
+        // handleOpenViewEventPopup({
+        //     event
+        // })
         handleOpenEditEventPopup({
             event,
             mode: 'edit',

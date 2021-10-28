@@ -56,9 +56,16 @@
     "TimeLabel": "Время:",
     "SubmitButtonEdit": "Изменить",
     "SubmitButtonCreate": "Создать",
-    "RemoveButton": "Удалить событие"
+    "RemoveButton": "Удалить событие",
+    "AllDay": "Весь день"
   },
   "Errors": {
     "StandardError": "Упс, что-то пошло не так. Попробуйте еще раз"
+  },
+  "ViewEventPopup": {
+    "InfoLabel": "Сведения",
+    "WhenLabel": "Когда",
+    "TitleLabel": "Название",
+    "Description": "Описание"
   }
 }

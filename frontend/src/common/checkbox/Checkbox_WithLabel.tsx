@@ -25,7 +25,6 @@ function Checkbox_WithLabel({
             <Checkbox
                 checked={checked}
                 onCheckedChange={value => onCheckedChange(value)}
-                className={className}
             />
             <label
                 className={styles.label}

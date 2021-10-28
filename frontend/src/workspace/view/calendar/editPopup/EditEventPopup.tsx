@@ -12,12 +12,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import ReactDatePicker from 'react-datepicker';
 import {useAtomWithSelector} from "../../../../core/reatom/useAtomWithSelector";
 import {TextArea} from "../../../../common/textArea/TextArea";
+import {Checkbox_WithLabel} from "../../../../common/checkbox/Checkbox_WithLabel";
 
 type DateBlockProps = {
     fieldName: string,
     date: Date,
     setDate: (value: Date) => void,
     className?: string,
+    timeDisabled: boolean,
 }
 
 function DateBlock({
@@ -25,6 +27,7 @@ function DateBlock({
     setDate,
     fieldName,
     className,
+    timeDisabled,
 }: DateBlockProps) {
     return (
         <div className={joinClassNames(styles.dateContainer, className)}>
@@ -53,6 +56,7 @@ function DateBlock({
                     minutesStep={5}
                     onChange={time => setDate(convertTimeToDate(date, time))}
                     className={styles.timePicker}
+                    disabled={timeDisabled}
                 />
             </div>
         </div>
@@ -67,12 +71,14 @@ function Content() {
         end,
         description,
         mode,
+        allDay,
     } = useAtom(editEventAtom)
     const handleSetTitle = useAction(editEventActions.setTitle)
     const handleSetStart = useAction(editEventActions.setStart)
     const handleSetEnd = useAction(editEventActions.setEnd)
     const handleSetDescription = useAction(editEventActions.setDescription)
     const handleRemove = useAction(editEventActions.removeEvent)
+    const handleSetAllDay = useAction(editEventActions.setAllDay)
 
     return (
         <div className={styles.container}>
@@ -93,12 +99,20 @@ function Content() {
                 date={start}
                 setDate={handleSetStart}
                 className={styles.contentBlock}
+                timeDisabled={allDay}
             />
             <DateBlock
                 fieldName={I18n_get('EditEventPopup.EndField')}
                 date={end}
                 setDate={handleSetEnd}
                 className={styles.contentBlock}
+                timeDisabled={allDay}
+            />
+            <Checkbox_WithLabel
+                checked={allDay}
+                onCheckedChange={handleSetAllDay}
+                label={I18n_get('EditEventPopup.AllDay')}
+                className={styles.allDayBlock}
             />
             {
                 mode == 'edit'

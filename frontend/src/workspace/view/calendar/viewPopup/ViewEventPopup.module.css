@@ -1,0 +1,40 @@
+.container {
+    padding: 30px;
+}
+.infoLabel {
+    font: 25px Roboto;
+    margin-bottom: 20px;
+}
+.eventTitleContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.eventTitle {
+    font: 16px Roboto;
+}
+
+.timeContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.titleLabel,
+.whenTitle,
+.descriptionLabel {
+    display: flex;
+    font: 16px/1 Roboto;
+    margin-right: 15px;
+}
+.range {
+    font: 13px Roboto;
+}
+.descriptionContainer {
+
+}
+.descriptionLabel {
+    margin-bottom: 10px;
+}
+.description {
+    font: 14px Roboto;
+}

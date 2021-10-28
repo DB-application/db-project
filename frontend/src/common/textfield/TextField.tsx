@@ -16,6 +16,7 @@ type TextFieldProps = {
     placeholder?: string,
     className?: string,
     inputClassName?: string,
+    disabled?: boolean,
 }
 
 function TextField({
@@ -29,18 +30,20 @@ function TextField({
     errorText,
     className,
     inputClassName,
+    disabled = false,
 }: TextFieldProps) {
     const ref = useRef<HTMLInputElement|null>(null)
 
     function _onInput() {
-        onChange(verify(ref.current).value)
+        !disabled && onChange(verify(ref.current).value)
     }
     function _onBlur() {
-        onBlur && onBlur(verify(ref.current).value)
+        !disabled && onBlur && onBlur(verify(ref.current).value)
     }
 
     const inputStyles = getStylesWithMods(styles.input, {
         [styles.inputError]: !!errorText,
+        [styles.inputDisabled]: disabled,
     })
 
     return (
@@ -61,6 +64,7 @@ function TextField({
                     onBlur={_onBlur}
                     value={value}
                     placeholder={placeholder}
+                    disabled={disabled}
                 />
             {errorText &&
                 <div className={styles.errorText}>

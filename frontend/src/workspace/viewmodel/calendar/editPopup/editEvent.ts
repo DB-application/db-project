@@ -35,6 +35,7 @@ const [descriptionAtom, setDescription] = declareAtomWithSetter<string>('editEve
 const eventIdAtom = declareAtom('editEvent.eventId', '', on => [
     on(open, (_, {event}) => event.eventId)
 ])
+const [allDayAtom, setAllDay] = declareAtomWithSetter('editEvent.addDay', false)
 
 const submit = declareAction('editEvent.submit',
     (_, store) => {
@@ -44,12 +45,23 @@ const submit = declareAction('editEvent.submit',
             description,
             title,
             eventId,
+            allDay,
         } = store.getState(editEventAtom)
+
+        let newStart = new Date(start)
+        let newEnd = new Date(end)
+        if (allDay) {
+            newStart.setHours(9)
+            newStart.setMinutes(0)
+
+            newEnd.setHours(18)
+            newEnd.setMinutes(0)
+        }
 
         store.dispatch(calendarActions.updateEvent({
             eventId,
-            end,
-            start,
+            end: newEnd,
+            start: newStart,
             title,
             description,
             invitedUsers: [],
@@ -74,6 +86,7 @@ const editEventAtom = combine({
     title: titleAtom,
     description: descriptionAtom,
     eventId: eventIdAtom,
+    allDay: allDayAtom,
 })
 
 const editEventActions = {
@@ -86,6 +99,7 @@ const editEventActions = {
     setTitle,
     submit,
     removeEvent,
+    setAllDay,
 }
 
 export {

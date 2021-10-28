@@ -24,17 +24,21 @@
     padding: 0 8px;
 }
 
-.input:focus {
+.input:focus:not(.inputDisabled) {
     box-shadow: 0 0 0 2px #003DAE;
 }
 
-.input:hover:not(.inputError):not(:focus) {
+.input:hover:not(.inputError):not(:focus):not(.inputDisabled) {
     border-color: #373537;
 }
 
-.inputError:not(:focus) {
+.inputError:not(:focus):not(.inputDisabled) {
     border: 1px solid #c80000;
     animation: fade-in-error-border 0.15s ease-in-out;
+}
+
+.inputDisabled {
+    opacity: 0.6;
 }
 
 .errorText {

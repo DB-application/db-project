@@ -4,12 +4,10 @@ import {useCallback, useMemo, useRef, useState} from "react";
 import {Button_Text} from "../button/Button_Text";
 import {ListItem_Text} from "../list/item/ListItem_Text";
 import {List_Base, ListItemProps} from "../list/List_Base";
-import {useEventHandler} from "../../core/hooks/useEventHandler";
 import {PopoverPortal} from "../../core/portal/PopoverPortal";
 import {getStylesWithMods} from "../../core/styles/getStylesWithMods";
 import {serializeNumber} from './converters';
 import {parsePickerValue, validTimePickerValue} from "./validation";
-import {verify} from "../../core/verify";
 import {TextField} from "../textfield/TextField";
 
 
@@ -24,6 +22,7 @@ type TimePickerProps = {
     hoursStep?: number,
     minutesStep?: 5 | 10 | 15 | 30,
     className?: string,
+    disabled?: boolean,
 }
 
 type TimePickerPopover = {
@@ -141,6 +140,7 @@ function TimePicker({
     hoursStep,
     onChange,
     className,
+    disabled = false,
 }: TimePickerProps) {
     const ref = useRef<HTMLDivElement|null>(null)
     const [inputValue, setInputValue] = useState<string>(getTimeString(time))
@@ -172,6 +172,7 @@ function TimePicker({
                         setInputValue(value)
                     }}
                     onBlur={onBlur}
+                    disabled={disabled}
                     inputClassName={styles.input}
                 />
             </div>

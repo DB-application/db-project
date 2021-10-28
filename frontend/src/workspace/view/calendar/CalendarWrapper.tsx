@@ -9,17 +9,28 @@ import styles from './CalendarWrapper.module.css'
 import {PopupPortal} from "../../../core/portal/PopupPortal";
 import {editEventActions, editEventAtom} from "../../viewmodel/calendar/editPopup/editEvent";
 import {EditEventPopup} from "./editPopup/EditEventPopup";
+import {viewEventActions, viewEventAtom} from "../../viewmodel/calendar/viewPopup/viewEvent";
+import {ViewEventPopup} from "./viewPopup/ViewEventPopup";
 
 function PopupsLayer() {
-    const show = useAtomWithSelector(editEventAtom, x => x.show)
+    const showEditEvent = useAtomWithSelector(editEventAtom, x => x.show)
+    const showViewEvent = useAtomWithSelector(viewEventAtom, x => x.opened)
     const handleCloseEditEventPopup = useAction(editEventActions.close)
+    const handleCloseViewEventPopup = useAction(viewEventActions.close)
 
     return (
-        <PopupPortal
-            show={show}
-            close={handleCloseEditEventPopup}
-            binding={<EditEventPopup/>}
-        />
+        <>
+            <PopupPortal
+                show={showEditEvent}
+                close={handleCloseEditEventPopup}
+                binding={<EditEventPopup/>}
+            />
+            <PopupPortal
+                show={showViewEvent}
+                close={handleCloseViewEventPopup}
+                binding={<ViewEventPopup/>}
+            />
+        </>
     )
 }
 

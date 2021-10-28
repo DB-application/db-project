@@ -27,7 +27,13 @@ type PopupWithHeaderAndFooterProps = {
     closePopup: () => void,
 }
 
-type PropsType = PopupWithHeaderProps | PopupWithFooterProps | PopupWithHeaderAndFooterProps
+type PopupContentOnlyProps = {
+    type: 'contentOnly',
+    content: JSX.Element,
+    closePopup: () => void,
+}
+
+type PropsType = PopupWithHeaderProps | PopupWithFooterProps | PopupWithHeaderAndFooterProps | PopupContentOnlyProps
 
 type PopupHeaderProps = {
     headerText: string,

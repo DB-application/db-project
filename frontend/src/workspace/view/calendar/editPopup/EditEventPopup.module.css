@@ -19,6 +19,10 @@
     margin-bottom: 10px;
 }
 
+.allDayBlock {
+    margin-bottom: 15px;
+}
+
 .calendarInput {
     font-family: Roboto;
     color: #403866;
