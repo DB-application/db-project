@@ -4,6 +4,8 @@ import {authorizedUser} from "../../../../authentication/viewModel/userAtom";
 import {createEventAction} from "../createEvent";
 import {editEventAction} from "../editEvent";
 import {removeEventAction} from "../removeEvent";
+import {toast} from "react-toastify";
+import {I18n_get} from "../../../../i18n/i18n_get";
 
 type PopupModeType = 'edit' | 'create'
 
@@ -76,6 +78,11 @@ const submit = declareAction('editEvent.submit',
             newEnd.setMinutes(0)
         }
 
+        if (newStart > newEnd) {
+            toast.error(I18n_get('Errors.EventStartBiggerEnd'))
+            return
+        }
+
         if (mode === 'create') {
             store.dispatch(createEventAction({
                 end,
@@ -109,8 +116,8 @@ const removeEvent = declareAction('editEvent.remove',
 
 const [isPopupLoadingAtom, setIsPopupLoading] = declareAtomWithSetter('editEvent.popupLoading', false, on => [
     on(close, () => false),
-    on(removeEvent, () => true),
-    on(submit, () => true),
+    on(removeEventAction, () => true),
+    on(createEventAction, () => true),
     on(createEventAction.done, () => false),
     on(createEventAction.fail, () => false),
     on(editEventAction.done, () => false),
