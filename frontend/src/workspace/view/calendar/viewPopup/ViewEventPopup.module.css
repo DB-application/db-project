@@ -38,3 +38,25 @@
 .description {
     font: 14px Roboto;
 }
+.eventInfoContainer {
+    display: flex;
+}
+.eventData {
+    min-width: 350px;
+}
+.invitedUserBlock {
+    margin-left: 15px;
+}
+.userBlockLabel {
+    margin-bottom: 8px;
+    font: 16px Roboto;
+}
+.organizator {
+    margin-bottom: 20px;
+    padding: 0 8px;
+    height: 35px;
+    max-width: 200px;
+}
+.usersList {
+    max-width: 200px;
+}

@@ -1,0 +1,28 @@
+import {EditEventData, EventsApi} from "../../../api/eventsApi";
+import {calendarActions} from "./calendar";
+import {processStandardError} from "../../../core/error/processStandardError";
+import {declareAsyncAction} from "../../../core/reatom/declareAsyncAction";
+import {toast} from "react-toastify";
+import {I18n_get} from "../../../i18n/i18n_get";
+
+
+const editEventAction = declareAsyncAction<EditEventData, void>(
+    'editEvent',
+    (payload, store) => {
+
+        return EventsApi.editEvent(payload)
+            .then(() => {
+                store.dispatch(calendarActions.updateEvent(payload))
+                toast.success(I18n_get('Success.EventEdit'))
+                return Promise.resolve()
+            })
+            .catch(() => {
+                processStandardError()
+                return Promise.reject()
+            })
+    }
+)
+
+export {
+    editEventAction,
+}

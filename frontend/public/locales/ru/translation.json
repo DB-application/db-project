@@ -62,10 +62,17 @@
   "Errors": {
     "StandardError": "Упс, что-то пошло не так. Попробуйте еще раз"
   },
+  "Success": {
+    "EventCreate": "Событие создано",
+    "EventEdit": "Событие изменено",
+    "EventRemoved": "Событие удалено"
+  },
   "ViewEventPopup": {
     "InfoLabel": "Сведения",
     "WhenLabel": "Когда",
     "TitleLabel": "Название",
-    "Description": "Описание"
+    "Description": "Описание",
+    "OrganizationBy": "Организатор",
+    "Collaborators": "Участники"
   }
 }

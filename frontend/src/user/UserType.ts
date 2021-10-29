@@ -4,7 +4,7 @@ export type UserType = {
     email: string,
     username: string,
     avatarUrl: string,
-    phone: string,
-    firstName: string,
-    lastName: string,
+    phone?: string,
+    firstName?: string,
+    lastName?: string,
 }

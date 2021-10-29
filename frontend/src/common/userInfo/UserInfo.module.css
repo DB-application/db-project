@@ -1,0 +1,53 @@
+.info {
+    display: flex;
+    align-items: center;
+}
+
+.userData {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.infoSmall .userData {
+    margin-left: 10px;
+}
+.infoNormal .userData {
+    margin-left: 18px;
+}
+.infoLarge .userData {
+    margin-left: 25px;
+}
+
+.nickname {
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.infoSmall .nickname {
+    font: 600 12px/14px Roboto;
+}
+.infoNormal .nickname {
+    font: 600 20px/22px Roboto;
+}
+.infoLarge .nickname {
+    font: 600 28px/32px Roboto;
+}
+
+.email {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.infoSmall .email {
+    font: 400 10px/12px Roboto;
+}
+.infoNormal .email {
+    font: 400 17px/19px Roboto;
+}
+.infoLarge .email {
+    font: 400 20px/25px Roboto;
+}

@@ -13,6 +13,7 @@ import ReactDatePicker from 'react-datepicker';
 import {useAtomWithSelector} from "../../../../core/reatom/useAtomWithSelector";
 import {TextArea} from "../../../../common/textArea/TextArea";
 import {Checkbox_WithLabel} from "../../../../common/checkbox/Checkbox_WithLabel";
+import {Preloader} from "../../../../common/preloader/Preloader";
 
 type DateBlockProps = {
     fieldName: string,
@@ -81,7 +82,7 @@ function Content() {
     const handleSetAllDay = useAction(editEventActions.setAllDay)
 
     return (
-        <div className={styles.container}>
+        <div className={styles.content}>
             <TextField
                 description={I18n_get('EditEventPopup.TitleField')}
                 value={title}
@@ -115,7 +116,7 @@ function Content() {
                 className={styles.allDayBlock}
             />
             {
-                mode == 'edit'
+                mode === 'edit'
                     && <Button_Text
                         text={I18n_get('EditEventPopup.RemoveButton')}
                         onClick={handleRemove}
@@ -126,8 +127,23 @@ function Content() {
     )
 }
 
+function ContentWrapper() {
+    const isPopupLoading = useAtomWithSelector(editEventAtom, x => x.isPopupLoading)
+
+    const content = isPopupLoading
+        ? <Preloader />
+        : <Content />
+
+    return (
+        <div className={styles.container}>
+            {content}
+        </div>
+    )
+}
+
 function EditEventPopup() {
     const mode = useAtomWithSelector(editEventAtom, x => x.mode)
+    const submitButtonState = useAtomWithSelector(editEventAtom, x => x.submitButtonState)
     const handleClosePopup = useAction(editEventActions.close)
     const handleSubmit = useAction(editEventActions.submit)
 
@@ -136,13 +152,14 @@ function EditEventPopup() {
         headerText={mode === 'edit'
             ? I18n_get('EditEventPopup.TitleEdit')
             : I18n_get('EditEventPopup.TitleAdd')}
-        content={<Content />}
+        content={<ContentWrapper />}
         acceptButton={<Button_Text
             text={mode === 'edit'
                 ? I18n_get('EditEventPopup.SubmitButtonEdit')
                 : I18n_get('EditEventPopup.SubmitButtonCreate')}
             onClick={handleSubmit}
             style={'primary'}
+            state={submitButtonState}
         />}
         closePopup={handleClosePopup}
     />

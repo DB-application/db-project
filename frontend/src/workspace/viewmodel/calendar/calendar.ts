@@ -1,6 +1,6 @@
-import {UserType} from "../../../user/UserType";
 import {combine, declareAction, declareAtom} from "@reatom/core";
 import {declareAtomWithSetter} from "../../../core/reatom/declareAtomWithSetter";
+import {initCalendar} from "./initCalendar";
 
 
 type CalendarEvent  = {
@@ -9,7 +9,8 @@ type CalendarEvent  = {
     description: string,
     start: Date;
     end: Date;
-    invitedUsers: Array<UserType>;
+    organizerId: string;
+    invitedUsersIds: Array<string>;
 }
 
 type CalendarEvents = {
@@ -18,8 +19,14 @@ type CalendarEvents = {
 
 const removeEvent = declareAction<string>()
 const updateEvent = declareAction<CalendarEvent>()
+const initEvents = declareAction<Array<CalendarEvent>>()
 
 const eventsAtom = declareAtom<CalendarEvents>('calendar.events', {}, on => [
+    on(initEvents, (state, events) => {
+        const eventsMap: CalendarEvents = {}
+        events.forEach(event => eventsMap[event.eventId] = event)
+        return eventsMap
+    }),
     on(updateEvent, (state, event) => ({
         ...state,
         [event.eventId]: event,
@@ -33,7 +40,10 @@ const eventsAtom = declareAtom<CalendarEvents>('calendar.events', {}, on => [
     }),
 ])
 
-const [calendarLoadingAtom, setCalendarLoading] = declareAtomWithSetter<boolean>('calendar.calendarLoading', false)
+const [calendarLoadingAtom, setCalendarLoading] = declareAtomWithSetter<boolean>('calendar.calendarLoading', true, on => [
+    on(initCalendar, () => true),
+    on(initCalendar.done, () => false),
+])
 
 const calendarAtom = combine({
     events: eventsAtom,
@@ -43,6 +53,7 @@ const calendarAtom = combine({
 const calendarActions = {
     updateEvent,
     removeEvent,
+    initEvents,
     setCalendarLoading,
 }
 

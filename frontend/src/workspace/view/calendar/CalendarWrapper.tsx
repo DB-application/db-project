@@ -44,8 +44,8 @@ function CalendarWrapper() {
     }, [handleInitCalendar])
 
     const content = calendarLoading
-        ? <EventsCalendar />
-        : <Preloader/>
+        ? <Preloader/>
+        : <EventsCalendar />
 
     return (
         <div className={styles.container} >

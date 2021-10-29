@@ -17,7 +17,7 @@ type TimeType = {
 }
 
 type TimePickerProps = {
-    time: TimeType
+    time: TimeType,
     onChange: (time: TimeType) => void,
     hoursStep?: number,
     minutesStep?: 5 | 10 | 15 | 30,

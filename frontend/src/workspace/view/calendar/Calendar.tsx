@@ -3,16 +3,17 @@ import moment from 'moment'
 import * as React from "react";
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
-import {generateUuid} from "../../../core/uuid/generateUuid";
 import {useAction} from "@reatom/react";
 import {calendarAtom, CalendarEvent} from "../../viewmodel/calendar/calendar";
 import {useAtomWithSelector} from "../../../core/reatom/useAtomWithSelector";
 import {editEventActions} from "../../viewmodel/calendar/editPopup/editEvent";
 import {viewEventActions} from "../../viewmodel/calendar/viewPopup/viewEvent";
+import {authorizedUser} from "../../../authentication/viewModel/userAtom";
 
 
 function EventsCalendar() {
     const events = useAtomWithSelector(calendarAtom, x => x.events)
+    const currentUserId = useAtomWithSelector(authorizedUser, x => x.id)
     const handleOpenEditEventPopup = useAction(editEventActions.open)
     const handleOpenViewEventPopup = useAction(viewEventActions.open)
 
@@ -20,28 +21,25 @@ function EventsCalendar() {
         if (typeof slotInfo.start == "string" || typeof slotInfo.end == "string") {
             return
         }
-        const uid = generateUuid()
         handleOpenEditEventPopup({
             mode: 'create',
-            event: {
-                start: slotInfo.start,
-                end: slotInfo.end,
-                description: '',
-                title: '',
-                eventId: uid,
-                invitedUsers: [],
-            },
+            start: slotInfo.start,
+            end: slotInfo.end,
         })
     }
 
     function onSelectEvent(event: CalendarEvent, e: React.SyntheticEvent<HTMLElement>) {
-        // handleOpenViewEventPopup({
-        //     event
-        // })
-        handleOpenEditEventPopup({
-            event,
-            mode: 'edit',
-        })
+        if (event.organizerId === currentUserId) {
+            handleOpenEditEventPopup({
+                ...event,
+                mode: 'edit',
+            })
+        }
+        else {
+            handleOpenViewEventPopup({
+                event
+            })
+        }
     }
     return (
         <Calendar
