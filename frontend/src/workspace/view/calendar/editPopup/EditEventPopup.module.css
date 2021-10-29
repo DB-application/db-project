@@ -75,3 +75,11 @@
 .timePicker {
     flex-shrink: 0;
 }
+
+.dateWarningIcon {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    color: red;
+    right: 12px;
+}

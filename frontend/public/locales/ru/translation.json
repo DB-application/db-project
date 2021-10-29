@@ -57,7 +57,8 @@
     "SubmitButtonEdit": "Изменить",
     "SubmitButtonCreate": "Создать",
     "RemoveButton": "Удалить событие",
-    "AllDay": "Весь день"
+    "AllDay": "Весь день",
+    "TitleRequired": "Поле название обязательное"
   },
   "Errors": {
     "StandardError": "Упс, что-то пошло не так. Попробуйте еще раз",

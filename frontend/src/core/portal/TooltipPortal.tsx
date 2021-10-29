@@ -6,7 +6,7 @@ import {PopoverAlign, PopoverSide} from "../../common/popover/getPopoverPosition
 
 type PropsType = {
     elementRef: RefObject<any>,
-    showTooltip: boolean,
+    showTooltip?: boolean,
     text: string,
     side?: PopoverSide,
     align?: PopoverAlign,
@@ -14,10 +14,10 @@ type PropsType = {
 
 function TooltipPortal({
     elementRef,
-    showTooltip,
+    showTooltip = true,
     text,
-    side,
-    align,
+    side = 'bottom',
+    align = 'center',
 }: PropsType) {
     const [show, setShow] = useState(false)
 

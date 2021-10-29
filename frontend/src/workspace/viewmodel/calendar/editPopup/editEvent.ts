@@ -47,6 +47,10 @@ const [endAtom, setEnd] = declareAtomWithSetter<Date>('editEvent.end', new Date(
 const [titleAtom, setTitle] = declareAtomWithSetter<string>('editEvent.title', '', on => [
     on(open, (_, payload) => payload.mode === 'edit' ? payload.title : '')
 ])
+const [titleErrorAtom, setTitleError] = declareAtomWithSetter<boolean>('editEvent.titleError', false, on => [
+    on(open, () => false),
+    on(setTitle, () => false)
+])
 const [descriptionAtom, setDescription] = declareAtomWithSetter<string>('editEvent.description', '', on => [
     on(open, (_, payload) => payload.mode === 'edit' ? payload.description : '')
 ])
@@ -54,6 +58,12 @@ const eventIdAtom = declareAtom('editEvent.eventId', '', on => [
     on(open, (_, payload) => payload.mode === 'edit' ? payload.eventId : '')
 ])
 const [allDayAtom, setAllDay] = declareAtomWithSetter('editEvent.addDay', false)
+
+const [endErrorAtom, setEndError] = declareAtomWithSetter('editEvent.endError', false, on => [
+    on(setEnd, () => false),
+    on(setStart, () => false),
+    on(open, () => false),
+])
 
 const submit = declareAction('editEvent.submit',
     (_, store) => {
@@ -78,8 +88,14 @@ const submit = declareAction('editEvent.submit',
             newEnd.setMinutes(0)
         }
 
+        if (!title) {
+            store.dispatch(setTitleError(true))
+            return
+        }
+
         if (newStart > newEnd) {
             toast.error(I18n_get('Errors.EventStartBiggerEnd'))
+            store.dispatch(setEndError(true))
             return
         }
 
@@ -142,12 +158,14 @@ const editEventAtom = combine({
     mode: modeAtom,
     start: startAtom,
     end: endAtom,
+    endError: endErrorAtom,
     title: titleAtom,
     description: descriptionAtom,
     eventId: eventIdAtom,
     allDay: allDayAtom,
     isPopupLoading: isPopupLoadingAtom,
     submitButtonState: submitButtonStateAtom,
+    titleError: titleErrorAtom,
 })
 
 const editEventActions = {

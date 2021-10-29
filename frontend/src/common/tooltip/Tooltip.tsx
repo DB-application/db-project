@@ -35,7 +35,9 @@ function Tooltip({
             ref={popoverRef}
             className={styles.tooltipContainer}
         >
-            {text}
+            <span className={styles.text}>
+                {text}
+            </span>
         </div>
     )
 }

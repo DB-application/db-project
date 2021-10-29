@@ -14,6 +14,9 @@ import {useAtomWithSelector} from "../../../../core/reatom/useAtomWithSelector";
 import {TextArea} from "../../../../common/textArea/TextArea";
 import {Checkbox_WithLabel} from "../../../../common/checkbox/Checkbox_WithLabel";
 import {Preloader} from "../../../../common/preloader/Preloader";
+import { WarningCircleIcon } from '../../../../icons/WarningCircleIcon';
+import {useRef} from "react";
+import {TooltipPortal} from "../../../../core/portal/TooltipPortal";
 
 type DateBlockProps = {
     fieldName: string,
@@ -21,6 +24,22 @@ type DateBlockProps = {
     setDate: (value: Date) => void,
     className?: string,
     timeDisabled: boolean,
+    error: boolean
+}
+
+function DateErrorIcon() {
+    const ref = useRef<HTMLDivElement|null>(null)
+
+    return (
+        <div className={styles.dateWarningIcon} ref={ref}>
+            <WarningCircleIcon />
+            <TooltipPortal
+                elementRef={ref}
+                text={'Окончания события раньше начала'}
+                side={'left'}
+            />
+        </div>
+    )
 }
 
 function DateBlock({
@@ -29,6 +48,7 @@ function DateBlock({
     fieldName,
     className,
     timeDisabled,
+    error,
 }: DateBlockProps) {
     return (
         <div className={joinClassNames(styles.dateContainer, className)}>
@@ -59,6 +79,7 @@ function DateBlock({
                     className={styles.timePicker}
                     disabled={timeDisabled}
                 />
+                {error && <DateErrorIcon />}
             </div>
         </div>
     )
@@ -73,6 +94,8 @@ function Content() {
         description,
         mode,
         allDay,
+        endError,
+        titleError,
     } = useAtom(editEventAtom)
     const handleSetTitle = useAction(editEventActions.setTitle)
     const handleSetStart = useAction(editEventActions.setStart)
@@ -88,6 +111,9 @@ function Content() {
                 value={title}
                 onChange={handleSetTitle}
                 className={styles.contentBlock}
+                errorText={titleError
+                    ? I18n_get('EditEventPopup.TitleRequired')
+                    : ''}
             />
             <TextArea
                 description={I18n_get('EditEventPopup.DescriptionField')}
@@ -101,6 +127,7 @@ function Content() {
                 setDate={handleSetStart}
                 className={styles.contentBlock}
                 timeDisabled={allDay}
+                error={false}
             />
             <DateBlock
                 fieldName={I18n_get('EditEventPopup.EndField')}
@@ -108,6 +135,7 @@ function Content() {
                 setDate={handleSetEnd}
                 className={styles.contentBlock}
                 timeDisabled={allDay}
+                error={endError}
             />
             <Checkbox_WithLabel
                 checked={allDay}
