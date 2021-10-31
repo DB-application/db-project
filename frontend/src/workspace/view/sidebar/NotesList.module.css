@@ -1,0 +1,50 @@
+.notesList {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.noteContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 35px;
+    padding: 0 15px 0 25px;
+    box-sizing: border-box;
+    cursor: pointer;
+    margin-bottom: 2px;
+    width: 100%;
+}
+
+.noteContainer.selectedNote {
+    background: rgba(50,53,55,0.06);
+}
+
+.noteContainer:hover:not(.selectedNote) {
+    background: rgba(50,53,55,0.06);
+}
+
+.title {
+    font: 500 14px Roboto;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.contextMenu {
+    display: none;
+    transition: all .15s ease-in-out;
+}
+
+.contextMenuItem {
+    padding: 0 8px;
+}
+
+.noteContainer:hover .contextMenu,
+.selectedNote .contextMenu {
+    display: block;
+}
+
+.addButton {
+    margin: 20px auto;
+}

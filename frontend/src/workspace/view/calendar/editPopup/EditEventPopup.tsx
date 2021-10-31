@@ -15,7 +15,7 @@ import {TextArea} from "../../../../common/textArea/TextArea";
 import {Checkbox_WithLabel} from "../../../../common/checkbox/Checkbox_WithLabel";
 import {Preloader} from "../../../../common/preloader/Preloader";
 import { WarningCircleIcon } from '../../../../icons/WarningCircleIcon';
-import {useRef} from "react";
+import {CSSProperties, useRef} from "react";
 import {TooltipPortal} from "../../../../core/portal/TooltipPortal";
 
 type DateBlockProps = {
@@ -156,14 +156,26 @@ function Content() {
 }
 
 function ContentWrapper() {
+    const containerRef = useRef<HTMLDivElement|null>(null)
     const isPopupLoading = useAtomWithSelector(editEventAtom, x => x.isPopupLoading)
 
     const content = isPopupLoading
         ? <Preloader />
         : <Content />
 
+    let style: CSSProperties | undefined = undefined
+    if (isPopupLoading && containerRef.current) {
+        style = {
+            height: containerRef.current.getBoundingClientRect().height
+        }
+    }
+
     return (
-        <div className={styles.container}>
+        <div
+            className={styles.container}
+            ref={containerRef}
+            style={style}
+        >
             {content}
         </div>
     )

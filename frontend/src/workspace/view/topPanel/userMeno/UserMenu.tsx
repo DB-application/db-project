@@ -11,6 +11,7 @@ import {LogoutIcon} from "../../../../icons/LogoutIcon";
 import {goToUrl} from "../../../../core/link/goToUrl";
 import {logoutAction} from "../../../../authentication/viewModel/actions/logoutAction";
 import {PopoverPortal} from "../../../../core/portal/PopoverPortal";
+import {Router} from "../../../../core/router/router";
 
 type UserMenuPopoverProps = {
     onLogout: () => void,
@@ -28,7 +29,7 @@ function UserMenuPopover({
                 icon={<ProfileIcon />}
                 text={'Профиль пользователя'}
                 onClick={() => {
-                    goToUrl('/profile')
+                    goToUrl(Router.Profile.url())
                     onClick()
                 }}
                 className={styles.listItem}

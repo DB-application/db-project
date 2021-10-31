@@ -1,16 +1,17 @@
-import {calendarActions} from "./calendar";
+import {calendarActions, CalendarEvent} from "./calendar";
 import {EventsApi} from "../../../api/eventsApi";
 import {processStandardError} from "../../../core/error/processStandardError";
 import {declareAsyncAction} from "../../../core/reatom/declareAsyncAction";
+import {notesActions} from "../notes/notes";
 
 
-const initCalendar = declareAsyncAction<void, void>(
+const initCalendar = declareAsyncAction<void, Array<CalendarEvent>>(
     'initCalendar',
     (_, store) => {
+        store.dispatch(notesActions.setSelectedNote(null))
         return EventsApi.getCurrentUserEvents()
             .then(events => {
-                store.dispatch(calendarActions.initEvents(events))
-                return Promise.resolve()
+                return Promise.resolve(events)
             })
             .catch(() => {
                 processStandardError()

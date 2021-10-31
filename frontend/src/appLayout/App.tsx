@@ -5,20 +5,21 @@ import {AuthLayout} from "../authentication/view/AuthLayout";
 import {AuthRouter} from './AuthRouter';
 import {WorkspaceLayout} from "../workspace/view/WorkspaceLayout";
 import {Redirect, Route, Switch} from 'react-router-dom';
+import {Router} from "../core/router/router";
 
 function App() {
     return (
         <div>
             <AuthRouter />
             <Switch>
-                <Redirect exact from={'/'} to={'/auth'}/>
-                <Route exact path={["/auth"]} >
+                <Redirect exact from={'/'} to={Router.Auth.url()}/>
+                <Route exact path={[Router.Auth.url()]} >
                     <AuthLayout />
                 </Route>
-                <Route exact path={["/profile"]}>
+                <Route exact path={[Router.Profile.url()]}>
                     <ProfileSettingsPage />
                 </Route>
-                <Route path={['/workspace']}>
+                <Route path={[Router.Workspace.url()]}>
                     <WorkspaceLayout />
                 </Route>
             </Switch>

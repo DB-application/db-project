@@ -2,7 +2,7 @@ import styles from './Button_Base.module.css'
 import {joinClassNames} from "../../core/styles/joinClassNames"
 import {PreloaderIcon} from '../preloader/Preloader'
 import {getStylesWithMods} from '../../core/styles/getStylesWithMods'
-import React, {useRef} from "react";
+import React, {CSSProperties, useRef} from "react";
 import {TooltipPortal} from "../../core/portal/TooltipPortal";
 
 type Button_Size_Type = 'small' | 'medium' | 'large'
@@ -53,7 +53,9 @@ function Button_Base(props: Button_BaseProps) {
         style,
         spacing = true,
     } = props
-    function _onClick() {
+
+    function _onClick(e: any) {
+        e.preventDefault()
         if (state === 'normal') {
             onClick()
         }
@@ -72,12 +74,20 @@ function Button_Base(props: Button_BaseProps) {
         [styles.buttonIconOnly]: !text && (!!leftIcon || !!rightIcon),
     })
 
+    let heightStyle: CSSProperties | undefined = undefined
+    if (state === 'preloader' && ref.current) {
+        heightStyle = {
+            width: ref.current.getBoundingClientRect().width
+        }
+    }
+
     return(
         <button
-            onClick={_onClick}
+            onClick={e => _onClick(e)}
             className={joinClassNames(buttonClassName, className)}
             disabled={state === 'disabled'}
             ref={ref}
+            style={heightStyle}
         >
             {state === 'preloader' && <PreloaderIcon className={styles.preloader} />}
             {state !== 'preloader' && leftIcon && <_Icon icon={leftIcon} className={styles.leftIcon}/>}

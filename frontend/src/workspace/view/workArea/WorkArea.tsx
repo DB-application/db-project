@@ -1,6 +1,7 @@
 import {Route, Switch, useRouteMatch} from 'react-router-dom'
 import styles from './WorkArea.module.css'
 import {CalendarWrapper} from "../calendar/CalendarWrapper";
+import {NoteAreaWrapper} from "../noteArea/NoteAreaWrapper";
 
 function WorkArea() {
     const { path } = useRouteMatch();
@@ -11,8 +12,8 @@ function WorkArea() {
                 <Route path={`${path}/calendar`}>
                     <CalendarWrapper />
                 </Route>
-                <Route path={`${path}/note`}>
-                    Заметка
+                <Route path={`${path}/note/:noteId`}>
+                    <NoteAreaWrapper />
                 </Route>
                 <Route path={`${path}/chat`}>
                     Чат

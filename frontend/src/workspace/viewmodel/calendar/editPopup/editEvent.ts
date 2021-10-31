@@ -134,6 +134,7 @@ const [isPopupLoadingAtom, setIsPopupLoading] = declareAtomWithSetter('editEvent
     on(close, () => false),
     on(removeEventAction, () => true),
     on(createEventAction, () => true),
+    on(editEventAction, () => true),
     on(createEventAction.done, () => false),
     on(createEventAction.fail, () => false),
     on(editEventAction.done, () => false),

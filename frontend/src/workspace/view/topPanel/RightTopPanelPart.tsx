@@ -6,7 +6,7 @@ import {ChatLeftDotsIcon} from '../../../icons/ChatLeftDotsIcon';
 import {useRouteMatch} from 'react-router-dom'
 import styles from './RightTopPanelPart.module.css'
 import {UserMenu} from "./userMeno/UserMenu";
-import {ComponentWithLink} from "../../../common/ComponentWithLink";
+import {Router} from "../../../core/router/router";
 
 
 function RightTopPanelPart() {
@@ -14,26 +14,20 @@ function RightTopPanelPart() {
     return (
         <div className={styles.container}>
             <div className={styles.buttonsGroup}>
-                <ComponentWithLink
-                    component={<Button_Icon
-                        icon={<ChatLeftDotsIcon/>}
-                        onClick={() => {}}
-                        tooltipText={I18n_get('Workspace.ChatButtonTooltip')}
-                        size={'small'}
-                        style={'link'}
-                    />}
-                    path={`${path}/chat`}
+                <Button_Icon
+                    icon={<ChatLeftDotsIcon/>}
+                    onClick={Router.Chat.open}
+                    tooltipText={I18n_get('Workspace.ChatButtonTooltip')}
+                    size={'small'}
+                    style={'link'}
                     className={styles.buttonsGroupButton}
                 />
-                <ComponentWithLink
-                    component={ <Button_Icon
-                        icon={<CalendarMonthOutlineIcon />}
-                        onClick={() => {}}
-                        tooltipText={I18n_get('Workspace.CalendarButtonTooltip')}
-                        size={'small'}
-                        style={'link'}
-                    />}
-                    path={`${path}/calendar`}
+                <Button_Icon
+                    icon={<CalendarMonthOutlineIcon />}
+                    onClick={Router.Calendar.open}
+                    tooltipText={I18n_get('Workspace.CalendarButtonTooltip')}
+                    size={'small'}
+                    style={'link'}
                     className={styles.buttonsGroupButton}
                 />
                 <Button_Icon

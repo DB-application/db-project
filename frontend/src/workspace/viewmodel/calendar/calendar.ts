@@ -22,7 +22,7 @@ const updateEvent = declareAction<CalendarEvent>()
 const initEvents = declareAction<Array<CalendarEvent>>()
 
 const eventsAtom = declareAtom<CalendarEvents>('calendar.events', {}, on => [
-    on(initEvents, (state, events) => {
+    on(initCalendar.done, (state, events) => {
         const eventsMap: CalendarEvents = {}
         events.forEach(event => eventsMap[event.eventId] = event)
         return eventsMap

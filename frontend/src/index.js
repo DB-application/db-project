@@ -10,11 +10,15 @@ import {isLoadingAppAtom} from "./appLayout/isLoadingApp";
 import {AppWrapper} from "./appLayout/AppWrapper";
 import i18n from "./i18n";
 import {initExternalLayer} from "./core/layers/externalLayers";
+import {workspaceLoadingAtom} from "./workspace/viewmodel/workspaceLoading";
+import {notesAtom} from "./workspace/viewmodel/notes/notes";
 
 const store = createStore(
     combine({
         userAtom,
         isLoadingAppAtom,
+        workspaceLoadingAtom,
+        notesAtom,
     })
 );
 

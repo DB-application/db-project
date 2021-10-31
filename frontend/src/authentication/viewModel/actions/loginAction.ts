@@ -4,6 +4,7 @@ import {loginPageActions} from "../loginPageData";
 import {toast} from "react-toastify";
 import {processStandardError} from "../../../core/error/processStandardError";
 import {goToUrl} from "../../../core/link/goToUrl";
+import {Router} from "../../../core/router/router";
 
 type LoginActionPayload = {
     login: string;
@@ -16,7 +17,7 @@ const loginAction = declareAction<LoginActionPayload>(
             .then(resp => {
                 toast.success('Вход произведен успешно')
                 store.dispatch(loginPageActions.setIsLoading(false))
-                setTimeout(() => goToUrl('/workspace'), 1000)
+                setTimeout(() => goToUrl(Router.Workspace.url()), 1000)
             })
             .catch(err => {
                 if (err.status && err.status === 401) {

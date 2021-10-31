@@ -62,7 +62,8 @@
   },
   "Errors": {
     "StandardError": "Упс, что-то пошло не так. Попробуйте еще раз",
-    "EventStartBiggerEnd": "Начало события должно быть раньше чем конец"
+    "EventStartBiggerEnd": "Начало события должно быть раньше чем конец",
+    "AddNote": "Ошибка при добавлении новой заметки"
   },
   "Success": {
     "EventCreate": "Событие создано",
@@ -76,5 +77,8 @@
     "Description": "Описание",
     "OrganizationBy": "Организатор",
     "Collaborators": "Участники"
+  },
+  "Sidebar": {
+    "RemoveNote": "Удалить"
   }
 }
