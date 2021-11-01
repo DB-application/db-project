@@ -1,9 +1,10 @@
 import {combine, declareAtom} from "@reatom/core";
 import {declareAtomWithSetter} from "../../../core/reatom/declareAtomWithSetter";
 import {getNoteContent} from "./getNoteContent";
+import {JSONContent} from '@tiptap/react'
 
 
-const [noteContentAtom, setNoteContent] = declareAtomWithSetter<Object>('noteContent', {}, on => [
+const [noteContentAtom, setNoteContent] = declareAtomWithSetter<JSONContent>('noteContent', {} as JSONContent, on => [
     on(getNoteContent.done, (_, {content}) => content)
 ])
 

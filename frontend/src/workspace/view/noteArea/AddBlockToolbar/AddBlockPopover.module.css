@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+    border-radius: 8px;
+    box-shadow: 0px 0px 4px rgba(66,72,78,0.12),0px 4px 16px rgba(66,72,78,0.2),0px 0px 1px rgba(66,72,78,0.16);
+    background: #fff;
+}
+
+.item {
+    padding: 0 8px;
+}

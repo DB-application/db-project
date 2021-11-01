@@ -1,5 +1,6 @@
 import {Note} from "../workspace/viewmodel/notes/notes";
 import {generateUuid} from "../core/uuid/generateUuid";
+import {JSONContent} from "@tiptap/react";
 
 
 function getNotes(): Promise<Array<Note>> {
@@ -104,7 +105,7 @@ function editNoteContent(payload: EditNoteContentData) {
 }
 
 type NoteContent = {
-    content: Object,
+    content: JSONContent,
     title: string,
 }
 
@@ -113,7 +114,27 @@ function getNoteContent(noteId: string): Promise<NoteContent> {
         setTimeout(() => {
             resolve({
                 content: {
-                    blocks: [],
+                    type: 'doc',
+                    content: [
+                        {
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "type": "text",
+                                    "text": "Example "
+                                },
+                                {
+                                    "type": "text",
+                                    "marks": [
+                                        {
+                                            "type": "bold"
+                                        }
+                                    ],
+                                    "text": "Text"
+                                }
+                            ]
+                        }
+                    ]
                 },
                 title: 'Новая записка',
             })

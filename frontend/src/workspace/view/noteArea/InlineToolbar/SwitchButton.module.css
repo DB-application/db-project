@@ -1,0 +1,26 @@
+.button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    outline: none;
+    transition: all 0.15s ease-in-out;
+    position: relative;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    background: #fff;
+    color: #000;
+    border: none;
+    padding: 0 3px;
+}
+
+.button:hover {
+    background: #c9cec166;
+}
+
+.button.checked {
+    background: #000;
+    color: #fff;
+}
