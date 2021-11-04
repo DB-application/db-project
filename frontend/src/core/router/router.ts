@@ -30,7 +30,7 @@ function openCalendar(push: boolean = false) {
 }
 
 function generateChatUrl() {
-    return `${WORKSPACE}${CALENDAR}`
+    return `${WORKSPACE}${CHAT}`
 }
 function openChat(push: boolean = false) {
     replaceUrl(generateChatUrl(), push)

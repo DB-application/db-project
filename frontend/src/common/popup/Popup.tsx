@@ -81,15 +81,19 @@ function PopupFooter({
 function Popup(props: PropsType) {
     const popupRef = useRef<HTMLDivElement|null>(null)
     const popupLayerRef = useRef<HTMLDivElement|null>(null)
+    const onPopupClickRef = useRef<boolean>(false)
 
-    useEventHandler('click', popupRef, event => {
-        event.preventDefault()
+    useEventHandler('mousedown', popupRef, event => {
+        onPopupClickRef.current = true
     })
-    useEventHandler('click', popupLayerRef, event => {
-        if (!event.defaultPrevented) {
+    useEventHandler('mouseup', popupRef, event => {
+        onPopupClickRef.current = true
+    })
+    useEventHandler('mouseup', popupLayerRef, event => {
+        if (!onPopupClickRef.current) {
             props.closePopup()
-            event.preventDefault()
         }
+        onPopupClickRef.current = false
     })
 
     const withHeader = props.type === 'withHeader' || props.type === 'withHeaderAndFooter'
