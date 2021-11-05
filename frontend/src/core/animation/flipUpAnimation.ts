@@ -4,7 +4,7 @@ import {animate, createAnimation} from "./animation";
 function createFlipUpAnimation(element: HTMLElement, time: number = 150) {
     const startTop = element.getBoundingClientRect().top
     return createAnimation({
-        opacity: [1, 0],
+        opacity: [0, 1],
         top: [startTop + 20, startTop],
     }, time)
 }
