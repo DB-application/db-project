@@ -1,8 +1,9 @@
-import {RefObject, useState} from "react";
+import {RefObject, useRef, useState} from "react";
 import {useEventHandler} from "../hooks/useEventHandler";
 import {Portal} from "./Portal";
 import {Tooltip} from "../../common/tooltip/Tooltip";
 import {PopoverAlign, PopoverSide} from "../../common/popover/getPopoverPosition";
+import {tooltipHideAnimation} from "../../common/tooltip/tooltipAnimations";
 
 type PropsType = {
     elementRef: RefObject<any>,
@@ -19,7 +20,13 @@ function TooltipPortal({
     side = 'bottom',
     align = 'center',
 }: PropsType) {
+    const tooltipRef = useRef<HTMLDivElement|null>(null)
     const [show, setShow] = useState(false)
+
+    const _closeTooltipWithAnimation = async () => {
+        tooltipRef && tooltipRef.current && await tooltipHideAnimation(tooltipRef.current)
+        setShow(false)
+    }
 
     let appearTimer: NodeJS.Timeout
 
@@ -29,7 +36,7 @@ function TooltipPortal({
 
     function closeTooltip() {
         clearTimeout(appearTimer)
-        setShow(false)
+        _closeTooltipWithAnimation()
     }
 
     useEventHandler('mouseenter', elementRef, appearTooltip)
@@ -48,6 +55,7 @@ function TooltipPortal({
                 elementRef={elementRef}
                 align={align}
                 side={side}
+                ref={tooltipRef}
             />}
         />
     )

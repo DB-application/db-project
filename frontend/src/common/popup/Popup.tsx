@@ -80,40 +80,30 @@ function PopupFooter({
 
 function Popup(props: PropsType) {
     const popupRef = useRef<HTMLDivElement|null>(null)
-    const popupLayerRef = useRef<HTMLDivElement|null>(null)
-    const onPopupClickRef = useRef<boolean>(false)
 
-    useEventHandler('mousedown', popupRef, event => {
-        onPopupClickRef.current = true
+    useEventHandler('click', popupRef, event => {
+        event.preventDefault()
     })
     useEventHandler('mouseup', popupRef, event => {
-        onPopupClickRef.current = true
-    })
-    useEventHandler('mouseup', popupLayerRef, event => {
-        if (!onPopupClickRef.current) {
-            props.closePopup()
-        }
-        onPopupClickRef.current = false
+        event.preventDefault()
     })
 
     const withHeader = props.type === 'withHeader' || props.type === 'withHeaderAndFooter'
     const withFooter = props.type === 'withHeaderAndFooter' || props.type === 'withFooter'
 
     return(
-        <div ref={popupLayerRef} className={styles.popupLayer}>
-            <div className={styles.popupContainer} ref={popupRef}>
-                {withHeader
-                    && <PopupHeader
-                        closePopup={props.closePopup}
-                        headerText={props.headerText}
-                    />}
-                {props.content}
-                {withFooter
-                    && <PopupFooter
-                        closePopup={props.closePopup}
-                        acceptButton={props.acceptButton}
-                    />}
-            </div>
+        <div className={styles.popupContainer} ref={popupRef}>
+            {withHeader
+            && <PopupHeader
+                closePopup={props.closePopup}
+                headerText={props.headerText}
+            />}
+            {props.content}
+            {withFooter
+            && <PopupFooter
+                closePopup={props.closePopup}
+                acceptButton={props.acceptButton}
+            />}
         </div>
     )
 }

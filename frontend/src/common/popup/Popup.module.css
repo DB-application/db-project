@@ -1,9 +1,3 @@
-.popupLayer {
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0,0,0,.3);
-    animation: fade-in .2s ease-in-out;
-}
 
 .popupContainer {
     position: absolute;
@@ -53,15 +47,6 @@
     border-bottom-right-radius: 3px;
     padding: 5px 10px;
     box-sizing: border-box;
-}
-
-@keyframes fade-in {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
 }
 
 @keyframes flip-up {
