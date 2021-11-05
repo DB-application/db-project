@@ -1,9 +1,9 @@
 import {Portal} from "./Portal";
-import React, {MutableRefObject, useRef, useState} from "react";
-import {popoverHideAnimation} from "../../common/popover/popoverHideAnimation";
+import React, {MutableRefObject, RefObject, useEffect, useRef, useState} from "react";
 import {useEventHandler} from "../hooks/useEventHandler";
 import styles from './PopupPortal.module.css'
-import {popupHideAnimation} from "../../common/popup/popupHideAnimation";
+import {popupAppearAnimation, popupHideAnimation} from "../../common/popup/popupHideAnimation";
+import { verify } from "../verify";
 
 type PropsType = {
     binding: JSX.Element,
@@ -15,6 +15,10 @@ type PopupLayoutProps = {
     binding: JSX.Element,
     closePopup: () => void,
 }
+
+const popupStack: Array<RefObject<HTMLElement|null>> = []
+
+// function addToStack:
 
 const PopupLayout = React.forwardRef<HTMLDivElement, PopupLayoutProps>((
     {
@@ -53,6 +57,12 @@ function PopupPortal({
         popupRef && popupRef.current && await popupHideAnimation(popupRef.current)
         setHiddenComplete(true)
     }
+
+    useEffect(() => {
+        if (show && popupRef.current) {
+            popupAppearAnimation(popupRef.current)
+        }
+    }, [show, popupRef, popupRef.current])
 
     if (!show) {
         if (hiddenComplete) {

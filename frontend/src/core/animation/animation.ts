@@ -49,7 +49,6 @@ function createAnimation(reducers: Reducers, time: number = 150): Animation {
 }
 
 async function animate(element: HTMLElement, animation: Animation) {
-
     const setTopCssValue = (top: number) => {
         element.style.top = `${top}px`
     }
@@ -59,6 +58,9 @@ async function animate(element: HTMLElement, animation: Animation) {
     const setTransformCssValue = (x: number, y: number) => {
         element.style.transform = `translate(${x}px, ${y}px)`
     }
+    animation.opacity && setOpacityCssValue(animation.opacity.startValue)
+    animation.top && setOpacityCssValue(animation.top.startValue)
+    animation.transform && setTransformCssValue(animation.transform[0].startValue, animation.transform[1].startValue)
 
     const animateValue = ({startValue, delta}: AnimationReducer, setter: (value: number) => void) => {
         let currentValue = startValue + delta
