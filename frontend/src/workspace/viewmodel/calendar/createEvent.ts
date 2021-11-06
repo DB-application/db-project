@@ -18,7 +18,7 @@ const createEventAction = declareAsyncAction<CreateEventData, void>(
                     organizerId: payload.organizerId,
                     title: payload.title,
                     description: payload.description,
-                    invitedUsersIds: [],
+                    invitedUsersIds: payload.invitedUsersIds,
                     place: payload.place,
                 }))
                 toast.success(I18n_get('Success.EventCreate'))

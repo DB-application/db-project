@@ -16,6 +16,7 @@ import {addNote} from "../../viewmodel/notes/addNote";
 import {Router} from "../../../core/router/router";
 import {sidebarAtom} from "../../viewmodel/sidebar/sidebar";
 import {useAtomWithSelector} from "../../../core/reatom/useAtomWithSelector";
+import {removeNote} from "../../viewmodel/notes/removeNote";
 
 type NotesListItemProps = {
     id: string,
@@ -39,7 +40,7 @@ function NoteContextMenu({
 }: NoteContextMenu) {
     const ref = useRef<HTMLDivElement|null>(null)
     const [popoverOpened, setPopoverOpened] = useState(false)
-    const handleRemoveNote = useAction(notesActions.removeNote)
+    const handleRemoveNote = useAction(removeNote)
 
     const items: Array<ListItemProps> = useMemo(() => {
         return [
@@ -48,7 +49,10 @@ function NoteContextMenu({
                 createBindingFn: () => <ListItem_IconAndText
                     icon={<DeleteBinLineIcon />}
                     text={I18n_get('Sidebar.RemoveNote')}
-                    onClick={() => handleRemoveNote(id)}
+                    onClick={() => {
+                        setPopoverOpened(false)
+                        handleRemoveNote(id)
+                    }}
                     className={styles.contextMenuItem}
                 />
             },

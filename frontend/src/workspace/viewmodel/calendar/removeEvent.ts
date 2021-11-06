@@ -12,7 +12,7 @@ const removeEventAction = declareAsyncAction<string, void>(
 
         return EventsApi.removeEvent(eventId)
             .then(() => {
-                store.dispatch(calendarActions.removeEvent(eventId))
+                store.dispatch(calendarActions.removeEvent([eventId]))
                 toast.success(I18n_get('Success.EventRemoved'))
                 return Promise.resolve()
             })

@@ -7,7 +7,7 @@ const initNotes = declareAsyncAction<void, void>(
     (_, store) => {
         return new Promise<void>(async (resolve, reject) => {
             setTimeout(() => {
-                store.dispatch(notesActions.initNotes([
+                store.dispatch(notesActions.updateNotes([
                     {
                         noteId: '1',
                         title: 'Заметка 1 Заметка 1 Заметка 1 ',

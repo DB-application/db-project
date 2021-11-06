@@ -32,6 +32,7 @@ type CreateEventData = {
     end: Date,
     title: string,
     description: string,
+    invitedUsersIds: Array<string>,
     organizerId: string,
     place: string,
 }

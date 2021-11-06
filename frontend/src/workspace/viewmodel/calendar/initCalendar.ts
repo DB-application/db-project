@@ -11,6 +11,7 @@ const initCalendar = declareAsyncAction<void, Array<CalendarEvent>>(
         store.dispatch(notesActions.setSelectedNote(null))
         return EventsApi.getCurrentUserEvents()
             .then(events => {
+                store.dispatch(calendarActions.updateEvents(events))
                 return Promise.resolve(events)
             })
             .catch(() => {
