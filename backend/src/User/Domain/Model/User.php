@@ -34,7 +34,10 @@ class User
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->username = $username;
-        $this->assertPhoneValid($phone);
+        if ($phone !== null)
+        {
+            $this->assertPhoneValid($phone);
+        }
         $this->phone = $phone;
         $this->avatarUrl = $avatarUrl;
         $this->loginKey = $this->buildLoginKey();

@@ -76,6 +76,18 @@ class Api implements ApiInterface
         }
     }
 
+    public function getUsersData(array $userIds): array
+    {
+        try
+        {
+            return $this->userService->getUsersData($userIds);
+        }
+        catch (\Exception $e)
+        {
+            $this->convertException($e);
+        }
+    }
+
     public function updateUserData(UserData $userData): void
     {
         try

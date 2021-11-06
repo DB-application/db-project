@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                  xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Event\Domain\Model\Event" table="event">
+        <id name="id" type="string" column="event_id"/>
+        <field name="name" column="name" type="string"/>
+        <field name="description" column="description" type="string" nullable="true"/>
+        <field name="startDate" column="start_date" type="datetime"/>
+        <field name="endDate" column="end_date" type="datetime"/>
+        <field name="place" column="place" type="string" nullable="true"/>
+        <field name="organizerId" column="organizer_id" type="string"/>
+        <field name="repetitionSchedule" column="repetition_schedule" type="integer" nullable="true"/>
+        <field name="isRepeatable" column="is_repeatable" type="integer"/>
+        <one-to-one field="organizerId" target-entity="User">
+            <join-column name="organizer_id" referenced-column-name="user_id"/>
+        </one-to-one>
+    </entity>
+</doctrine-mapping>

@@ -41,6 +41,33 @@ class UserQueryService implements UserQueryServiceInterface
         return $result ? $this->hydrator->hydrateAll($result) : null;
     }
 
+    /**
+     * @param array $userIds
+     * @return array
+     */
+    public function getUsersDataByIds(array $userIds): array
+    {
+        $const = static function (string $value)
+        {
+            return $value;
+        };
+
+        $qb = $this->conn->createQueryBuilder();
+        $qb->from('user', 'u');
+        $this->addUserFieldSelect($qb);
+        $qb->where("{$const(UserTable::USER_ID)} IN :userIds");
+        $query = $qb->getSQL();
+        $result = $this->conn->executeQuery($query, ['userIds' => $userIds])->fetchAllAssociative();
+
+        $userData = [];
+        foreach ($result as $item)
+        {
+            $userData[] = $this->hydrator->hydrateAll($item);
+        }
+
+        return $userData;
+    }
+
     public function getUserDataByEmailAndPassword(string $email, string $password): ?UserData
     {
         $const = static function (string $value)

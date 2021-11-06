@@ -55,6 +55,15 @@ class UserAppService
         return $this->userQueryService->getUserDataById($userId);
     }
 
+    /**
+     * @param string[] $userIds
+     * @return UserData[]
+     */
+    public function getUsersData(array $userIds): array
+    {
+        return $this->userQueryService->getUsersDataByIds($userIds);
+    }
+
     public function updateUserData(UserData $userData): void
     {
         //TODO: обернуть в транзакцию

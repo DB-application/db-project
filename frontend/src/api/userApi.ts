@@ -1,4 +1,4 @@
-import { HttpStatus } from "../core/http/HttpStatus"
+import {HttpStatus} from "../core/http/HttpStatus"
 import {goToUrl} from "../core/link/goToUrl";
 
 type Api_UserInfo = {
@@ -71,7 +71,7 @@ type GetUserDataType = {
 };
 
 function getUserData(): Promise<GetUserDataType> {
-    return fetch('/get/user_data', {
+    return fetch('/current/user_data', {
         method: 'POST',
     })
         .then(response => {
