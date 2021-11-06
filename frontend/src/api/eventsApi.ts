@@ -32,35 +32,36 @@ type CreateEventData = {
     end: Date,
     title: string,
     description: string,
-    invitedUsersIds: Array<string>,
     organizerId: string,
     place: string,
 }
 
 function createEvent(eventData: CreateEventData): Promise<{eventId: string}> {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve({eventId: '1'})
-        }, 1000)
+    return fetch('/create/event', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            startDate: eventData.start.getTime(),
+            endDate: eventData.end.getTime(),
+            title: eventData.title,
+            description: eventData.description,
+            organizerId: eventData.organizerId,
+            place: eventData.place,
+        })
     })
-    // return fetch('/create/event', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(eventData)
-    // })
-    //     .then(response => {
-    //         switch (response.status) {
-    //             case HttpStatus.OK:
-    //                 return response.json()
-    //             case HttpStatus.UNAUTHORIZED:
-    //                 goToUrl('/auth')
-    //                 return Promise.reject(response)
-    //             default:
-    //                 return Promise.reject(response)
-    //         }
-    //     })
+        .then(response => {
+            switch (response.status) {
+                case HttpStatus.OK:
+                    return response.json()
+                case HttpStatus.UNAUTHORIZED:
+                    goToUrl('/auth')
+                    return Promise.reject(response)
+                default:
+                    return Promise.reject(response)
+            }
+        })
 }
 
 type EditEventData = {

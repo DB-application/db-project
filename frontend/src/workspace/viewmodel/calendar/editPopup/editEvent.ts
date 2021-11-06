@@ -111,7 +111,6 @@ const submit = declareAction('editEvent.submit',
                 start,
                 description,
                 organizerId: currentUserId,
-                invitedUsersIds: [],
                 place,
             }))
         }
