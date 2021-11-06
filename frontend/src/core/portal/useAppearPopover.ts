@@ -1,4 +1,4 @@
-import {RefObject, useLayoutEffect} from "react";
+import {RefObject, useLayoutEffect, useRef} from "react";
 import {
     getPopoverPosition,
     invertPopoverSide,
@@ -15,8 +15,9 @@ function useAppearPopover(
     align: PopoverAlign,
     side: PopoverSide,
 ) {
+    const appearedRef = useRef<boolean>(false)
     useLayoutEffect(() => {
-        if (show) {
+        if (show && !appearedRef.current) {
             const controlHTML = controlRef.current
             const popoverHTML = popoverRef.current
             if (popoverHTML && controlHTML) {
@@ -28,10 +29,14 @@ function useAppearPopover(
                 popoverHTML.style.top = `${position.top}px`
                 popoverHTML.style.left = `${position.left}px`
                 popoverAppearAnimation(popoverHTML)
+                    .then(() => appearedRef.current = true)
             }
         }
+        else {
+            appearedRef.current = false
+        }
 
-    }, [show, controlRef, popoverRef.current, side, align])
+    }, [show, controlRef, popoverRef, popoverRef.current, side, align])
 }
 
 export {

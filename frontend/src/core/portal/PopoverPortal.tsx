@@ -15,37 +15,6 @@ interface IProps {
     side?: PopoverSide,
 }
 
-type PopoverLayerProps = {
-    elementRef: RefObject<any>,
-    content: JSX.Element,
-    closePopover: () => void,
-    align?: PopoverAlign,
-    side?: PopoverSide,
-}
-
-const PopoverLayer = React.forwardRef<HTMLDivElement, PopoverLayerProps>(({
-    closePopover,
-    align,
-    side,
-    content,
-    elementRef,
-}, popoverRef) => {
-    const popoverLayerRef = useRef<HTMLDivElement|null>(null)
-
-    return (
-        <div ref={popoverLayerRef}>
-            <PopoverContainer
-                control={elementRef}
-                content={content}
-                closePopover={closePopover}
-                align={align}
-                side={side}
-                ref={popoverRef}
-            />
-        </div>
-    )
-})
-
 function PopoverPortal({
     elementRef,
     show,
@@ -74,13 +43,15 @@ function PopoverPortal({
 
     return (
         <Portal
-            children={<PopoverLayer
-                ref={popoverRef}
+            children={<PopoverContainer
+                control={elementRef}
                 content={content}
-                closePopover={() => setShow(false)}
+                closePopover={() => {
+                    setShow(false)
+                }}
                 align={align}
                 side={side}
-                elementRef={elementRef}
+                ref={popoverRef}
             />}
             parentId={'popover'}
         />

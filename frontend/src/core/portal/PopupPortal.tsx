@@ -58,7 +58,7 @@ function PopupPortal({
         setAppearComplete(false)
         removeFromStack()
         appearPreviousPopup()
-    }, [popupRef, popupRef.current, setAppearComplete, setHiddenComplete])
+    }, [popupRef, setAppearComplete, setHiddenComplete])
 
     const openPopup = useCallback(async () => {
         addToStack(popupRef)
@@ -71,13 +71,13 @@ function PopupPortal({
                 popupAppearAnimation(verify(popupRef.current))
                     .then(() => setAppearComplete(true))
             })
-    }, [popupRef, popupRef.current, setAppearComplete])
+    }, [popupRef, setAppearComplete])
 
     useEffect(() => {
         if (show && popupRef.current && !appearComplete) {
             openPopup()
         }
-    }, [show, popupRef, popupRef.current])
+    }, [show, popupRef])
 
     if (!show) {
         if (hiddenComplete) {

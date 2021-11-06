@@ -51,6 +51,11 @@ function createAnimation(reducers: Reducers, time: number = 150): Animation {
 }
 
 async function animate(element: HTMLElement, animation: Animation) {
+    const computedStyle = getComputedStyle(element)
+    const elementUserSelect = computedStyle.getPropertyValue('user-select');
+    const elementPointerEvents = computedStyle.getPropertyValue('pointer-events');
+    element.style.userSelect = 'none'
+    element.style.pointerEvents = 'none'
     const setTopCssValue = (top: number) => {
         element.style.top = `${top}px`
     }
@@ -124,6 +129,10 @@ async function animate(element: HTMLElement, animation: Animation) {
     ].filter(timer => !!timer)
 
     return Promise.all(timers)
+        .then(() => {
+            element.style.userSelect = elementUserSelect
+            element.style.pointerEvents = elementPointerEvents
+        })
 }
 
 export {

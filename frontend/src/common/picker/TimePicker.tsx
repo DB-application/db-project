@@ -9,6 +9,7 @@ import {getStylesWithMods} from "../../core/styles/getStylesWithMods";
 import {serializeNumber} from './converters';
 import {parsePickerValue, validTimePickerValue} from "./validation";
 import {TextField} from "../textfield/TextField";
+import {useEventHandler} from "../../core/hooks/useEventHandler";
 
 
 type TimeType = {
@@ -78,6 +79,7 @@ function TimePickerPopover({
     minutesStep = 1,
     hoursStep = 1,
 }: TimePickerPopover) {
+    const popoverRef = useRef<HTMLDivElement|null>(null)
     const setHour = useCallback((hour: number) => {
         setCurrentTime({...currentTime, hours: hour})
     }, [setCurrentTime, currentTime])
@@ -89,8 +91,12 @@ function TimePickerPopover({
     const hours = useMemo(() => generateDigits(hoursStep, 24), [hoursStep])
     const minutes = useMemo(() => generateDigits(minutesStep, 60), [minutesStep])
 
+    useEventHandler('mousedown', popoverRef, event => {
+        event.preventDefault()
+    })
+
     return(
-        <div>
+        <div ref={popoverRef}>
             <div className={styles.timeListsContainer}>
                 <TimePickerList
                     onSelect={setHour}
