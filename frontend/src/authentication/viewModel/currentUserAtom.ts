@@ -14,7 +14,7 @@ const setAvatarUrl = declareAction<string>()
 const setUserName = declareAction<string>()
 const setUserUnauthorized = declareAction()
 
-const [userAtom, setUserData] = declareAtomWithSetter<UserModel>('currentUserAtom', userMockData, (on) => [
+const [currentUserAtom, setCurrentUserData] = declareAtomWithSetter<UserModel>('currentUserAtom', userMockData, (on) => [
     on(setEmail, (state, email) => ({...state, email})),
     on(setFirstname, (state, firstname) => ({...state, firstname})),
     on(setLastname, (state, lastname) => ({...state, lastname})),
@@ -24,12 +24,12 @@ const [userAtom, setUserData] = declareAtomWithSetter<UserModel>('currentUserAto
     on(setUserUnauthorized, () => ({isAuthUser: false})),
 ])
 
-const authorizedUser = map(userAtom, (user) => (
+const authorizedCurrentUser = map(currentUserAtom, (user) => (
     user as AuthenticatedUserModel
 ))
 
-const userActions = {
-    setUserData,
+const currentUserActions = {
+    setCurrentUserData,
     setEmail,
     setFirstname,
     setLastname,
@@ -40,7 +40,7 @@ const userActions = {
 }
 
 export {
-    userActions,
-    userAtom,
-    authorizedUser,
+    currentUserActions,
+    currentUserAtom,
+    authorizedCurrentUser,
 };

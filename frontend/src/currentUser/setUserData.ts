@@ -1,6 +1,6 @@
 import {Store} from "@reatom/core";
-import {UserApi} from "../api/userApi";
-import {authorizedUser, userActions} from "../authentication/viewModel/userAtom";
+import {CurrentUserApi} from "../api/currentUserApi";
+import {authorizedCurrentUser, currentUserActions} from "../authentication/viewModel/currentUserAtom";
 import { HttpStatus } from "../core/http/HttpStatus";
 
 type SetUserInfoPayload = {
@@ -18,8 +18,8 @@ function setUserInfo(store: Store, {
     firstName,
     nickname,
 }: SetUserInfoPayload) {
-    const user = store.getState(authorizedUser)
-    return UserApi.setUserInfo({
+    const user = store.getState(authorizedCurrentUser)
+    return CurrentUserApi.setUserInfo({
         firstName,
         lastName,
         phoneNumber,
@@ -29,7 +29,7 @@ function setUserInfo(store: Store, {
     })
         .then(response => {
             if (response.status === HttpStatus.OK) {
-                store.dispatch(userActions.setUserData({
+                store.dispatch(currentUserActions.setCurrentUserData({
                     ...user,
                     username: nickname,
                     email,

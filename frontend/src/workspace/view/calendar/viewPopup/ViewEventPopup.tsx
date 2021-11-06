@@ -5,7 +5,7 @@ import styles from './ViewEventPopup.module.css'
 import {I18n_get} from "../../../../i18n/i18n_get";
 import {UserInfo} from "../../../../common/userInfo/UserInfo";
 import {UserList} from "../../../../common/userList/UserList";
-import {UserType} from "../../../../user/UserType";
+import {UserData} from "../../../../common/UserData";
 import {UserInfoPopover} from "../../../../common/userInfo/UserInfoPopover";
 import {PopoverPortal} from "../../../../core/portal/PopoverPortal";
 import {useRef, useState} from "react";
@@ -15,13 +15,13 @@ function InvitedUsersBlock() {
     const organizerRef = useRef<HTMLDivElement|null>(null)
     const [popoverOpened, setPopoverOpened] = useState<boolean>(false)
 
-    const organizator: UserType = {
+    const organizator: UserData = {
         id: '123',
         username: "Fenomen",
         email: 'email12 321@mail.ru',
         avatarUrl: '',
     }
-    const users: Array<UserType> = [
+    const users: Array<UserData> = [
         {
             id: '1',
             email: 'email12321123123w@mail.ru',

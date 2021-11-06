@@ -1,13 +1,13 @@
 import {declareAction} from "@reatom/core";
-import {userActions} from "../authentication/viewModel/userAtom";
+import {currentUserActions} from "../authentication/viewModel/currentUserAtom";
 import {processStandardError} from "../core/error/processStandardError";
-import {UserApi} from "../api/userApi";
+import {CurrentUserApi} from "../api/currentUserApi";
 import {setIsLoadingApp} from "../appLayout/isLoadingApp";
 
 const initUserDataAction = declareAction((_, store) => {
-    UserApi.getUserData()
+    CurrentUserApi.getUserData()
         .then((data) => {
-            store.dispatch(userActions.setUserData({ ...data, isAuthUser: true }));
+            store.dispatch(currentUserActions.setCurrentUserData({ ...data, isAuthUser: true }));
             store.dispatch(setIsLoadingApp(false))
         })
         .catch(() => {

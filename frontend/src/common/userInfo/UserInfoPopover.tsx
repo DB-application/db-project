@@ -1,9 +1,9 @@
-import {UserType} from "../../user/UserType";
+import {UserData} from "../UserData";
 import styles from './UserInfoPopover.module.css'
 import {AvatarWrapper} from "../avatar/Avatar";
 
 type UserInfoPopoverProps = {
-    user: UserType,
+    user: UserData,
 }
 
 type InfoBlockProps = {

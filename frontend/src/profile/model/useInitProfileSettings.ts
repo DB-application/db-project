@@ -1,10 +1,10 @@
-import {userAtom} from "../../authentication/viewModel/userAtom";
+import {currentUserAtom} from "../../authentication/viewModel/currentUserAtom";
 import {profileSettingsActions} from "./profileSettings";
 import {useAction, useAtom} from "@reatom/react";
 import {useLayoutEffect} from "react";
 
 function useInitProfileSettings() {
-    const userInfo = useAtom(userAtom)
+    const userInfo = useAtom(currentUserAtom)
     const handleSetNickName = useAction(profileSettingsActions.setNickname)
     const handleSetFirstname = useAction(profileSettingsActions.setFirstName)
     const handleSetLastname = useAction(profileSettingsActions.setLastName)

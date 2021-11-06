@@ -1,6 +1,6 @@
 import {combine, declareAction, declareAtom, map} from "@reatom/core";
 import {declareAtomWithSetter} from "../../../../core/reatom/declareAtomWithSetter";
-import {authorizedUser} from "../../../../authentication/viewModel/userAtom";
+import {authorizedCurrentUser} from "../../../../authentication/viewModel/currentUserAtom";
 import {createEventAction} from "../createEvent";
 import {editEventAction} from "../editEvent";
 import {removeEventAction} from "../removeEvent";
@@ -81,7 +81,7 @@ const submit = declareAction('editEvent.submit',
             mode,
             place,
         } = store.getState(editEventAtom)
-        const {id: currentUserId} = store.getState(authorizedUser)
+        const {id: currentUserId} = store.getState(authorizedCurrentUser)
 
         let newStart = new Date(start)
         let newEnd = new Date(end)

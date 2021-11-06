@@ -4,7 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {context} from '@reatom/react';
 import {combine, createStore,} from "@reatom/core";
-import {userAtom} from "./authentication/viewModel/userAtom";
+import {currentUserAtom} from "./authentication/viewModel/currentUserAtom";
 import {BrowserRouter as Router} from 'react-router-dom';
 import {isLoadingAppAtom} from "./appLayout/isLoadingApp";
 import {AppWrapper} from "./appLayout/AppWrapper";
@@ -12,13 +12,15 @@ import i18n from "./i18n";
 import {initExternalLayer} from "./core/layers/externalLayers";
 import {workspaceLoadingAtom} from "./workspace/viewmodel/workspaceLoading";
 import {notesAtom} from "./workspace/viewmodel/notes/notes";
+import {usersAtom} from "./users/usersAtom";
 
 const store = createStore(
     combine({
-        userAtom,
+        userAtom: currentUserAtom,
         isLoadingAppAtom,
         workspaceLoadingAtom,
         notesAtom,
+        usersAtom,
     })
 );
 

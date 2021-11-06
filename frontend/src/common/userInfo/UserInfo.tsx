@@ -1,11 +1,11 @@
-import {UserType} from "../../user/UserType";
+import {UserData} from "../UserData";
 import {AvatarSize, AvatarWrapper} from "../avatar/Avatar";
 import styles from './UserInfo.module.css'
 import {joinClassNames} from "../../core/styles/joinClassNames";
 import {getStylesWithMods} from "../../core/styles/getStylesWithMods";
 
 type UserInfoProps = {
-    user: UserType,
+    user: UserData,
     size: 'small'|'normal'|'large',
     onClick?: () => void,
     className?: string,

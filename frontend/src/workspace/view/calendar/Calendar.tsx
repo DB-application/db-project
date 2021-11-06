@@ -8,12 +8,12 @@ import {calendarAtom, CalendarEvent} from "../../viewmodel/calendar/calendar";
 import {useAtomWithSelector} from "../../../core/reatom/useAtomWithSelector";
 import {editEventActions} from "../../viewmodel/calendar/editPopup/editEvent";
 import {viewEventActions} from "../../viewmodel/calendar/viewPopup/viewEvent";
-import {authorizedUser} from "../../../authentication/viewModel/userAtom";
+import {authorizedCurrentUser} from "../../../authentication/viewModel/currentUserAtom";
 
 
 function EventsCalendar() {
     const events = useAtomWithSelector(calendarAtom, x => x.events)
-    const currentUserId = useAtomWithSelector(authorizedUser, x => x.id)
+    const currentUserId = useAtomWithSelector(authorizedCurrentUser, x => x.id)
     const handleOpenEditEventPopup = useAction(editEventActions.open)
     const handleOpenViewEventPopup = useAction(viewEventActions.open)
 

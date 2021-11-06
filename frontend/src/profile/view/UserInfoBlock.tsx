@@ -1,12 +1,12 @@
 import {useAtom} from "@reatom/react";
-import {authorizedUser} from "../../authentication/viewModel/userAtom";
+import {authorizedCurrentUser} from "../../authentication/viewModel/currentUserAtom";
 
 
 import styles from './UserInfoBlock.module.css'
 import {UserInfo} from "../../common/userInfo/UserInfo";
 
 function UserInfoBlock() {
-    const user = useAtom(authorizedUser)
+    const user = useAtom(authorizedCurrentUser)
 
     return <UserInfo
         user={user}

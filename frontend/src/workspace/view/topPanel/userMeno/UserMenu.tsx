@@ -1,6 +1,6 @@
 import {AvatarWrapper} from "../../../../common/avatar/Avatar";
 import {useAction, useAtom} from "@reatom/react";
-import {authorizedUser} from "../../../../authentication/viewModel/userAtom";
+import {authorizedCurrentUser} from "../../../../authentication/viewModel/currentUserAtom";
 import styles from "./UserMenu.module.css";
 import React, {useRef, useState} from "react";
 import {List_Base, ListItemProps} from "../../../../common/list/List_Base";
@@ -75,7 +75,7 @@ function UserMenuPopover({
 function UserMenu() {
     const ref = useRef<HTMLDivElement|null>(null)
     const [popoverOpened, setPopoverOpened] = useState<boolean>(false)
-    const user = useAtom(authorizedUser)
+    const user = useAtom(authorizedCurrentUser)
     const logout = useAction(logoutAction)
 
     return (

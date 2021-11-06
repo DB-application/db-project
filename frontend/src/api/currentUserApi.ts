@@ -88,14 +88,14 @@ function getUserData(): Promise<GetUserDataType> {
 }
 
 
-const UserApi = {
+const CurrentUserApi = {
     getUserData,
     changePassword,
     setUserInfo,
 }
 
 export {
-    UserApi,
+    CurrentUserApi,
 }
 export type {
     Api_UserInfo,

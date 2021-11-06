@@ -1,4 +1,4 @@
-import {UserType} from "../../user/UserType";
+import {UserData} from "../UserData";
 import styles from './UserList.module.css'
 import {List_Base, ListItemProps} from "../list/List_Base";
 import {UserInfo} from "../userInfo/UserInfo";
@@ -7,13 +7,13 @@ import {useRef, useState} from "react";
 import {UserInfoPopover} from "../userInfo/UserInfoPopover";
 
 type UserListProps = {
-    users: Array<UserType>,
+    users: Array<UserData>,
     onClick: (id: string) => void,
     className?: string,
 }
 
 type UserListItemProps = {
-    user: UserType,
+    user: UserData,
     onClick: () => void,
 }
 
