@@ -19,14 +19,14 @@ final class Version20211024185730 extends AbstractMigration
         $this->addSql(<<<SQL
             CREATE TABLE event
             (
-                event_id VARCHAR(16) PRIMARY KEY,
+                event_id VARCHAR(64) PRIMARY KEY,
                 name VARCHAR(60) NOT NULL,
                 description TEXT,
                 start_date DATETIME NOT NULL,
                 end_date DATETIME NOT NULL,
                 place VARCHAR(60),
-                organizer_id VARCHAR(16) NOT NULL,
-                repetition_shedule INT,
+                organizer_id VARCHAR(64) NOT NULL,
+                repetition_schedule INT,
                 is_repeatable TINYINT(1),
                 FOREIGN KEY (organizer_id) REFERENCES user (user_id)
             );

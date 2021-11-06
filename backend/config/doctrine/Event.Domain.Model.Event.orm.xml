@@ -14,8 +14,5 @@
         <field name="organizerId" column="organizer_id" type="string"/>
         <field name="repetitionSchedule" column="repetition_schedule" type="integer" nullable="true"/>
         <field name="isRepeatable" column="is_repeatable" type="integer"/>
-        <one-to-one field="organizerId" target-entity="User">
-            <join-column name="organizer_id" referenced-column-name="user_id"/>
-        </one-to-one>
     </entity>
 </doctrine-mapping>

@@ -1,40 +1,41 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Event\Domain;
+namespace App\Event\Domain\Model;
 
 use App\Common\Domain\Uuid;
 
 class Event
 {
+    /** @var Uuid */
     private $id;
-
+    /** @var string */
     private $name;
-
+    /** @var string */
     private $description;
-
+    /** @var \DateTimeImmutable */
     private $startDate;
-
+    /** @var \DateTimeImmutable */
     private $endDate;
-
+    /** @var string */
     private $place;
-
+    /** @var Uuid */
     private $organizerId;
-
+    /** @var int|null */
     private $repetitionSchedule;
-
+    /** @var bool */
     private $isRepeatable;
 
     public function __construct(
-        Uuid               $id,
-        string             $name,
-        string             $description,
+        Uuid $id,
+        string $name,
+        string $description,
         \DateTimeImmutable $startDate,
         \DateTimeImmutable $endDate,
-        string             $place,
-        Uuid               $organizerId,
-        int                $repetitionSchedule,
-        bool               $isRepeatable
+        string $place,
+        Uuid $organizerId,
+        ?int $repetitionSchedule,
+        bool $isRepeatable
     )
     {
         $this->id = $id;
@@ -83,7 +84,7 @@ class Event
         return $this->organizerId;
     }
 
-    public function getRepetitionSchedule(): int
+    public function getRepetitionSchedule(): ?int
     {
         return $this->repetitionSchedule;
     }
