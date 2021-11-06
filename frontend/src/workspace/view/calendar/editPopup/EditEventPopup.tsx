@@ -96,9 +96,11 @@ function Content() {
         allDay,
         endError,
         titleError,
+        place,
     } = useAtom(editEventAtom)
     const handleSetTitle = useAction(editEventActions.setTitle)
     const handleSetStart = useAction(editEventActions.setStart)
+    const handleSetPlace = useAction(editEventActions.setPlace)
     const handleSetEnd = useAction(editEventActions.setEnd)
     const handleSetDescription = useAction(editEventActions.setDescription)
     const handleRemove = useAction(editEventActions.removeEvent)
@@ -119,6 +121,12 @@ function Content() {
                 description={I18n_get('EditEventPopup.DescriptionField')}
                 value={description}
                 onChange={handleSetDescription}
+                className={styles.contentBlock}
+            />
+            <TextField
+                description={I18n_get('EditEventPopup.PlaceField')}
+                value={place}
+                onChange={handleSetPlace}
                 className={styles.contentBlock}
             />
             <DateBlock

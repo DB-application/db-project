@@ -6,9 +6,15 @@ import {I18n_get} from "../../../../i18n/i18n_get";
 import {UserInfo} from "../../../../common/userInfo/UserInfo";
 import {UserList} from "../../../../common/userList/UserList";
 import {UserType} from "../../../../user/UserType";
+import {UserInfoPopover} from "../../../../common/userInfo/UserInfoPopover";
+import {PopoverPortal} from "../../../../core/portal/PopoverPortal";
+import {useRef, useState} from "react";
 
 
 function InvitedUsersBlock() {
+    const organizerRef = useRef<HTMLDivElement|null>(null)
+    const [popoverOpened, setPopoverOpened] = useState<boolean>(false)
+
     const organizator: UserType = {
         id: '123',
         username: "Fenomen",
@@ -18,8 +24,11 @@ function InvitedUsersBlock() {
     const users: Array<UserType> = [
         {
             id: '1',
-            email: 'email12 321@mail.ru',
-            username: 'user 1',
+            email: 'email12321123123w@mail.ru',
+            firstName: 'Эльдар',
+            lastName: 'Мухаметханов',
+            phone: '89021025370',
+            username: 'email12321123123w 123 ',
             avatarUrl: '',
         },
         {
@@ -41,10 +50,21 @@ function InvitedUsersBlock() {
             <div className={styles.userBlockLabel}>
                 {I18n_get('ViewEventPopup.OrganizationBy')}
             </div>
-            <UserInfo
-                user={organizator}
-                size={'small'}
-                className={styles.organizator}
+            <div ref={organizerRef}>
+                <UserInfo
+                    user={organizator}
+                    size={'small'}
+                    onClick={() => setPopoverOpened(true)}
+                    className={styles.organizator}
+                />
+            </div>
+            <PopoverPortal
+                elementRef={organizerRef}
+                show={popoverOpened}
+                setShow={setPopoverOpened}
+                content={<UserInfoPopover
+                    user={organizator}
+                />}
             />
             <div className={styles.userBlockLabel}>
                 {I18n_get('ViewEventPopup.Collaborators')}
@@ -58,12 +78,53 @@ function InvitedUsersBlock() {
     )
 }
 
+type InfoDataBlock = {
+    description: string,
+    value: string,
+}
+
+function InfoDataBlock({
+    value,
+    description,
+}: InfoDataBlock) {
+    return (
+        <div className={styles.infoContainer}>
+            <div className={styles.infoTitle}>
+                {description}:
+            </div>
+            <div className={styles.infoValue}>
+                {value}
+            </div>
+        </div>
+    )
+}
+
+type DescriptionBlockProps = {
+    description: string,
+}
+
+function DescriptionBlock({
+    description,
+}: DescriptionBlockProps) {
+    return (
+        <div className={styles.descriptionContainer}>
+            <div className={styles.infoTitle}>
+                {I18n_get('ViewEventPopup.Description')}:
+            </div>
+            <div className={styles.description}>
+                {description}
+            </div>
+        </div>
+    )
+}
+
 function Content() {
     const {
         title,
         start,
         end,
-        description
+        description,
+        place,
     } = useAtom(viewEventAtom)
 
     const getDateString = (date: Date) => {
@@ -77,30 +138,25 @@ function Content() {
             </div>
             <div className={styles.eventInfoContainer}>
                 <div className={styles.eventData}>
-                    <div className={styles.eventTitleContainer}>
-                        <div className={styles.titleLabel}>
-                            {I18n_get('ViewEventPopup.TitleLabel')}:
-                        </div>
-                        <div className={styles.eventTitle}>
-                            {title}
-                        </div>
-                    </div>
-                    <div className={styles.timeContainer}>
-                        <div className={styles.whenTitle}>
-                            {I18n_get('ViewEventPopup.WhenLabel')}:
-                        </div>
-                        <div className={styles.range}>
-                            {getDateString(start)} - {getDateString(end)}
-                        </div>
-                    </div>
-                    <div className={styles.descriptionContainer}>
-                        <div className={styles.descriptionLabel}>
-                            {I18n_get('ViewEventPopup.Description')}:
-                        </div>
-                        <div className={styles.description}>
-                            {description}
-                        </div>
-                    </div>
+                    <InfoDataBlock
+                        description={I18n_get('ViewEventPopup.TitleLabel')}
+                        value={title}
+                    />
+                    {place && <InfoDataBlock
+                        description={I18n_get('ViewEventPopup.PlaceLabel')}
+                        value={place}
+                    />}
+                    <InfoDataBlock
+                        description={I18n_get('ViewEventPopup.StartLabel')}
+                        value={getDateString(start)}
+                    />
+                    <InfoDataBlock
+                        description={I18n_get('ViewEventPopup.EndLabel')}
+                        value={getDateString(end)}
+                    />
+                    {description && <DescriptionBlock
+                        description={description}
+                    />}
                 </div>
                 <InvitedUsersBlock />
             </div>

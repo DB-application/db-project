@@ -19,6 +19,7 @@ const createEventAction = declareAsyncAction<CreateEventData, void>(
                     title: payload.title,
                     description: payload.description,
                     invitedUsersIds: payload.invitedUsersIds,
+                    place: payload.place,
                 }))
                 toast.success(I18n_get('Success.EventCreate'))
                 return Promise.resolve({eventId})

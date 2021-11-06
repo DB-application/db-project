@@ -10,7 +10,8 @@ type Reducers = {
 
 type AnimationReducer = {
     startValue: number,
-    delta: number,
+    endValue: number,
+    iterationsCount: number,
 }
 
 type Animation = {
@@ -29,8 +30,9 @@ function createAnimation(reducers: Reducers, time: number = 150): Animation {
 
     const createAnimationByReducer = (reducer: Reducer) => {
         return {
-            delta: (reducer[1] - reducer[0]) / iterationsCount,
             startValue: reducer[0],
+            endValue: reducer[1],
+            iterationsCount: iterationsCount,
         }
     }
 
@@ -58,39 +60,70 @@ async function animate(element: HTMLElement, animation: Animation) {
     const setTransformCssValue = (x: number, y: number) => {
         element.style.transform = `translate(${x}px, ${y}px)`
     }
+    const calculateDelta = (reducer: AnimationReducer) => {
+        return (reducer.endValue - reducer.startValue) / reducer.iterationsCount
+    }
     animation.opacity && setOpacityCssValue(animation.opacity.startValue)
-    animation.top && setOpacityCssValue(animation.top.startValue)
+    animation.top && setTopCssValue(animation.top.startValue)
     animation.transform && setTransformCssValue(animation.transform[0].startValue, animation.transform[1].startValue)
 
-    const animateValue = ({startValue, delta}: AnimationReducer, setter: (value: number) => void) => {
-        let currentValue = startValue + delta
-        return setInterval(() => {
-            setter(currentValue)
-            currentValue += delta
+    const doWithInterval = (iterationsCount: number, doEveryTime: () => void, doWhenEnd: () => void) => {
+        let iteration = 1;
+        const timerId = setInterval(() => {
+            doEveryTime()
+            iteration++
+            if (iteration >= iterationsCount) {
+                clearInterval(timerId)
+                doWhenEnd()
+            }
         }, FRAME_TIME);
+    }
+
+    const animateValue = async (reducer: AnimationReducer, setter: (value: number) => void) => {
+        return new Promise((resolve) => {
+            const delta = calculateDelta(reducer)
+            let currentValue = reducer.startValue + delta
+            doWithInterval(
+                reducer.iterationsCount,
+                () => {
+                    setter(currentValue)
+                    currentValue += delta
+                },
+                () => {
+                    setter(reducer.endValue)
+                    resolve(undefined)
+                }
+            )
+        })
     }
     const animateTransform = (reducerX: AnimationReducer, reducerY: AnimationReducer) => {
-        let currentX = reducerX.startValue + reducerX.delta
-        let currentY = reducerY.startValue + reducerY.delta
-        return setInterval(() => {
-            setTransformCssValue(currentX, currentY)
-            currentX += reducerX.delta
-            currentY += reducerY.delta
-        }, FRAME_TIME);
+        return new Promise((resolve) => {
+            const deltaX = calculateDelta(reducerX)
+            const deltaY = calculateDelta(reducerY)
+            let currentX = reducerX.startValue + deltaX
+            let currentY = reducerY.startValue + deltaY
+            doWithInterval(
+                reducerX.iterationsCount,
+                () => {
+                    setTransformCssValue(currentX, currentY)
+                    currentX += deltaX
+                    currentY += deltaY
+                },
+                () => {
+                    setTransformCssValue(reducerX.endValue, reducerY.endValue)
+                    resolve(undefined)
+                }
+            )
+        })
     }
 
-    return new Promise((resolve) => {
-        const timers = [
-            animation.top && animateValue(animation.top, setTopCssValue),
-            animation.opacity && animateValue(animation.opacity, setOpacityCssValue),
-            animation.transform && animateTransform(animation.transform[0], animation.transform[1]),
-        ]
+    const timers = [
+        animation.top && animateValue(animation.top, setTopCssValue),
+        animation.opacity && animateValue(animation.opacity, setOpacityCssValue),
+        animation.transform && animateTransform(animation.transform[0], animation.transform[1]),
+    ].filter(timer => !!timer)
 
-        setTimeout(() => {
-            timers.forEach(timerId => timerId && clearInterval(timerId))
-            resolve(undefined)
-        }, animation.time);
-    })
+    return Promise.all(timers)
 }
 
 export {

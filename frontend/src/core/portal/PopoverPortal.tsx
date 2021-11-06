@@ -4,6 +4,7 @@ import {PopoverContainer} from "../../common/popover/PopoverContainer";
 import {PopoverAlign, PopoverSide} from "../../common/popover/getPopoverPosition";
 import {popoverHideAnimation} from "../../common/popover/popoverHideAnimation";
 import {useEventHandler} from "../hooks/useEventHandler";
+import {useAppearPopover} from "./useAppearPopover";
 
 interface IProps {
     elementRef: RefObject<any>,
@@ -56,8 +57,8 @@ function PopoverPortal({
     show,
     setShow,
     content,
-    align,
-    side,
+    align = 'center',
+    side = 'bottom',
 }: IProps ) {
     const popoverRef = useRef<HTMLDivElement|null>(null)
     const [hiddenComplete, setHiddenComplete] = useState(false)
@@ -66,7 +67,7 @@ function PopoverPortal({
         popoverRef && popoverRef.current && await popoverHideAnimation(popoverRef.current)
         setHiddenComplete(true)
     }
-
+    useAppearPopover(show, elementRef, popoverRef, align, side)
     if (!show) {
         if (hiddenComplete) {
             return null

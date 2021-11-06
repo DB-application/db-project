@@ -1,0 +1,42 @@
+.container {
+    padding: 15px;
+    box-sizing: border-box;
+    max-width: 200px;
+}
+
+.header {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.avatar {
+
+}
+
+.nickname {
+    margin-left: 13px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.info {
+
+}
+
+.infoBlock {
+    display: flex;
+    align-items: center;
+}
+
+.infoDescription {
+    font: bold 14px Roboto;
+}
+
+.infoValue {
+    font: 12px Roboto;
+    margin-left: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

@@ -18,19 +18,6 @@ const Tooltip = React.forwardRef<HTMLDivElement|null, PropsType>(
          align = 'center',
      }, ref
 ) => {
-    const tooltipRef = ref as MutableRefObject<HTMLDivElement|null>
-    useEffect(() => {
-        const controlHTML = elementRef.current as HTMLElement
-        const controlBounds = controlHTML.getBoundingClientRect()
-        const popoverHTML = tooltipRef.current
-        if (popoverHTML) {
-            const popoverRect = popoverHTML.getBoundingClientRect()
-            const position = getPopoverPosition(controlBounds, popoverRect, side, align)
-            popoverHTML.style.top = `${position.top}px`
-            popoverHTML.style.left = `${position.left}px`
-        }
-    }, [elementRef, tooltipRef.current, side, align])
-
     return(
         <div
             ref={ref}

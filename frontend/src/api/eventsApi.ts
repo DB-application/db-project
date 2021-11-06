@@ -34,6 +34,7 @@ type CreateEventData = {
     description: string,
     invitedUsersIds: Array<string>,
     organizerId: string,
+    place: string,
 }
 
 function createEvent(eventData: CreateEventData): Promise<{eventId: string}> {
@@ -70,6 +71,7 @@ type EditEventData = {
     description: string,
     invitedUsersIds: Array<string>,
     organizerId: string,
+    place: string,
 }
 
 function editEvent(eventData: EditEventData) {

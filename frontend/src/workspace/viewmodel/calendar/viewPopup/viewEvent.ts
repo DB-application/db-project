@@ -25,12 +25,16 @@ const titleAtom = declareAtom<string>('viewEvent.title', '', on => [
 const descriptionAtom = declareAtom<string>('viewEvent.description', '', on => [
     on(open, (_, {event}) => event.description)
 ])
+const placeAtom = declareAtom<string>('viewEvent.place', '', on => [
+    on(open, (_, {event}) => event.place)
+])
 
 const viewEventAtom = combine(({
     opened: openedAtom,
     start: startAtom,
     end: endAtom,
     title: titleAtom,
+    place: placeAtom,
     description: descriptionAtom,
 }))
 

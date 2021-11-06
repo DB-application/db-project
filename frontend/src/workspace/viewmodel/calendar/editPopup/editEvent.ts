@@ -21,6 +21,7 @@ type OpenPopupPayload = {
     start: Date;
     end: Date;
     organizerId: string;
+    place: string;
     invitedUsersIds: Array<string>;
 }
 
@@ -54,6 +55,9 @@ const [titleErrorAtom, setTitleError] = declareAtomWithSetter<boolean>('editEven
 const [descriptionAtom, setDescription] = declareAtomWithSetter<string>('editEvent.description', '', on => [
     on(open, (_, payload) => payload.mode === 'edit' ? payload.description : '')
 ])
+const [placeAtom, setPlace] = declareAtomWithSetter<string>('editEvent.place', '', on => [
+    on(open, (_, payload) => payload.mode === 'edit' ? payload.place : '')
+])
 const eventIdAtom = declareAtom('editEvent.eventId', '', on => [
     on(open, (_, payload) => payload.mode === 'edit' ? payload.eventId : '')
 ])
@@ -75,6 +79,7 @@ const submit = declareAction('editEvent.submit',
             eventId,
             allDay,
             mode,
+            place,
         } = store.getState(editEventAtom)
         const {id: currentUserId} = store.getState(authorizedUser)
 
@@ -107,6 +112,7 @@ const submit = declareAction('editEvent.submit',
                 description,
                 organizerId: currentUserId,
                 invitedUsersIds: [],
+                place,
             }))
         }
         else {
@@ -118,6 +124,7 @@ const submit = declareAction('editEvent.submit',
                 start,
                 title,
                 invitedUsersIds: [],
+                place,
             }))
         }
     }
@@ -162,6 +169,7 @@ const editEventAtom = combine({
     endError: endErrorAtom,
     title: titleAtom,
     description: descriptionAtom,
+    place: placeAtom,
     eventId: eventIdAtom,
     allDay: allDayAtom,
     isPopupLoading: isPopupLoadingAtom,
@@ -174,6 +182,7 @@ const editEventActions = {
     open,
     close,
     setDescription,
+    setPlace,
     setEnd,
     setStart,
     setTitle,

@@ -1,34 +1,27 @@
 .container {
     padding: 30px;
 }
+
 .infoLabel {
     font: 25px Roboto;
     margin-bottom: 20px;
 }
-.eventTitleContainer {
+
+.infoTitle {
+    font: 18px Roboto;
+}
+.infoValue {
+    font: 15px Roboto;
+    margin-left: 7px;
+    align-self: end;
+    color: rgba(66,72,78,0.87);
+}
+.infoContainer {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-}
-.eventTitle {
-    font: 16px Roboto;
 }
 
-.timeContainer {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-.titleLabel,
-.whenTitle,
-.descriptionLabel {
-    display: flex;
-    font: 16px/1 Roboto;
-    margin-right: 15px;
-}
-.range {
-    font: 13px Roboto;
-}
 .descriptionContainer {
 
 }
@@ -37,6 +30,7 @@
 }
 .description {
     font: 14px Roboto;
+    margin-top: 10px;
 }
 .eventInfoContainer {
     display: flex;
@@ -49,13 +43,17 @@
 }
 .userBlockLabel {
     margin-bottom: 8px;
-    font: 16px Roboto;
+    font: 18px Roboto;
 }
 .organizator {
     margin-bottom: 20px;
     padding: 0 8px;
     height: 35px;
     max-width: 200px;
+    cursor: pointer;
+}
+.organizator:hover {
+    background: rgba(55, 53, 47, 0.08);
 }
 .usersList {
     max-width: 200px;

@@ -50,6 +50,7 @@
     "TitleAdd": "Создание события",
     "TitleField": "Название события",
     "DescriptionField": "Описание события",
+    "PlaceField": "Место",
     "StartField": "Начало",
     "EndField": "Конец",
     "DateLabel": "Дата:",
@@ -72,7 +73,9 @@
   },
   "ViewEventPopup": {
     "InfoLabel": "Сведения",
-    "WhenLabel": "Когда",
+    "StartLabel": "Начало",
+    "EndLabel": "Конец",
+    "PlaceLabel": "Место",
     "TitleLabel": "Название",
     "Description": "Описание",
     "OrganizationBy": "Организатор",

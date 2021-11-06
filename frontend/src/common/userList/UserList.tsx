@@ -2,6 +2,9 @@ import {UserType} from "../../user/UserType";
 import styles from './UserList.module.css'
 import {List_Base, ListItemProps} from "../list/List_Base";
 import {UserInfo} from "../userInfo/UserInfo";
+import {PopoverPortal} from "../../core/portal/PopoverPortal";
+import {useRef, useState} from "react";
+import {UserInfoPopover} from "../userInfo/UserInfoPopover";
 
 type UserListProps = {
     users: Array<UserType>,
@@ -18,13 +21,31 @@ function UserListItem({
     user,
     onClick,
 }: UserListItemProps) {
-
-    return <UserInfo
-        user={user}
-        onClick={onClick}
-        size={'small'}
-        className={styles.item}
-    />
+    const itemRef = useRef<HTMLDivElement>(null)
+    const [popoverOpened, setPopoverOpened] = useState<boolean>(false)
+    return (
+        <>
+            <div ref={itemRef} className={styles.itemContainer}>
+                <UserInfo
+                    user={user}
+                    onClick={() => {
+                        setPopoverOpened(true)
+                        onClick()
+                    }}
+                    size={'small'}
+                    className={styles.item}
+                />
+            </div>
+            <PopoverPortal
+                elementRef={itemRef}
+                show={popoverOpened}
+                setShow={setPopoverOpened}
+                content={<UserInfoPopover
+                    user={user}
+                />}
+            />
+        </>
+    )
 }
 
 function UserList({

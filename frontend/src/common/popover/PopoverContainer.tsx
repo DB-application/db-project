@@ -33,20 +33,6 @@ const PopoverContainer = React.forwardRef<HTMLDivElement, PropsType>(
         e.preventDefault()
     })
 
-    useEffect(() => {
-        const controlHTML = control.current
-        const popoverHTML = popoverRef.current
-        if (popoverHTML && controlHTML) {
-            const controlBounds = controlHTML.getBoundingClientRect()
-            const popoverRect = popoverHTML.getBoundingClientRect()
-            const popoverInfo = {side, align}
-            invertPopoverSide(controlBounds, popoverRect, popoverInfo)
-            const position = getPopoverPosition(controlBounds, popoverRect, popoverInfo.side, popoverInfo.align)
-            popoverHTML.style.top = `${position.top}px`
-            popoverHTML.style.left = `${position.left}px`
-        }
-    }, [control, popoverRef.current, side, align])
-
     return(
         <div
             className={styles.popoverContainer}

@@ -10,6 +10,7 @@ type CalendarEvent  = {
     start: Date;
     end: Date;
     organizerId: string;
+    place: string;
     invitedUsersIds: Array<string>;
 }
 
