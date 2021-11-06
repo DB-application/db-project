@@ -32,12 +32,6 @@ const PopoverLayer = React.forwardRef<HTMLDivElement, PopoverLayerProps>(({
 }, popoverRef) => {
     const popoverLayerRef = useRef<HTMLDivElement|null>(null)
 
-    useEventHandler('mousedown', popoverLayerRef, e => {
-        if (!e.defaultPrevented) {
-            e.preventDefault()
-        }
-    })
-
     return (
         <div ref={popoverLayerRef}>
             <PopoverContainer

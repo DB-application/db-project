@@ -22,15 +22,17 @@ const PopoverContainer = React.forwardRef<HTMLDivElement, PropsType>(
         content,
     }, ref) => {
     const popoverRef = ref as MutableRefObject<HTMLDivElement|null>
+    const popoverClickRef = useRef<boolean>(false)
+
     const root = useMemo(() => verify(document.getElementById('root')), [])
     useHtmlElementEventHandler('mousedown', root,  (event) => {
-        if (!event.defaultPrevented) {
+        if (!popoverClickRef.current) {
             closePopover()
         }
     })
 
     useEventHandler('mousedown', popoverRef, e => {
-        e.preventDefault()
+        popoverClickRef.current = true
     })
 
     return(
