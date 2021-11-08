@@ -9,7 +9,7 @@ use App\User\Infrastructure\Query\Table\UserTable;
 
 class UserDataHydrator
 {
-    public function hydrateAll(array $data): UserData
+    public function hydrateRow(array $data): UserData
     {
         $userId = TypeConverter::hydrateValue($data[UserTable::USER_ID], UserTable::USER_FIELDS[UserTable::USER_ID]);
         $email = TypeConverter::hydrateValue($data[UserTable::EMAIL], UserTable::USER_FIELDS[UserTable::EMAIL]);

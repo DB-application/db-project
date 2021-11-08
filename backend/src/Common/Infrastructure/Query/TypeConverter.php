@@ -7,6 +7,7 @@ class TypeConverter
 {
     public const STRING = 0;
     public const INTEGER = 1;
+    public const DATE_TIME = 2;
 
     public static function hydrateValue($value, int $valueType)
     {
@@ -16,6 +17,8 @@ class TypeConverter
                 return (string)$value;
             case self::INTEGER:
                 return (int)$value;
+            case self::DATE_TIME:
+                return new \DateTimeImmutable($value);
         }
 
         return $value;

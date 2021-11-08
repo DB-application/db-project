@@ -38,7 +38,7 @@ class UserQueryService implements UserQueryServiceInterface
         $query = $qb->getSQL();
         $result = $this->conn->executeQuery($query, ['userId' => $userId])->fetchAssociative();
 
-        return $result ? $this->hydrator->hydrateAll($result) : null;
+        return $result ? $this->hydrator->hydrateRow($result) : null;
     }
 
     /**
@@ -62,7 +62,7 @@ class UserQueryService implements UserQueryServiceInterface
         $userData = [];
         foreach ($result as $item)
         {
-            $userData[] = $this->hydrator->hydrateAll($item);
+            $userData[] = $this->hydrator->hydrateRow($item);
         }
 
         return $userData;
@@ -83,7 +83,7 @@ class UserQueryService implements UserQueryServiceInterface
         $query = $qb->getSQL();
         $result = $this->conn->executeQuery($query, ['email' => $email, 'password' => $password])->fetchOne();
 
-        return $result ? $this->hydrator->hydrateAll($result) : null;
+        return $result ? $this->hydrator->hydrateRow($result) : null;
     }
 
     public function getUserDataByUsernameAndPassword(string $username, string $password): ?UserData
@@ -101,7 +101,7 @@ class UserQueryService implements UserQueryServiceInterface
         $query = $qb->getSQL();
         $result = $this->conn->executeQuery($query, [':password' => $password, ':username' => $username])->fetchAssociative();
 
-        return $result ? $this->hydrator->hydrateAll($result) : null;
+        return $result ? $this->hydrator->hydrateRow($result) : null;
     }
 
     private function addUserFieldSelect(QueryBuilder $qb, string $alias = 'u'): void
@@ -112,7 +112,6 @@ class UserQueryService implements UserQueryServiceInterface
         $qb->addSelect($alias . '.' . UserTable::USERNAME);
         $qb->addSelect($alias . '.' . UserTable::FIRST_NAME);
         $qb->addSelect($alias . '.' . UserTable::LAST_NAME);
-        $qb->addSelect($alias . '.' . UserTable::LOGIN_KEY);
         $qb->addSelect($alias . '.' . UserTable::PHONE);
         $qb->addSelect($alias . '.' . UserTable::AVATAR_URL);
     }

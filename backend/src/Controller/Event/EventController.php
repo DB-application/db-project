@@ -47,4 +47,25 @@ class EventController extends AbstractController
             return new Response(null, Response::HTTP_UNAUTHORIZED);
         }
     }
+
+    /**
+     * @Route("/events")
+     */
+    public function getCurrentUserEventData(Request $request): Response
+    {
+        //TODO обработка исключений
+        $requestData = json_decode($request->getContent(), true);
+        //TODO добавить права и проверку
+        try
+        {
+            $userId = $this->securityContext->getAuthenticatedUserId();
+            $events = $this->eventApi->getEventsDataByUserId($userId);
+
+            return new Response(json_encode($events), Response::HTTP_OK);
+        }
+        catch (UserNotAuthenticated $e)
+        {
+            return new Response(null, Response::HTTP_UNAUTHORIZED);
+        }
+    }
 }
