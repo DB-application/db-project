@@ -83,29 +83,32 @@ type EditEventData = {
 }
 
 function editEvent(eventData: EditEventData) {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve(undefined)
-        }, 1000)
+    return fetch('/edit/event', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            eventId: eventData.eventId,
+            start: eventData.start.getTime(),
+            end: eventData.start.getTime(),
+            title: eventData.title,
+            description: eventData.description,
+            organizerId: eventData.organizerId,
+            place: eventData.place,
+        })
     })
-    // return fetch('/edit/event', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(eventData)
-    // })
-    //     .then(response => {
-    //         switch (response.status) {
-    //             case HttpStatus.OK:
-    //                 return Promise.resolve(response)
-    //             case HttpStatus.UNAUTHORIZED:
-    //                 goToUrl('/auth')
-    //                 return Promise.reject(response)
-    //             default:
-    //                 return Promise.reject(response)
-    //         }
-    //     })
+        .then(response => {
+            switch (response.status) {
+                case HttpStatus.OK:
+                    return Promise.resolve(response)
+                case HttpStatus.UNAUTHORIZED:
+                    goToUrl('/auth')
+                    return Promise.reject(response)
+                default:
+                    return Promise.reject(response)
+            }
+        })
 }
 
 function removeEvent(eventId: string) {
