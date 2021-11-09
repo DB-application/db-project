@@ -14,6 +14,7 @@ function useAppearPopover(
     popoverRef: RefObject<HTMLElement|null>,
     align: PopoverAlign,
     side: PopoverSide,
+    animation: (element: HTMLElement) => Promise<any>
 ) {
     const appearedRef = useRef<boolean>(false)
     useLayoutEffect(() => {
@@ -28,7 +29,7 @@ function useAppearPopover(
                 const position = getPopoverPosition(controlBounds, popoverRect, popoverInfo.side, popoverInfo.align)
                 popoverHTML.style.top = `${position.top}px`
                 popoverHTML.style.left = `${position.left}px`
-                popoverAppearAnimation(popoverHTML)
+                animation(popoverHTML)
                     .then(() => appearedRef.current = true)
             }
         }

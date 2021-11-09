@@ -3,7 +3,7 @@ import {useEventHandler} from "../hooks/useEventHandler";
 import {Portal} from "./Portal";
 import {Tooltip} from "../../common/tooltip/Tooltip";
 import {PopoverAlign, PopoverSide} from "../../common/popover/getPopoverPosition";
-import {tooltipHideAnimation} from "../../common/tooltip/tooltipAnimations";
+import {tooltipAppearAnimation, tooltipHideAnimation} from "../../common/tooltip/tooltipAnimations";
 import {useAppearPopover} from "./useAppearPopover";
 
 type PropsType = {
@@ -24,7 +24,7 @@ function TooltipPortal({
     const tooltipRef = useRef<HTMLDivElement|null>(null)
     const [show, setShow] = useState(false)
 
-    useAppearPopover(show, elementRef, tooltipRef, align, side)
+    useAppearPopover(show, elementRef, tooltipRef, align, side, tooltipAppearAnimation)
 
     const _closeTooltipWithAnimation = async () => {
         tooltipRef && tooltipRef.current && await tooltipHideAnimation(tooltipRef.current)

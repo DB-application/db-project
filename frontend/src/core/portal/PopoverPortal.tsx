@@ -30,7 +30,7 @@ function PopoverPortal({
         popoverRef && popoverRef.current && await popoverHideAnimation(popoverRef.current)
         setHiddenComplete(true)
     }
-    useAppearPopover(show, elementRef, popoverRef, align, side)
+    useAppearPopover(show, elementRef, popoverRef, align, side, popoverHideAnimation)
     if (!show) {
         if (hiddenComplete) {
             return null
