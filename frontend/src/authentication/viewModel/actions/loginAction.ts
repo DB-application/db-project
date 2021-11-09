@@ -5,6 +5,7 @@ import {toast} from "react-toastify";
 import {processStandardError} from "../../../core/error/processStandardError";
 import {goToUrl} from "../../../core/link/goToUrl";
 import {Router} from "../../../core/router/router";
+import {LocalStorage, STORAGE_KEYS} from "../../../core/localStorage/localStorage";
 
 type LoginActionPayload = {
     login: string;
@@ -17,7 +18,8 @@ const loginAction = declareAction<LoginActionPayload>(
             .then(resp => {
                 toast.success('Вход произведен успешно')
                 store.dispatch(loginPageActions.setIsLoading(false))
-                setTimeout(() => goToUrl(Router.Workspace.url()), 1000)
+                const redirectToUrl: string = LocalStorage.getValue(STORAGE_KEYS.REDIRECT_FROM) || Router.Workspace.url()
+                setTimeout(() => goToUrl(redirectToUrl), 1000)
             })
             .catch(err => {
                 if (err.status && err.status === 401) {
