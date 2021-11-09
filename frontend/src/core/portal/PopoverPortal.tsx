@@ -2,8 +2,7 @@ import React, {RefObject, useRef, useState} from "react";
 import {Portal} from "./Portal";
 import {PopoverContainer} from "../../common/popover/PopoverContainer";
 import {PopoverAlign, PopoverSide} from "../../common/popover/getPopoverPosition";
-import {popoverHideAnimation} from "../../common/popover/popoverHideAnimation";
-import {useEventHandler} from "../hooks/useEventHandler";
+import {popoverAppearAnimation, popoverHideAnimation} from "../../common/popover/popoverHideAnimation";
 import {useAppearPopover} from "./useAppearPopover";
 
 interface IProps {
@@ -30,7 +29,7 @@ function PopoverPortal({
         popoverRef && popoverRef.current && await popoverHideAnimation(popoverRef.current)
         setHiddenComplete(true)
     }
-    useAppearPopover(show, elementRef, popoverRef, align, side, popoverHideAnimation)
+    useAppearPopover(show, elementRef, popoverRef, align, side, popoverAppearAnimation)
     if (!show) {
         if (hiddenComplete) {
             return null
