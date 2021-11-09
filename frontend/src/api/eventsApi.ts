@@ -1,5 +1,5 @@
 import {HttpStatus} from "../core/http/HttpStatus";
-import {goToUrl} from "../core/link/goToUrl";
+import {goToAuth, goToUrl} from "../core/link/goToUrl";
 
 
 type EventData_Api = {
@@ -25,7 +25,7 @@ function getCurrentUserEvents(): Promise<Array<EventData_Api>> {
                 case HttpStatus.OK:
                     return response.json()
                 case HttpStatus.UNAUTHORIZED:
-                    goToUrl('/auth')
+                    goToAuth()
                     return Promise.reject(response)
                 default:
                     return Promise.reject(response)
@@ -63,7 +63,7 @@ function createEvent(eventData: CreateEventData): Promise<{eventId: string}> {
                 case HttpStatus.OK:
                     return response.json()
                 case HttpStatus.UNAUTHORIZED:
-                    goToUrl('/auth')
+                    goToAuth()
                     return Promise.reject(response)
                 default:
                     return Promise.reject(response)
@@ -103,7 +103,7 @@ function editEvent(eventData: EditEventData) {
                 case HttpStatus.OK:
                     return Promise.resolve(response)
                 case HttpStatus.UNAUTHORIZED:
-                    goToUrl('/auth')
+                    goToAuth()
                     return Promise.reject(response)
                 default:
                     return Promise.reject(response)
@@ -126,7 +126,7 @@ function removeEvent(eventId: string) {
                 case HttpStatus.OK:
                     return Promise.resolve(response)
                 case HttpStatus.UNAUTHORIZED:
-                    goToUrl('/auth')
+                    goToAuth()
                     return Promise.reject(response)
                 default:
                     return Promise.reject(response)

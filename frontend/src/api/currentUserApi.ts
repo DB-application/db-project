@@ -1,5 +1,5 @@
 import {HttpStatus} from "../core/http/HttpStatus"
-import {goToUrl} from "../core/link/goToUrl";
+import {goToAuth} from "../core/link/goToUrl";
 
 type Api_UserInfo = {
     userId: string,
@@ -52,7 +52,7 @@ function changePassword(body: ChangePasswordBody): Promise<Response> {
                 case HttpStatus.BAD_REQUEST:
                     return Promise.resolve(response)
                 case HttpStatus.UNAUTHORIZED:
-                    goToUrl('/auth')
+                    goToAuth()
                     return Promise.reject(response)
                 default:
                     return Promise.reject(response)

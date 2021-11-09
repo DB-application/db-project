@@ -11,7 +11,7 @@ function AuthRouter() {
     const user = useAtom(currentUserAtom)
 
     if (!user.isAuthUser) {
-        if (location.pathname == Router.Auth.url()) {
+        if (location.pathname === Router.Auth.url()) {
             return null
         }
         LocalStorage.setValue(STORAGE_KEYS.REDIRECT_FROM, location.pathname)
