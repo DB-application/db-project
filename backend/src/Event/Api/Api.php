@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Event\Api;
 
 use App\Event\Api\Input\CreateEventInput;
+use App\Event\Api\Input\EditEventInput;
 use App\Event\App\Data\EventData;
 use App\Event\App\Service\EventAppService;
 
@@ -26,6 +27,18 @@ class Api implements ApiInterface
     public function getEventDataById(string $eventId): ?EventData
     {
         return $this->appService->getEventData($eventId);
+    }
+
+    public function editEvent(EditEventInput $input): void
+    {
+        //TODO: обработка исключений
+        $this->appService->editEvent($input->getEventId(), $input->getTitle(), $input->getStartDate(), $input->getEndDate(), $input->getOrganizerId(), $input->getDescription(), $input->getPlace());
+    }
+
+    public function removeEvent(string $eventId): void
+    {
+        //TODO: обработка исключений
+        $this->appService->removeEvent($eventId);
     }
 
     public function getEventsDataByUserId(string $userId): array

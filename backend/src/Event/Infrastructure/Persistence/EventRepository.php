@@ -33,9 +33,9 @@ class EventRepository implements EventRepositoryInterface
         return $this->repo->findOneBy(['email' => $email, 'username' => $username]);
     }
 
-    public function findEventById(string $userId): Event
+    public function findEventById(string $eventId): Event
     {
-        return $this->repo->findOneBy(['userId' => $userId]);
+        return $this->repo->findOneBy(['id' => $eventId]);
     }
 
     public function add(Event $event): void
@@ -46,6 +46,13 @@ class EventRepository implements EventRepositoryInterface
 
     public function update(): void
     {
+        $this->em->flush();
+    }
+
+    public function remove($eventId): void
+    {
+        $event = $this->findEventById($eventId);
+        $this->em->remove($event);
         $this->em->flush();
     }
 }
