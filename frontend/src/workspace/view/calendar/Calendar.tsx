@@ -1,4 +1,4 @@
-import {Calendar, momentLocalizer, SlotInfo} from 'react-big-calendar'
+import {Calendar, momentLocalizer, SlotInfo, View} from 'react-big-calendar'
 import moment from 'moment'
 import * as React from "react";
 import 'react-big-calendar/lib/css/react-big-calendar.css'
@@ -9,6 +9,7 @@ import {useAtomWithSelector} from "../../../core/reatom/useAtomWithSelector";
 import {editEventActions} from "../../viewmodel/calendar/editPopup/editEvent";
 import {viewEventActions} from "../../viewmodel/calendar/viewPopup/viewEvent";
 import {authorizedCurrentUser} from "../../../authentication/viewModel/currentUserAtom";
+import {LocalStorage, STORAGE_KEYS} from "../../../core/localStorage/localStorage";
 
 
 function EventsCalendar() {
@@ -48,7 +49,8 @@ function EventsCalendar() {
             events={Object.values(events)}
             onSelectSlot={handleSelect}
             onSelectEvent={onSelectEvent}
-            defaultView={'week'}
+            defaultView={LocalStorage.getValue(STORAGE_KEYS.CALENDAR_DEFAULT_VIEW) || 'week'}
+            onView={view => LocalStorage.setValue(STORAGE_KEYS.CALENDAR_DEFAULT_VIEW, view)}
             step={30}
         />
     )
