@@ -31,6 +31,26 @@ class EventAppService
         return (string)$event->getId();
     }
 
+    public function editEvent(string $eventId, string $title, \DateTimeImmutable $startDate, \DateTimeImmutable $endDate, string $organizerId, ?string $description, ?string $place): void
+    {
+        // TODO: обернуть в транзакцию
+        //Добавить проверку $organizerId
+        $event = $this->repository->findEventById($eventId);
+        $event->setName($title);
+        $event->setStartDate($startDate);
+        $event->setEndDate($endDate);
+        $event->setOrganizerId(new Uuid($organizerId));
+        $event->setDescription($description);
+        $event->setPlace($place);
+        $this->repository->update();
+    }
+
+    public function removeEvent(string $eventId)
+    {
+        //TODO: обернуть в транзакцию
+        $this->repository->remove($eventId);
+    }
+
     public function getEventData(string $eventId): ?EventData
     {
         //TODO: если EventData null

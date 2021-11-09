@@ -41,6 +41,7 @@ class Event
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
+        $this->assertEndDateValid($endDate, $startDate);
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->place = $place;
@@ -92,5 +93,49 @@ class Event
     public function isRepeatable(): bool
     {
         return $this->isRepeatable;
+    }
+
+    public function setId(Uuid $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public function setStartDate(\DateTimeImmutable $startDate): void
+    {
+        $this->startDate = $startDate;
+    }
+
+    public function setEndDate(\DateTimeImmutable $endDate): void
+    {
+        $this->endDate = $endDate;
+    }
+
+    public function setPlace(string $place): void
+    {
+        $this->place = $place;
+    }
+
+    public function setOrganizerId(Uuid $organizerId): void
+    {
+        $this->organizerId = $organizerId;
+    }
+
+    private function assertEndDateValid(\DateTimeImmutable $endDate, \DateTimeImmutable $startDate): void
+    {
+        if ($endDate < $startDate)
+        {
+            //TODO: добавить кастомное исключение
+            throw new \Exception();
+        }
     }
 }

@@ -90,8 +90,8 @@ function editEvent(eventData: EditEventData) {
         },
         body: JSON.stringify({
             eventId: eventData.eventId,
-            start: eventData.start.getTime(),
-            end: eventData.start.getTime(),
+            startDate: eventData.start.getTime(),
+            endDate: eventData.end.getTime(),
             title: eventData.title,
             description: eventData.description,
             organizerId: eventData.organizerId,
@@ -112,31 +112,26 @@ function editEvent(eventData: EditEventData) {
 }
 
 function removeEvent(eventId: string) {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve(undefined)
-        }, 1000)
+    return fetch('/remove/event', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            eventId,
+        })
     })
-    // return fetch('/remove/event', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //         eventId,
-    //     })
-    // })
-    //     .then(response => {
-    //         switch (response.status) {
-    //             case HttpStatus.OK:
-    //                 return Promise.resolve(response)
-    //             case HttpStatus.UNAUTHORIZED:
-    //                 goToUrl('/auth')
-    //                 return Promise.reject(response)
-    //             default:
-    //                 return Promise.reject(response)
-    //         }
-    //     })
+        .then(response => {
+            switch (response.status) {
+                case HttpStatus.OK:
+                    return Promise.resolve(response)
+                case HttpStatus.UNAUTHORIZED:
+                    goToUrl('/auth')
+                    return Promise.reject(response)
+                default:
+                    return Promise.reject(response)
+            }
+        })
 }
 
 const EventsApi = {

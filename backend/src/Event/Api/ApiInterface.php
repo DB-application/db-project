@@ -3,6 +3,7 @@
 namespace App\Event\Api;
 
 use App\Event\Api\Input\CreateEventInput;
+use App\Event\Api\Input\EditEventInput;
 use App\Event\App\Data\EventData;
 
 interface ApiInterface
@@ -16,4 +17,11 @@ interface ApiInterface
      * @return EventData[]
      */
     public function getEventsDataByUserId(string $userId): array;
+
+    /**
+     * @param EditEventInput $input
+     */
+    public function editEvent(EditEventInput $input): void;
+
+    public function removeEvent(string $eventId): void;
 }

@@ -7,6 +7,7 @@ use App\Common\Exception\UserNotAuthenticated;
 use App\Common\Security\SecurityContextInterface;
 use App\Event\Api\ApiInterface;
 use App\Event\Api\Input\CreateEventInput;
+use App\Event\Api\Input\EditEventInput;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,7 +55,6 @@ class EventController extends AbstractController
     public function getCurrentUserEventData(Request $request): Response
     {
         //TODO обработка исключений
-        $requestData = json_decode($request->getContent(), true);
         //TODO добавить права и проверку
         try
         {
@@ -62,6 +62,50 @@ class EventController extends AbstractController
             $events = $this->eventApi->getEventsDataByUserId($userId);
 
             return new Response(json_encode($events), Response::HTTP_OK);
+        }
+        catch (UserNotAuthenticated $e)
+        {
+            return new Response(null, Response::HTTP_UNAUTHORIZED);
+        }
+    }
+
+    /**
+     * @Route("/edit/event")
+     */
+    public function editEvent(Request $request): Response
+    {
+        //TODO обработка исключений
+        $requestData = json_decode($request->getContent(), true);
+        //TODO добавить права и проверку
+        try
+        {
+            $userId = $this->securityContext->getAuthenticatedUserId();
+            $startDate = (new \DateTimeImmutable())->setTimestamp($requestData['startDate'] / 1000);
+            $endDate = (new \DateTimeImmutable())->setTimestamp($requestData['endDate'] / 1000);
+            $input = new EditEventInput($requestData['eventId'], $requestData['title'], $requestData['description'], $startDate, $endDate, $userId, $requestData['place']);
+            $this->eventApi->editEvent($input);
+
+            return new Response(null, Response::HTTP_OK);
+        }
+        catch (UserNotAuthenticated $e)
+        {
+            return new Response(null, Response::HTTP_UNAUTHORIZED);
+        }
+    }
+
+    /**
+     * @Route("/remove/event")
+     */
+    public function removeEvent(Request $request): Response
+    {
+        //TODO обработка исключений
+        $requestData = json_decode($request->getContent(), true);
+        //TODO добавить права и проверку
+        try
+        {
+            $this->eventApi->removeEvent($requestData['eventId']);
+
+            return new Response(null, Response::HTTP_OK);
         }
         catch (UserNotAuthenticated $e)
         {
