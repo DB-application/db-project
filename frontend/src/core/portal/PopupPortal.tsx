@@ -5,6 +5,7 @@ import styles from './PopupPortal.module.css'
 import {popupAppearAnimation, popupHideAnimation} from "../../common/popup/popupHideAnimation";
 import {verify} from "../verify";
 import {addToStack, appearPreviousPopup, hiddenPreviousPopup, removeFromStack} from "./popupStack";
+import {useHtmlElementEventHandler} from "../hooks/useHtmlElementEventHandler";
 
 type PropsType = {
     binding: JSX.Element,
@@ -27,6 +28,13 @@ const PopupLayout = React.forwardRef<HTMLDivElement, PopupLayoutProps>((
 ) => {
     const popupRef = ref as MutableRefObject<HTMLDivElement|null>
     const popupLayerRef = useRef<HTMLDivElement|null>(null)
+
+    useHtmlElementEventHandler('keydown', document.body, event => {
+        const keyboardEvent = event as KeyboardEvent
+        if (keyboardEvent.keyCode === 27) {
+            closePopup()
+        }
+    })
 
     useEventHandler('mouseup', popupLayerRef, event => {
         if (!event.defaultPrevented) {

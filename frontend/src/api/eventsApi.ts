@@ -1,30 +1,36 @@
 import {HttpStatus} from "../core/http/HttpStatus";
-import { goToUrl } from "../core/link/goToUrl";
-import {CalendarEvent} from "../workspace/viewmodel/calendar/calendar";
+import {goToUrl} from "../core/link/goToUrl";
 
-function getCurrentUserEvents(): Promise<Array<CalendarEvent>> {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve([])
-        }, 1000)
+
+type EventData_Api = {
+    eventId: string,
+    title: string;
+    description: string,
+    startDate: number;
+    endDate: number;
+    organizerId: string;
+    place: string;
+    invitedUsersIds: Array<string>;
+}
+
+function getCurrentUserEvents(): Promise<Array<EventData_Api>> {
+    return fetch('/events', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
     })
-    // return fetch('/events', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    // })
-    //     .then(response => {
-    //         switch (response.status) {
-    //             case HttpStatus.OK:
-    //                 return response.json()
-    //             case HttpStatus.UNAUTHORIZED:
-    //                 goToUrl('/auth')
-    //                 return Promise.reject(response)
-    //             default:
-    //                 return Promise.reject(response)
-    //         }
-    //     })
+        .then(response => {
+            switch (response.status) {
+                case HttpStatus.OK:
+                    return response.json()
+                case HttpStatus.UNAUTHORIZED:
+                    goToUrl('/auth')
+                    return Promise.reject(response)
+                default:
+                    return Promise.reject(response)
+            }
+        })
 }
 
 type CreateEventData = {
