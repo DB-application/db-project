@@ -79,17 +79,19 @@ function UserMenu() {
     const logout = useAction(logoutAction)
 
     return (
-        <div
-            ref={ref}
-            className={styles.userMenu}
-            onClick={() => setPopoverOpened(!popoverOpened)}
-        >
-            <AvatarWrapper
-                label={user.username}
-                size={'small'}
-                avatarUrl={user.avatarUrl}
-                className={styles.avatar}
-            />
+        <>
+            <div
+                ref={ref}
+                className={styles.userMenu}
+                onClick={() => setPopoverOpened(true)}
+            >
+                <AvatarWrapper
+                    label={user.username}
+                    size={'small'}
+                    avatarUrl={user.avatarUrl}
+                    className={styles.avatar}
+                />
+            </div>
             <PopoverPortal
                 elementRef={ref}
                 show={popoverOpened}
@@ -100,7 +102,7 @@ function UserMenu() {
                 />}
                 align={'right'}
             />
-        </div>
+        </>
     )
 }
 
