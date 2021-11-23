@@ -57,7 +57,11 @@ function UserInfo({
                 className={styles.avatar}
             />
             <div className={styles.userData}>
-                <div className={styles.nickname}>{user.username}</div>
+                <div className={styles.nickname}>
+                    <div className={styles.name}>
+                        {user.username}
+                    </div>
+                </div>
                 <div className={styles.email}>{user.email}</div>
             </div>
         </div>

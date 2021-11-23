@@ -2,7 +2,7 @@ import {declareAsyncAction} from "../../../core/reatom/declareAsyncAction";
 import {EventsApi} from "../../../api/eventsApi";
 
 
-const inviteUsers = declareAsyncAction<Array<string>, void>(
+const inviteUsersAction = declareAsyncAction<Array<string>, void>(
     'inviteUsers.inviteUsers',
     (userIds, store) => {
         return EventsApi.inviteUsers(Array.from(userIds))
@@ -10,5 +10,5 @@ const inviteUsers = declareAsyncAction<Array<string>, void>(
 )
 
 export {
-    inviteUsers,
+    inviteUsersAction,
 }

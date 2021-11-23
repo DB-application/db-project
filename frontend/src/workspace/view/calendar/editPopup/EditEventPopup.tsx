@@ -23,6 +23,7 @@ import {Button_IconAndText} from "../../../../common/button/Button_IconAndText";
 import {PlusCircleIcon} from '../../../../icons/PlusCircleIcon';
 import {inviteUsersPopupActions} from "../../../viewmodel/calendar/inviteUsers/inviteUsers";
 import {ContainerWithPreloader} from "../../../../common/ContainerWithPreloader";
+import { InvitedUsersBlock } from './InvitedUsersBlock';
 
 type DateBlockProps = {
     fieldName: string,
@@ -91,37 +92,7 @@ function DateBlock({
     )
 }
 
-function InvitedUsersBlock() {
-    const invitedUsers = useAtomWithSelector(editEventAtom, x => x.invitedUsers)
-    const handleInviteUsersPopupOpen = useAction(inviteUsersPopupActions.open)
-    const users = useAtom(usersAtom)
 
-    const usersData: Array<UserData> = invitedUsers.map(userId => users[userId])
-        .filter(user => user)
-    return (
-        <div className={styles.contentBlock}>
-            <div className={styles.fieldDescription}>
-                {I18n_get('EditEventPopup.InvitedUsersLabel')}
-            </div>
-            <div className={styles.inviteUsersRow}>
-                {usersData.length
-                    ? <UserAvatarsList
-                        users={usersData}
-                        className={styles.invitedAvatars}
-                    />
-                    : null
-                }
-                <Button_IconAndText
-                    icon={<PlusCircleIcon />}
-                    text={I18n_get('EditEventPopup.InviteUsers')}
-                    onClick={handleInviteUsersPopupOpen}
-                    style={'primary'}
-                    size={'small'}
-                />
-            </div>
-        </div>
-    )
-}
 
 function Content() {
     const {

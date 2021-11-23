@@ -4,7 +4,7 @@ import {declareAsyncAction} from "../../../../core/reatom/declareAsyncAction";
 import {EventsApi} from "../../../../api/eventsApi";
 import {dispatchAsyncAction} from "../../../../core/reatom/dispatchAsyncAction";
 import {loadAbsentUsers} from "../../../../users/loadUsers";
-import {inviteUsers} from "../inviteUsers";
+import {inviteUsersAction} from "../inviteUsersAction";
 import {editEventActions, editEventAtom} from "../editPopup/editEvent";
 
 
@@ -12,14 +12,9 @@ const submit = declareAsyncAction<void, void>(
     'inviteUsers.inviteUsers',
     (_, store) => {
         const selectedUsersIds = store.getState(selectedUsersIdsAtom)
-        return dispatchAsyncAction(store, inviteUsers, Array.from(selectedUsersIds))
+        return dispatchAsyncAction(store, inviteUsersAction, Array.from(selectedUsersIds))
             .then(() => {
-                const invitedUsers = new Set(store.getState(editEventAtom).invitedUsers)
-                const newInvitedUsers = new Set([
-                    ...Array.from(invitedUsers),
-                    ...Array.from(selectedUsersIds),
-                ])
-                store.dispatch(editEventActions.setInvitedUsersAtom(Array.from(newInvitedUsers)))
+                store.dispatch(editEventActions.addInvitedUsers(Array.from(selectedUsersIds)))
             })
     }
 )

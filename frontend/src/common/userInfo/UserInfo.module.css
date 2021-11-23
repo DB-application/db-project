@@ -1,14 +1,14 @@
 .info {
     display: flex;
-    align-items: center;
+    flex-grow: 1;
+    min-width: 0;
 }
 
 .userData {
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    flex-grow: 1;
+    min-width: 0;
 }
 
 .infoXSmall .userData {
@@ -25,21 +25,26 @@
 }
 
 .nickname {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+}
 
+.name {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-.infoXSmall .nickname {
+.infoXSmall .name {
     font: 600 12px/14px Roboto;
 }
-.infoSmall .nickname {
+.infoSmall .name {
     font: 600 16px/18px Roboto;
 }
-.infoNormal .nickname {
+.infoNormal .name {
     font: 600 20px/22px Roboto;
 }
-.infoLarge .nickname {
+.infoLarge .name {
     font: 600 28px/32px Roboto;
 }
 

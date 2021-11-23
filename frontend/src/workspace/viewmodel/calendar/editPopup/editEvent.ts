@@ -9,6 +9,7 @@ import {I18n_get} from "../../../../i18n/i18n_get";
 import {loadAbsentUsers} from "../../../../users/loadUsers";
 import {dispatchAsyncAction} from "../../../../core/reatom/dispatchAsyncAction";
 import {declareAsyncAction} from "../../../../core/reatom/declareAsyncAction";
+import {removeUserFromEventAction} from "../removeUserFromEventAction";
 
 type PopupModeType = 'edit' | 'create'
 
@@ -80,8 +81,31 @@ const [descriptionAtom, setDescription] = declareAtomWithSetter<string>('editEve
 const [placeAtom, setPlace] = declareAtomWithSetter<string>('editEvent.place', '', on => [
     on(open, (_, payload) => payload.mode === 'edit' ? payload.place : '')
 ])
+
+const removeInvitedUser = declareAsyncAction<string, void>(
+    'editEvent.removeInvitedUser',
+    async (userId, store) => {
+        const invitedUsers = store.getState(invitedUsersAtom)
+        store.dispatch(setInvitedUsersAtom(invitedUsers.filter(invitedUserId => invitedUserId !== userId)))
+        return dispatchAsyncAction(store, removeUserFromEventAction, [userId])
+            .then(() => {
+                return Promise.resolve()
+            })
+            .catch(() => {
+                store.dispatch(addInvitedUsers([userId]))
+            })
+    }
+)
+const addInvitedUsers = declareAction<Array<string>>()
 const [invitedUsersAtom, setInvitedUsersAtom] = declareAtomWithSetter<Array<string>>('editEvent.invitedUsers', [], on => [
-    on(open, (_, payload) => payload.mode === 'edit' ? payload.invitedUsersIds : [])
+    on(open, (_, payload) => payload.mode === 'edit' ? payload.invitedUsersIds : []),
+    on(addInvitedUsers, (state, userIds) => {
+        const newInvitedUsers = new Set([
+            ...Array.from(state),
+            ...userIds,
+        ])
+        return Array.from(newInvitedUsers)
+    })
 ])
 const eventIdAtom = declareAtom('editEvent.eventId', '', on => [
     on(open, (_, payload) => payload.mode === 'edit' ? payload.eventId : '')
@@ -209,6 +233,8 @@ const editEventActions = {
     removeEvent,
     setAllDay,
     setInvitedUsersAtom,
+    removeInvitedUser,
+    addInvitedUsers,
     setIsPopupLoading,
 }
 

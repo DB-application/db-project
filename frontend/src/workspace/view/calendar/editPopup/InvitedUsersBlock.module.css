@@ -1,0 +1,48 @@
+.contentBlock:not(:last-child) {
+    margin-bottom: 15px;
+}
+
+.fieldDescription {
+    font: 18px Roboto;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inviteUsersRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.invitedAvatars {
+    margin-bottom: 15px;
+}
+
+.usersList {
+    width: 100%;
+    overflow-y: auto;
+    max-height: 150px;
+}
+
+.listItem {
+    display: flex;
+    align-items: center;
+}
+
+.listItem:not(:last-child) {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.organizerLabel {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    padding: 0 16px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}

@@ -153,6 +153,14 @@ function inviteUsers(userId: Array<string>): Promise<void> {
     })
 }
 
+function removeUsersFromEvent(userId: Array<string>): Promise<void> {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve()
+        }, 1000)
+    })
+}
+
 const EventsApi = {
     getCurrentUserEvents,
     createEvent,
@@ -160,6 +168,7 @@ const EventsApi = {
     removeEvent,
     getUsersToInvite,
     inviteUsers,
+    removeUsersFromEvent,
 }
 
 export type {

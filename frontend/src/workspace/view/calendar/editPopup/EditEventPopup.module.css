@@ -69,21 +69,6 @@
     margin-right: 10px;
 }
 
-.inviteUsersRow {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-direction: column;
-}
-
-.invitedAvatars {
-    margin-bottom: 15px;
-}
-
-.datePicker {
-
-}
-
 .timePicker {
     flex-shrink: 0;
 }
