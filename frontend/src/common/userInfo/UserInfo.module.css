@@ -11,8 +11,11 @@
     text-overflow: ellipsis;
 }
 
-.infoSmall .userData {
+.infoXSmall .userData {
     margin-left: 10px;
+}
+.infoSmall .userData {
+    margin-left: 14px;
 }
 .infoNormal .userData {
     margin-left: 18px;
@@ -27,8 +30,11 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-.infoSmall .nickname {
+.infoXSmall .nickname {
     font: 600 12px/14px Roboto;
+}
+.infoSmall .nickname {
+    font: 600 16px/18px Roboto;
 }
 .infoNormal .nickname {
     font: 600 20px/22px Roboto;
@@ -42,8 +48,11 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-.infoSmall .email {
+.infoXSmall .email {
     font: 400 10px/12px Roboto;
+}
+.infoSmall .email {
+    font: 400 14px/16px Roboto;
 }
 .infoNormal .email {
     font: 400 17px/19px Roboto;

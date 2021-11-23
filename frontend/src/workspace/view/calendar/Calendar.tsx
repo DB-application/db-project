@@ -30,17 +30,17 @@ function EventsCalendar() {
     }
 
     function onSelectEvent(event: CalendarEvent, e: React.SyntheticEvent<HTMLElement>) {
-        if (event.organizerId === currentUserId) {
+        // if (event.organizerId === currentUserId) {
             handleOpenEditEventPopup({
                 ...event,
                 mode: 'edit',
             })
-        }
-        else {
-            handleOpenViewEventPopup({
-                event
-            })
-        }
+        // }
+        // else {
+        //     handleOpenViewEventPopup({
+        //         event
+        //     })
+        // }
     }
     return (
         <Calendar

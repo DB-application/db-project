@@ -24,7 +24,7 @@ code {
   z-index: 61;
 }
 .external-layer {
-  position: absolute;
+  position: relative;
   left: 0;
   top: 0;
   z-index: 10;

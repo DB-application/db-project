@@ -1,4 +1,4 @@
-import React, {MutableRefObject, RefObject, useMemo, useRef} from "react"
+import React, {MutableRefObject, RefObject, useEffect, useMemo, useRef} from "react"
 import {useEventHandler} from "../../core/hooks/useEventHandler"
 import {PopoverAlign, PopoverSide} from "./getPopoverPosition"
 import styles from './Popover.module.css'
@@ -22,21 +22,16 @@ const PopoverContainer = React.forwardRef<HTMLDivElement, PropsType>(
          content,
      }, ref) => {
         const popoverRef = ref as MutableRefObject<HTMLDivElement|null>
-        const onPopoverClick = useRef<boolean>(false)
-        const root = useMemo(() => verify(document.getElementById('root')), [])
-        useHtmlElementEventHandler('mousedown', root,  () => {
-            if (!onPopoverClick.current) {
-                closePopover()
+        const popoverLayer = useMemo(() => verify(document.getElementById('popover')), [])
+        useHtmlElementEventHandler('mousedown', document,  e => {
+            const target = e.target as Node
+            const isPopover = popoverLayer.contains(target)
+            const compareResult = target.compareDocumentPosition(verify(popoverRef.current))
+            if (compareResult != 8) {
+                if (!isPopover || compareResult == 4) {
+                    closePopover()
+                }
             }
-        })
-        useHtmlElementEventHandler('mouseup', root,  () => {
-            onPopoverClick.current = false
-        })
-        useEventHandler('mousedown', popoverRef, () => {
-            onPopoverClick.current = true
-        })
-        useEventHandler('mouseup', popoverRef, () => {
-            onPopoverClick.current = true
         })
 
         return(

@@ -6,7 +6,7 @@ import {getStylesWithMods} from "../../core/styles/getStylesWithMods";
 
 type UserInfoProps = {
     user: UserData,
-    size: 'small'|'normal'|'large',
+    size: 'xSmall'|'small'|'normal'|'large',
     onClick?: () => void,
     className?: string,
 }
@@ -20,7 +20,10 @@ function UserInfo({
 
     let avatarSize: AvatarSize
     switch (size) {
-        case "small":
+        case 'small':
+            avatarSize = 'small'
+            break
+        case "xSmall":
             avatarSize = 'xSmall'
             break
         case "normal":
@@ -36,6 +39,7 @@ function UserInfo({
     }
 
     const infoClassName = getStylesWithMods(styles.info, {
+        [styles.infoXSmall]: size === 'xSmall',
         [styles.infoSmall]: size === 'small',
         [styles.infoNormal]: size === 'normal',
         [styles.infoLarge]: size === 'large',

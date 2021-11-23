@@ -52,6 +52,8 @@
     "DescriptionField": "Описание события",
     "PlaceField": "Место",
     "StartField": "Начало",
+    "InvitedUsersLabel": "Приглашенные пользователи",
+    "InviteUsers": "Пригласить пользователей",
     "EndField": "Конец",
     "DateLabel": "Дата:",
     "TimeLabel": "Время:",
@@ -83,5 +85,9 @@
   },
   "Sidebar": {
     "RemoveNote": "Удалить"
+  },
+  "InviteUsersPopup": {
+    "Title": "Приглашение пользователей",
+    "Invite": "Пригласить"
   }
 }

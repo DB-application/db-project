@@ -57,6 +57,7 @@ function PopupHeader({
                 size={'small'}
                 onClick={closePopup}
                 style={'secondary'}
+                className={styles.closeHeader}
             />
         </div>
     )

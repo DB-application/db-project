@@ -12,12 +12,12 @@
     flex-direction: column;
 }
 
-.dateContainer {
+.dataContainer {
     display: flex;
     flex-direction: column;
 }
 
-.dateFieldDescription {
+.fieldDescription {
     font: 18px Roboto;
     margin-bottom: 10px;
 }
@@ -57,6 +57,7 @@
 .dateRow {
     display: flex;
     align-items: center;
+    position: relative;
 }
 
 .datePickerLabel {
@@ -66,6 +67,17 @@
 .timePickerLabel {
     margin-left: 45px;
     margin-right: 10px;
+}
+
+.inviteUsersRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.invitedAvatars {
+    margin-bottom: 15px;
 }
 
 .datePicker {
@@ -81,5 +93,5 @@
     width: 25px;
     height: 25px;
     color: red;
-    right: 12px;
+    right: -36px;
 }

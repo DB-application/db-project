@@ -1,5 +1,6 @@
 import {HttpStatus} from "../core/http/HttpStatus";
 import {goToAuth, goToUrl} from "../core/link/goToUrl";
+import {rejects} from "assert";
 
 
 type EventData_Api = {
@@ -134,11 +135,31 @@ function removeEvent(eventId: string) {
         })
 }
 
+function getUsersToInvite(): Promise<{userIds: Array<string>}> {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve({
+                userIds: ['1', '2', '3', '4', '5'],
+            })
+        }, 1000)
+    })
+}
+
+function inviteUsers(userId: Array<string>): Promise<void> {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve()
+        }, 1000)
+    })
+}
+
 const EventsApi = {
     getCurrentUserEvents,
     createEvent,
     editEvent,
     removeEvent,
+    getUsersToInvite,
+    inviteUsers,
 }
 
 export type {

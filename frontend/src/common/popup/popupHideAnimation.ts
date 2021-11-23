@@ -15,14 +15,17 @@ async function popupAppearAnimation(popupWrapper: HTMLElement, time: number = 15
     const transformYEnd = -popupHeight / 2
     const transformXStart = -popupWidth / 2
     const popupAnimation: Animation = createAnimation({
-        transform: [[transformXStart, transformXStart], [transformYEnd + 30, transformYEnd]],
+        transform: [[transformXStart, transformXStart], [transformYEnd + 15, transformYEnd]],
         opacity: [0, 1]
     }, time)
 
     return Promise.all([
         animate(popup, popupAnimation),
         animateFadeIn(popupLayer, time)
-    ]).then(() => document.body.style.overflow = 'auto')
+    ]).then(() => {
+        document.body.style.overflow = 'auto'
+        popup.style.transform = 'translate(-50%, -50%)'
+    })
 }
 
 async function popupHideAnimation(popupWrapper: HTMLElement, time: number = 150) {
@@ -37,7 +40,7 @@ async function popupHideAnimation(popupWrapper: HTMLElement, time: number = 150)
     const transformYStart = -popupHeight / 2
     const transformXStart = -popupWidth / 2
     const popupAnimation: Animation = createAnimation({
-        transform: [[transformXStart, transformXStart], [transformYStart, transformYStart + 30]],
+        transform: [[transformXStart, transformXStart], [transformYStart, transformYStart + 15]],
         opacity: [1, 0]
     }, time)
 

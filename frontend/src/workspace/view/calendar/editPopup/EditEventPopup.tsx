@@ -13,10 +13,16 @@ import ReactDatePicker from 'react-datepicker';
 import {useAtomWithSelector} from "../../../../core/reatom/useAtomWithSelector";
 import {TextArea} from "../../../../common/textArea/TextArea";
 import {Checkbox_WithLabel} from "../../../../common/checkbox/Checkbox_WithLabel";
-import {Preloader} from "../../../../common/preloader/Preloader";
-import { WarningCircleIcon } from '../../../../icons/WarningCircleIcon';
-import {CSSProperties, useRef} from "react";
+import {WarningCircleIcon} from '../../../../icons/WarningCircleIcon';
+import {useRef} from "react";
 import {TooltipPortal} from "../../../../core/portal/TooltipPortal";
+import {UserAvatarsList} from "../../../../common/userAvatarList/UserAvatarList";
+import {usersAtom} from "../../../../users/usersAtom";
+import {UserData} from '../../../../common/UserData';
+import {Button_IconAndText} from "../../../../common/button/Button_IconAndText";
+import {PlusCircleIcon} from '../../../../icons/PlusCircleIcon';
+import {inviteUsersPopupActions} from "../../../viewmodel/calendar/inviteUsers/inviteUsers";
+import {ContainerWithPreloader} from "../../../../common/ContainerWithPreloader";
 
 type DateBlockProps = {
     fieldName: string,
@@ -51,8 +57,8 @@ function DateBlock({
     error,
 }: DateBlockProps) {
     return (
-        <div className={joinClassNames(styles.dateContainer, className)}>
-            <div className={styles.dateFieldDescription}>
+        <div className={joinClassNames(styles.dataContainer, className)}>
+            <div className={styles.fieldDescription}>
                 {fieldName}
             </div>
             <div className={styles.dateRow}>
@@ -85,6 +91,37 @@ function DateBlock({
     )
 }
 
+function InvitedUsersBlock() {
+    const invitedUsers = useAtomWithSelector(editEventAtom, x => x.invitedUsers)
+    const handleInviteUsersPopupOpen = useAction(inviteUsersPopupActions.open)
+    const users = useAtom(usersAtom)
+
+    const usersData: Array<UserData> = invitedUsers.map(userId => users[userId])
+        .filter(user => user)
+    return (
+        <div className={styles.contentBlock}>
+            <div className={styles.fieldDescription}>
+                {I18n_get('EditEventPopup.InvitedUsersLabel')}
+            </div>
+            <div className={styles.inviteUsersRow}>
+                {usersData.length
+                    ? <UserAvatarsList
+                        users={usersData}
+                        className={styles.invitedAvatars}
+                    />
+                    : null
+                }
+                <Button_IconAndText
+                    icon={<PlusCircleIcon />}
+                    text={I18n_get('EditEventPopup.InviteUsers')}
+                    onClick={handleInviteUsersPopupOpen}
+                    style={'primary'}
+                    size={'small'}
+                />
+            </div>
+        </div>
+    )
+}
 
 function Content() {
     const {
@@ -151,41 +188,28 @@ function Content() {
                 label={I18n_get('EditEventPopup.AllDay')}
                 className={styles.allDayBlock}
             />
+            <InvitedUsersBlock/>
             {
                 mode === 'edit'
-                    && <Button_Text
-                        text={I18n_get('EditEventPopup.RemoveButton')}
-                        onClick={handleRemove}
-                        style={'danger'}
-                    />
+                && <Button_Text
+                    text={I18n_get('EditEventPopup.RemoveButton')}
+                    onClick={handleRemove}
+                    style={'danger'}
+                />
             }
         </div>
     )
 }
 
 function ContentWrapper() {
-    const containerRef = useRef<HTMLDivElement|null>(null)
     const isPopupLoading = useAtomWithSelector(editEventAtom, x => x.isPopupLoading)
 
-    const content = isPopupLoading
-        ? <Preloader />
-        : <Content />
-
-    let style: CSSProperties | undefined = undefined
-    if (isPopupLoading && containerRef.current) {
-        style = {
-            height: containerRef.current.getBoundingClientRect().height
-        }
-    }
-
     return (
-        <div
+        <ContainerWithPreloader
+            content={<Content />}
+            isPopupLoading={isPopupLoading}
             className={styles.container}
-            ref={containerRef}
-            style={style}
-        >
-            {content}
-        </div>
+        />
     )
 }
 

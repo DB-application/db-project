@@ -1,0 +1,7 @@
+.avatarWrapper {
+    display: inline-flex;
+    background: #fff;
+    padding: 2px;
+    border-radius: 50%;
+    cursor: pointer;
+}

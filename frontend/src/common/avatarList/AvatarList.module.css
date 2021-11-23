@@ -1,0 +1,8 @@
+.avatarsContainer {
+    display: inline-flex;
+    align-items: center;
+}
+
+.avatarItem:not(:first-child) {
+    margin-left: -10px;
+}

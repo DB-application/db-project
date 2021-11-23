@@ -1,5 +1,6 @@
 import {RefObject, useLayoutEffect, useRef} from "react";
 import {
+    checkScreenOverflowPosition,
     getPopoverPosition,
     invertPopoverSide,
     PopoverAlign,
@@ -27,6 +28,7 @@ function useAppearPopover(
                 const popoverInfo = {side, align}
                 invertPopoverSide(controlBounds, popoverRect, popoverInfo)
                 const position = getPopoverPosition(controlBounds, popoverRect, popoverInfo.side, popoverInfo.align)
+                checkScreenOverflowPosition(position, popoverRect)
                 popoverHTML.style.top = `${position.top}px`
                 popoverHTML.style.left = `${position.left}px`
                 animation(popoverHTML)

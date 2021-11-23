@@ -32,7 +32,7 @@ function UserListItem({
                         setPopoverOpened(true)
                         onClick()
                     }}
-                    size={'small'}
+                    size={'xSmall'}
                     className={styles.item}
                 />
             </div>
@@ -43,6 +43,8 @@ function UserListItem({
                 content={<UserInfoPopover
                     user={user}
                 />}
+                side={'right'}
+                align={'center'}
             />
         </>
     )

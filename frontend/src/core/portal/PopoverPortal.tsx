@@ -1,4 +1,4 @@
-import React, {RefObject, useRef, useState} from "react";
+import React, {RefObject, useEffect, useRef, useState} from "react";
 import {Portal} from "./Portal";
 import {PopoverContainer} from "../../common/popover/PopoverContainer";
 import {PopoverAlign, PopoverSide} from "../../common/popover/getPopoverPosition";
@@ -7,6 +7,7 @@ import {useAppearPopover} from "./useAppearPopover";
 
 interface IProps {
     elementRef: RefObject<any>,
+    nestedPopoverRef?: RefObject<any>,
     show: boolean,
     setShow: (show: boolean) => void,
     content: JSX.Element,
@@ -24,6 +25,10 @@ function PopoverPortal({
 }: IProps ) {
     const popoverRef = useRef<HTMLDivElement|null>(null)
     const [hiddenComplete, setHiddenComplete] = useState(false)
+
+    useEffect(() => {
+        return () => setHiddenComplete(false)
+    }, [setHiddenComplete])
 
     const closePopover = async () => {
         popoverRef && popoverRef.current && await popoverHideAnimation(popoverRef.current)

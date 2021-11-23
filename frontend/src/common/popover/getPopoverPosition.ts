@@ -16,7 +16,7 @@ function getPopoverPositionLeft(elementRect: DOMRect, popoverRect: DOMRect, alig
         case "center":
             return {
                 left: elementRect.left - popoverRect.width - 5,
-                top: (elementRect.top + elementRect.top) / 2 - popoverRect.width / 2,
+                top: (elementRect.top + elementRect.bottom) / 2 - popoverRect.height / 2,
             }
         case "right":
             return {
@@ -37,7 +37,7 @@ function getPopoverPositionRight(elementRect: DOMRect, popoverRect: DOMRect, ali
         case "center":
             return {
                 left: elementRect.right + 5,
-                top: (elementRect.top + elementRect.top) / 2 - popoverRect.width / 2,
+                top: (elementRect.top + elementRect.bottom) / 2 - popoverRect.height / 2,
             }
         case "right":
             return {
@@ -131,6 +131,24 @@ function invertPopoverSide(elementRect: DOMRect, popoverRect: DOMRect, positionI
     }
 }
 
+function checkScreenOverflowPosition(position: Position, popoverRect: DOMRect) {
+    const windowHeight = window.innerHeight
+    const windowWidth = window.innerWidth
+
+    if (position.top < 0) {
+        position.top = 5
+    }
+    if (position.top + popoverRect.height > windowHeight) {
+        position.top = windowHeight - popoverRect.height - 5
+    }
+    if (position.left < 0) {
+        position.left = 5
+    }
+    if (position.left + popoverRect.width > windowWidth) {
+        position.left = windowWidth - popoverRect.width - 5
+    }
+}
+
 export type {
     PopoverAlign,
     PopoverSide,
@@ -140,4 +158,5 @@ export type {
 export {
     getPopoverPosition,
     invertPopoverSide,
+    checkScreenOverflowPosition,
 }

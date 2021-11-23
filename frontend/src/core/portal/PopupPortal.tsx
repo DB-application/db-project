@@ -70,10 +70,6 @@ function PopupPortal({
 
     const openPopup = useCallback(async () => {
         addToStack(popupRef)
-        const popup = verify(verify(popupRef.current).firstElementChild) as HTMLElement
-        const popupLayer = verify(verify(popupRef.current).parentElement)
-        popup.style.opacity = '0'
-        popupLayer.style.opacity = '0'
         hiddenPreviousPopup()
             .then(() => {
                 popupAppearAnimation(verify(popupRef.current))

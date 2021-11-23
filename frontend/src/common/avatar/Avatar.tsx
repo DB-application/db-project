@@ -1,4 +1,6 @@
 import Avatar from "react-avatar"
+import styles from './Avatar.module.css'
+import {useEffect, useRef} from "react";
 
 type AvatarSize = 'xSmall' | 'small' | 'normal' | 'large' | 'xLarge'
 
@@ -36,16 +38,24 @@ function AvatarWrapper({
     className,
     onClick,
 }: AvatarProps) {
+    const ref = useRef<HTMLDivElement|null>(null)
+    useEffect(() => {
+        const avatar = ref.current && ref.current.querySelector('.sb-avatar__text')
+        avatar && avatar.removeAttribute('title')
+    }, [ref, ref.current])
+
     return(
-        <Avatar
-            name={label}
-            src={avatarUrl}
-            onClick={onClick}
-            className={className}
-            color={color}
-            size={getAvatarSize(size)}
-            round={true}
-        />
+        <div ref={ref} className={styles.avatarWrapper}>
+            <Avatar
+                name={label}
+                src={avatarUrl}
+                onClick={onClick}
+                className={className}
+                color={color}
+                size={getAvatarSize(size)}
+                round={true}
+            />
+        </div>
     )
 }
 

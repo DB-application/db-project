@@ -42,3 +42,7 @@ function declareAsyncAction<PAYLOAD, SUCCESS>(
 export {
     declareAsyncAction,
 }
+
+export type {
+    AsyncActionCreator,
+}

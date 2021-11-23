@@ -6,6 +6,9 @@ import {editEventAction} from "../editEvent";
 import {removeEventAction} from "../removeEvent";
 import {toast} from "react-toastify";
 import {I18n_get} from "../../../../i18n/i18n_get";
+import {loadAbsentUsers} from "../../../../users/loadUsers";
+import {dispatchAsyncAction} from "../../../../core/reatom/dispatchAsyncAction";
+import {declareAsyncAction} from "../../../../core/reatom/declareAsyncAction";
 
 type PopupModeType = 'edit' | 'create'
 
@@ -25,8 +28,27 @@ type OpenPopupPayload = {
     invitedUsersIds: Array<string>;
 }
 
-const open = declareAction<OpenPopupPayload>()
+const loadInvitedUsers = declareAsyncAction<Array<string>, void>('editEvent.loadInvitedUsers',
+    async (userIds, store) => {
+        return dispatchAsyncAction(store, loadAbsentUsers, userIds)
+    }
+)
+
+const open = declareAsyncAction<OpenPopupPayload, void>(
+    'editEvent.open',
+    async (payload, store) => {
+        const invitedUsers = payload.mode === 'create'
+            ? []
+            : payload.invitedUsersIds
+        if (invitedUsers.length > 0) {
+            return dispatchAsyncAction(store, loadInvitedUsers, invitedUsers)
+        }
+        return Promise.resolve()
+    }
+)
+
 const close = declareAction()
+
 const [showAtom, setShow] = declareAtomWithSetter('editEvent.show', false, on => [
     on(open, () => true),
     on(close, () => false),
@@ -58,6 +80,9 @@ const [descriptionAtom, setDescription] = declareAtomWithSetter<string>('editEve
 const [placeAtom, setPlace] = declareAtomWithSetter<string>('editEvent.place', '', on => [
     on(open, (_, payload) => payload.mode === 'edit' ? payload.place : '')
 ])
+const [invitedUsersAtom, setInvitedUsersAtom] = declareAtomWithSetter<Array<string>>('editEvent.invitedUsers', [], on => [
+    on(open, (_, payload) => payload.mode === 'edit' ? payload.invitedUsersIds : [])
+])
 const eventIdAtom = declareAtom('editEvent.eventId', '', on => [
     on(open, (_, payload) => payload.mode === 'edit' ? payload.eventId : '')
 ])
@@ -71,21 +96,12 @@ const [endErrorAtom, setEndError] = declareAtomWithSetter('editEvent.endError', 
 
 const submit = declareAction('editEvent.submit',
     (_, store) => {
-        const {
-            start,
-            end,
-            description,
-            title,
-            eventId,
-            allDay,
-            mode,
-            place,
-        } = store.getState(editEventAtom)
+        const event = store.getState(editEventAtom)
         const {id: currentUserId} = store.getState(authorizedCurrentUser)
 
-        let newStart = new Date(start)
-        let newEnd = new Date(end)
-        if (allDay) {
+        let newStart = new Date(event.start)
+        let newEnd = new Date(event.end)
+        if (event.allDay) {
             newStart.setHours(9)
             newStart.setMinutes(0)
 
@@ -93,7 +109,7 @@ const submit = declareAction('editEvent.submit',
             newEnd.setMinutes(0)
         }
 
-        if (!title) {
+        if (!event.title) {
             store.dispatch(setTitleError(true))
             return
         }
@@ -104,27 +120,27 @@ const submit = declareAction('editEvent.submit',
             return
         }
 
-        if (mode === 'create') {
+        if (event.mode === 'create') {
             store.dispatch(createEventAction({
-                end,
-                title,
-                start,
-                description,
+                end: event.end,
+                title: event.title,
+                start: event.start,
+                description: event.description,
                 organizerId: currentUserId,
-                invitedUsersIds: [],
-                place,
+                invitedUsersIds: event.invitedUsers,
+                place: event.place,
             }))
         }
         else {
             store.dispatch(editEventAction({
-                end,
-                eventId,
-                description,
+                end: event.end,
+                eventId: event.eventId,
+                description: event.description,
                 organizerId: currentUserId,
-                start,
-                title,
-                invitedUsersIds: [],
-                place,
+                start: event.start,
+                title: event.title,
+                invitedUsersIds: event.invitedUsers,
+                place: event.place,
             }))
         }
     }
@@ -138,7 +154,9 @@ const removeEvent = declareAction('editEvent.remove',
 )
 
 const [isPopupLoadingAtom, setIsPopupLoading] = declareAtomWithSetter('editEvent.popupLoading', false, on => [
-    on(close, () => false),
+    on(open, () => true),
+    on(open.done, () => false),
+    on(open.fail, () => false),
     on(removeEventAction, () => true),
     on(createEventAction, () => true),
     on(editEventAction, () => true),
@@ -170,6 +188,7 @@ const editEventAtom = combine({
     title: titleAtom,
     description: descriptionAtom,
     place: placeAtom,
+    invitedUsers: invitedUsersAtom,
     eventId: eventIdAtom,
     allDay: allDayAtom,
     isPopupLoading: isPopupLoadingAtom,
@@ -189,6 +208,7 @@ const editEventActions = {
     submit,
     removeEvent,
     setAllDay,
+    setInvitedUsersAtom,
     setIsPopupLoading,
 }
 

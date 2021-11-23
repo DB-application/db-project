@@ -1,0 +1,8 @@
+.avatarList {
+
+}
+
+.userList {
+    max-height: 500px;
+    overflow: auto;
+}

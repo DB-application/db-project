@@ -13,10 +13,12 @@ import {initExternalLayer} from "./core/layers/externalLayers";
 import {workspaceLoadingAtom} from "./workspace/viewmodel/workspaceLoading";
 import {notesAtom} from "./workspace/viewmodel/notes/notes";
 import {usersAtom} from "./users/usersAtom";
+import {usersLoadingAtom} from "./users/loadUsers";
 
 const store = createStore(
     combine({
         userAtom: currentUserAtom,
+        usersLoadingAtom,
         isLoadingAppAtom,
         workspaceLoadingAtom,
         notesAtom,

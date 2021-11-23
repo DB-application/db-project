@@ -13,7 +13,6 @@ import {getStylesWithMods} from "../../../core/styles/getStylesWithMods";
 import {PlusCircleIcon} from "../../../icons/PlusCircleIcon";
 import {Button_IconAndText} from "../../../common/button/Button_IconAndText";
 import {addNote} from "../../viewmodel/notes/addNote";
-import {Router} from "../../../core/router/router";
 import {sidebarAtom} from "../../viewmodel/sidebar/sidebar";
 import {useAtomWithSelector} from "../../../core/reatom/useAtomWithSelector";
 import {removeNote} from "../../viewmodel/notes/removeNote";
@@ -61,20 +60,22 @@ function NoteContextMenu({
     }, [])
 
     return (
-        <div ref={ref} className={styles.contextMenu}>
-            <Button_Icon
-                icon={<MoreAltIcon />}
-                onClick={() => setPopoverOpened(true)}
-                style={'link'}
-                size={'small'}
-            />
+        <>
+            <div ref={ref} className={styles.contextMenu}>
+                <Button_Icon
+                    icon={<MoreAltIcon />}
+                    onClick={() => setPopoverOpened(true)}
+                    style={'link'}
+                    size={'small'}
+                />
+            </div>
             <PopoverPortal
                 elementRef={ref}
                 show={popoverOpened}
                 setShow={setPopoverOpened}
                 content={<List_Base items={items} />}
             />
-        </div>
+        </>
     )
 }
 

@@ -23,9 +23,9 @@ const Tooltip = React.forwardRef<HTMLDivElement|null, PropsType>(
             ref={ref}
             className={styles.tooltipContainer}
         >
-            <span className={styles.text}>
+            <div className={styles.text}>
                 {text}
-            </span>
+            </div>
         </div>
     )
 })

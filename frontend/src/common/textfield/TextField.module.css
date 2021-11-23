@@ -22,6 +22,7 @@
     transition: all .15s ease;
     outline: none;
     padding: 0 8px;
+    will-change: opacity;
 }
 
 .input:focus:not(.inputDisabled) {

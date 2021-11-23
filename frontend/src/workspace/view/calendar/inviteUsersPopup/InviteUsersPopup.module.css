@@ -1,0 +1,27 @@
+.container {
+    min-height: 300px;
+    max-height: 500px;
+    overflow: auto;
+    box-sizing: border-box;
+    padding: 30px 45px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.listItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+    cursor: pointer;
+}
+
+.checkbox {
+    margin-right: 15px;
+}
+
+.userInfo {
+
+}

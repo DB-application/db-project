@@ -53,7 +53,7 @@ function InvitedUsersBlock() {
             <div ref={organizerRef}>
                 <UserInfo
                     user={organizator}
-                    size={'small'}
+                    size={'xSmall'}
                     onClick={() => setPopoverOpened(true)}
                     className={styles.organizator}
                 />
