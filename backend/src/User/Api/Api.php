@@ -102,7 +102,7 @@ class Api implements ApiInterface
 
     public function getAllUsers(): array
     {
-        $this->userService->getAllUsers();
+        return $this->userService->getAllUsers();
     }
 
     private function convertException(\Exception $e)

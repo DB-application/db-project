@@ -8,6 +8,7 @@ use App\User\App\Query\UserQueryServiceInterface;
 use App\User\Infrastructure\Query\Hydrator\UserDataHydrator;
 use App\User\Infrastructure\Query\Table\UserTable;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\FetchMode;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -109,16 +110,9 @@ class UserQueryService implements UserQueryServiceInterface
     {
         $qb = $this->conn->createQueryBuilder();
         $qb->from('user', 'u');
-        $this->addUserFieldSelect($qb);
-        $query = $qb->getSQL();
-        $result = $this->conn->executeQuery($query, [])->fetchAssociative();
-        $userData = [];
-        foreach ($result as $item)
-        {
-            $userData[] = $this->hydrator->hydrateRow($item);
-        }
-
-        return $userData;
+        $qb->addSelect('u.' . UserTable::USER_ID);
+        $qb->execute()->fetchAll(FetchMode::COLUMN);
+        return $qb->execute()->fetchAll(FetchMode::COLUMN);
     }
 
     private function addUserFieldSelect(QueryBuilder $qb, string $alias = 'u'): void
