@@ -35,7 +35,7 @@ class EventAppService
     {
         // TODO: обернуть в транзакцию
         //Добавить проверку $organizerId
-        $event = $this->repository->findEventById($eventId);
+        $event = $this->repository->findEventById(new Uuid($eventId));
         $event->setName($title);
         $event->setStartDate($startDate);
         $event->setEndDate($endDate);
@@ -48,7 +48,12 @@ class EventAppService
     public function removeEvent(string $eventId)
     {
         //TODO: обернуть в транзакцию
-        $this->repository->remove($eventId);
+        $event = $this->repository->findEventById(new Uuid($eventId));
+        if ($event === null)
+        {
+            //TODO: выкинуть доменное исключение
+        }
+        $this->repository->remove($event);
     }
 
     public function getEventData(string $eventId): ?EventData

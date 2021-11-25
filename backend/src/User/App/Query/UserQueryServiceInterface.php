@@ -20,4 +20,6 @@ interface UserQueryServiceInterface
      * @return UserData|null
      */
     public function getUserDataByUsernameAndPassword(string $username, string $password): ?UserData;
+
+    public function getAllUsers(): array;
 }

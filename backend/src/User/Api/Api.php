@@ -100,6 +100,11 @@ class Api implements ApiInterface
         }
     }
 
+    public function getAllUsers(): array
+    {
+        $this->userService->getAllUsers();
+    }
+
     private function convertException(\Exception $e)
     {
         // TODO: сделать обработку исключений

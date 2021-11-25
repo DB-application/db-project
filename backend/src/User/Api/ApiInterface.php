@@ -45,4 +45,6 @@ interface ApiInterface
      * @param UserData $userData
      */
     public function updateUserData(UserData $userData): void;
+
+    public function getAllUsers(): array;
 }
