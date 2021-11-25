@@ -5,6 +5,7 @@ import {EventsApi} from "../../../../api/eventsApi";
 import {dispatchAsyncAction} from "../../../../core/reatom/dispatchAsyncAction";
 import {loadAbsentUsers} from "../../../../users/loadUsers";
 import {editEventActions} from "../editPopup/editEvent";
+import {usersAtom} from "../../../../users/usersAtom";
 
 
 const open = declareAction(
@@ -20,17 +21,19 @@ const [showAtom, setShow] = declareAtomWithSetter('inviteUsers.show', false, on 
     on(close, () => false),
 ])
 
-const addSelectedUsers = declareAction<string>('inviteUsers.addSelectedUsers')
-const removeSelectedUsers = declareAction<string>('inviteUsers.removeSelectedUsers')
+const addSelectedUsers = declareAction<Array<string>>('inviteUsers.addSelectedUsers')
+const removeSelectedUsers = declareAction<Array<string>>('inviteUsers.removeSelectedUsers')
+const resetSelectedUsers = declareAction('inviteUsers.resetSelected')
 const [selectedUsersIdsAtom, setSelectedUsersIds] = declareAtomWithSetter<Set<string>>('inviteUsers.selectedUsersIds', new Set<string>(), on => [
     on(open, () => new Set()),
     on(addSelectedUsers, (state, value) => new Set([
         ...Array.from(state.values()),
-        value,
+        ...value,
     ])),
     on(removeSelectedUsers, (state, value) => new Set([
-        ...Array.from(state.values()).filter(userId => userId != value),
+        ...Array.from(state.values()).filter(userId => !value.includes(userId)),
     ])),
+    on(resetSelectedUsers, () => new Set())
 ])
 
 const loadUsersList = declareAsyncAction<void, Array<string>>(
@@ -50,6 +53,26 @@ const loadUsersList = declareAsyncAction<void, Array<string>>(
 const usersListAtom = declareAtom<Array<string>>('inviteUsers.usersList', [], on => [
     on(loadUsersList.done, ((_, list) => list)),
 ])
+
+const [searchPatternAtom, setSearchPattern] = declareAtomWithSetter('invitedUsers.searchPattern', '')
+
+const searchedUsersAtom = map(
+    combine({
+        usersList: usersListAtom,
+        searchPattern: searchPatternAtom,
+        users: usersAtom,
+    }),
+    ({usersList, searchPattern, users}) => {
+        if (!searchPattern) {
+            return usersList
+        }
+        const regex = new RegExp(searchPattern)
+        return usersList.filter(userId => {
+            const user = users[userId]
+            return user.username.match(regex) || user.email.match(regex)
+        })
+    }
+)
 
 const [isPopupLoadingAtom, setIsPopupLoading] = declareAtomWithSetter('inviteUsers.popupLoading', false, on => [
     on(open, () => true),
@@ -83,6 +106,8 @@ const inviteUsersPopupAtom = combine({
     isPopupLoading: isPopupLoadingAtom,
     submitButtonState: submitButtonStateAtom,
     usersList: usersListAtom,
+    searchPattern: searchPatternAtom,
+    searchedUsers: searchedUsersAtom,
 })
 
 const inviteUsersPopupActions = {
@@ -95,6 +120,8 @@ const inviteUsersPopupActions = {
     setSelectedUsersIds,
     submit,
     loadUsersList,
+    setSearchPattern,
+    resetSelectedUsers,
 }
 
 export {

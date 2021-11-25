@@ -16,14 +16,8 @@ import {Checkbox_WithLabel} from "../../../../common/checkbox/Checkbox_WithLabel
 import {WarningCircleIcon} from '../../../../icons/WarningCircleIcon';
 import {useRef} from "react";
 import {TooltipPortal} from "../../../../core/portal/TooltipPortal";
-import {UserAvatarsList} from "../../../../common/userAvatarList/UserAvatarList";
-import {usersAtom} from "../../../../users/usersAtom";
-import {UserData} from '../../../../common/UserData';
-import {Button_IconAndText} from "../../../../common/button/Button_IconAndText";
-import {PlusCircleIcon} from '../../../../icons/PlusCircleIcon';
-import {inviteUsersPopupActions} from "../../../viewmodel/calendar/inviteUsers/inviteUsers";
 import {ContainerWithPreloader} from "../../../../common/ContainerWithPreloader";
-import { InvitedUsersBlock } from './InvitedUsersBlock';
+import {InvitedUsersBlock} from './InvitedUsersBlock';
 
 type DateBlockProps = {
     fieldName: string,

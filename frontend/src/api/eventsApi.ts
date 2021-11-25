@@ -56,6 +56,7 @@ function createEvent(eventData: CreateEventData): Promise<{eventId: string}> {
             description: eventData.description,
             organizerId: eventData.organizerId,
             place: eventData.place,
+            userIds: eventData.invitedUsersIds,
         })
     })
         .then(response => {
@@ -96,6 +97,7 @@ function editEvent(eventData: EditEventData) {
             description: eventData.description,
             organizerId: eventData.organizerId,
             place: eventData.place,
+            userIds: eventData.invitedUsersIds,
         })
     })
         .then(response => {
@@ -135,29 +137,23 @@ function removeEvent(eventId: string) {
 }
 
 function getUsersToInvite(): Promise<{userIds: Array<string>}> {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve({
-                userIds: ['1', '2', '3', '4', '5'],
-            })
-        }, 1000)
+    return fetch('/get_all_users', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
     })
-}
-
-function inviteUsers(userId: Array<string>): Promise<void> {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve()
-        }, 1000)
-    })
-}
-
-function removeUsersFromEvent(userId: Array<string>): Promise<void> {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve()
-        }, 1000)
-    })
+        .then(response => {
+            switch (response.status) {
+                case HttpStatus.OK:
+                    return response.json()
+                case HttpStatus.UNAUTHORIZED:
+                    goToAuth()
+                    return Promise.reject(response)
+                default:
+                    return Promise.reject(response)
+            }
+        })
 }
 
 const EventsApi = {
@@ -166,8 +162,6 @@ const EventsApi = {
     editEvent,
     removeEvent,
     getUsersToInvite,
-    inviteUsers,
-    removeUsersFromEvent,
 }
 
 export type {

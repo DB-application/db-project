@@ -1,6 +1,5 @@
 .container {
-    min-height: 300px;
-    max-height: 500px;
+    height: 450px;
     overflow: auto;
     box-sizing: border-box;
     padding: 30px 45px;
@@ -11,11 +10,19 @@
     flex-direction: column;
 }
 
-.listItem {
+.searchWrapper {
+    margin-bottom: 15px;
+}
+
+.listItem,
+.searchWrapper {
     display: flex;
     align-items: center;
-    margin-bottom: 6px;
     cursor: pointer;
+}
+
+.listItem {
+    margin-bottom: 6px;
 }
 
 .checkbox {
@@ -23,5 +30,9 @@
 }
 
 .userInfo {
+
+}
+
+.searchField {
 
 }

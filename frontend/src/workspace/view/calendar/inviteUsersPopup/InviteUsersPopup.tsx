@@ -12,6 +12,7 @@ import {UserInfo} from "../../../../common/userInfo/UserInfo";
 import {useEventHandler} from "../../../../core/hooks/useEventHandler";
 import {ContainerWithPreloader} from "../../../../common/ContainerWithPreloader";
 import {usersAtom} from "../../../../users/usersAtom";
+import {SearchField} from "../../../../common/textfield/SearchField";
 
 type UsersListItemProps = {
     userData: UserData
@@ -54,12 +55,12 @@ function UsersListItem({
 
 function UsersList() {
     const selectedUsersIds = useAtomWithSelector(inviteUsersPopupAtom, x => x.selectedUsersIds)
-    const userList = useAtomWithSelector(inviteUsersPopupAtom, x => x.usersList)
+    const searchedUsers = useAtomWithSelector(inviteUsersPopupAtom, x => x.searchedUsers)
     const users = useAtom(usersAtom)
     const handleAddToSelected = useAction(inviteUsersPopupActions.addSelectedUsers)
     const handleRemoveSelectedUsers = useAction(inviteUsersPopupActions.removeSelectedUsers)
 
-    const items = userList.map(userId => {
+    const items = searchedUsers.map(userId => {
         const user = users[userId]
         if (!user) {
             return null
@@ -77,8 +78,8 @@ function UsersList() {
             }}
             selected={selectedUsersIds.has(user.id)}
             onCheckedChange={checked => checked
-                ? handleAddToSelected(user.id)
-                : handleRemoveSelectedUsers(user.id)}
+                ? handleAddToSelected([user.id])
+                : handleRemoveSelectedUsers([user.id])}
         />
     })
 
@@ -89,9 +90,41 @@ function UsersList() {
     )
 }
 
+function SearchUsersField() {
+    const searchedUsers = useAtomWithSelector(inviteUsersPopupAtom, x => x.searchedUsers)
+    const selectedUsersIds = useAtomWithSelector(inviteUsersPopupAtom, x => x.selectedUsersIds)
+    const searchPattern = useAtomWithSelector(inviteUsersPopupAtom, x => x.searchPattern)
+    const handleSetSearchPattern = useAction(inviteUsersPopupActions.setSearchPattern)
+    const handleResetSelectedUsers = useAction(inviteUsersPopupActions.resetSelectedUsers)
+    const handleAddSelectedUsers = useAction(inviteUsersPopupActions.addSelectedUsers)
+
+    return (
+        <div
+            className={styles.searchWrapper}
+        >
+            <div className={styles.checkbox}>
+                <Checkbox
+                    checked={searchedUsers.length === selectedUsersIds.size}
+                    onCheckedChange={value => value
+                        ? handleAddSelectedUsers(searchedUsers)
+                        : handleResetSelectedUsers()
+                    }
+                />
+            </div>
+            <SearchField
+                value={searchPattern}
+                onChange={handleSetSearchPattern}
+                placeholder={'Найти пользователя'}
+                className={styles.searchField}
+            />
+        </div>
+    )
+}
+
 function Content() {
     return (
         <div className={styles.content}>
+            <SearchUsersField />
             <UsersList />
         </div>
     )

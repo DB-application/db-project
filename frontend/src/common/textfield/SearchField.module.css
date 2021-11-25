@@ -1,0 +1,45 @@
+.fieldContainer {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.input {
+    font-family: Roboto;
+    color: #403866;
+    line-height: 1.2;
+    font-size: 16px;
+    display: block;
+    width: 100%;
+    height: 35px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #b4aaaa;
+    transition: all .15s ease;
+    outline: none;
+    padding: 0 8px 0 40px;
+    will-change: opacity;
+    background: transparent;
+}
+
+.searchIcon {
+    position: absolute;
+    color: rgba(66,72,78,0.6);
+    height: 25px;
+    width: 25px;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.input:focus:not(.inputDisabled) {
+    box-shadow: 0 1px 0 0 #003DAE;
+    border-color: #003DAE;
+}
+
+.input:hover:not(.inputError):not(:focus):not(.inputDisabled) {
+    border-color: #373537;
+}
+
+.inputDisabled {
+    opacity: 0.6;
+}
