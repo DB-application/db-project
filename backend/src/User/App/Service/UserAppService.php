@@ -109,4 +109,10 @@ class UserAppService
             throw new InvalidUserPasswordException();
         }
     }
+
+    //TODO: УДАЛИТь
+    public function getAllUsers(): array
+    {
+        return $this->userQueryService->getAllUsers();
+    }
 }

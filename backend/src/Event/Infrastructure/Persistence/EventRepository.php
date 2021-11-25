@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Event\Infrastructure\Persistence;
 
+use App\Common\Domain\Uuid;
 use App\Event\Domain\Model\Event;
 use App\Event\Domain\Model\EventRepositoryInterface;
 use Doctrine\ORM\EntityManager;
@@ -33,7 +34,7 @@ class EventRepository implements EventRepositoryInterface
         return $this->repo->findOneBy(['email' => $email, 'username' => $username]);
     }
 
-    public function findEventById(string $eventId): Event
+    public function findEventById(Uuid $eventId): ?Event
     {
         return $this->repo->findOneBy(['id' => $eventId]);
     }
@@ -49,9 +50,8 @@ class EventRepository implements EventRepositoryInterface
         $this->em->flush();
     }
 
-    public function remove($eventId): void
+    public function remove(Event $event): void
     {
-        $event = $this->findEventById($eventId);
         $this->em->remove($event);
         $this->em->flush();
     }

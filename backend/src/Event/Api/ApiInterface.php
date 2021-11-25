@@ -23,5 +23,11 @@ interface ApiInterface
      */
     public function editEvent(EditEventInput $input): void;
 
+    /**
+     * @param string[] $userIds
+     * @param string $eventId
+     */
+    public function inviteUsers(array $userIds, string $eventId): void;
+
     public function removeEvent(string $eventId): void;
 }

@@ -104,6 +104,23 @@ class UserQueryService implements UserQueryServiceInterface
         return $result ? $this->hydrator->hydrateRow($result) : null;
     }
 
+    //TODO: УДАЛИТЬ!
+    public function getAllUsers(): array
+    {
+        $qb = $this->conn->createQueryBuilder();
+        $qb->from('user', 'u');
+        $this->addUserFieldSelect($qb);
+        $query = $qb->getSQL();
+        $result = $this->conn->executeQuery($query, [])->fetchAssociative();
+        $userData = [];
+        foreach ($result as $item)
+        {
+            $userData[] = $this->hydrator->hydrateRow($item);
+        }
+
+        return $userData;
+    }
+
     private function addUserFieldSelect(QueryBuilder $qb, string $alias = 'u'): void
     {
         $qb->addSelect($alias . '.' . UserTable::USER_ID);

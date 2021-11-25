@@ -82,6 +82,24 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/get_all_users")
+     */
+    public function getAllUsers(Request $request): Response
+    {
+        $requestData = json_decode($request->getContent(), true);
+        try
+        {
+            $userId = $this->securityContext->getAuthenticatedUserId();
+        }
+        catch (UserNotAuthenticated $e)
+        {
+            return new Response(null, Response::HTTP_UNAUTHORIZED);
+        }
+        $userIds = $this->userApi->getAllUsers();
+        return new Response(json_encode(['userIds' => $userIds]), Response::HTTP_OK);
+    }
+
+    /**
      * @Route("/login")
      */
     public function loginUser(Request $request): Response

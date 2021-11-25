@@ -84,6 +84,7 @@ class EventController extends AbstractController
             $endDate = (new \DateTimeImmutable())->setTimestamp($requestData['endDate'] / 1000);
             $input = new EditEventInput($requestData['eventId'], $requestData['title'], $requestData['description'], $startDate, $endDate, $userId, $requestData['place']);
             $this->eventApi->editEvent($input);
+            $this->eventApi->inviteUsers($requestData['userIds'], $requestData['eventId']);
 
             return new Response(null, Response::HTTP_OK);
         }
