@@ -3,23 +3,21 @@ declare(strict_types=1);
 
 namespace App\Event\Domain\Model;
 
-use App\Common\Domain\Uuid;
-
 class UserInvitation
 {
-    /** @var Uuid */
+    /** @var string */
     private $id;
-    /** @var Uuid */
+    /** @var string */
     private $userId;
-    /** @var Uuid */
+    /** @var string */
     private $eventId;
     /** @var int */
     private $status;
 
     public function __construct(
-        Uuid $id,
-        Uuid $userId,
-        Uuid $eventId,
+        string $id,
+        string $userId,
+        string $eventId,
         int $status
     )
     {
@@ -30,25 +28,25 @@ class UserInvitation
     }
 
     /**
-     * @return Uuid
+     * @return string
      */
-    public function getId(): Uuid
+    public function getId(): string
     {
         return $this->id;
     }
 
     /**
-     * @return Uuid
+     * @return string
      */
-    public function getUserId(): Uuid
+    public function getUserId(): string
     {
         return $this->userId;
     }
 
     /**
-     * @return Uuid
+     * @return string
      */
-    public function getEventId(): Uuid
+    public function getEventId(): string
     {
         return $this->eventId;
     }

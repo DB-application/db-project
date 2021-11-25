@@ -4,11 +4,12 @@ import {UsersApi} from "../api/usersApi";
 import {processStandardError} from "../core/error/processStandardError";
 import {usersActions, usersAtom} from "./usersAtom";
 import {declareAtomWithSetter} from "../core/reatom/declareAtomWithSetter";
-import { Store } from "@reatom/core";
+import {Store} from "@reatom/core";
 import {dispatchAsyncAction} from "../core/reatom/dispatchAsyncAction";
 
 
 function loadUsersResponseCall(store: Store, userIds: Array<string>) {
+    console.log('jopa')
     return UsersApi.getUsersData(userIds)
         .then(usersData => {
             store.dispatch(usersActions.updateUsers(usersData))

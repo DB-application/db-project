@@ -8,6 +8,6 @@
         <id name="id" type="string" column="user_invitation_id"/>
         <field name="eventId" column="event_id" type="string"/>
         <field name="userId" column="user_id" type="string"/>
-        <field name="status" column="status" type="int"/>
+        <field name="status" column="status" type="integer"/>
     </entity>
 </doctrine-mapping>

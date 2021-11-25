@@ -3,14 +3,12 @@ declare(strict_types=1);
 
 namespace App\Event\Infrastructure\Persistence;
 
-use App\Common\Domain\Uuid;
 use App\Event\Domain\Model\UserInvitation;
 use App\Event\Domain\Model\UserInvitationRepositoryInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Persistence\ObjectRepository;
-use function Doctrine\ORM\QueryBuilder;
 
 class UserInvitationRepository implements UserInvitationRepositoryInterface
 {
@@ -25,25 +23,24 @@ class UserInvitationRepository implements UserInvitationRepositoryInterface
         $this->repo = $em->getRepository(UserInvitation::class);
     }
 
-    public function findById(Uuid $id): ?UserInvitation
+    public function findById(string $id): ?UserInvitation
     {
         return $this->repo->findOneBy(['id' => $id]);
     }
 
-    public function findByUserIdAndEventId(Uuid $userId, Uuid $eventId): ?UserInvitation
+    public function findByUserIdAndEventId(string $userId, string $eventId): ?UserInvitation
     {
         return $this->repo->findOneBy(['userId' => $userId, 'eventId' => $eventId]);
     }
 
-    public function findByUserIdsAndEventId(array $userIds, Uuid $eventId): \Iterator
+    public function findByUserIdsAndEventId(array $userIds, string $eventId): \Iterator
     {
         $qb = $this->repo->createQueryBuilder('ui');
-        $qb->where($qb->expr()->in('userId', $userIds));
-        $qb->where($qb->expr()->eq('eventId', $eventId));
-        foreach ($qb->getQuery()->toIterable() as $row)
-        {
-            yield $row[0];
-        }
+        $qb->where($qb->expr()->in('ui.userId', ':userIds'));
+        $qb->andWhere($qb->expr()->eq('ui.eventId', ':eventId'));
+        $qb->setParameter('userIds', $userIds);
+        $qb->setParameter('eventId', $eventId);
+        return $qb->getQuery()->toIterable();
     }
 
     public function add(UserInvitation $invitation): void

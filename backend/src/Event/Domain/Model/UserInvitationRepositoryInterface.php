@@ -3,30 +3,28 @@ declare(strict_types=1);
 
 namespace App\Event\Domain\Model;
 
-use App\Common\Domain\Uuid;
-
 interface UserInvitationRepositoryInterface
 {
 
     /**
-     * @param Uuid $id
+     * @param string $id
      * @return UserInvitation|null
      */
-    public function findById(Uuid $id): ?UserInvitation;
+    public function findById(string $id): ?UserInvitation;
 
     /**
-     * @param Uuid $userId
-     * @param Uuid $eventId
+     * @param string $userId
+     * @param string $eventId
      * @return mixed
      */
-    public function findByUserIdAndEventId(Uuid $userId, Uuid $eventId): ?UserInvitation;
+    public function findByUserIdAndEventId(string $userId, string $eventId): ?UserInvitation;
 
     /**
-     * @param Uuid[] $userIds
-     * @param Uuid $eventId
+     * @param string[] $userIds
+     * @param string $eventId
      * @return UserInvitation[]|\Iterator
      */
-    public function findByUserIdsAndEventId(array $userIds, Uuid $eventId): \Iterator;
+    public function findByUserIdsAndEventId(array $userIds, string $eventId): \Iterator;
 
     /**
      * @param UserInvitation $invitation

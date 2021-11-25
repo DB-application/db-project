@@ -48,17 +48,12 @@ class UserQueryService implements UserQueryServiceInterface
      */
     public function getUsersDataByIds(array $userIds): array
     {
-        $const = static function (string $value)
-        {
-            return $value;
-        };
-
         $qb = $this->conn->createQueryBuilder();
         $qb->from('user', 'u');
         $this->addUserFieldSelect($qb);
-        $qb->where("{$const(UserTable::USER_ID)} IN :userIds");
-        $query = $qb->getSQL();
-        $result = $this->conn->executeQuery($query, ['userIds' => $userIds])->fetchAllAssociative();
+        $qb->where($qb->expr()->in('u.' . UserTable::USER_ID, ':userIds'));
+        $qb->setParameter('userIds', $userIds, Connection::PARAM_STR_ARRAY);
+        $result = $qb->execute()->fetchAll();
 
         $userData = [];
         foreach ($result as $item)
