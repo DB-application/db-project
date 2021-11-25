@@ -4,20 +4,8 @@ import {declareAsyncAction} from "../../../../core/reatom/declareAsyncAction";
 import {EventsApi} from "../../../../api/eventsApi";
 import {dispatchAsyncAction} from "../../../../core/reatom/dispatchAsyncAction";
 import {loadAbsentUsers} from "../../../../users/loadUsers";
-import {inviteUsersAction} from "../inviteUsersAction";
-import {editEventActions, editEventAtom} from "../editPopup/editEvent";
+import {editEventActions} from "../editPopup/editEvent";
 
-
-const submit = declareAsyncAction<void, void>(
-    'inviteUsers.inviteUsers',
-    (_, store) => {
-        const selectedUsersIds = store.getState(selectedUsersIdsAtom)
-        return dispatchAsyncAction(store, inviteUsersAction, Array.from(selectedUsersIds))
-            .then(() => {
-                store.dispatch(editEventActions.addInvitedUsers(Array.from(selectedUsersIds)))
-            })
-    }
-)
 
 const open = declareAction(
     'inviteUsers.open',
@@ -30,7 +18,6 @@ const close = declareAction('inviteUsers.close')
 const [showAtom, setShow] = declareAtomWithSetter('inviteUsers.show', false, on => [
     on(open, () => true),
     on(close, () => false),
-    on(submit.done, () => false),
 ])
 
 const addSelectedUsers = declareAction<string>('inviteUsers.addSelectedUsers')
@@ -68,10 +55,16 @@ const [isPopupLoadingAtom, setIsPopupLoading] = declareAtomWithSetter('inviteUse
     on(open, () => true),
     on(loadUsersList.done, () => false),
     on(loadUsersList.fail, () => false),
-    on(submit, () => true),
-    on(submit.done, () => false),
-    on(submit.fail, () => false),
 ])
+
+const submit = declareAction(
+    'inviteUsers.inviteUsers',
+    (_, store) => {
+        const selectedUsersIds = store.getState(selectedUsersIdsAtom)
+        store.dispatch(editEventActions.addInvitedUsers(Array.from(selectedUsersIds)))
+        store.dispatch(inviteUsersPopupActions.close())
+    }
+)
 
 const submitButtonStateAtom = map(
     combine({

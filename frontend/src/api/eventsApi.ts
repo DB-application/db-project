@@ -1,6 +1,5 @@
 import {HttpStatus} from "../core/http/HttpStatus";
-import {goToAuth, goToUrl} from "../core/link/goToUrl";
-import {rejects} from "assert";
+import {goToAuth} from "../core/link/goToUrl";
 
 
 type EventData_Api = {

@@ -9,7 +9,6 @@ import {I18n_get} from "../../../../i18n/i18n_get";
 import {loadAbsentUsers} from "../../../../users/loadUsers";
 import {dispatchAsyncAction} from "../../../../core/reatom/dispatchAsyncAction";
 import {declareAsyncAction} from "../../../../core/reatom/declareAsyncAction";
-import {removeUserFromEventAction} from "../removeUserFromEventAction";
 
 type PopupModeType = 'edit' | 'create'
 
@@ -82,20 +81,7 @@ const [placeAtom, setPlace] = declareAtomWithSetter<string>('editEvent.place', '
     on(open, (_, payload) => payload.mode === 'edit' ? payload.place : '')
 ])
 
-const removeInvitedUser = declareAsyncAction<string, void>(
-    'editEvent.removeInvitedUser',
-    async (userId, store) => {
-        const invitedUsers = store.getState(invitedUsersAtom)
-        store.dispatch(setInvitedUsersAtom(invitedUsers.filter(invitedUserId => invitedUserId !== userId)))
-        return dispatchAsyncAction(store, removeUserFromEventAction, [userId])
-            .then(() => {
-                return Promise.resolve()
-            })
-            .catch(() => {
-                store.dispatch(addInvitedUsers([userId]))
-            })
-    }
-)
+const removeInvitedUser = declareAction<string>()
 const addInvitedUsers = declareAction<Array<string>>()
 const [invitedUsersAtom, setInvitedUsersAtom] = declareAtomWithSetter<Array<string>>('editEvent.invitedUsers', [], on => [
     on(open, (_, payload) => payload.mode === 'edit' ? payload.invitedUsersIds : []),
@@ -105,7 +91,8 @@ const [invitedUsersAtom, setInvitedUsersAtom] = declareAtomWithSetter<Array<stri
             ...userIds,
         ])
         return Array.from(newInvitedUsers)
-    })
+    }),
+    on(removeInvitedUser, (state, userId) => state.filter(invitedUserId => invitedUserId !== userId))
 ])
 const eventIdAtom = declareAtom('editEvent.eventId', '', on => [
     on(open, (_, payload) => payload.mode === 'edit' ? payload.eventId : '')
