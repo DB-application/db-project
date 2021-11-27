@@ -33,7 +33,6 @@
 }
 
 .input:focus:not(.inputDisabled) {
-    box-shadow: 0 1px 0 0 #003DAE;
     border-color: #003DAE;
 }
 
