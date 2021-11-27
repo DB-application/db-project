@@ -50,7 +50,9 @@ class EventQueryService implements EventQueryServiceInterface
         $qb = $this->conn->createQueryBuilder();
         $qb->from('event', 'e');
         $this->addEventFieldSelect($qb);
+        $qb->innerJoin('e', 'user_invitation', 'ui', 'e.event_id = ui.event_id');
         $qb->where("{$const(EventTable::ORGANIZER_ID)} = :userId");
+        $qb->orWhere($qb->expr()->eq('ui.user_id', ':userId'));
         $query = $qb->getSQL();
         $result = $this->conn->executeQuery($query, ['userId' => $userId])->fetchAllAssociative();
         //TODO: добавить поиск по приграшенным пользователем
