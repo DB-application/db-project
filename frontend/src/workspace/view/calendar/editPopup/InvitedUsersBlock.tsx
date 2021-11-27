@@ -11,6 +11,7 @@ import {PlusCircleIcon} from "../../../../icons/PlusCircleIcon";
 import {UserInfo} from "../../../../common/userInfo/UserInfo";
 import {Button_Text} from "../../../../common/button/Button_Text";
 import {authorizedCurrentUser} from "../../../../authentication/viewModel/currentUserAtom";
+import {calendarAtom} from "../../../viewmodel/calendar/calendar";
 
 type UsersListItemProps = {
     user: UserData,
@@ -51,8 +52,8 @@ function UsersListItem({
 
 function InvitedUsersList() {
     const invitedUsers = useAtomWithSelector(editEventAtom, x => x.invitedUsers)
-    const users = useAtom(usersAtom)
     const currentUser = useAtom(authorizedCurrentUser)
+    const users = useAtom(usersAtom)
 
     const usersData: Array<UserData> = invitedUsers.map(userId => users[userId])
         .filter(user => user)

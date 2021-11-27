@@ -1,5 +1,7 @@
 .container {
     padding: 30px;
+    min-width: 550px;
+    min-height: 240px;
 }
 
 .infoLabel {

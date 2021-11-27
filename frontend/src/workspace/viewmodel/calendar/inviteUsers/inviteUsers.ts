@@ -6,6 +6,7 @@ import {dispatchAsyncAction} from "../../../../core/reatom/dispatchAsyncAction";
 import {loadAbsentUsers} from "../../../../users/loadUsers";
 import {editEventActions} from "../editPopup/editEvent";
 import {usersAtom} from "../../../../users/usersAtom";
+import {authorizedCurrentUser} from "../../../../authentication/viewModel/currentUserAtom";
 
 
 const open = declareAction(
@@ -42,10 +43,12 @@ const loadUsersList = declareAsyncAction<void, Array<string>>(
 
         return EventsApi.getUsersToInvite()
             .then(async ({userIds}) => {
-                if (userIds.length > 0) {
-                    await dispatchAsyncAction(store, loadAbsentUsers, userIds)
+                const currentUser = store.getState(authorizedCurrentUser)
+                const withoutCurrent = userIds.filter(userId => userId !== currentUser.id)
+                if (withoutCurrent.length > 0) {
+                    await dispatchAsyncAction(store, loadAbsentUsers, withoutCurrent)
                 }
-                return Promise.resolve(userIds)
+                return Promise.resolve(withoutCurrent)
             })
     }
 )

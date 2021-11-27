@@ -5,45 +5,26 @@ import styles from './ViewEventPopup.module.css'
 import {I18n_get} from "../../../../i18n/i18n_get";
 import {UserInfo} from "../../../../common/userInfo/UserInfo";
 import {UserList} from "../../../../common/userList/UserList";
-import {UserData} from "../../../../common/UserData";
 import {UserInfoPopover} from "../../../../common/userInfo/UserInfoPopover";
 import {PopoverPortal} from "../../../../core/portal/PopoverPortal";
-import {useRef, useState} from "react";
+import {useMemo, useRef, useState} from "react";
+import {useAtomWithSelector} from "../../../../core/reatom/useAtomWithSelector";
+import {calendarAtom} from "../../../viewmodel/calendar/calendar";
+import {usersAtom} from "../../../../users/usersAtom";
+import {ContainerWithPreloader} from "../../../../common/ContainerWithPreloader";
 
 
 function InvitedUsersBlock() {
     const organizerRef = useRef<HTMLDivElement|null>(null)
     const [popoverOpened, setPopoverOpened] = useState<boolean>(false)
+    const events = useAtomWithSelector(calendarAtom, x => x.events)
+    const eventId = useAtomWithSelector(viewEventAtom, x => x.eventId)
+    const users = useAtom(usersAtom)
+    const {organizerId, invitedUsersIds} = useMemo(() => events[eventId], [events, eventId])
 
-    const organizator: UserData = {
-        id: '123',
-        username: "Fenomen",
-        email: 'email12 321@mail.ru',
-        avatarUrl: '',
-    }
-    const users: Array<UserData> = [
-        {
-            id: '1',
-            email: 'email12321123123w@mail.ru',
-            firstName: 'Эльдар',
-            lastName: 'Мухаметханов',
-            phone: '89021025370',
-            username: 'email12321123123w 123 ',
-            avatarUrl: '',
-        },
-        {
-            id: '2',
-            email: 'email',
-            username: 'pohui 1',
-            avatarUrl: '',
-        },
-        {
-            id: '1',
-            email: 'email',
-            username: 'jopa 1',
-            avatarUrl: '',
-        }
-    ]
+    const usersData = useMemo(() => (
+        invitedUsersIds.map(invited => users[invited])
+    ), [invitedUsersIds, users])
 
     return (
         <div className={styles.invitedUserBlock}>
@@ -52,7 +33,7 @@ function InvitedUsersBlock() {
             </div>
             <div ref={organizerRef}>
                 <UserInfo
-                    user={organizator}
+                    user={users[organizerId]}
                     size={'xSmall'}
                     onClick={() => setPopoverOpened(true)}
                     className={styles.organizator}
@@ -63,14 +44,16 @@ function InvitedUsersBlock() {
                 show={popoverOpened}
                 setShow={setPopoverOpened}
                 content={<UserInfoPopover
-                    user={organizator}
+                    user={users[organizerId]}
                 />}
+                side={'right'}
+                align={'center'}
             />
             <div className={styles.userBlockLabel}>
                 {I18n_get('ViewEventPopup.Collaborators')}
             </div>
             <UserList
-                users={users}
+                users={usersData}
                 onClick={() => {}}
                 className={styles.usersList}
             />
@@ -119,20 +102,17 @@ function DescriptionBlock({
 }
 
 function Content() {
-    const {
-        title,
-        start,
-        end,
-        description,
-        place,
-    } = useAtom(viewEventAtom)
+    const events = useAtomWithSelector(calendarAtom, x => x.events)
+    const eventId = useAtomWithSelector(viewEventAtom, x => x.eventId)
+
+    const event = useMemo(() => events[eventId], [events, eventId])
 
     const getDateString = (date: Date) => {
         return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
     }
 
     return (
-        <div className={styles.container}>
+        <div>
             <div className={styles.infoLabel}>
                 {I18n_get('ViewEventPopup.InfoLabel')}
             </div>
@@ -140,22 +120,22 @@ function Content() {
                 <div className={styles.eventData}>
                     <InfoDataBlock
                         description={I18n_get('ViewEventPopup.TitleLabel')}
-                        value={title}
+                        value={event.title}
                     />
-                    {place && <InfoDataBlock
+                    {event.place && <InfoDataBlock
                         description={I18n_get('ViewEventPopup.PlaceLabel')}
-                        value={place}
+                        value={event.place}
                     />}
                     <InfoDataBlock
                         description={I18n_get('ViewEventPopup.StartLabel')}
-                        value={getDateString(start)}
+                        value={getDateString(event.start)}
                     />
                     <InfoDataBlock
                         description={I18n_get('ViewEventPopup.EndLabel')}
-                        value={getDateString(end)}
+                        value={getDateString(event.end)}
                     />
-                    {description && <DescriptionBlock
-                        description={description}
+                    {event.description && <DescriptionBlock
+                        description={event.description}
                     />}
                 </div>
                 <InvitedUsersBlock />
@@ -164,12 +144,24 @@ function Content() {
     )
 }
 
+function ContentWrapper() {
+    const isPopupLoading = useAtomWithSelector(viewEventAtom, x => x.isPopupLoading)
+
+    return (
+        <ContainerWithPreloader
+            content={<Content />}
+            isPopupLoading={isPopupLoading}
+            className={styles.container}
+        />
+    )
+}
+
 function ViewEventPopup() {
     const handleViewEventPopup = useAction(viewEventActions.close)
 
     return <Popup
         type={"contentOnly"}
-        content={<Content />}
+        content={<ContentWrapper />}
         closePopup={handleViewEventPopup}
     />
 }

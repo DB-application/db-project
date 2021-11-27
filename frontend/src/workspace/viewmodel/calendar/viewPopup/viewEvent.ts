@@ -1,11 +1,33 @@
 import {combine, declareAction, declareAtom} from "@reatom/core";
 import {CalendarEvent} from "../calendar";
+import {declareAsyncAction} from "../../../../core/reatom/declareAsyncAction";
+import {dispatchAsyncAction} from "../../../../core/reatom/dispatchAsyncAction";
+import {loadAbsentUsers} from "../../../../users/loadUsers";
+import {declareAtomWithSetter} from "../../../../core/reatom/declareAtomWithSetter";
 
 type OpenPopupPayload = {
     event: CalendarEvent,
 }
 
-const open = declareAction<OpenPopupPayload>('viewEvent.open')
+const loadInvitedUsers = declareAsyncAction<Array<string>, void>('editEvent.loadInvitedUsers',
+    async (userIds, store) => {
+        return dispatchAsyncAction(store, loadAbsentUsers, userIds)
+    }
+)
+
+const open = declareAsyncAction<OpenPopupPayload, void>(
+    'viewEvent.open',
+    async (payload, store) => {
+        const usersToLoad = [
+            ...payload.event.invitedUsersIds,
+            payload.event.organizerId,
+        ]
+        if (usersToLoad.length > 0) {
+            return dispatchAsyncAction(store, loadInvitedUsers, usersToLoad)
+        }
+        return Promise.resolve()
+    }
+)
 const close = declareAction('viewEvent.open')
 
 const openedAtom = declareAtom('viewEvent.opened', false, on => [
@@ -13,29 +35,20 @@ const openedAtom = declareAtom('viewEvent.opened', false, on => [
     on(close, () => false),
 ])
 
-const startAtom = declareAtom<Date>('viewEvent.start', new Date(), on => {
-    on(open, (_, {event}) => event.start)
+const eventIdAtom = declareAtom<string>('viewEvent.eventId', '', on => {
+    on(open, (_, {event}) => event.eventId)
 })
-const endAtom = declareAtom<Date>('viewEvent.end', new Date(), on => [
-    on(open, (_, {event}) => event.end)
-])
-const titleAtom = declareAtom<string>('viewEvent.title', '', on => [
-    on(open, (_, {event}) => event.title)
-])
-const descriptionAtom = declareAtom<string>('viewEvent.description', '', on => [
-    on(open, (_, {event}) => event.description)
-])
-const placeAtom = declareAtom<string>('viewEvent.place', '', on => [
-    on(open, (_, {event}) => event.place)
+
+const [isPopupLoadingAtom, setIsPopupLoading] = declareAtomWithSetter('editEvent.popupLoading', false, on => [
+    on(open, () => true),
+    on(open.done, () => false),
+    on(open.fail, () => false),
 ])
 
 const viewEventAtom = combine(({
     opened: openedAtom,
-    start: startAtom,
-    end: endAtom,
-    title: titleAtom,
-    place: placeAtom,
-    description: descriptionAtom,
+    eventId: eventIdAtom,
+    isPopupLoading: isPopupLoadingAtom,
 }))
 
 const viewEventActions = {
