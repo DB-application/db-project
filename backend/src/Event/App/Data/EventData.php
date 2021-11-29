@@ -19,6 +19,8 @@ class EventData implements \JsonSerializable
     private $organizerId;
     /** @var string */
     private $place;
+    /** @var string[]|null */
+    private $invitedUserIds;
 
     public function __construct(string $eventId, string $title, ?string $description, \DateTimeImmutable $startDate, \DateTimeImmutable $endDate, string $organizerId, string $place)
     {
@@ -66,6 +68,22 @@ class EventData implements \JsonSerializable
         return $this->place;
     }
 
+    /**
+     * @return string[]
+     */
+    public function getInvitedUserIds(): array
+    {
+        return $this->invitedUserIds;
+    }
+
+    /**
+     * @param string[]|null $invitedUserIds
+     */
+    public function setInvitedUserIds(?array $invitedUserIds): void
+    {
+        $this->invitedUserIds = $invitedUserIds;
+    }
+
     public function jsonSerialize()
     {
         return [
@@ -76,6 +94,7 @@ class EventData implements \JsonSerializable
             'endDate' => $this->endDate->getTimestamp(),
             'organizerId' => $this->organizerId,
             'place' => $this->place,
+            'invitedUserIds' => $this->invitedUserIds,
         ];
     }
 }

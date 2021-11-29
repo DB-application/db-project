@@ -7,6 +7,7 @@ use App\Common\Domain\Uuid;
 use App\Common\Domain\UuidGenerator;
 use App\Event\App\Data\EventData;
 use App\Event\App\Query\EventQueryServiceInterface;
+use App\Event\App\Query\UserInvitationQueryServiceInterface;
 use App\Event\Domain\Model\Event;
 use App\Event\Domain\Model\EventRepositoryInterface;
 
@@ -16,9 +17,12 @@ class EventAppService
     private $repository;
     /** @var EventQueryServiceInterface */
     private $eventQueryService;
+    /** @var UserInvitationQueryServiceInterface */
+    private $invitationQueryService;
 
-    public function __construct(EventRepositoryInterface $repository, EventQueryServiceInterface $eventQueryService)
+    public function __construct(EventRepositoryInterface $repository, EventQueryServiceInterface $eventQueryService, UserInvitationQueryServiceInterface $invitationQueryService)
     {
+        $this->invitationQueryService = $invitationQueryService;
         $this->repository = $repository;
         $this->eventQueryService = $eventQueryService;
     }
@@ -36,6 +40,10 @@ class EventAppService
         // TODO: обернуть в транзакцию
         //Добавить проверку $organizerId
         $event = $this->repository->findEventById(new Uuid($eventId));
+        if ($event === null)
+        {
+            throw new \RuntimeException("invalid event id {'$eventId'}");
+        }
         $event->setName($title);
         $event->setStartDate($startDate);
         $event->setEndDate($endDate);
@@ -51,7 +59,7 @@ class EventAppService
         $event = $this->repository->findEventById(new Uuid($eventId));
         if ($event === null)
         {
-            //TODO: выкинуть доменное исключение
+            throw new \RuntimeException("invalid event id {'$eventId'}");
         }
         $this->repository->remove($event);
     }
@@ -59,7 +67,14 @@ class EventAppService
     public function getEventData(string $eventId): ?EventData
     {
         //TODO: если EventData null
-        return $this->eventQueryService->getEventData($eventId);
+        $eventData = $this->eventQueryService->getEventData($eventId);
+        if ($eventData === null)
+        {
+            throw new \RuntimeException("invalid event id {'$eventId'}");
+        }
+        $invitedUsersMap = $this->invitationQueryService->getInvitedUsersByEventIds([$eventData->getEventId()]);
+        $eventData->setInvitedUserIds($invitedUsersMap[$eventData->getEventId()]);
+        return $eventData;
     }
 
     /**
@@ -68,6 +83,20 @@ class EventAppService
      */
     public function getUserEvents(string $userId): array
     {
-        return $this->eventQueryService->getUserEvents($userId);
+        $eventsData = $this->eventQueryService->getUserEvents($userId);
+        $eventIds = array_map(
+            static function (EventData $eventData): string
+            {
+                return $eventData->getEventId();
+            },
+            $eventsData
+        );
+        $invitedUsersMap = $this->invitationQueryService->getInvitedUsersByEventIds($eventIds);
+        foreach ($eventsData as $eventData)
+        {
+            $eventData->setInvitedUserIds($invitedUsersMap[$eventData->getEventId()] ?? []);
+        }
+
+        return $eventsData;
     }
 }

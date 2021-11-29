@@ -18,6 +18,7 @@ class EventDataHydrator
         $endDate = TypeConverter::hydrateValue($data[EventTable::END_DATE], EventTable::EVENT_FIELDS[EventTable::END_DATE]);
         $organizerId = TypeConverter::hydrateValue($data[EventTable::ORGANIZER_ID], EventTable::EVENT_FIELDS[EventTable::ORGANIZER_ID]);
         $place = TypeConverter::hydrateValue($data[EventTable::PLACE], EventTable::EVENT_FIELDS[EventTable::PLACE]);
+        $invitedUser = TypeConverter::hydrateValue($data[EventTable::PLACE], EventTable::EVENT_FIELDS[EventTable::PLACE]);
         return new EventData($eventId, $title, $description, $startDate, $endDate, $organizerId, $place);
     }
 }

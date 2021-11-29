@@ -15,6 +15,7 @@ class EventQueryService implements EventQueryServiceInterface
 {
     /** @var Connection */
     private $conn;
+    /** @var EventDataHydrator */
     private $hydrator;
 
     public function __construct(EntityManagerInterface $em, EventDataHydrator $hydrator)
@@ -42,20 +43,16 @@ class EventQueryService implements EventQueryServiceInterface
 
     public function getUserEvents(string $userId): array
     {
-        $const = static function (string $value)
-        {
-            return $value;
-        };
-
         $qb = $this->conn->createQueryBuilder();
         $qb->from('event', 'e');
         $this->addEventFieldSelect($qb);
-        $qb->innerJoin('e', 'user_invitation', 'ui', 'e.event_id = ui.event_id');
-        $qb->where("{$const(EventTable::ORGANIZER_ID)} = :userId");
+        $qb->leftJoin('e', 'user_invitation', 'ui', 'e.event_id = ui.event_id');
+        $qb->where($qb->expr()->eq('e.' . EventTable::ORGANIZER_ID, ':organizerId'));
         $qb->orWhere($qb->expr()->eq('ui.user_id', ':userId'));
-        $query = $qb->getSQL();
-        $result = $this->conn->executeQuery($query, ['userId' => $userId])->fetchAllAssociative();
-        //TODO: добавить поиск по приграшенным пользователем
+        $qb->setParameter('userId', $userId);
+        $qb->setParameter('organizerId', $userId);
+        $qb->groupBy('e.event_id');
+        $result = $qb->execute()->fetchAllAssociative();
         $data = [];
         foreach ($result as $item)
         {
