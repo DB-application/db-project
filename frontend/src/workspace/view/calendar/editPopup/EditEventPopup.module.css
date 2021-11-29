@@ -40,14 +40,19 @@
     transition: all .15s ease;
     outline: none;
     padding: 0 8px;
+    will-change: opacity;
 }
 
 .calendarInput:focus {
     box-shadow: 0 0 0 2px #003DAE;
 }
 
-.calendarInput:hover:not(.inputError):not(:focus) {
+.calendarInput:hover:not(.inputError):not(:focus):not(:disabled) {
     border-color: #373537;
+}
+
+.calendarInput:disabled {
+    opacity: 0.6;
 }
 
 .contentBlock:not(:last-child) {

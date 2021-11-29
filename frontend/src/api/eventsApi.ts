@@ -1,5 +1,6 @@
 import {HttpStatus} from "../core/http/HttpStatus";
 import {goToAuth} from "../core/link/goToUrl";
+import {CalendarEventRepeatableType} from "../workspace/viewmodel/calendar/calendar";
 
 
 type EventData_Api = {
@@ -41,6 +42,8 @@ type CreateEventData = {
     invitedUsersIds: Array<string>,
     organizerId: string,
     place: string,
+    repeatable: CalendarEventRepeatableType;
+    isRepeatable: boolean;
 }
 
 function createEvent(eventData: CreateEventData): Promise<{eventId: string}> {
@@ -81,6 +84,8 @@ type EditEventData = {
     invitedUsersIds: Array<string>,
     organizerId: string,
     place: string,
+    repeatable: CalendarEventRepeatableType;
+    isRepeatable: boolean;
 }
 
 function editEvent(eventData: EditEventData) {

@@ -18,6 +18,7 @@ import {useRef} from "react";
 import {TooltipPortal} from "../../../../core/portal/TooltipPortal";
 import {ContainerWithPreloader} from "../../../../common/ContainerWithPreloader";
 import {InvitedUsersBlock} from './InvitedUsersBlock';
+import { RepeatableBlock } from './RepeatableBlock';
 
 type DateBlockProps = {
     fieldName: string,
@@ -51,6 +52,7 @@ function DateBlock({
     timeDisabled,
     error,
 }: DateBlockProps) {
+    const repeatableType = useAtomWithSelector(editEventAtom, x => x.repeatableType)
     return (
         <div className={joinClassNames(styles.dataContainer, className)}>
             <div className={styles.fieldDescription}>
@@ -66,6 +68,7 @@ function DateBlock({
                         date && setDate(date as Date)
                     }}
                     className={styles.calendarInput}
+                    disabled={repeatableType !== 'none'}
                 />
                 <div className={styles.timePickerLabel}>
                     {I18n_get('EditEventPopup.TimeLabel')}
@@ -95,7 +98,6 @@ function Content() {
         end,
         description,
         mode,
-        allDay,
         endError,
         titleError,
         place,
@@ -106,7 +108,6 @@ function Content() {
     const handleSetEnd = useAction(editEventActions.setEnd)
     const handleSetDescription = useAction(editEventActions.setDescription)
     const handleRemove = useAction(editEventActions.removeEvent)
-    const handleSetAllDay = useAction(editEventActions.setAllDay)
 
     return (
         <div className={styles.content}>
@@ -136,7 +137,7 @@ function Content() {
                 date={start}
                 setDate={handleSetStart}
                 className={styles.contentBlock}
-                timeDisabled={allDay}
+                timeDisabled={false}
                 error={false}
             />
             <DateBlock
@@ -144,15 +145,10 @@ function Content() {
                 date={end}
                 setDate={handleSetEnd}
                 className={styles.contentBlock}
-                timeDisabled={allDay}
+                timeDisabled={false}
                 error={endError}
             />
-            <Checkbox_WithLabel
-                checked={allDay}
-                onCheckedChange={handleSetAllDay}
-                label={I18n_get('EditEventPopup.AllDay')}
-                className={styles.allDayBlock}
-            />
+            <RepeatableBlock/>
             <InvitedUsersBlock/>
             {
                 mode === 'edit'

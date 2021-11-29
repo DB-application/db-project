@@ -25,8 +25,8 @@
 .searchIcon {
     position: absolute;
     color: rgba(66,72,78,0.6);
-    height: 25px;
-    width: 25px;
+    height: 20px;
+    width: 20px;
     left: 5px;
     top: 50%;
     transform: translateY(-50%);

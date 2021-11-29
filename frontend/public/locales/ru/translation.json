@@ -62,7 +62,12 @@
     "RemoveButton": "Удалить событие",
     "AllDay": "Весь день",
     "TitleRequired": "Поле название обязательное",
-    "OrganizerLabel": "Организатор"
+    "Repeat": "Повтор",
+    "OrganizerLabel": "Организатор",
+    "RepeatableNone":  "Никогда",
+    "RepeatableEveryDay":  "Каждый день",
+    "RepeatableEveryWeek":  "Каждую неделю",
+    "RepeatableEveryMonth":  "Каждый месяц"
   },
   "Errors": {
     "StandardError": "Упс, что-то пошло не так. Попробуйте еще раз",

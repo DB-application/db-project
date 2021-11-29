@@ -4,6 +4,7 @@ import {verify} from "../../core/verify";
 import {getStylesWithMods} from "../../core/styles/getStylesWithMods";
 import {joinClassNames} from "../../core/styles/joinClassNames";
 import {PlusCircleIcon} from "../../icons/PlusCircleIcon";
+import {SearchIcon} from "../../icons/SearchIcon";
 
 type SearchFieldProps = {
     value: string,
@@ -44,7 +45,7 @@ function SearchField({
             className={joinClassNames(styles.fieldContainer, className)}
         >
             <div className={styles.searchIcon}>
-                {<PlusCircleIcon/>}
+                <SearchIcon/>
             </div>
             <input
                 ref={ref}

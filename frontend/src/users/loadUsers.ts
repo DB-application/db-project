@@ -9,7 +9,6 @@ import {dispatchAsyncAction} from "../core/reatom/dispatchAsyncAction";
 
 
 function loadUsersResponseCall(store: Store, userIds: Array<string>) {
-    console.log('jopa')
     return UsersApi.getUsersData(userIds)
         .then(usersData => {
             store.dispatch(usersActions.updateUsers(usersData))

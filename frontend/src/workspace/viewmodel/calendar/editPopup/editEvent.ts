@@ -9,6 +9,7 @@ import {I18n_get} from "../../../../i18n/i18n_get";
 import {loadAbsentUsers} from "../../../../users/loadUsers";
 import {dispatchAsyncAction} from "../../../../core/reatom/dispatchAsyncAction";
 import {declareAsyncAction} from "../../../../core/reatom/declareAsyncAction";
+import {calendarAtom, CalendarEventRepeatableType} from "../calendar";
 
 type PopupModeType = 'edit' | 'create'
 
@@ -26,6 +27,8 @@ type OpenPopupPayload = {
     organizerId: string;
     place: string;
     invitedUsersIds: Array<string>;
+    repeatable: CalendarEventRepeatableType;
+    isRepeatable: boolean;
 }
 
 const loadInvitedUsers = declareAsyncAction<Array<string>, void>('editEvent.loadInvitedUsers',
@@ -80,7 +83,12 @@ const [descriptionAtom, setDescription] = declareAtomWithSetter<string>('editEve
 const [placeAtom, setPlace] = declareAtomWithSetter<string>('editEvent.place', '', on => [
     on(open, (_, payload) => payload.mode === 'edit' ? payload.place : '')
 ])
-
+const [repeatableTypeAtom, setRepeatableType] = declareAtomWithSetter<CalendarEventRepeatableType>('editEvent.repeatableType', 'none', on => [
+    on(open, (_, payload) => payload.mode === 'edit' ? payload.repeatable : 'none')
+])
+const isRepeatableAtom = declareAtom<boolean>('editEvent.isRepeatable', false, on => [
+    on(open, (_, payload) => payload.mode === 'edit' ? payload.isRepeatable : false)
+])
 const removeInvitedUser = declareAction<string>()
 const addInvitedUsers = declareAction<Array<string>>()
 const [invitedUsersAtom, setInvitedUsersAtom] = declareAtomWithSetter<Array<string>>('editEvent.invitedUsers', [], on => [
@@ -108,16 +116,21 @@ const [endErrorAtom, setEndError] = declareAtomWithSetter('editEvent.endError', 
 const submit = declareAction('editEvent.submit',
     (_, store) => {
         const event = store.getState(editEventAtom)
+        const events = store.getState(calendarAtom).events
         const {id: currentUserId} = store.getState(authorizedCurrentUser)
 
         let newStart = new Date(event.start)
         let newEnd = new Date(event.end)
-        if (event.allDay) {
-            newStart.setHours(9)
-            newStart.setMinutes(0)
+        console.log('event.isRepeatable', event.isRepeatable)
+        if (event.isRepeatable) {
+            const originalEvent = events[event.eventId]
+            newStart.setFullYear(originalEvent.start.getFullYear())
+            newStart.setMonth(originalEvent.start.getMonth())
+            newStart.setDate(originalEvent.start.getDate())
 
-            newEnd.setHours(18)
-            newEnd.setMinutes(0)
+            newEnd.setFullYear(originalEvent.end.getFullYear())
+            newEnd.setMonth(originalEvent.end.getMonth())
+            newEnd.setDate(originalEvent.end.getDate())
         }
 
         if (!event.title) {
@@ -133,25 +146,29 @@ const submit = declareAction('editEvent.submit',
 
         if (event.mode === 'create') {
             store.dispatch(createEventAction({
-                end: event.end,
+                end: newEnd,
                 title: event.title,
-                start: event.start,
+                start: newStart,
                 description: event.description,
                 organizerId: currentUserId,
                 invitedUsersIds: event.invitedUsers,
                 place: event.place,
+                repeatable: event.repeatableType,
+                isRepeatable: event.isRepeatable,
             }))
         }
         else {
             store.dispatch(editEventAction({
-                end: event.end,
+                end: newEnd,
                 eventId: event.eventId,
                 description: event.description,
                 organizerId: currentUserId,
-                start: event.start,
+                start: newStart,
                 title: event.title,
                 invitedUsersIds: event.invitedUsers,
                 place: event.place,
+                repeatable: event.repeatableType,
+                isRepeatable: event.isRepeatable,
             }))
         }
     }
@@ -200,6 +217,8 @@ const editEventAtom = combine({
     description: descriptionAtom,
     place: placeAtom,
     invitedUsers: invitedUsersAtom,
+    isRepeatable: isRepeatableAtom,
+    repeatableType: repeatableTypeAtom,
     eventId: eventIdAtom,
     allDay: allDayAtom,
     isPopupLoading: isPopupLoadingAtom,
@@ -216,6 +235,7 @@ const editEventActions = {
     setEnd,
     setStart,
     setTitle,
+    setRepeatableType,
     submit,
     removeEvent,
     setAllDay,

@@ -3,6 +3,7 @@ import {declareAtomWithSetter} from "../../../core/reatom/declareAtomWithSetter"
 import {initCalendar} from "./initCalendar";
 import {declareMapAtom} from "../../../core/reatom/declareMapAtom";
 
+type CalendarEventRepeatableType = 'none' | 'everyWeek' | 'everyDay' | 'everyMonth'
 
 type CalendarEvent  = {
     eventId: string,
@@ -13,6 +14,8 @@ type CalendarEvent  = {
     organizerId: string;
     place: string;
     invitedUsersIds: Array<string>;
+    repeatable: CalendarEventRepeatableType;
+    isRepeatable: boolean;
 }
 
 const {
@@ -44,6 +47,7 @@ const calendarActions = {
 
 export type {
     CalendarEvent,
+    CalendarEventRepeatableType,
 }
 export {
     calendarAtom,

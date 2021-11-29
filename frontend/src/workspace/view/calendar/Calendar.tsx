@@ -10,7 +10,17 @@ import {editEventActions} from "../../viewmodel/calendar/editPopup/editEvent";
 import {viewEventActions} from "../../viewmodel/calendar/viewPopup/viewEvent";
 import {authorizedCurrentUser} from "../../../authentication/viewModel/currentUserAtom";
 import {LocalStorage, STORAGE_KEYS} from "../../../core/localStorage/localStorage";
+import { getRepeatableEvents } from './repeatableEvents';
 
+function getAllEvents(events: Array<CalendarEvent>) {
+    const allEvents: Array<CalendarEvent> = []
+    events.forEach(event => {
+        event.repeatable !== 'none'
+            ? allEvents.push(...getRepeatableEvents(event))
+            : allEvents.push(event)
+    })
+    return allEvents
+}
 
 function EventsCalendar() {
     const events = useAtomWithSelector(calendarAtom, x => x.events)
@@ -42,11 +52,12 @@ function EventsCalendar() {
             })
         }
     }
+
     return (
         <Calendar
             selectable
             localizer={momentLocalizer(moment)}
-            events={Object.values(events)}
+            events={getAllEvents(Object.values(events))}
             onSelectSlot={handleSelect}
             onSelectEvent={onSelectEvent}
             defaultView={LocalStorage.getValue(STORAGE_KEYS.CALENDAR_DEFAULT_VIEW) || 'week'}

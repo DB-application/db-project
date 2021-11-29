@@ -21,6 +21,8 @@ const initCalendar = declareAsyncAction<void, Array<CalendarEvent>>(
                         organizerId: event.organizerId,
                         description: event.description,
                         invitedUsersIds: event.invitedUsersIds || [],
+                        isRepeatable: false,
+                        repeatable: 'none',
                     }))
                 store.dispatch(calendarActions.updateEvents(events))
                 return Promise.resolve(events)
