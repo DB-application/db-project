@@ -74,11 +74,41 @@ function createNote(noteData: CreateNoteData): Promise<{noteId: string}> {
 
 type EditNoteContentData = {
     noteId: string,
-    title: string,
     content: Object,
 }
 
 function editNoteContent(payload: EditNoteContentData) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(undefined)
+        }, 1000)
+    })
+    // return fetch('/edit/note_content', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(payload)
+    // })
+    //     .then(response => {
+    //         switch (response.status) {
+    //             case HttpStatus.OK:
+    //                 return Promise.resolve(response)
+    //             case HttpStatus.UNAUTHORIZED:
+    //                 goToUrl('/auth')
+    //                 return Promise.reject(response)
+    //             default:
+    //                 return Promise.reject(response)
+    //         }
+    //     })
+}
+
+type EditTitleContentData = {
+    noteId: string,
+    title: string,
+}
+
+function editNoteTitle(payload: EditTitleContentData) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve(undefined)
@@ -196,6 +226,7 @@ const NotesApi = {
     removeNote,
     createNote,
     getNoteContent,
+    editNoteTitle,
 }
 
 export type {

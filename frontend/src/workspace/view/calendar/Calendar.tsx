@@ -1,4 +1,4 @@
-import {Calendar, momentLocalizer, SlotInfo, View} from 'react-big-calendar'
+import {Calendar, momentLocalizer, SlotInfo} from 'react-big-calendar'
 import moment from 'moment'
 import * as React from "react";
 import 'react-big-calendar/lib/css/react-big-calendar.css'
@@ -10,16 +10,14 @@ import {editEventActions} from "../../viewmodel/calendar/editPopup/editEvent";
 import {viewEventActions} from "../../viewmodel/calendar/viewPopup/viewEvent";
 import {authorizedCurrentUser} from "../../../authentication/viewModel/currentUserAtom";
 import {LocalStorage, STORAGE_KEYS} from "../../../core/localStorage/localStorage";
-import { getRepeatableEvents } from './repeatableEvents';
+import {getRepeatableEvents} from './repeatableEvents';
 
 function getAllEvents(events: Array<CalendarEvent>) {
-    const allEvents: Array<CalendarEvent> = []
-    events.forEach(event => {
-        event.repeatable !== 'none'
-            ? allEvents.push(...getRepeatableEvents(event))
-            : allEvents.push(event)
-    })
-    return allEvents
+    return events.reduce((accumulate: Array<CalendarEvent>, event) => {
+        return event.repeatable !== 'none'
+            ? accumulate.concat(getRepeatableEvents(event))
+            : accumulate.concat([event])
+    }, [])
 }
 
 function EventsCalendar() {
@@ -62,7 +60,10 @@ function EventsCalendar() {
             onSelectEvent={onSelectEvent}
             defaultView={LocalStorage.getValue(STORAGE_KEYS.CALENDAR_DEFAULT_VIEW) || 'week'}
             onView={view => LocalStorage.setValue(STORAGE_KEYS.CALENDAR_DEFAULT_VIEW, view)}
+            tooltipAccessor={event => event.title}
+            showMultiDayTimes={true}
             step={30}
+            views={['month', 'week', 'work_week', 'day', 'agenda']}
         />
     )
 }

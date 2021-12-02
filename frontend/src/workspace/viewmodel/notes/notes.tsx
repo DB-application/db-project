@@ -1,7 +1,6 @@
 import {combine, declareAction, declareAtom, map} from "@reatom/core";
 import {Router} from "../../../core/router/router";
 import {declareMapAtom} from "../../../core/reatom/declareMapAtom";
-import {CalendarEvent} from "../calendar/calendar";
 
 type Note = {
     noteId: string,

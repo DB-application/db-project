@@ -1,6 +1,11 @@
 .ProseMirror {
     outline: none;
 }
+
+.ProseMirror > ol > li {
+    margin-bottom: 20px;
+}
+
 ul[data-type="taskList"] {
     list-style: none;
     padding-left: 16px;
@@ -11,11 +16,18 @@ ul[data-type="taskList"] p {
 
 ul[data-type="taskList"] li {
     display: flex;
+    margin-bottom: 20px;
 }
+
 ul[data-type="taskList"] li > label {
     flex: 0 0 auto;
     margin-right: 0.5rem;
-    user-select: none;
+}
+
+ul[data-type="taskList"] li > label > input {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
 }
 
 ul[data-type="taskList"] li > div {
@@ -141,7 +153,7 @@ blockquote {
 }
 
 .ProseMirror p {
-    margin: 0;
+    /*margin: 0;*/
 }
 
 .tableWrapper {

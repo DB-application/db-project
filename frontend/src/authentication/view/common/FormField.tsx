@@ -10,6 +10,7 @@ type FormFieldProps = {
     value: string,
     onChange: (value: string) => void,
     onBlur: () => void,
+    onEnter?: () => void,
     errorText: string | null,
     placeholder: string,
     className?: string,
@@ -19,6 +20,7 @@ type FieldProps = {
     value: string,
     onChange: (value: string) => void,
     onBlur: () => void,
+    onEnter?: () => void,
     errorText: string | null,
     placeholder: string,
     className?: string,
@@ -53,6 +55,7 @@ function PasswordField({
     onBlur,
     className,
     placeholder,
+    onEnter,
 }: FieldProps) {
     const ref = useRef<HTMLInputElement>(null)
     const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -63,12 +66,19 @@ function PasswordField({
         }
     }
 
+    function _onKeyDown(e: any) {
+        if (e.code === 'Enter') {
+            onEnter && onEnter()
+        }
+    }
+
     return (
         <div className={styles.inputContainer}>
             <input
                 ref={ref}
                 className={className}
                 onBlur={onBlur}
+                onKeyDown={_onKeyDown}
                 onInput={_onInput}
                 type={showPassword
                     ? 'text'
@@ -90,12 +100,19 @@ function TextField({
     onBlur,
     className,
     placeholder,
+    onEnter,
 }: FieldProps) {
     const ref = useRef<HTMLInputElement>(null)
 
     function _onInput() {
         if (ref.current) {
             onChange(ref.current.value)
+        }
+    }
+
+    function _onKeyDown(e: any) {
+        if (e.code === 'Enter') {
+            onEnter && onEnter()
         }
     }
     return(
@@ -105,6 +122,7 @@ function TextField({
                 className={className}
                 onBlur={onBlur}
                 onInput={_onInput}
+                onKeyDown={_onKeyDown}
                 type={'text'}
                 value={value}
                 placeholder={placeholder}
@@ -121,7 +139,8 @@ function FormField(props: FormFieldProps) {
         onBlur,
         placeholder,
         value,
-        onChange
+        onChange,
+        onEnter,
     } = props
 
     const inputClassNames = getStylesWithMods(styles.input, {
@@ -134,6 +153,7 @@ function FormField(props: FormFieldProps) {
         onBlur,
         value,
         placeholder,
+        onEnter,
         className: inputClassNames,
     }
 

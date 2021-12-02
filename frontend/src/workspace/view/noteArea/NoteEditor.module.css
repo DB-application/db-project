@@ -4,13 +4,14 @@
 
 .noteContainer {
     width: 80%;
+    max-width: 720px;
     margin: 50px auto 35px;
 }
 
 .title {
-    font: 35px Roboto;
     margin: 60px auto 0;
     width: 80%;
+    max-width: 720px;
 }
 
 .taskListItem {

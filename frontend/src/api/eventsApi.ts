@@ -11,7 +11,7 @@ type EventData_Api = {
     endDate: number;
     organizerId: string;
     place: string;
-    invitedUsersIds: Array<string>;
+    invitedUserIds: Array<string>;
 }
 
 function getCurrentUserEvents(): Promise<Array<EventData_Api>> {

@@ -43,7 +43,7 @@ function calculateIterationsCount(repeatable: CalendarEventRepeatableType) {
     throw new Error('unknown repeatable')
 }
 
-function getRepeatableEvents(event: CalendarEvent) {
+function getRepeatableEvents(event: CalendarEvent): Array<CalendarEvent> {
     const repeatable = event.repeatable
     const initialDateStart = new Date(event.start)
     const initialDateEnd = new Date(event.end)
