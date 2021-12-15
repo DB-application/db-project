@@ -20,7 +20,7 @@ const initCalendar = declareAsyncAction<void, Array<CalendarEvent>>(
                         title: event.title,
                         organizerId: event.organizerId,
                         description: event.description,
-                        invitedUsersIds: event.invitedUsersIds || [],
+                        invitedUsersIds: event.invitedUserIds,
                         isRepeatable: false,
                         repeatable: 'none',
                     }))

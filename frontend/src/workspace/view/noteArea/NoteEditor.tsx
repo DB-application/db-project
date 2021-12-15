@@ -19,11 +19,13 @@ import {noteActions, noteAtom} from "../../viewmodel/notes/note";
 import {InlineToolbar} from './InlineToolbar/InlineToolbar'
 import {AddBlockPopover} from "./AddBlockToolbar/AddBlockPopover";
 import 'tippy.js/animations/shift-away.css';
+import {TitleEditor} from "./TitleEditor/TitleEditor";
 
 
 function NoteEditor() {
     const note = useAtom(noteAtom)
     const handleSetNoteContent = useAction(noteActions.setNoteContent)
+    const handleSetNoteTitle = useAction(noteActions.setNoteTitle)
     const editor = useEditor({
         extensions: [
             StarterKit,
@@ -40,7 +42,7 @@ function NoteEditor() {
             Underline,
             Highlight.configure({ multicolor: true }),
             Link.configure({
-                openOnClick: false,
+                openOnClick: true,
             }),
             CodeBlockLowlight.configure({
                 lowlight,
@@ -60,11 +62,15 @@ function NoteEditor() {
 
     return (
         <>
-            <div className={styles.title}>{note.title}</div>
+            <TitleEditor
+                value={note.title}
+                onBlur={title => note.title !== title && handleSetNoteTitle(title)}
+                className={styles.title}
+            />
             <div className={styles.noteContainer}>
+                <EditorContent editor={editor} />
                 {editor && <InlineToolbar editor={editor} />}
                 {editor && <AddBlockPopover editor={editor} />}
-                <EditorContent editor={editor} />
             </div>
         </>
     )

@@ -42,6 +42,7 @@
 }
 .invitedUserBlock {
     margin-left: 15px;
+    flex-grow: 1;
 }
 .userBlockLabel {
     margin-bottom: 8px;
