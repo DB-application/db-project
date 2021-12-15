@@ -3,65 +3,75 @@ declare(strict_types=1);
 
 namespace App\Event\App\Service;
 
+use App\Common\App\Transaction\MultiBlockingOperationExecutorInterface;
+use App\Common\App\Transaction\TransactionInterface;
 use App\Common\Domain\Uuid;
-use App\Common\Domain\UuidGenerator;
 use App\Event\App\Data\EventData;
+use App\Event\App\Lock\LockNames;
 use App\Event\App\Query\EventQueryServiceInterface;
 use App\Event\App\Query\UserInvitationQueryServiceInterface;
-use App\Event\Domain\Model\Event;
-use App\Event\Domain\Model\EventRepositoryInterface;
+use App\Event\Domain\Service\EventService;
 
 class EventAppService
 {
-    /** @var EventRepositoryInterface */
-    private $repository;
+    /** @var EventService */
+    private $eventService;
     /** @var EventQueryServiceInterface */
     private $eventQueryService;
     /** @var UserInvitationQueryServiceInterface */
     private $invitationQueryService;
+    /** @var TransactionInterface */
+    private $transaction;
+    /** @var MultiBlockingOperationExecutorInterface */
+    private $blockingOperatorExecutor;
 
-    public function __construct(EventRepositoryInterface $repository, EventQueryServiceInterface $eventQueryService, UserInvitationQueryServiceInterface $invitationQueryService)
+    public function __construct(
+        EventQueryServiceInterface $eventQueryService,
+        UserInvitationQueryServiceInterface $invitationQueryService,
+        EventService $eventService,
+        TransactionInterface $transaction,
+        MultiBlockingOperationExecutorInterface $blockingOperatorExecutor
+    )
     {
+        $this->transaction = $transaction;
+        $this->eventService = $eventService;
         $this->invitationQueryService = $invitationQueryService;
-        $this->repository = $repository;
         $this->eventQueryService = $eventQueryService;
+        $this->blockingOperatorExecutor = $blockingOperatorExecutor;
     }
 
     public function createEvent(string $title, \DateTimeImmutable $startDate, \DateTimeImmutable $endDate, string $organizerId, ?string $description, ?string $place): string
     {
-        // TODO: обернуть в транзакцию
-        $event = new Event(UuidGenerator::generateUuid(), $title, $description, $startDate, $endDate, $place, new Uuid($organizerId), null, false);
-        $this->repository->add($event);
-        return (string)$event->getId();
+        return (string)$this->transaction->execute(
+            function () use ($title, $startDate, $endDate, $organizerId, $description, $place): Uuid
+            {
+                return $this->eventService->createEvent($title, $startDate, $endDate, new Uuid($organizerId), $description, $place);
+            }
+        );
     }
 
     public function editEvent(string $eventId, string $title, \DateTimeImmutable $startDate, \DateTimeImmutable $endDate, string $organizerId, ?string $description, ?string $place): void
     {
-        // TODO: обернуть в транзакцию
         //Добавить проверку $organizerId
-        $event = $this->repository->findEventById(new Uuid($eventId));
-        if ($event === null)
-        {
-            throw new \RuntimeException("invalid event id {'$eventId'}");
-        }
-        $event->setName($title);
-        $event->setStartDate($startDate);
-        $event->setEndDate($endDate);
-        $event->setOrganizerId(new Uuid($organizerId));
-        $event->setDescription($description);
-        $event->setPlace($place);
-        $this->repository->update();
+        $this->blockingOperatorExecutor->execute(
+            [LockNames::getEventLock($eventId)],
+            function () use ($eventId, $title, $startDate, $endDate, $organizerId, $description, $place)
+            {
+                $this->eventService->editEvent($eventId, $title, $startDate, $endDate, new Uuid($organizerId), $description, $place);
+            }
+        );
     }
 
-    public function removeEvent(string $eventId)
+    public function removeEvent(string $eventId): void
     {
-        //TODO: обернуть в транзакцию
-        $event = $this->repository->findEventById(new Uuid($eventId));
-        if ($event === null)
-        {
-            throw new \RuntimeException("invalid event id {'$eventId'}");
-        }
-        $this->repository->remove($event);
+        $operation = $this->blockingOperatorExecutor->execute(
+            [LockNames::getEventLock($eventId)],
+            function () use ($eventId)
+            {
+                $this->eventService->removeEvent($eventId);
+            }
+        );
+        $this->transaction->execute($operation);
     }
 
     public function getEventData(string $eventId): ?EventData

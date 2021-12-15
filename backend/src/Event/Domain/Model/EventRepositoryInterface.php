@@ -11,7 +11,5 @@ interface EventRepositoryInterface
 
     public function add(Event $event): void;
 
-    public function update(): void;
-
     public function remove(Event $event): void;
 }

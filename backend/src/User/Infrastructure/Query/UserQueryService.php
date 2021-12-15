@@ -95,7 +95,7 @@ class UserQueryService implements UserQueryServiceInterface
         $qb->where("{$const(UserTable::USERNAME)} = :username");
         $qb->andWhere("{$const(UserTable::PASSWORD)} = :password");
         $query = $qb->getSQL();
-        $result = $this->conn->executeQuery($query, [':password' => $password, ':username' => $username])->fetchAssociative();
+        $result = $this->conn->executeQuery($query, ['password' => $password, 'username' => $username])->fetchAssociative();
 
         return $result ? $this->hydrator->hydrateRow($result) : null;
     }

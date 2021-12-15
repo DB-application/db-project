@@ -110,7 +110,7 @@ class UserController extends AbstractController
         {
             $this->userApi->authenticateUser($input);
         }
-        catch (\Exception $e)
+        catch (UserNotAuthenticated $e)
         {
             return new Response(null, Response::HTTP_UNAUTHORIZED);
         }

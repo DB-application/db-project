@@ -42,17 +42,10 @@ class EventRepository implements EventRepositoryInterface
     public function add(Event $event): void
     {
         $this->em->persist($event);
-        $this->em->flush();
-    }
-
-    public function update(): void
-    {
-        $this->em->flush();
     }
 
     public function remove(Event $event): void
     {
         $this->em->remove($event);
-        $this->em->flush();
     }
 }
