@@ -3,23 +3,37 @@ import {generateUuid} from "../core/uuid/generateUuid";
 import {JSONContent} from "@tiptap/react";
 
 
-function getNotes(): Promise<Array<Note>> {
+function getNotes(workspaceId: string): Promise<Array<Note>> {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            resolve([
-                {
-                    noteId: '1',
-                    title: 'Заметка 1 Заметка 1 Заметка 1 ',
-                },
-                {
-                    noteId: '3',
-                    title: 'Заметка 3',
-                },
-                {
-                    noteId: '2',
-                    title: 'Заметка 2',
-                },
-            ])
+            if (workspaceId == '1') {
+                resolve([
+                    {
+                        noteId: '1',
+                        title: 'Заметка 1 Заметка 1 Заметка 1 ',
+                    },
+                    {
+                        noteId: '3',
+                        title: 'Заметка 3',
+                    },
+                    {
+                        noteId: '2',
+                        title: 'Заметка 2',
+                    },
+                ])
+            }
+            else {
+                resolve([
+                    {
+                        noteId: '1',
+                        title: 'Заметка 1 Заметка 1 Заметка 1 ',
+                    },
+                    {
+                        noteId: '3',
+                        title: 'Заметка 3',
+                    },
+                ])
+            }
         }, 1000)
     })
     // return fetch('/notes', {

@@ -7,6 +7,7 @@ import {initNotes} from '../viewmodel/notes/initNotes';
 import {useAction, useAtom} from "@reatom/react";
 import {workspaceLoadingAtom} from "../viewmodel/workspaceLoading";
 import {Preloader} from "../../common/preloader/Preloader";
+import {initWorkspaces} from "../viewmodel/workspace/initWorkspaces";
 
 function WorkspaceContent() {
     return(
@@ -19,12 +20,11 @@ function WorkspaceContent() {
 }
 
 function WorkspaceLayout() {
-    const handleInitNotes = useAction(initNotes)
+    const handleInitWorkspaces = useAction(initWorkspaces)
     const workspaceLoading = useAtom(workspaceLoadingAtom)
-    
     useEffect(() => {
-        handleInitNotes()
-    }, [handleInitNotes])
+        handleInitWorkspaces()
+    }, [handleInitWorkspaces])
 
     return (
         <div className={styles.workspaceWrapper}>

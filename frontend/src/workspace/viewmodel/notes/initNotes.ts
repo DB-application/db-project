@@ -1,30 +1,17 @@
 import {notesActions} from "./notes";
 import {declareAsyncAction} from "../../../core/reatom/declareAsyncAction";
+import {NotesApi} from "../../../api/noteApi";
 
 
-const initNotes = declareAsyncAction<void, void>(
+const initNotes = declareAsyncAction<string, void>(
     'initNotes',
-    (_, store) => {
-        return new Promise<void>(async (resolve, reject) => {
-            setTimeout(() => {
-                store.dispatch(notesActions.updateNotes([
-                    {
-                        noteId: '1',
-                        title: 'Заметка 1 Заметка 1 Заметка 1 ',
-                    },
-                    {
-                        noteId: '3',
-                        title: 'Заметка 3',
-                    },
-                    {
-                        noteId: '2',
-                        title: 'Заметка 2',
-                    },
-                ]))
-                resolve()
-            }, 1000)
-        })
-
+    (workspaceId, store) => {
+        return NotesApi.getNotes(workspaceId)
+            .then(notes => {
+                store.dispatch(notesActions.clearNotes())
+                store.dispatch(notesActions.updateNotes(notes))
+                return Promise.resolve()
+            })
     }
 )
 

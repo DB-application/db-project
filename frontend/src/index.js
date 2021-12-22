@@ -14,6 +14,7 @@ import {workspaceLoadingAtom} from "./workspace/viewmodel/workspaceLoading";
 import {notesAtom} from "./workspace/viewmodel/notes/notes";
 import {usersAtom} from "./users/usersAtom";
 import {usersLoadingAtom} from "./users/loadUsers";
+import {sidebarAtom} from "./workspace/viewmodel/sidebar/sidebar";
 
 const store = createStore(
     combine({
@@ -23,6 +24,7 @@ const store = createStore(
         workspaceLoadingAtom,
         notesAtom,
         usersAtom,
+        sidebarAtom,
     })
 );
 

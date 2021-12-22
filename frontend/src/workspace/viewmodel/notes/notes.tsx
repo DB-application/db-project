@@ -7,6 +7,8 @@ type Note = {
     title: string,
 }
 
+const clearNotes = declareAction('notes.clearNotes')
+
 const {
     atom: notesAtom,
     removeItems: removeNotes,
@@ -15,6 +17,9 @@ const {
 } = declareMapAtom<Note>(
     'sidebar.notes',
     (note => note.noteId),
+    on => [
+        on(clearNotes, () => ({})),
+    ]
 )
 
 const orderedNotesAtom = map(
@@ -27,10 +32,9 @@ const orderedNotesAtom = map(
 )
 
 const setSelectedNote = declareAction<string|null>('setSelectedNote',
-    (nodeId, store) => {
-        if (nodeId) {
-            Router.Note.open(nodeId)
-            return
+    (noteId, store) => {
+        if (noteId) {
+            Router.Note.open(noteId)
         }
     }
 )
@@ -49,6 +53,7 @@ const notesActions = {
     updateNote,
     removeNotes,
     updateNotes,
+    clearNotes,
     setSelectedNote,
 }
 

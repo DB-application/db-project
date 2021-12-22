@@ -1,0 +1,41 @@
+.pickerContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.listItem {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    min-width: 0;
+    position: relative;
+    padding: 5px 5px 5px 35px;
+    max-width: 300px;
+}
+
+.tickIcon {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 50%;
+    left: 4px;
+    transform: translateY(-50%);
+    color: rgba(66,72,78,0.6);
+}
+
+.workspaceAvatar {
+
+}
+
+.name {
+    margin-left: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.createButton {
+    align-self: flex-end;
+}

@@ -9,7 +9,7 @@ import {Router} from "../core/router/router";
 
 function App() {
     return (
-        <div>
+        <>
             <AuthRouter />
             <Switch>
                 <Redirect exact from={'/'} to={Router.Auth.url()}/>
@@ -23,7 +23,7 @@ function App() {
                     <WorkspaceLayout />
                 </Route>
             </Switch>
-        </div>
+        </>
     )
 }
 

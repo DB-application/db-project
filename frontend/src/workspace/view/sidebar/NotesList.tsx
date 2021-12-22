@@ -134,7 +134,7 @@ function NotesList() {
     const handleAddNote = useAction(addNote)
 
     return (
-        <div className={styles.notesList}>
+        <div className={styles.container}>
             <Button_IconAndText
                 icon={<PlusCircleIcon/>}
                 text={'Добавить заметку'}
@@ -144,14 +144,16 @@ function NotesList() {
                 className={styles.addButton}
             />
 
-            {notes.map(note => (
-                <NotesListItemWrapper
-                    key={note.noteId}
-                    id={note.noteId}
-                    title={note.title}
-                    selected={selectedNote === note.noteId}
-                />
-            ))}
+            <div className={styles.notesList}>
+                {notes.map(note => (
+                    <NotesListItemWrapper
+                        key={note.noteId}
+                        id={note.noteId}
+                        title={note.title}
+                        selected={selectedNote === note.noteId}
+                    />
+                ))}
+            </div>
         </div>
     )
 }
