@@ -44,9 +44,7 @@ function SearchField({
         <div
             className={joinClassNames(styles.fieldContainer, className)}
         >
-            <div className={styles.searchIcon}>
-                <SearchIcon/>
-            </div>
+            <SearchIcon className={styles.searchIcon} />
             <input
                 ref={ref}
                 className={joinClassNames(inputStyles, inputClassName)}

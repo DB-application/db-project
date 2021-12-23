@@ -1,12 +1,12 @@
 import * as React from "react";
+import {IconPropsType} from "./IconPropsType";
 
-function EyeSlashIcon() {
+function EyeSlashIcon(props?: IconPropsType) {
     return (
         <svg
             fill="currentColor"
             viewBox="0 0 16 16"
-            width="100%"
-            height="100%"
+            {...props}
         >
             <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 00-2.79.588l.77.771A5.944 5.944 0 018 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0114.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" />
             <path d="M11.297 9.176a3.5 3.5 0 00-4.474-4.474l.823.823a2.5 2.5 0 012.829 2.829l.822.822zm-2.943 1.299l.822.822a3.5 3.5 0 01-4.474-4.474l.823.823a2.5 2.5 0 002.829 2.829z" />

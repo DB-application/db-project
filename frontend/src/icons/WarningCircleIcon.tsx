@@ -1,10 +1,11 @@
-function WarningCircleIcon() {
+import {IconPropsType} from "./IconPropsType";
+
+function WarningCircleIcon(props?: IconPropsType){
     return (
         <svg
             viewBox="0 0 21 21"
             fill="currentColor"
-            height="100%"
-            width="100%"
+            {...props}
         >
             <g fill="none" fillRule="evenodd">
                 <path

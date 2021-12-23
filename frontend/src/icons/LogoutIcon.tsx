@@ -1,6 +1,7 @@
+import {IconPropsType} from "./IconPropsType";
 
 
-function LogoutIcon() {
+function LogoutIcon(props?: IconPropsType) {
     return (
         <svg
             fill="none"
@@ -9,8 +10,7 @@ function LogoutIcon() {
             strokeLinejoin="round"
             strokeWidth={2}
             viewBox="0 0 24 24"
-            width="100%"
-            height="100%"
+            {...props}
         >
             <path stroke="none" d="M0 0h24v24H0z" />
             <path d="M14 8V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h7a2 2 0 002-2v-2" />

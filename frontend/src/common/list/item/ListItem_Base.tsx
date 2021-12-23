@@ -59,9 +59,9 @@ function ListItem_Base({
             className={itemClassName}
             ref={itemRef}
         >
-            {iconLeft && <_ItemIcon binding={iconLeft} className={styles.iconLeft}/>}
+            {iconLeft && React.cloneElement(iconLeft, {className: styles.iconLeft})}
             <_ItemText text={text} className={styles.text}/>
-            {iconRight && <_ItemIcon binding={iconRight} className={styles.iconRight}/>}
+            {iconRight && React.cloneElement(iconRight, {className: styles.iconRight})}
             <TooltipPortal
                 elementRef={itemRef}
                 showTooltip={!!tooltipText}

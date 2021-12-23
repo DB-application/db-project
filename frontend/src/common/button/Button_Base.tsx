@@ -90,7 +90,7 @@ function Button_Base(props: Button_BaseProps) {
             style={heightStyle}
         >
             {state === 'preloader' && <PreloaderIcon className={styles.preloader} />}
-            {state !== 'preloader' && leftIcon && <_Icon icon={leftIcon} className={styles.leftIcon}/>}
+            {state !== 'preloader' && leftIcon && React.cloneElement(leftIcon, {className: styles.leftIcon})}
             {state !== 'preloader' && text && <_Text text={text} />}
             {state !== 'preloader' && rightIcon && <_Icon icon={rightIcon} className={styles.rightIcon}/>}
             <TooltipPortal

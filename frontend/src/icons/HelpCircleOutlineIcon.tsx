@@ -1,6 +1,7 @@
+import {IconPropsType} from "./IconPropsType";
 
 
-function HelpCircleOutlineIcon() {
+function HelpCircleOutlineIcon(props?: IconPropsType) {
     return (
         <svg
             fill="none"
@@ -9,8 +10,7 @@ function HelpCircleOutlineIcon() {
             strokeLinejoin="round"
             strokeWidth={2}
             viewBox="0 0 24 24"
-            width="100%"
-            height="100%"
+            {...props}
         >
             <path d="M22 12 A10 10 0 0 1 12 22 A10 10 0 0 1 2 12 A10 10 0 0 1 22 12 z" />
             <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01" />

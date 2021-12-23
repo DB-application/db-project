@@ -35,9 +35,7 @@ function Checkbox({
                 className={checkboxClassName}
                 tabIndex={0}
             />
-            {checked && <div className={styles.icon}>
-                <BxCheckIcon/>
-            </div>}
+            {checked && <BxCheckIcon className={styles.icon} />}
         </div>
     )
 }

@@ -14,11 +14,7 @@ type PreloaderIconProps = {
 function PreloaderIcon({
     className,
 }: PreloaderIconProps) {
-    return (
-        <div className={joinClassNames(styles.spinner, className)}>
-            <BxLoaderAltIcon/>
-        </div>
-    )
+    return <BxLoaderAltIcon className={joinClassNames(styles.spinner, className)} />
 }
 
 function Preloader({

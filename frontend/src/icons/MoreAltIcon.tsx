@@ -1,12 +1,12 @@
+import {IconPropsType} from "./IconPropsType";
 
 
-function MoreAltIcon() {
+function MoreAltIcon(props?: IconPropsType) {
     return (
         <svg
             fill="none"
             viewBox="0 0 24 24"
-            width="100%"
-            height="100%"
+            {...props}
         >
             <path
                 fill="currentColor"

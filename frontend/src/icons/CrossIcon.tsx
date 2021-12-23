@@ -1,11 +1,11 @@
+import {IconPropsType} from "./IconPropsType";
 
 
-function CrossIcon() {
+function CrossIcon(props?: IconPropsType) {
     return (
         <svg
             viewBox="0 0 21 21"
-            width="100%"
-            height="100%"
+            {...props}
         >
             <g
                 fill="none"

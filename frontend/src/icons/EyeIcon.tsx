@@ -1,12 +1,12 @@
 import * as React from "react";
+import {IconPropsType} from "./IconPropsType";
 
-function EyeIcon() {
+function EyeIcon(props?: IconPropsType) {
     return (
         <svg
             fill="currentColor"
             viewBox="0 0 16 16"
-            width="100%"
-            height="100%"
+            {...props}
         >
             <path
                 fillRule="evenodd"

@@ -1,5 +1,6 @@
+import {IconPropsType} from "./IconPropsType";
 
-function Logo() {
+function Logo(props?: IconPropsType) {
     return (
         <svg width="250px" height="64px" viewBox="0 0 512 94" preserveAspectRatio="xMidYMid">
             <g>
