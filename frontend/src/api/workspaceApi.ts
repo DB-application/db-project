@@ -40,11 +40,18 @@ function getWorkspacesList(): Promise<Array<WorkspaceData>> {
     })
 }
 
-function createWorkspace(): Promise<{id: string}> {
-    return fetch('/create_workspace', {
+type CreateWorkspacePayload = {
+    name: string,
+}
+
+function createWorkspace(payload: CreateWorkspacePayload): Promise<{id: string}> {
+    return fetch('/create/workspace', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            body: JSON.stringify({
+                name: payload.name,
+            }),
         },
     })
         .then(response => {

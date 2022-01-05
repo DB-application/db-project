@@ -8,7 +8,9 @@ import {authorizedCurrentUser} from "../../../authentication/viewModel/currentUs
 const createWorkspace = declareAsyncAction<string, void>(
     'createWorkspace',
     (name, store) => {
-        return WorkspaceApi.createWorkspace()
+        return WorkspaceApi.createWorkspace({
+            name,
+        })
             .then(({id}) => {
                 const currentUserId = store.getState(authorizedCurrentUser).id
                 store.dispatch(workspacesActions.updateWorkspace({
