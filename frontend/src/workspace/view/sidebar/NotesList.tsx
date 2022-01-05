@@ -30,13 +30,13 @@ type NotesListItemWrapperProps = {
     selected: boolean,
 }
 
-type NoteContextMenu = {
+type NoteContextMenuProps = {
     id: string,
 }
 
 function NoteContextMenu({
     id,
-}: NoteContextMenu) {
+}: NoteContextMenuProps) {
     const ref = useRef<HTMLDivElement|null>(null)
     const [popoverOpened, setPopoverOpened] = useState(false)
     const handleRemoveNote = useAction(removeNote)

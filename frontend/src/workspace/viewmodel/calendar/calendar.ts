@@ -1,4 +1,4 @@
-import {combine, declareAction, declareAtom} from "@reatom/core";
+import {combine} from "@reatom/core";
 import {declareAtomWithSetter} from "../../../core/reatom/declareAtomWithSetter";
 import {initCalendar} from "./initCalendar";
 import {declareMapAtom} from "../../../core/reatom/declareMapAtom";

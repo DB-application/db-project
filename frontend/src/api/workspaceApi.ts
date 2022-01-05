@@ -1,6 +1,25 @@
 import {WorkspaceData} from "../workspace/viewmodel/workspace/workspace";
+import {HttpStatus} from "../core/http/HttpStatus";
+import {goToAuth} from "../core/link/goToUrl";
 
 function getWorkspacesList(): Promise<Array<WorkspaceData>> {
+    // return fetch('/workspaces', {
+    //     method: 'GET',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    // })
+    //     .then(response => {
+    //         switch (response.status) {
+    //             case HttpStatus.OK:
+    //                 return response.json()
+    //             case HttpStatus.UNAUTHORIZED:
+    //                 goToAuth()
+    //                 return Promise.reject(response)
+    //             default:
+    //                 return Promise.reject(response)
+    //         }
+    //     })
     return new Promise<Array<WorkspaceData>>((resolve, reject) => {
         setTimeout(() => {
             resolve([
@@ -22,13 +41,30 @@ function getWorkspacesList(): Promise<Array<WorkspaceData>> {
 }
 
 function createWorkspace(): Promise<{id: string}> {
-    return new Promise<{id: string}>((resolve, reject) => {
-        setTimeout(() => {
-            resolve({
-                id: 'qwerty',
-            })
-        }, 1000)
+    return fetch('/create_workspace', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
     })
+        .then(response => {
+            switch (response.status) {
+                case HttpStatus.OK:
+                    return response.json()
+                case HttpStatus.UNAUTHORIZED:
+                    goToAuth()
+                    return Promise.reject(response)
+                default:
+                    return Promise.reject(response)
+            }
+        })
+    // return new Promise<{id: string}>((resolve, reject) => {
+    //     setTimeout(() => {
+    //         resolve({
+    //             id: 'qwerty',
+    //         })
+    //     }, 1000)
+    // })
 }
 
 type EditWorkspacePayload = {
@@ -38,19 +74,53 @@ type EditWorkspacePayload = {
 }
 
 function editWorkspace(payload: EditWorkspacePayload): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-        setTimeout(() => {
-            resolve()
-        }, 1000)
+    return fetch('/edit_workspace', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
     })
+        .then(response => {
+            switch (response.status) {
+                case HttpStatus.OK:
+                    return response.json()
+                case HttpStatus.UNAUTHORIZED:
+                    goToAuth()
+                    return Promise.reject(response)
+                default:
+                    return Promise.reject(response)
+            }
+        })
+    // return new Promise<void>((resolve, reject) => {
+    //     setTimeout(() => {
+    //         resolve()
+    //     }, 1000)
+    // })
 }
 
 function deleteWorkspace(id: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve()
-        }, 1000)
+    return fetch('/delete_workspace', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
     })
+        .then(response => {
+            switch (response.status) {
+                case HttpStatus.OK:
+                    return response.json()
+                case HttpStatus.UNAUTHORIZED:
+                    goToAuth()
+                    return Promise.reject(response)
+                default:
+                    return Promise.reject(response)
+            }
+        })
+    // return new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         resolve()
+    //     }, 1000)
+    // })
 }
 
 

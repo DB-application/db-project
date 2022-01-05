@@ -1,6 +1,6 @@
 import {declareAction} from "@reatom/core";
 import {Router} from "../../../core/router/router";
-import {notesActions, orderedNotesAtom, selectedNoteAtom, sidebarNotesAtom} from "./notes";
+import {notesActions, orderedNotesAtom, selectedNoteAtom} from "./notes";
 import {NotesApi} from "../../../api/noteApi";
 import {processStandardError} from "../../../core/error/processStandardError";
 

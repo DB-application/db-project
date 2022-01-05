@@ -6,8 +6,7 @@ type ModsType = {
 
 function getStylesWithMods(defaultStyle: string, mods: ModsType): string {
     const styles = [defaultStyle];
-    const modsStyles = Object.keys(mods)
-        .filter(style => mods[style])
+    const modsStyles = Object.keys(mods).filter(style => mods[style])
     styles.push(...modsStyles)
     return joinClassNames(...styles)
 }

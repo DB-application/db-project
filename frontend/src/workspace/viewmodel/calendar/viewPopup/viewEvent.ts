@@ -9,12 +9,6 @@ type OpenPopupPayload = {
     event: CalendarEvent,
 }
 
-const loadInvitedUsers = declareAsyncAction<Array<string>, void>('editEvent.loadInvitedUsers',
-    async (userIds, store) => {
-        return dispatchAsyncAction(store, loadAbsentUsers, userIds)
-    }
-)
-
 const open = declareAsyncAction<OpenPopupPayload, void>(
     'viewEvent.open',
     async (payload, store) => {
@@ -23,7 +17,7 @@ const open = declareAsyncAction<OpenPopupPayload, void>(
             payload.event.organizerId,
         ]
         if (usersToLoad.length > 0) {
-            return dispatchAsyncAction(store, loadInvitedUsers, usersToLoad)
+            return dispatchAsyncAction(store, loadAbsentUsers, usersToLoad)
         }
         return Promise.resolve()
     }
@@ -39,7 +33,7 @@ const eventIdAtom = declareAtom<string>('viewEvent.eventId', '', on => {
     on(open, (_, {event}) => event.eventId)
 })
 
-const [isPopupLoadingAtom, setIsPopupLoading] = declareAtomWithSetter('editEvent.popupLoading', false, on => [
+const [isPopupLoadingAtom] = declareAtomWithSetter('editEvent.popupLoading', false, on => [
     on(open, () => true),
     on(open.done, () => false),
     on(open.fail, () => false),
