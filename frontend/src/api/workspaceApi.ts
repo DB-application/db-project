@@ -49,10 +49,10 @@ function createWorkspace(payload: CreateWorkspacePayload): Promise<{id: string}>
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            body: JSON.stringify({
-                name: payload.name,
-            }),
         },
+        body: JSON.stringify({
+            name: payload.name,
+        }),
     })
         .then(response => {
             switch (response.status) {
@@ -86,6 +86,11 @@ function editWorkspace(payload: EditWorkspacePayload): Promise<void> {
         headers: {
             'Content-Type': 'application/json',
         },
+        body: JSON.stringify({
+            id: payload.name,
+            name: payload.name,
+            invitedUsersIds: payload.invitedUsersIds,
+        }),
     })
         .then(response => {
             switch (response.status) {
@@ -111,6 +116,9 @@ function deleteWorkspace(id: string): Promise<void> {
         headers: {
             'Content-Type': 'application/json',
         },
+        body: JSON.stringify({
+            workspaceId: id,
+        })
     })
         .then(response => {
             switch (response.status) {
