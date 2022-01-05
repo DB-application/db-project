@@ -52,8 +52,6 @@
     "DescriptionField": "Описание события",
     "PlaceField": "Место",
     "StartField": "Начало",
-    "InvitedUsersLabel": "Приглашенные пользователи",
-    "InviteUsers": "Пригласить",
     "EndField": "Конец",
     "DateLabel": "Дата:",
     "TimeLabel": "Время:",
@@ -63,7 +61,6 @@
     "AllDay": "Весь день",
     "TitleRequired": "Поле название обязательное",
     "Repeat": "Повтор",
-    "OrganizerLabel": "Организатор",
     "RepeatableNone":  "Никогда",
     "RepeatableEveryDay":  "Каждый день",
     "RepeatableEveryWeek":  "Каждую неделю",
@@ -95,5 +92,16 @@
   "InviteUsersPopup": {
     "Title": "Приглашение пользователей",
     "Invite": "Пригласить"
+  },
+  "EditWorkspacePopup": {
+    "Title": "Редактирование рабочего пространства",
+    "SubmitButton": "Изменить",
+    "WorkspaceName": "Название",
+    "WorkspaceRequired": "Поле название обязательное"
+  },
+  "Common": {
+    "InvitedUsersLabel": "Приглашенные пользователи",
+    "InviteUsers": "Пригласить",
+    "OrganizerLabel": "Создатель"
   }
 }

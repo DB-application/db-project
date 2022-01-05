@@ -2,6 +2,7 @@ import {declareAsyncAction} from "../../../core/reatom/declareAsyncAction";
 import {WorkspaceApi} from "../../../api/workspaceApi";
 import {workspacesActions} from "./workspace";
 import {openWorkspace} from "./loadWorkspace";
+import {authorizedCurrentUser} from "../../../authentication/viewModel/currentUserAtom";
 
 
 const createWorkspace = declareAsyncAction<string, void>(
@@ -9,9 +10,12 @@ const createWorkspace = declareAsyncAction<string, void>(
     (name, store) => {
         return WorkspaceApi.createWorkspace()
             .then(({id}) => {
-                store.dispatch(workspacesActions.addWorkspace({
+                const currentUserId = store.getState(authorizedCurrentUser).id
+                store.dispatch(workspacesActions.updateWorkspace({
                     id,
                     name,
+                    invitedUsersIds: [],
+                    createdBy: currentUserId,
                 }))
                 store.dispatch(openWorkspace(id))
             })

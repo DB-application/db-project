@@ -19,11 +19,9 @@ function WorkspacePicker() {
     const pickerRef = useRef<HTMLDivElement|null>(null)
     const [popoverShow, setPopoverShow] = useState(false)
     const currentWorkspace = useAtomWithSelector(sidebarAtom, x => x.currentWorkspace)
-    const workspacesList = useAtomWithSelector(sidebarAtom, x => x.workspacesList)
+    const workspaces = useAtomWithSelector(sidebarAtom, x => x.workspaces)
 
-    const currentWorkspaceData = useMemo(() => {
-        return verify(workspacesList.find(workspace => workspace.id === currentWorkspace))
-    }, [currentWorkspace, workspacesList])
+    const currentWorkspaceData = workspaces[currentWorkspace]
 
     return (
         <>
@@ -45,7 +43,7 @@ function WorkspacePicker() {
                 elementRef={pickerRef}
                 show={popoverShow}
                 setShow={setPopoverShow}
-                content={<WorkspacePickerPopover/>}
+                content={<WorkspacePickerPopover />}
                 side={'bottom'}
             />
         </>

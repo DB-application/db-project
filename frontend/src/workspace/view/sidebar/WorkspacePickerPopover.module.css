@@ -39,3 +39,11 @@
 .createButton {
     align-self: flex-end;
 }
+
+.moreIcon {
+    visibility: hidden;
+}
+
+.listItem:hover .moreIcon {
+    visibility: visible;
+}

@@ -1,31 +1,35 @@
 import {declareAtomWithSetter} from "../../../core/reatom/declareAtomWithSetter";
-import {declareAction} from "@reatom/core";
+import {declareMapAtom} from "../../../core/reatom/declareMapAtom";
 
 type WorkspaceData = {
     id: string,
     name: string,
+    invitedUsersIds: Array<string>,
+    createdBy: string,
 }
 
-const addWorkspace = declareAction<WorkspaceData>()
-const removeWorkspace = declareAction<string>()
-
-const [workspacesListAtom, setWorkspacesList] = declareAtomWithSetter<Array<WorkspaceData>>('sidebar.workspacesList', [], on => [
-    on(addWorkspace, (state, value) => [...state, value]),
-    on(removeWorkspace, (state, value) => state.filter(workspace => workspace.id !== value)),
-])
+const {
+    atom: workspacesAtom,
+    removeItems: removeWorkspace,
+    updateItem: updateWorkspace,
+    updateItems: updateWorkspaces,
+} = declareMapAtom<WorkspaceData>(
+    'sidebar.notes',
+    (workspace => workspace.id),
+)
 
 const [currentWorkspaceAtom, setCurrentWorkspace] = declareAtomWithSetter<string>('currentWorkspaceAtom', '')
 
 const workspacesActions = {
-    addWorkspace,
     removeWorkspace,
+    updateWorkspace,
+    updateWorkspaces,
 }
 
 export {
-    workspacesListAtom,
+    workspacesAtom,
     currentWorkspaceAtom,
     setCurrentWorkspace,
-    setWorkspacesList,
     workspacesActions
 }
 

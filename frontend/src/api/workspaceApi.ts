@@ -1,5 +1,4 @@
 import {WorkspaceData} from "../workspace/viewmodel/workspace/workspace";
-import {set} from "local-storage";
 
 function getWorkspacesList(): Promise<Array<WorkspaceData>> {
     return new Promise<Array<WorkspaceData>>((resolve, reject) => {
@@ -8,10 +7,14 @@ function getWorkspacesList(): Promise<Array<WorkspaceData>> {
                 {
                     id: '1',
                     name: 'Рабочее пространство по умолчанию',
+                    invitedUsersIds: [],
+                    createdBy: 'fe12f16f-25a4-41a8-9249-d435c889cc52',
                 },
                 {
                     id: '2',
                     name: 'Второе рабочее пространство',
+                    invitedUsersIds: [],
+                    createdBy: 'fe12f16f-25a4-41a8-9249-d435c889cc52',
                 }
             ])
         }, 1000)
@@ -28,7 +31,21 @@ function createWorkspace(): Promise<{id: string}> {
     })
 }
 
-function deleteWorkspace(): Promise<void> {
+type EditWorkspacePayload = {
+    id: string,
+    name: string,
+    invitedUsersIds: Array<string>,
+}
+
+function editWorkspace(payload: EditWorkspacePayload): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+        setTimeout(() => {
+            resolve()
+        }, 1000)
+    })
+}
+
+function deleteWorkspace(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve()
@@ -42,6 +59,11 @@ const WorkspaceApi = {
     createWorkspace,
     deleteWorkspace,
     getWorkspacesList,
+    editWorkspace,
+}
+
+export type {
+    EditWorkspacePayload,
 }
 
 export {

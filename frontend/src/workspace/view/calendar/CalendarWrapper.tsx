@@ -11,16 +11,12 @@ import {editEventActions, editEventAtom} from "../../viewmodel/calendar/editPopu
 import {EditEventPopup} from "./editPopup/EditEventPopup";
 import {viewEventActions, viewEventAtom} from "../../viewmodel/calendar/viewPopup/viewEvent";
 import {ViewEventPopup} from "./viewPopup/ViewEventPopup";
-import {inviteUsersPopupActions, inviteUsersPopupAtom} from "../../viewmodel/calendar/inviteUsers/inviteUsers";
-import {InviteUsersPopup} from "./inviteUsersPopup/InviteUsersPopup";
 
 function PopupsLayer() {
     const showEditEvent = useAtomWithSelector(editEventAtom, x => x.show)
     const showViewEvent = useAtomWithSelector(viewEventAtom, x => x.opened)
-    const showInviteUsers = useAtomWithSelector(inviteUsersPopupAtom, x => x.show)
     const handleCloseEditEventPopup = useAction(editEventActions.close)
     const handleCloseViewEventPopup = useAction(viewEventActions.close)
-    const handleCloseInviteUsersPopup = useAction(inviteUsersPopupActions.close)
 
     return (
         <>
@@ -33,11 +29,6 @@ function PopupsLayer() {
                 show={showViewEvent}
                 close={handleCloseViewEventPopup}
                 binding={<ViewEventPopup/>}
-            />
-            <PopupPortal
-                show={showInviteUsers}
-                close={handleCloseInviteUsersPopup}
-                binding={<InviteUsersPopup/>}
             />
         </>
     )

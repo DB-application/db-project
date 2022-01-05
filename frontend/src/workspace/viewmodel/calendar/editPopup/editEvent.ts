@@ -10,6 +10,7 @@ import {loadAbsentUsers} from "../../../../users/loadUsers";
 import {dispatchAsyncAction} from "../../../../core/reatom/dispatchAsyncAction";
 import {declareAsyncAction} from "../../../../core/reatom/declareAsyncAction";
 import {calendarAtom, CalendarEventRepeatableType} from "../calendar";
+import {addToSet, removeFromSet} from "../../../../common/immutable/set";
 
 type PopupModeType = 'edit' | 'create'
 
@@ -91,16 +92,10 @@ const isRepeatableAtom = declareAtom<boolean>('editEvent.isRepeatable', false, o
 ])
 const removeInvitedUser = declareAction<string>()
 const addInvitedUsers = declareAction<Array<string>>()
-const [invitedUsersAtom, setInvitedUsersAtom] = declareAtomWithSetter<Array<string>>('editEvent.invitedUsers', [], on => [
-    on(open, (_, payload) => payload.mode === 'edit' ? payload.invitedUsersIds : []),
-    on(addInvitedUsers, (state, userIds) => {
-        const newInvitedUsers = new Set([
-            ...Array.from(state),
-            ...userIds,
-        ])
-        return Array.from(newInvitedUsers)
-    }),
-    on(removeInvitedUser, (state, userId) => state.filter(invitedUserId => invitedUserId !== userId))
+const [invitedUsersAtom, setInvitedUsersAtom] = declareAtomWithSetter<Set<string>>('editEvent.invitedUsers', new Set(), on => [
+    on(open, (_, payload) => payload.mode === 'edit' ? new Set(payload.invitedUsersIds) : new Set()),
+    on(addInvitedUsers, (state, userIds) => addToSet(state, userIds)),
+    on(removeInvitedUser, (state, userId) => removeFromSet(state, [userId]))
 ])
 const eventIdAtom = declareAtom('editEvent.eventId', '', on => [
     on(open, (_, payload) => payload.mode === 'edit' ? payload.eventId : '')
@@ -121,7 +116,6 @@ const submit = declareAction('editEvent.submit',
 
         let newStart = new Date(event.start)
         let newEnd = new Date(event.end)
-        console.log('event.isRepeatable', event.isRepeatable)
         if (event.isRepeatable) {
             const originalEvent = events[event.eventId]
             newStart.setFullYear(originalEvent.start.getFullYear())
@@ -151,7 +145,7 @@ const submit = declareAction('editEvent.submit',
                 start: newStart,
                 description: event.description,
                 organizerId: currentUserId,
-                invitedUsersIds: event.invitedUsers,
+                invitedUsersIds: Array.from(event.invitedUsers),
                 place: event.place,
                 repeatable: event.repeatableType,
                 isRepeatable: event.isRepeatable,
@@ -165,7 +159,7 @@ const submit = declareAction('editEvent.submit',
                 organizerId: currentUserId,
                 start: newStart,
                 title: event.title,
-                invitedUsersIds: event.invitedUsers,
+                invitedUsersIds: Array.from(event.invitedUsers),
                 place: event.place,
                 repeatable: event.repeatableType,
                 isRepeatable: event.isRepeatable,

@@ -6,6 +6,7 @@ import {popupAppearAnimation, popupHideAnimation} from "../../common/popup/popup
 import {verify} from "../verify";
 import {addToStack, appearPreviousPopup, hiddenPreviousPopup, removeFromStack} from "./popupStack";
 import {useHtmlElementEventHandler} from "../hooks/useHtmlElementEventHandler";
+import {hideLowerLayers} from "../layers/externalLayers";
 
 type PropsType = {
     binding: JSX.Element,
@@ -69,6 +70,7 @@ function PopupPortal({
     }, [popupRef, setAppearComplete, setHiddenComplete])
 
     const openPopup = useCallback(async () => {
+        hideLowerLayers('popup')
         addToStack(popupRef)
         hiddenPreviousPopup()
             .then(() => {

@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom";
 import {verify} from "../verify";
 import {joinClassNames} from "../styles/joinClassNames";
+import {Signal} from "../../common/signals/Signal";
 
 type LayerType = 'popup'|'popover'|'tooltip'
 
@@ -10,10 +11,21 @@ type LayersType = {
 
 const layers: LayersType = {}
 const layersOrder: Array<LayerType> = ['tooltip', 'popover', 'popup']
+
+const closePopoverSignal = new Signal<void>()
+const closeTooltipSignal = new Signal<void>()
+const closePopupSignal = new Signal<void>()
+
 const layerTypeToClassname = {
     'tooltip': 'tooltip-layer',
     'popup': 'popup-layer',
     'popover': 'popover-layer',
+}
+
+const layerTypeToCloseSignal = {
+    'tooltip': closeTooltipSignal,
+    'popup': closePopupSignal,
+    'popover': closePopoverSignal,
 }
 
 function initExternalLayer(layerType: LayerType) {
@@ -30,11 +42,7 @@ function getExternalLayer(layerType: LayerType) {
 }
 
 function cleanExternalLayer(layerType: LayerType) {
-    const layer = getExternalLayer(layerType)
-    if (layer.hasChildNodes())
-    {
-        ReactDOM.unmountComponentAtNode(layer)
-    }
+    layerTypeToCloseSignal[layerType].dispatch()
 }
 
 function hideLowerLayers(layerType: LayerType) {
@@ -50,6 +58,9 @@ export {
     hideLowerLayers,
     getExternalLayer,
     cleanExternalLayer,
+    closePopoverSignal,
+    closePopupSignal,
+    closeTooltipSignal,
 }
 
 export type {

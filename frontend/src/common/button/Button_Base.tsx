@@ -4,6 +4,7 @@ import {PreloaderIcon} from '../preloader/Preloader'
 import {getStylesWithMods} from '../../core/styles/getStylesWithMods'
 import React, {CSSProperties, useRef} from "react";
 import {TooltipPortal} from "../../core/portal/TooltipPortal";
+import {useEventHandler} from "../../core/hooks/useEventHandler";
 
 type Button_Size_Type = 'small' | 'medium' | 'large'
 
@@ -60,6 +61,9 @@ function Button_Base(props: Button_BaseProps) {
             onClick()
         }
     }
+
+    useEventHandler('click', ref, _onClick)
+
     const buttonClassName = getStylesWithMods(styles.button, {
         [styles.buttonSmall]: size === 'small',
         [styles.buttonMedium]: size === 'medium',
@@ -83,7 +87,6 @@ function Button_Base(props: Button_BaseProps) {
 
     return(
         <button
-            onClick={e => _onClick(e)}
             className={joinClassNames(buttonClassName, className)}
             disabled={state === 'disabled'}
             ref={ref}

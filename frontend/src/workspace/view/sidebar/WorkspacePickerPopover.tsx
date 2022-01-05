@@ -9,6 +9,11 @@ import {useAction} from "@reatom/react";
 import {openWorkspace} from "../../viewmodel/workspace/loadWorkspace";
 import {createWorkspace} from "../../viewmodel/workspace/createWorkspace";
 import {Button_Text} from "../../../common/button/Button_Text";
+import {Button_Icon} from "../../../common/button/Button_Icon";
+import {MoreAltIcon} from "../../../icons/MoreAltIcon";
+import {useRef} from "react";
+import {useEventHandler} from "../../../core/hooks/useEventHandler";
+import {editWorkspacePopupActions} from "../../viewmodel/editWorkspacePopup/editWorkspacePopup";
 
 
 type WorkspacesListItemProps = {
@@ -29,15 +34,18 @@ function WorkspacesListItem({
     selected,
     onClick,
 }: WorkspacesListItemProps) {
+    const itemRef = useRef<HTMLDivElement|null>(null)
+    const handleOpenEditWorkspacePopup = useAction(editWorkspacePopupActions.open)
+
+    useEventHandler('click', itemRef, (e: Event) => {
+        !e.defaultPrevented && onClick()
+    })
+
     return (
-        <div className={styles.listItem} onClick={onClick}>
-            {
-                selected
-                    ? <BxCheckIcon
-                        className={styles.tickIcon}
-                    />
-                    : null
-            }
+        <div className={styles.listItem} ref={itemRef}>
+            {selected && <BxCheckIcon
+                className={styles.tickIcon}
+            />}
             <AvatarWrapper
                 label={getWorkspaceName(workspace.name)}
                 className={styles.workspaceAvatar}
@@ -46,17 +54,24 @@ function WorkspacesListItem({
             <div className={styles.name}>
                 {workspace.name}
             </div>
+            <Button_Icon
+                icon={<MoreAltIcon />}
+                onClick={() => handleOpenEditWorkspacePopup(workspace)}
+                style={'link'}
+                size={'small'}
+                className={styles.moreIcon}
+            />
         </div>
     )
 }
 
 function WorkspacePickerPopover() {
     const currentWorkspace = useAtomWithSelector(sidebarAtom, x => x.currentWorkspace)
-    const workspacesList = useAtomWithSelector(sidebarAtom, x => x.workspacesList)
+    const workspaces = useAtomWithSelector(sidebarAtom, x => x.workspaces)
     const handleOpenWorkspace = useAction(openWorkspace)
     const handleCreateWorkspace = useAction(createWorkspace)
 
-    const listItems: Array<ListItemProps|null> = workspacesList.map((workspace) => {
+    const listItems: Array<ListItemProps|null> = Object.values(workspaces).map((workspace) => {
         return {
             id: workspace.id,
             createBindingFn: () => <WorkspacesListItem

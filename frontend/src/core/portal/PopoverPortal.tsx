@@ -4,6 +4,7 @@ import {PopoverContainer} from "../../common/popover/PopoverContainer";
 import {PopoverAlign, PopoverSide} from "../../common/popover/getPopoverPosition";
 import {popoverAppearAnimation, popoverHideAnimation} from "../../common/popover/popoverHideAnimation";
 import {useAppearPopover} from "./useAppearPopover";
+import {closePopoverSignal} from "../layers/externalLayers";
 
 interface IProps {
     elementRef: RefObject<any>,
@@ -25,6 +26,11 @@ function PopoverPortal({
 }: IProps ) {
     const popoverRef = useRef<HTMLDivElement|null>(null)
     const [hiddenComplete, setHiddenComplete] = useState(false)
+
+    useEffect(() => {
+        const unsub = closePopoverSignal.add(() => setShow(false))
+        return () => unsub()
+    }, [setShow])
 
     useEffect(() => {
         return () => setHiddenComplete(false)

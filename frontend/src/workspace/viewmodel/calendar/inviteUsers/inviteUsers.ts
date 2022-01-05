@@ -7,15 +7,22 @@ import {loadAbsentUsers} from "../../../../users/loadUsers";
 import {editEventActions} from "../editPopup/editEvent";
 import {usersAtom} from "../../../../users/usersAtom";
 import {authorizedCurrentUser} from "../../../../authentication/viewModel/currentUserAtom";
+import {addToSet, removeFromSet} from "../../../../common/immutable/set";
+import {editWorkspacePopupActions} from "../../editWorkspacePopup/editWorkspacePopup";
 
+type InviteUsersPopupType = 'event' | 'workspace'
 
-const open = declareAction(
+const open = declareAction<InviteUsersPopupType>(
     'inviteUsers.open',
     (_, store) => {
         store.dispatch(inviteUsersPopupActions.loadUsersList())
     }
 )
 const close = declareAction('inviteUsers.close')
+
+const typeAtom = declareAtom<InviteUsersPopupType>('inviteUsers.type', 'event', on => [
+    on(open, (_, value) => value),
+])
 
 const [showAtom, setShow] = declareAtomWithSetter('inviteUsers.show', false, on => [
     on(open, () => true),
@@ -27,13 +34,8 @@ const removeSelectedUsers = declareAction<Array<string>>('inviteUsers.removeSele
 const resetSelectedUsers = declareAction('inviteUsers.resetSelected')
 const [selectedUsersIdsAtom, setSelectedUsersIds] = declareAtomWithSetter<Set<string>>('inviteUsers.selectedUsersIds', new Set<string>(), on => [
     on(open, () => new Set()),
-    on(addSelectedUsers, (state, value) => new Set([
-        ...Array.from(state.values()),
-        ...value,
-    ])),
-    on(removeSelectedUsers, (state, value) => new Set([
-        ...Array.from(state.values()).filter(userId => !value.includes(userId)),
-    ])),
+    on(addSelectedUsers, (state, value) => addToSet(state, value)),
+    on(removeSelectedUsers, (state, value) => removeFromSet(state, value)),
     on(resetSelectedUsers, () => new Set())
 ])
 
@@ -87,7 +89,15 @@ const submit = declareAction(
     'inviteUsers.inviteUsers',
     (_, store) => {
         const selectedUsersIds = store.getState(selectedUsersIdsAtom)
-        store.dispatch(editEventActions.addInvitedUsers(Array.from(selectedUsersIds)))
+        const popupType = store.getState(typeAtom)
+        switch (popupType) {
+            case 'event':
+                store.dispatch(editEventActions.addInvitedUsers(Array.from(selectedUsersIds)))
+                break
+            case "workspace":
+                store.dispatch(editWorkspacePopupActions.addInvitedUsers(Array.from(selectedUsersIds)))
+                break
+        }
         store.dispatch(inviteUsersPopupActions.close())
     }
 )
@@ -105,6 +115,7 @@ const submitButtonStateAtom = map(
 
 const inviteUsersPopupAtom = combine({
     show: showAtom,
+    type: typeAtom,
     selectedUsersIds: selectedUsersIdsAtom,
     isPopupLoading: isPopupLoadingAtom,
     submitButtonState: submitButtonStateAtom,
@@ -130,4 +141,8 @@ const inviteUsersPopupActions = {
 export {
     inviteUsersPopupAtom,
     inviteUsersPopupActions,
+}
+
+export type {
+    InviteUsersPopupType,
 }

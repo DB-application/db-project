@@ -1,7 +1,7 @@
 import {combine, declareAtom} from "@reatom/core";
 import {Button_State_Type} from "../../../common/button/Button_Base";
 import {addNote} from "../notes/addNote";
-import {currentWorkspaceAtom, workspacesListAtom} from "../workspace/workspace";
+import {currentWorkspaceAtom, workspacesAtom} from "../workspace/workspace";
 
 const addNoteButtonStateAtom = declareAtom<Button_State_Type>('addNoteButtonState', 'normal', on => [
     on(addNote, () => 'preloader'),
@@ -11,7 +11,7 @@ const addNoteButtonStateAtom = declareAtom<Button_State_Type>('addNoteButtonStat
 
 const sidebarAtom = combine({
     addNoteButtonState: addNoteButtonStateAtom,
-    workspacesList: workspacesListAtom,
+    workspaces: workspacesAtom,
     currentWorkspace: currentWorkspaceAtom,
 })
 

@@ -1,0 +1,17 @@
+.container {
+    min-height: 300px;
+    max-height: 500px;
+    overflow: auto;
+    width: 500px;
+    box-sizing: border-box;
+    padding: 30px 45px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.contentBlock:not(:last-child) {
+    margin-bottom: 15px;
+}

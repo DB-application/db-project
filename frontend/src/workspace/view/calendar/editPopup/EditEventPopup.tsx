@@ -17,8 +17,10 @@ import {WarningCircleIcon} from '../../../../icons/WarningCircleIcon';
 import {useRef} from "react";
 import {TooltipPortal} from "../../../../core/portal/TooltipPortal";
 import {ContainerWithPreloader} from "../../../../common/ContainerWithPreloader";
-import {InvitedUsersBlock} from './InvitedUsersBlock';
+import {InvitedUsersBlock} from '../../common/invitedUsersBlock/InvitedUsersBlock';
 import { RepeatableBlock } from './RepeatableBlock';
+import {calendarAtom} from "../../../viewmodel/calendar/calendar";
+import {authorizedCurrentUser} from "../../../../authentication/viewModel/currentUserAtom";
 
 type DateBlockProps = {
     fieldName: string,
@@ -101,13 +103,16 @@ function Content() {
         endError,
         titleError,
         place,
+        invitedUsers,
     } = useAtom(editEventAtom)
+    const currentUser = useAtom(authorizedCurrentUser)
     const handleSetTitle = useAction(editEventActions.setTitle)
     const handleSetStart = useAction(editEventActions.setStart)
     const handleSetPlace = useAction(editEventActions.setPlace)
     const handleSetEnd = useAction(editEventActions.setEnd)
     const handleSetDescription = useAction(editEventActions.setDescription)
     const handleRemove = useAction(editEventActions.removeEvent)
+    const handleRemoveInvitedUser = useAction(editEventActions.removeInvitedUser)
 
     return (
         <div className={styles.content}>
@@ -149,7 +154,12 @@ function Content() {
                 error={endError}
             />
             <RepeatableBlock/>
-            <InvitedUsersBlock/>
+            <InvitedUsersBlock
+                popupType={'event'}
+                organizerId={currentUser.id}
+                invitedUsers={Array.from(invitedUsers)}
+                removeUserCallback={handleRemoveInvitedUser}
+            />
             {
                 mode === 'edit'
                 && <Button_Text
