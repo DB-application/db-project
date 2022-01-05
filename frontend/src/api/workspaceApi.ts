@@ -81,7 +81,7 @@ type EditWorkspacePayload = {
 }
 
 function editWorkspace(payload: EditWorkspacePayload): Promise<void> {
-    return fetch('/edit_workspace', {
+    return fetch('/edit/workspace', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -111,7 +111,7 @@ function editWorkspace(payload: EditWorkspacePayload): Promise<void> {
 }
 
 function deleteWorkspace(id: string): Promise<void> {
-    return fetch('/delete_workspace', {
+    return fetch('/delete/workspace', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
