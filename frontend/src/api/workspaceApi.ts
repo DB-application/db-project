@@ -87,7 +87,7 @@ function editWorkspace(payload: EditWorkspacePayload): Promise<void> {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            id: payload.name,
+            id: payload.id,
             name: payload.name,
             invitedUsersIds: payload.invitedUsersIds,
         }),
