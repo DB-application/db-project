@@ -7,6 +7,8 @@ use App\Workspace\Domain\Exception\CannotRemoveDefaultWorkspace;
 use App\Workspace\Domain\Exception\DefaultWorkspaceAlreadyExistsException;
 use App\Workspace\Domain\Exception\DuplicateNameException;
 use App\Workspace\Domain\Exception\InvalidWorkspaceIdException;
+use App\Workspace\Domain\Exception\InvitedUserNotFoundException;
+use App\Workspace\Domain\Exception\UserAlreadyInvitedException;
 use App\Workspace\Domain\Model\Workspace;
 use App\Workspace\Domain\Model\WorkspaceId;
 use App\Workspace\Domain\Model\WorkspaceRepositoryInterface;
@@ -30,7 +32,7 @@ class WorkspaceService
      */
     public function createDefaultWorkspace(string $name, string $ownerId): WorkspaceId
     {
-        $this->assertNameValid($name);
+//        $this->assertNameValid($name);
         $this->assertNoDefaultWorkspace();
         $workspace = new Workspace($this->repository->nextId(), $name, $ownerId, true);
         $this->repository->add($workspace);
@@ -45,7 +47,7 @@ class WorkspaceService
      */
     public function createWorkspace(string $name, string $ownerId): WorkspaceId
     {
-        $this->assertNameValid($name);
+//        $this->assertNameValid($name);
         $workspace = new Workspace($this->repository->nextId(), $name, $ownerId, false);
         $this->repository->add($workspace);
         return $workspace->getId();
@@ -88,6 +90,22 @@ class WorkspaceService
     }
 
     /**
+     * @param WorkspaceId $workspaceId
+     * @param string $userId
+     * @throws InvalidWorkspaceIdException
+     * @throws UserAlreadyInvitedException
+     */
+    public function inviteUser(WorkspaceId $workspaceId, string $userId): void
+    {
+        $workspace = $this->repository->findById($workspaceId);
+        if ($workspace === null)
+        {
+            throw new InvalidWorkspaceIdException($workspaceId);
+        }
+        $workspace->addUser($userId);
+    }
+
+    /**
      * @param string $name
      * @throws DuplicateNameException
      */
@@ -97,6 +115,22 @@ class WorkspaceService
         {
             throw new DuplicateNameException($name);
         }
+    }
+
+    /**
+     * @param WorkspaceId $workspaceId
+     * @param string $userId
+     * @throws InvalidWorkspaceIdException
+     * @throws InvitedUserNotFoundException
+     */
+    public function removeUser(WorkspaceId $workspaceId, string $userId): void
+    {
+        $workspace = $this->repository->findById($workspaceId);
+        if ($workspace === null)
+        {
+            throw new InvalidWorkspaceIdException($workspaceId);
+        }
+        $workspace->removeUser($userId);
     }
 
     /**
