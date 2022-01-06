@@ -1,0 +1,92 @@
+<?php
+declare(strict_types=1);
+
+namespace App\Workspace\App\Service;
+
+use App\Common\App\Transaction\MultiBlockingOperationExecutorInterface;
+use App\Common\App\Transaction\TransactionInterface;
+use App\Workspace\App\Lock\LockNames;
+use App\Workspace\Domain\Model\WorkspaceId;
+use App\Workspace\Domain\Service\WorkspaceService;
+
+class WorkspaceAppService
+{
+    /** @var WorkspaceService */
+    private $workspaceService;
+    /** @var TransactionInterface */
+    private $transaction;
+    /** @var MultiBlockingOperationExecutorInterface */
+    private $blockingOperatorExecutor;
+
+    public function __construct(
+        WorkspaceService $workspaceService,
+        TransactionInterface $transaction,
+        MultiBlockingOperationExecutorInterface $blockingOperatorExecutor
+    )
+    {
+        $this->workspaceService = $workspaceService;
+        $this->transaction = $transaction;
+        $this->blockingOperatorExecutor = $blockingOperatorExecutor;
+    }
+
+    /**
+     * @param string $name
+     * @param string $ownerId
+     * @return string
+     */
+    public function createWorkspace(string $name, string $ownerId): string
+    {
+        return (string)$this->transaction->execute(
+            function () use ($name, $ownerId): WorkspaceId
+            {
+                return $this->workspaceService->createWorkspace($name, $ownerId);
+            }
+        );
+    }
+
+    /**
+     * @param string $name
+     * @param string $ownerId
+     * @return string
+     */
+    public function createDefaultWorkspace(string $name, string $ownerId): string
+    {
+        return (string)$this->transaction->execute(
+            function () use ($name, $ownerId): WorkspaceId
+            {
+                return $this->workspaceService->createDefaultWorkspace($name, $ownerId);
+            }
+        );
+    }
+
+    /**
+     * @param string $id
+     * @param string $name
+     */
+    public function editWorkspace(string $id, string $name): void
+    {
+        $operation = $this->blockingOperatorExecutor->execute(
+            [LockNames::getWorkspaceLock($id)],
+            function () use ($id, $name)
+            {
+                $this->workspaceService->editWorkspace(new WorkspaceId($id), $name);
+            }
+        );
+        $this->transaction->execute($operation);
+    }
+
+    /**
+     * @param string $id
+     */
+    public function removeEvent(string $id): void
+    {
+        $operation = $this->blockingOperatorExecutor->execute(
+            [LockNames::getWorkspaceLock($id)],
+            function () use ($id)
+            {
+                $this->workspaceService->removeWorkspace(new WorkspaceId($id));
+            }
+        );
+        $this->transaction->execute($operation);
+    }
+}

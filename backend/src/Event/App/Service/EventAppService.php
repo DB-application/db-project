@@ -53,13 +53,14 @@ class EventAppService
     public function editEvent(string $eventId, string $title, \DateTimeImmutable $startDate, \DateTimeImmutable $endDate, string $organizerId, ?string $description, ?string $place): void
     {
         //Добавить проверку $organizerId
-        $this->blockingOperatorExecutor->execute(
+        $operation = $this->blockingOperatorExecutor->execute(
             [LockNames::getEventLock($eventId)],
             function () use ($eventId, $title, $startDate, $endDate, $organizerId, $description, $place)
             {
                 $this->eventService->editEvent($eventId, $title, $startDate, $endDate, new Uuid($organizerId), $description, $place);
             }
         );
+        $this->transaction->execute($operation);
     }
 
     public function removeEvent(string $eventId): void

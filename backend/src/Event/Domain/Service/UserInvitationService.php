@@ -37,7 +37,7 @@ class UserInvitationService
             // сделать доменное исключение
             throw new \RuntimeException("User already invited");
         }
-        $invitation = new UserInvitation((string)UuidGenerator::generateUuid(), $userId, $eventId, InvitationStatus::INVITED);
+        $invitation = new UserInvitation(UuidGenerator::generateUuid(), $userId, $eventId, InvitationStatus::INVITED);
         $this->invitationRepository->add($invitation);
     }
 
@@ -57,13 +57,13 @@ class UserInvitationService
         $invitedUsers = [];
         foreach ($this->invitationRepository->findByUserIdsAndEventId($userIds, $eventId) as $invitation)
         {
-            if (in_array((string)$invitation->getUserId(), $userIds))
+            if (in_array($invitation->getUserId(), $userIds))
             {
-                $invitedUsers[] = (string)$invitation->getUserId();
+                $invitedUsers[] = $invitation->getUserId();
             }
             else
             {
-                $removedUsers[] = (string)$invitation->getUserId();
+                $removedUsers[] = $invitation->getUserId();
             }
         }
         $notInvitedUsers = array_diff($userIds, $invitedUsers);
@@ -74,7 +74,7 @@ class UserInvitationService
                 // сделать доменное исключение
                 throw new \RuntimeException("User already invited");
             }
-            $invitation = new UserInvitation((string)UuidGenerator::generateUuid(), $userId, $eventId, InvitationStatus::INVITED);
+            $invitation = new UserInvitation(UuidGenerator::generateUuid(), $userId, $eventId, InvitationStatus::INVITED);
             $this->invitationRepository->add($invitation);
         }
         foreach ($removedUsers as $invitation)

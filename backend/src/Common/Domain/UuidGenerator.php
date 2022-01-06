@@ -7,8 +7,8 @@ use Ramsey\Uuid\Uuid as Generator;
 
 class UuidGenerator
 {
-    public static function generateUuid(): Uuid
+    public static function generateUuid(): string
     {
-        return new Uuid(Generator::uuid4()->toString());
+        return Generator::uuid4()->toString();
     }
 }

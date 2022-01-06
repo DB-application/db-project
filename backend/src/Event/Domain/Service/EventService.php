@@ -21,7 +21,7 @@ class EventService
 
     public function createEvent(string $title, \DateTimeImmutable $startDate, \DateTimeImmutable $endDate, Uuid $organizerId, ?string $description, ?string $place): Uuid
     {
-        $event = new Event(UuidGenerator::generateUuid(), $title, $description, $startDate, $endDate, $place, $organizerId, null, false);
+        $event = new Event(new Uuid(UuidGenerator::generateUuid()), $title, $description, $startDate, $endDate, $place, $organizerId, null, false);
         $this->repository->add($event);
         return $event->getId();
     }

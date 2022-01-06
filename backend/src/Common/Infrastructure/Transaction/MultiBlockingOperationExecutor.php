@@ -23,7 +23,6 @@ class MultiBlockingOperationExecutor implements MultiBlockingOperationExecutorIn
         {
             $operation = $this->decorateOperationWithLock($name, $operation);
         }
-        // and call it
         return $operation(...$parameters);
     }
 

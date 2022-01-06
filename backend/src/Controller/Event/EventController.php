@@ -20,7 +20,6 @@ class EventController extends AbstractController
     /** @var SecurityContextInterface */
     private $securityContext;
 
-
     public function __construct(ApiInterface $eventApi, SecurityContextInterface $securityContext)
     {
         $this->eventApi = $eventApi;
