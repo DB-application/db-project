@@ -1,12 +1,12 @@
 import {Portal} from "./Portal";
 import React, {MutableRefObject, useCallback, useEffect, useRef, useState} from "react";
-import {useEventHandler} from "../hooks/useEventHandler";
 import styles from './PopupPortal.module.css'
 import {popupAppearAnimation, popupHideAnimation} from "../../common/popup/popupHideAnimation";
 import {verify} from "../verify";
 import {addToStack, appearPreviousPopup, hiddenPreviousPopup, removeFromStack} from "./popupStack";
 import {useHtmlElementEventHandler} from "../hooks/useHtmlElementEventHandler";
 import {hideLowerLayers} from "../layers/externalLayers";
+import { useCloseLayer } from "./useCloseLayer";
 
 type PropsType = {
     binding: JSX.Element,
@@ -37,11 +37,7 @@ const PopupLayout = React.forwardRef<HTMLDivElement, PopupLayoutProps>((
         }
     })
 
-    useEventHandler('mouseup', popupLayerRef, event => {
-        if (!event.defaultPrevented) {
-            closePopup()
-        }
-    })
+    useCloseLayer(popupRef, popupLayerRef, closePopup)
 
     return (
         <div ref={popupLayerRef} className={styles.popupLayer}>

@@ -2,10 +2,9 @@ import styles from './WorkspaceBlock.module.css'
 import {useAtomWithSelector} from "../../../core/reatom/useAtomWithSelector";
 import {sidebarAtom} from "../../viewmodel/sidebar/sidebar";
 import {AvatarWrapper} from "../../../common/avatar/Avatar";
-import {useMemo, useRef, useState} from "react";
-import {verify} from "../../../core/verify";
+import {useRef, useState} from "react";
 import {PopoverPortal} from "../../../core/portal/PopoverPortal";
-import { WorkspacePickerPopover } from './WorkspacePickerPopover';
+import {WorkspacePickerPopover} from './WorkspacePickerPopover';
 
 
 const getWorkspaceName = (name: string) => {

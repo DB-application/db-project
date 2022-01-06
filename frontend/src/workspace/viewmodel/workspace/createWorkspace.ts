@@ -8,7 +8,6 @@ import {authorizedCurrentUser} from "../../../authentication/viewModel/currentUs
 const createWorkspace = declareAsyncAction<string, void>(
     'createWorkspace',
     (name, store) => {
-        console.log('createWorksa')
         return WorkspaceApi.createWorkspace({
             name,
         })
@@ -18,7 +17,7 @@ const createWorkspace = declareAsyncAction<string, void>(
                     id,
                     name,
                     invitedUsersIds: [],
-                    createdBy: currentUserId,
+                    ownerId: currentUserId,
                 }))
                 store.dispatch(openWorkspace(id))
             })

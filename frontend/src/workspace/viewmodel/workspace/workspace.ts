@@ -5,7 +5,7 @@ type WorkspaceData = {
     id: string,
     name: string,
     invitedUsersIds: Array<string>,
-    createdBy: string,
+    ownerId: string,
 }
 
 const {

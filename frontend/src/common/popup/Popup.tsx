@@ -85,9 +85,9 @@ function Popup(props: PropsType) {
     useEventHandler('click', popupRef, event => {
         event.preventDefault()
     })
-    useEventHandler('mouseup', popupRef, event => {
-        event.preventDefault()
-    })
+    // useEventHandler('mouseup', popupRef, event => {
+    //     event.preventDefault()
+    // })
 
     const withHeader = props.type === 'withHeader' || props.type === 'withHeaderAndFooter'
     const withFooter = props.type === 'withHeaderAndFooter' || props.type === 'withFooter'

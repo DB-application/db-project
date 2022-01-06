@@ -31,7 +31,7 @@ function Content() {
                 className={styles.contentBlock}
             />
             <InvitedUsersBlock
-                organizerId={currentWorkspace.createdBy}
+                organizerId={currentWorkspace.ownerId}
                 popupType={'workspace'}
                 invitedUsers={Array.from(invitedUsers)}
                 removeUserCallback={handleRemoveInvitedUser}

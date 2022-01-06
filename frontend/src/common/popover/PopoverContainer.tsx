@@ -1,9 +1,8 @@
-import React, {MutableRefObject, RefObject, useEffect, useMemo, useRef} from "react"
-import {useEventHandler} from "../../core/hooks/useEventHandler"
+import React, {MutableRefObject, RefObject, useRef} from "react"
 import {PopoverAlign, PopoverSide} from "./getPopoverPosition"
 import styles from './Popover.module.css'
 import {verify} from "../../core/verify";
-import {useHtmlElementEventHandler} from "../../core/hooks/useHtmlElementEventHandler";
+import {useCloseLayer} from "../../core/portal/useCloseLayer";
 
 type PropsType = {
     control: RefObject<any>,
@@ -22,17 +21,9 @@ const PopoverContainer = React.forwardRef<HTMLDivElement, PropsType>(
          content,
      }, ref) => {
         const popoverRef = ref as MutableRefObject<HTMLDivElement|null>
-        const popoverLayer = useMemo(() => verify(document.getElementById('popover')), [])
-        useHtmlElementEventHandler('mousedown', document,  e => {
-            const target = e.target as Node
-            const isPopover = popoverLayer.contains(target)
-            const compareResult = target.compareDocumentPosition(verify(popoverRef.current))
-            if (compareResult != 8) {
-                if (!isPopover || compareResult == 4) {
-                    closePopover()
-                }
-            }
-        })
+        const popoverLayerRef = useRef(verify(document.getElementById('popover')) as HTMLDivElement)
+
+        useCloseLayer(popoverRef, popoverLayerRef, closePopover)
 
         return(
             <div

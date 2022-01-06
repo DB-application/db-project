@@ -15,6 +15,6 @@ class WorkspaceDataHydrator
         $name = TypeConverter::hydrateValue($data[WorkspaceTable::NAME], WorkspaceTable::WORKSPACE_FIELDS[WorkspaceTable::NAME]);
         $isDefault = TypeConverter::hydrateValue($data[WorkspaceTable::IS_DEFAULT], WorkspaceTable::WORKSPACE_FIELDS[WorkspaceTable::IS_DEFAULT]);
         $ownerId = TypeConverter::hydrateValue($data[WorkspaceTable::OWNER_ID], WorkspaceTable::WORKSPACE_FIELDS[WorkspaceTable::OWNER_ID]);
-        return new WorkspaceData($id, $name, $isDefault, $ownerId);
+        return new WorkspaceData($id, $name, $ownerId, $isDefault);
     }
 }

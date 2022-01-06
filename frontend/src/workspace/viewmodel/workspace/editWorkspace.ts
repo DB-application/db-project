@@ -8,11 +8,12 @@ const editWorkspace = declareAsyncAction<EditWorkspacePayload, void>(
         return WorkspaceApi.editWorkspace(payload)
             .then(() => {
                 const workspaces = store.getState(workspacesAtom)
+                const currentWorkspace = workspaces[payload.id]
                 store.dispatch(workspacesActions.updateWorkspace({
-                    ...workspaces[payload.id],
-                    id: payload.id,
+                    id: currentWorkspace.id,
                     name: payload.name,
                     invitedUsersIds: payload.invitedUsersIds,
+                    ownerId: currentWorkspace.ownerId,
                 }))
             })
     }
