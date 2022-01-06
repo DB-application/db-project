@@ -4,7 +4,7 @@ import {workspacesActions} from "./workspace";
 
 
 const deleteWorkspace = declareAsyncAction<string, void>(
-    'createWorkspace',
+    'deleteWorkspace',
     (id, store) => {
         return WorkspaceApi.deleteWorkspace(id)
             .then(() => {

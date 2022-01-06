@@ -57,7 +57,7 @@
     "TimeLabel": "Время:",
     "SubmitButtonEdit": "Изменить",
     "SubmitButtonCreate": "Создать",
-    "RemoveButton": "Удалить событие",
+    "RemoveButton": "Удалить",
     "AllDay": "Весь день",
     "TitleRequired": "Поле название обязательное",
     "Repeat": "Повтор",
@@ -97,7 +97,8 @@
     "Title": "Редактирование рабочего пространства",
     "SubmitButton": "Изменить",
     "WorkspaceName": "Название",
-    "WorkspaceRequired": "Поле название обязательное"
+    "WorkspaceRequired": "Поле название обязательное",
+    "RemoveButton": "Удалить"
   },
   "Common": {
     "InvitedUsersLabel": "Приглашенные пользователи",

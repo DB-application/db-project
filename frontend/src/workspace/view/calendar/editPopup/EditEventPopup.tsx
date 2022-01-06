@@ -111,7 +111,6 @@ function Content() {
     const handleSetPlace = useAction(editEventActions.setPlace)
     const handleSetEnd = useAction(editEventActions.setEnd)
     const handleSetDescription = useAction(editEventActions.setDescription)
-    const handleRemove = useAction(editEventActions.removeEvent)
     const handleRemoveInvitedUser = useAction(editEventActions.removeInvitedUser)
 
     return (
@@ -160,14 +159,6 @@ function Content() {
                 invitedUsers={Array.from(invitedUsers)}
                 removeUserCallback={handleRemoveInvitedUser}
             />
-            {
-                mode === 'edit'
-                && <Button_Text
-                    text={I18n_get('EditEventPopup.RemoveButton')}
-                    onClick={handleRemove}
-                    style={'danger'}
-                />
-            }
         </div>
     )
 }
@@ -189,7 +180,7 @@ function EditEventPopup() {
     const submitButtonState = useAtomWithSelector(editEventAtom, x => x.submitButtonState)
     const handleClosePopup = useAction(editEventActions.close)
     const handleSubmit = useAction(editEventActions.submit)
-
+    const handleRemove = useAction(editEventActions.removeEvent)
     return <Popup
         type={'withHeaderAndFooter'}
         headerText={mode === 'edit'
@@ -205,6 +196,15 @@ function EditEventPopup() {
             state={submitButtonState}
         />}
         closePopup={handleClosePopup}
+        extraButton={mode === 'edit'
+            ? <Button_Text
+                text={I18n_get('EditEventPopup.RemoveButton')}
+                onClick={handleRemove}
+                state={submitButtonState}
+                style={'danger'}
+            />
+            : undefined
+        }
     />
 }
 

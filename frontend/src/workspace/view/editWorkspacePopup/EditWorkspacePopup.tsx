@@ -56,6 +56,7 @@ function EditWorkspacePopup() {
     const submitButtonState = useAtomWithSelector(editWorkspacePopupAtom, x => x.submitButtonState)
     const handleClosePopup = useAction(editWorkspacePopupActions.close)
     const handleSubmit = useAction(editWorkspacePopupActions.submit)
+    const handleRemove = useAction(editWorkspacePopupActions.remove)
 
     return <Popup
         type={'withHeaderAndFooter'}
@@ -68,6 +69,12 @@ function EditWorkspacePopup() {
             state={submitButtonState}
         />}
         closePopup={handleClosePopup}
+        extraButton={<Button_Text
+            text={I18n_get('EditWorkspacePopup.RemoveButton')}
+            onClick={handleRemove}
+            state={submitButtonState}
+            style={'danger'}
+        />}
     />
 }
 

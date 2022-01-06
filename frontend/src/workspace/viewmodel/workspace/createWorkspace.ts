@@ -8,6 +8,7 @@ import {authorizedCurrentUser} from "../../../authentication/viewModel/currentUs
 const createWorkspace = declareAsyncAction<string, void>(
     'createWorkspace',
     (name, store) => {
+        console.log('')
         return WorkspaceApi.createWorkspace({
             name,
         })

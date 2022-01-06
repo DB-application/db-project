@@ -16,6 +16,7 @@ type PopupWithFooterProps = {
     type: 'withFooter',
     content: JSX.Element,
     acceptButton: JSX.Element,
+    extraButton?: JSX.Element,
     closePopup: () => void,
 }
 
@@ -24,6 +25,7 @@ type PopupWithHeaderAndFooterProps = {
     headerText: string,
     content: JSX.Element,
     acceptButton: JSX.Element,
+    extraButton?: JSX.Element,
     closePopup: () => void,
 }
 
@@ -42,6 +44,7 @@ type PopupHeaderProps = {
 
 type PopupFooterProps = {
     acceptButton: JSX.Element,
+    extraButton?: JSX.Element
     closePopup: () => void,
 }
 
@@ -66,6 +69,7 @@ function PopupHeader({
 function PopupFooter({
     closePopup,
     acceptButton,
+    extraButton,
 }: PopupFooterProps) {
     return (
         <div className={styles.popupFooter}>
@@ -74,7 +78,10 @@ function PopupFooter({
                 text={'Отмена'}
                 style={'secondary'}
             />
-            {acceptButton}
+            <div className={styles.generalButtons}>
+                {extraButton}
+                {acceptButton}
+            </div>
         </div>
     )
 }
@@ -85,9 +92,6 @@ function Popup(props: PropsType) {
     useEventHandler('click', popupRef, event => {
         event.preventDefault()
     })
-    // useEventHandler('mouseup', popupRef, event => {
-    //     event.preventDefault()
-    // })
 
     const withHeader = props.type === 'withHeader' || props.type === 'withHeaderAndFooter'
     const withFooter = props.type === 'withHeaderAndFooter' || props.type === 'withFooter'
@@ -103,6 +107,7 @@ function Popup(props: PropsType) {
             {withFooter
             && <PopupFooter
                 closePopup={props.closePopup}
+                extraButton={props.extraButton}
                 acceptButton={props.acceptButton}
             />}
         </div>

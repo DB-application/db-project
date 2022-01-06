@@ -32,9 +32,14 @@ function removeFromStack() {
     popupStack.pop()
 }
 
+function isLastPopup(popupRef: RefObject<HTMLElement|null>) {
+    return popupStack[popupStack.length - 1] === popupRef
+}
+
 export {
     addToStack,
     removeFromStack,
+    isLastPopup,
     hiddenPreviousPopup,
     appearPreviousPopup,
 }

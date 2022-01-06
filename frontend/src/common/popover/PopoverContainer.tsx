@@ -3,6 +3,7 @@ import {PopoverAlign, PopoverSide} from "./getPopoverPosition"
 import styles from './Popover.module.css'
 import {verify} from "../../core/verify";
 import {useCloseLayer} from "../../core/portal/useCloseLayer";
+import {getExternalLayer} from "../../core/layers/externalLayers";
 
 type PropsType = {
     control: RefObject<any>,
@@ -21,9 +22,8 @@ const PopoverContainer = React.forwardRef<HTMLDivElement, PropsType>(
          content,
      }, ref) => {
         const popoverRef = ref as MutableRefObject<HTMLDivElement|null>
-        const popoverLayerRef = useRef(verify(document.getElementById('popover')) as HTMLDivElement)
 
-        useCloseLayer(popoverRef, popoverLayerRef, closePopover)
+        useCloseLayer('popover', popoverRef, closePopover)
 
         return(
             <div

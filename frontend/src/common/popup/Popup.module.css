@@ -50,3 +50,8 @@
     padding: 5px 10px;
     box-sizing: border-box;
 }
+
+.generalButtons {
+    display: flex;
+    gap: 10px;
+}

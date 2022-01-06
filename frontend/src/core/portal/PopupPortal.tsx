@@ -3,9 +3,9 @@ import React, {MutableRefObject, useCallback, useEffect, useRef, useState} from 
 import styles from './PopupPortal.module.css'
 import {popupAppearAnimation, popupHideAnimation} from "../../common/popup/popupHideAnimation";
 import {verify} from "../verify";
-import {addToStack, appearPreviousPopup, hiddenPreviousPopup, removeFromStack} from "./popupStack";
+import {addToStack, appearPreviousPopup, hiddenPreviousPopup, isLastPopup, removeFromStack} from "./popupStack";
 import {useHtmlElementEventHandler} from "../hooks/useHtmlElementEventHandler";
-import {hideLowerLayers} from "../layers/externalLayers";
+import {getExternalLayer, hideLowerLayers} from "../layers/externalLayers";
 import { useCloseLayer } from "./useCloseLayer";
 
 type PropsType = {
@@ -28,7 +28,7 @@ const PopupLayout = React.forwardRef<HTMLDivElement, PopupLayoutProps>((
     ref,
 ) => {
     const popupRef = ref as MutableRefObject<HTMLDivElement|null>
-    const popupLayerRef = useRef<HTMLDivElement|null>(null)
+    const popupLayerRef = useRef(getExternalLayer('popup') as HTMLDivElement)
 
     useHtmlElementEventHandler('keydown', document.body, event => {
         const keyboardEvent = event as KeyboardEvent
@@ -37,10 +37,14 @@ const PopupLayout = React.forwardRef<HTMLDivElement, PopupLayoutProps>((
         }
     })
 
-    useCloseLayer(popupRef, popupLayerRef, closePopup)
+    useCloseLayer(
+        'popup',
+        popupRef,
+        () => isLastPopup(popupRef) && closePopup(),
+    )
 
     return (
-        <div ref={popupLayerRef} className={styles.popupLayer}>
+        <div className={styles.popupLayer}>
             <div ref={popupRef}>
                 {binding}
             </div>

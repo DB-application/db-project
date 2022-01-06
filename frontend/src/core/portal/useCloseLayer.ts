@@ -1,20 +1,36 @@
 import {useHtmlElementEventHandler} from "../hooks/useHtmlElementEventHandler";
 import {RefObject} from "react";
+import {foreachLowerLayers, getExternalLayer, LayerType} from "../layers/externalLayers";
 
+function checkClickInLayer(target: Node, popupRef: RefObject<HTMLDivElement|null>, layer: LayerType): boolean {
+    const popup = popupRef.current
+    const popupLayer = getExternalLayer(layer)
+    if (popupLayer && popup) {
+        const isPopover = popupLayer.contains(target)
+        const compareResult = target.compareDocumentPosition(popup)
+        if (!(compareResult & Node.DOCUMENT_POSITION_CONTAINS)) {
+            if (!isPopover || compareResult & Node.DOCUMENT_POSITION_FOLLOWING) {
+                return false
+            }
+        }
+    }
+    return true
+}
 
-function useCloseLayer(popupRef: RefObject<HTMLDivElement|null>, popupLayerRef: RefObject<HTMLDivElement|null>, onClose: () => void) {
+function useCloseLayer(layerType: LayerType, popupRef: RefObject<HTMLDivElement|null>, onClose: () => void) {
     useHtmlElementEventHandler('mousedown', document,  e => {
         const target = e.target as Node
-        const popup = popupRef.current
-        const popupLayer = popupLayerRef.current
-        if (popupLayer && popup) {
-            const isPopover = popupLayer.contains(target)
-            const compareResult = target.compareDocumentPosition(popup)
-            if (!(compareResult & Node.DOCUMENT_POSITION_CONTAINS)) {
-                if (!isPopover || compareResult & Node.DOCUMENT_POSITION_FOLLOWING) {
-                    onClose()
+        let mustClose = true
+        foreachLowerLayers(
+            layerType,
+            (layer) => {
+                if (checkClickInLayer(target, popupRef, layer)) {
+                    mustClose = false
                 }
             }
+        )
+        if (mustClose && !checkClickInLayer(target, popupRef, layerType)) {
+            onClose()
         }
     })
 }

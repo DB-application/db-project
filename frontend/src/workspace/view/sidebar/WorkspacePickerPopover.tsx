@@ -68,6 +68,7 @@ function WorkspacesListItem({
 function WorkspacePickerPopover() {
     const currentWorkspace = useAtomWithSelector(sidebarAtom, x => x.currentWorkspace)
     const workspaces = useAtomWithSelector(sidebarAtom, x => x.workspaces)
+    const addWorkspaceButtonState = useAtomWithSelector(sidebarAtom, x => x.addWorkspaceButtonState)
     const handleOpenWorkspace = useAction(openWorkspace)
     const handleCreateWorkspace = useAction(createWorkspace)
 
@@ -92,6 +93,7 @@ function WorkspacePickerPopover() {
             <Button_Text
                 text={'Создать новое'}
                 onClick={() => handleCreateWorkspace('Новое рабочее пространство')}
+                state={addWorkspaceButtonState}
                 style={'primary'}
                 className={styles.createButton}
             />

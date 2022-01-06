@@ -3,7 +3,7 @@ import {EditWorkspacePayload, WorkspaceApi} from "../../../api/workspaceApi";
 import {workspacesActions, workspacesAtom} from "./workspace";
 
 const editWorkspace = declareAsyncAction<EditWorkspacePayload, void>(
-    'createWorkspace',
+    'editWorkspace',
     (payload, store) => {
         return WorkspaceApi.editWorkspace(payload)
             .then(() => {

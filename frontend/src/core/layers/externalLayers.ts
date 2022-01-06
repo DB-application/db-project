@@ -45,12 +45,16 @@ function cleanExternalLayer(layerType: LayerType) {
     layerTypeToCloseSignal[layerType].dispatch()
 }
 
-function hideLowerLayers(layerType: LayerType) {
+function foreachLowerLayers(layerType: LayerType, fn: (layerType: LayerType) => void) {
     const layerOrder = layersOrder.findIndex(layer => layer === layerType)
     for(let i = 0; i < layerOrder; i++)
     {
-        cleanExternalLayer(layersOrder[i])
+        fn(layersOrder[i])
     }
+}
+
+function hideLowerLayers(layerType: LayerType) {
+    foreachLowerLayers(layerType, cleanExternalLayer)
 }
 
 export {
@@ -58,6 +62,7 @@ export {
     hideLowerLayers,
     getExternalLayer,
     cleanExternalLayer,
+    foreachLowerLayers,
     closePopoverSignal,
     closePopupSignal,
     closeTooltipSignal,
