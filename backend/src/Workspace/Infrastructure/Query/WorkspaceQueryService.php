@@ -71,7 +71,7 @@ class WorkspaceQueryService implements WorkspaceQueryServiceInterface
         return $data;
     }
 
-    private function addWorkspaceFieldSelect(QueryBuilder $qb, string $alias = 'e'): void
+    private function addWorkspaceFieldSelect(QueryBuilder $qb, string $alias = 'w'): void
     {
         $qb->addSelect($alias . '.' . WorkspaceTable::ID);
         $qb->addSelect($alias . '.' . WorkspaceTable::NAME);
