@@ -26,11 +26,11 @@ final class Version20211007163907 extends AbstractMigration
                 email VARCHAR(256) UNIQUE NOT NULL,
                 username VARCHAR(256) UNIQUE NOT NULL,
                 password VARCHAR(256) NOT NULL,
-                login_key VARCHAR(100) UNIQUE,
                 first_name VARCHAR(256),
                 last_name VARCHAR(256),
                 phone VARCHAR(12) UNIQUE,
-                avatar_url VARCHAR(12)
+                avatar_url VARCHAR(12),
+                INDEX (email)
             );
 SQL
         );

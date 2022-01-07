@@ -104,8 +104,14 @@ class EventController extends AbstractController
         //TODO добавить права и проверку
         try
         {
-            $this->eventApi->removeEvent($requestData['eventId']);
-
+            $userId = $this->securityContext->getAuthenticatedUserId();
+            $eventId = $requestData['eventId'];
+            $event = $this->eventApi->getEventDataById($eventId);
+            if ($event->getOrganizerId() !== $userId)
+            {
+                return new Response(null, Response::HTTP_FORBIDDEN);
+            }
+            $this->eventApi->removeEvent($eventId);
             return new Response(null, Response::HTTP_OK);
         }
         catch (UserNotAuthenticated $e)

@@ -9,25 +9,17 @@ class User
     private $id;
     /** @var string */
     private $userId;
-    /** @var WorkspaceId */
-    private $workspaceId;
+    /** @var Workspace */
+    private $workspace;
 
-    public function __construct(WorkspaceId $workspaceId, string $userId)
+    public function __construct(Workspace $workspace, string $userId)
     {
         $this->userId = $userId;
-        $this->workspaceId = $workspaceId;
+        $this->workspace = $workspace;
     }
 
     public function getUserId(): string
     {
         return $this->userId;
-    }
-
-    /**
-     * @return WorkspaceId
-     */
-    public function getWorkspaceId(): WorkspaceId
-    {
-        return $this->workspaceId;
     }
 }

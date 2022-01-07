@@ -50,7 +50,7 @@ class WorkspaceQueryService implements WorkspaceQueryServiceInterface
         $workspaceUserTableJoinAlias = 'wu.';
 
         $qb = $this->conn->createQueryBuilder();
-        $qb->from(WorkspaceTable::TABLE_NAME, 'w');
+        $qb->from(WorkspaceTable::TABLE_NAME, $workspaceTableAlias);
         $this->addWorkspaceFieldSelect($qb);
         $qb->leftJoin(
             $workspaceTableAlias, WorkspaceUserTable::TABLE_NAME, $workspaceUserTableAlias,
@@ -70,6 +70,19 @@ class WorkspaceQueryService implements WorkspaceQueryServiceInterface
 
         return $data;
     }
+
+    public function getWorkspaceUserIds(string $workspaceId): array
+    {
+        $workspaceUserTableAlias = 'wu';
+        $workspaceUserTableJoinAlias = 'wu.';
+        $qb = $this->conn->createQueryBuilder();
+        $qb->from(WorkspaceUserTable::TABLE_NAME, $workspaceUserTableAlias);
+        $qb->select($workspaceUserTableJoinAlias . WorkspaceUserTable::USER_ID);
+        $qb->where($qb->expr()->eq($workspaceUserTableJoinAlias . WorkspaceUserTable::WORKSPACE_ID, ':workspaceId'));
+        $qb->setParameter('workspaceId', $workspaceId);
+        return $qb->execute()->fetchAllNumeric();
+    }
+
 
     private function addWorkspaceFieldSelect(QueryBuilder $qb, string $alias = 'w'): void
     {

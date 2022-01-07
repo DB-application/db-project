@@ -5,7 +5,6 @@ namespace App\Workspace\Domain\Service;
 
 use App\Workspace\Domain\Exception\CannotRemoveDefaultWorkspace;
 use App\Workspace\Domain\Exception\DefaultWorkspaceAlreadyExistsException;
-use App\Workspace\Domain\Exception\DuplicateNameException;
 use App\Workspace\Domain\Exception\InvalidWorkspaceIdException;
 use App\Workspace\Domain\Exception\InvitedUserNotFoundException;
 use App\Workspace\Domain\Exception\UserAlreadyInvitedException;
@@ -15,6 +14,8 @@ use App\Workspace\Domain\Model\WorkspaceRepositoryInterface;
 
 class WorkspaceService
 {
+    private const DEFAULT_WORKSPACE_NAME = 'New workspace';
+
     /** @var WorkspaceRepositoryInterface */
     private $repository;
 
@@ -24,17 +25,14 @@ class WorkspaceService
     }
 
     /**
-     * @param string $name
      * @param string $ownerId
      * @return WorkspaceId
      * @throws DefaultWorkspaceAlreadyExistsException
-     * @throws DuplicateNameException
      */
-    public function createDefaultWorkspace(string $name, string $ownerId): WorkspaceId
+    public function createDefaultWorkspace(string $ownerId): WorkspaceId
     {
-//        $this->assertNameValid($name);
-        $this->assertNoDefaultWorkspace();
-        $workspace = new Workspace($this->repository->nextId(), $name, $ownerId, true);
+        $this->assertNoDefaultWorkspace($ownerId);
+        $workspace = new Workspace($this->repository->nextId(), self::DEFAULT_WORKSPACE_NAME, $ownerId, true);
         $this->repository->add($workspace);
         return $workspace->getId();
     }
@@ -43,17 +41,13 @@ class WorkspaceService
      * @param string $name
      * @param string $ownerId
      * @return WorkspaceId
-     * @throws DuplicateNameException
      */
     public function createWorkspace(string $name, string $ownerId): WorkspaceId
     {
-//        $this->assertNameValid($name);
         $workspace = new Workspace($this->repository->nextId(), $name, $ownerId, false);
         $this->repository->add($workspace);
         return $workspace->getId();
     }
-
-    //TODO: подумать можно ли будет изменять стандартный воркспейс
 
     /**
      * @param WorkspaceId $id
@@ -106,18 +100,6 @@ class WorkspaceService
     }
 
     /**
-     * @param string $name
-     * @throws DuplicateNameException
-     */
-    private function assertNameValid(string $name): void
-    {
-        if ($this->repository->findByName($name) !== null)
-        {
-            throw new DuplicateNameException($name);
-        }
-    }
-
-    /**
      * @param WorkspaceId $workspaceId
      * @param string $userId
      * @throws InvalidWorkspaceIdException
@@ -134,11 +116,37 @@ class WorkspaceService
     }
 
     /**
+     * @param WorkspaceId $workspaceId
+     * @param array $invitedUserIds
+     * @throws InvalidWorkspaceIdException
+     * @throws InvitedUserNotFoundException
+     * @throws UserAlreadyInvitedException
+     */
+    public function updateInvitedUsers(WorkspaceId $workspaceId, array $invitedUserIds): void
+    {
+        $workspace = $this->repository->findById($workspaceId);
+        if ($workspace === null)
+        {
+            throw new InvalidWorkspaceIdException($workspaceId);
+        }
+        $usersToInvite = array_diff($invitedUserIds, $workspace->getInvitedUserIds());
+        $usersToRemove = array_diff($workspace->getInvitedUserIds(), $invitedUserIds);
+        foreach ($usersToInvite as $user)
+        {
+            $workspace->addUser($user);
+        }
+        foreach ($usersToRemove as $user)
+        {
+            $workspace->removeUser($user);
+        }
+    }
+
+    /**
      * @throws DefaultWorkspaceAlreadyExistsException
      */
-    private function assertNoDefaultWorkspace(): void
+    private function assertNoDefaultWorkspace(string $ownerId): void
     {
-        if ($this->repository->findDefaultWorkspace() !== null)
+        if ($this->repository->findDefaultWorkspace($ownerId) !== null)
         {
             throw new DefaultWorkspaceAlreadyExistsException();
         }

@@ -45,16 +45,15 @@ class WorkspaceAppService
     }
 
     /**
-     * @param string $name
      * @param string $ownerId
      * @return string
      */
-    public function createDefaultWorkspace(string $name, string $ownerId): string
+    public function createDefaultWorkspace(string $ownerId): string
     {
         return (string)$this->transaction->execute(
-            function () use ($name, $ownerId): WorkspaceId
+            function () use ($ownerId): WorkspaceId
             {
-                return $this->workspaceService->createDefaultWorkspace($name, $ownerId);
+                return $this->workspaceService->createDefaultWorkspace($ownerId);
             }
         );
     }
@@ -78,13 +77,53 @@ class WorkspaceAppService
     /**
      * @param string $id
      */
-    public function removeEvent(string $id): void
+    public function removeWorkspace(string $id): void
     {
         $operation = $this->blockingOperatorExecutor->execute(
             [LockNames::getWorkspaceLock($id)],
             function () use ($id)
             {
                 $this->workspaceService->removeWorkspace(new WorkspaceId($id));
+            }
+        );
+        $this->transaction->execute($operation);
+    }
+
+    /**
+     * @param string $workspaceId
+     * @param array $invitedUserIds
+     */
+    public function updateInvitedUsers(string $workspaceId, array $invitedUserIds): void
+    {
+        $operation = $this->blockingOperatorExecutor->execute(
+            [LockNames::getWorkspaceLock($workspaceId)],
+            function () use ($workspaceId, $invitedUserIds)
+            {
+                $this->workspaceService->updateInvitedUsers(new WorkspaceId($workspaceId), $invitedUserIds);
+            }
+        );
+        $this->transaction->execute($operation);
+    }
+
+    public function inviteUser(string $workspaceId, string $userId): void
+    {
+        $operation = $this->blockingOperatorExecutor->execute(
+            [LockNames::getWorkspaceLock($workspaceId)],
+            function () use ($workspaceId, $userId)
+            {
+                $this->workspaceService->inviteUser(new WorkspaceId($workspaceId), $userId);
+            }
+        );
+        $this->transaction->execute($operation);
+    }
+
+    public function removeUser(string $workspaceId, string $userId): void
+    {
+        $operation = $this->blockingOperatorExecutor->execute(
+            [LockNames::getWorkspaceLock($workspaceId)],
+            function () use ($workspaceId, $userId)
+            {
+                $this->workspaceService->removeUser(new WorkspaceId($workspaceId), $userId);
             }
         );
         $this->transaction->execute($operation);

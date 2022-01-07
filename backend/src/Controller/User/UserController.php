@@ -25,12 +25,15 @@ class UserController extends AbstractController
     private $securityContext;
     /** @var UserAuthenticator */
     private $authenticator;
+    /** @var \App\Workspace\Api\ApiInterface */
+    private $workspaceApi;
 
-    public function __construct(ApiInterface $userApi, SecurityContextInterface $securityContext, UserAuthenticator $authenticator)
+    public function __construct(ApiInterface $userApi, SecurityContextInterface $securityContext, UserAuthenticator $authenticator, \App\Workspace\Api\ApiInterface $workspaceApi)
     {
         $this->userApi = $userApi;
         $this->securityContext = $securityContext;
         $this->authenticator = $authenticator;
+        $this->workspaceApi = $workspaceApi;
     }
 
     /**
@@ -40,7 +43,8 @@ class UserController extends AbstractController
     {
         $requestData = json_decode($request->getContent(), true);
         $input = new CreateUserInput($requestData['email'], md5($requestData['password']), $requestData['username']);
-        $this->userApi->createUser($input);
+        $userId = $this->userApi->createUser($input);
+        $this->workspaceApi->createDefaultWorkspace($userId);
 
         return new Response();
     }

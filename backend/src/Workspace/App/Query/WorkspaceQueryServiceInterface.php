@@ -14,4 +14,10 @@ interface WorkspaceQueryServiceInterface
      * @return WorkspaceData[]
      */
     public function getUserWorkspaces(string $userId): array;
+
+    /**
+     * @param string $workspaceId
+     * @return array
+     */
+    public function getWorkspaceUserIds(string $workspaceId): array;
 }

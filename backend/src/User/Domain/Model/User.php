@@ -15,8 +15,6 @@ class User
     private $username;
     /** @var string */
     private $password;
-    /** @var string */
-    private $loginKey;
     /** @var string|null */
     private $firstName;
     /** @var string|null */
@@ -116,11 +114,6 @@ class User
     public function setAvatarUrl(?string $avatarUrl): void
     {
         $this->avatarUrl = $avatarUrl;
-    }
-
-    public function getLoginKey(): string
-    {
-        return $this->loginKey;
     }
 
     private function assertPhoneValid(string $phone): void

@@ -22,13 +22,14 @@ class Api implements ApiInterface
 
     /**
      * @param CreateUserInput $input
+     * @return string
      * @throws InvalidUserEmailException
      */
-    public function createUser(CreateUserInput $input): void
+    public function createUser(CreateUserInput $input): string
     {
         try
         {
-            $this->userService->createUser($input->getEmail(), $input->getPassword(), $input->getUsername());
+            return $this->userService->createUser($input->getEmail(), $input->getPassword(), $input->getUsername());
         }
         catch (\Exception $e)
         {

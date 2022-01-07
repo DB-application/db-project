@@ -26,7 +26,8 @@ final class Version20220106112517 extends AbstractMigration
                 user_id VARCHAR(64) NOT NULL,
                 workspace_id VARCHAR(128) NOT NULL,
                 FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE CASCADE,
-                FOREIGN KEY (workspace_id) REFERENCES workspace (id) ON DELETE CASCADE
+                FOREIGN KEY (workspace_id) REFERENCES workspace (id) ON DELETE CASCADE,
+                INDEX (user_id, workspace_id)
             );
 SQL
         );
