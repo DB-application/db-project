@@ -44,7 +44,7 @@ function RegistrationLayout() {
     const handleSetNicknameError = useAction(registrationPageAction.setNicknameError)
     const handleSubmitForm = useAction(registrationPageAction.submitRegistrationForm)
 
-    const onSubmit = () => () => {
+    const onSubmit = () => {
         handleSetEmailError(isValidEmail(email))
         handleSetPasswordError(isValidPassword(password))
         handleSetNicknameError(isValidNickname(nickname))
