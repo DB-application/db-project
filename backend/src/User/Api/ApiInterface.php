@@ -7,15 +7,14 @@ use App\User\Api\Input\AuthenticateUserInput;
 use App\User\Api\Input\ChangeUserPasswordInput;
 use App\User\Api\Input\CreateUserInput;
 use App\User\App\Data\UserData;
-use App\User\Domain\Exception\InvalidUserEmailException;
 
 interface ApiInterface
 {
     /**
      * @param CreateUserInput $input
-     * @throws InvalidUserEmailException
+     * @return string
      */
-    public function createUser(CreateUserInput $input): void;
+    public function createUser(CreateUserInput $input): string;
 
     /**
      * @param AuthenticateUserInput $input

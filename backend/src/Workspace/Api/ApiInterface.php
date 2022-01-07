@@ -15,6 +15,12 @@ interface ApiInterface
     public function createWorkspace(string $name, string $ownerId): string;
 
     /**
+     * @param string $ownerId
+     * @return string
+     */
+    public function createDefaultWorkspace(string $ownerId): string;
+
+    /**
      * @param string $id
      * @param string $name
      */
@@ -35,4 +41,28 @@ interface ApiInterface
      * @return WorkspaceData[]
      */
     public function getUserWorkspaces(string $userId): array;
+
+    /**
+     * @param string $workspaceId
+     * @param string $userId
+     */
+    public function inviteUser(string $workspaceId, string $userId): void;
+
+    /**
+     * @param string $workspaceId
+     * @param string $userId
+     */
+    public function removeUser(string $workspaceId, string $userId): void;
+
+    /**
+     * @param string $workspaceId
+     * @param string[] $invitedUserIds
+     */
+    public function updateInvitedUsers(string $workspaceId, array $invitedUserIds): void;
+
+    /**
+     * @param string $workspaceId
+     * @return string[]
+     */
+    public function getWorkspaceUserIds(string $workspaceId): array;
 }

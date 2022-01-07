@@ -27,7 +27,8 @@ final class Version20211125164217 extends AbstractMigration
                 event_id VARCHAR(64) NOT NULL,
                 status SMALLINT,
                 FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE CASCADE,
-                FOREIGN KEY (event_id) REFERENCES event (event_id) ON DELETE CASCADE
+                FOREIGN KEY (event_id) REFERENCES event (event_id) ON DELETE CASCADE,
+                INDEX (user_id, event_id)
             );
 SQL
         );

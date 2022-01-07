@@ -35,9 +35,9 @@ class WorkspaceRepository implements WorkspaceRepositoryInterface
         return $this->repo->findOneBy(['name' => $name]);
     }
 
-    public function findDefaultWorkspace(): ?Workspace
+    public function findDefaultWorkspace(string $ownerId): ?Workspace
     {
-        return $this->repo->findOneBy(['isDefault' => true]);
+        return $this->repo->findOneBy(['isDefault' => true, 'ownerId' => $ownerId]);
     }
 
     public function add(Workspace $workspace): void

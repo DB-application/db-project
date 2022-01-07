@@ -31,7 +31,7 @@ class Workspace
 
     public function getId(): WorkspaceId
     {
-        return $this->id;
+        return new WorkspaceId((string)$this->id);
     }
 
     public function getOwnerId(): string
@@ -68,7 +68,7 @@ class Workspace
             }
         }
 
-        $this->users->add(new User($this->getId(), $userId));
+        $this->users->add(new User($this, $userId));
     }
 
     /**
@@ -86,5 +86,19 @@ class Workspace
             }
         }
         throw new InvitedUserNotFoundException($userId, $this->getId());
+    }
+
+    /**
+     * @return array
+     */
+    public function getInvitedUserIds(): array
+    {
+        $userIds = [];
+        foreach ($this->users as $user)
+        {
+            $userIds[] = $user->getUserId();
+        }
+
+        return $userIds;
     }
 }

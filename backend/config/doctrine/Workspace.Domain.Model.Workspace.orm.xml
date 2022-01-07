@@ -9,6 +9,11 @@
         <field name="name" column="name" type="string"/>
         <field name="isDefault" column="is_default" type="boolean"/>
         <field name="ownerId" column="owner_id" type="string"/>
-        <one-to-many field="users" target-entity="App\Workspace\Domain\Model\User" mapped-by="workspaceId"/>
+        <one-to-many field="users" target-entity="App\Workspace\Domain\Model\User" mapped-by="workspace">
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
     </entity>
 </doctrine-mapping>

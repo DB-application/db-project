@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\User\App\Service;
 
+use App\Common\Domain\Uuid;
 use App\Common\Domain\UuidGenerator;
 use App\Common\Exception\UserNotAuthenticated;
 use App\Security\UserAuthenticator;
@@ -36,9 +37,10 @@ class UserAppService
      * @param string $email
      * @param string $password
      * @param string $username
+     * @return string
      * @throws InvalidUserEmailException
      */
-    public function createUser(string $email, string $password, string $username): void
+    public function createUser(string $email, string $password, string $username): string
     {
         // TODO: обернуть в транзакцию
         $user = $this->repository->findUserByEmailAndUserName($email, $username);
@@ -46,8 +48,9 @@ class UserAppService
         {
             throw new InvalidUserEmailException('User with this email already exist');
         }
-        $user = new User(UuidGenerator::generateUuid(), new Email($email), new Password($password), $username);
+        $user = new User(new Uuid(UuidGenerator::generateUuid()), new Email($email), new Password($password), $username);
         $this->repository->add($user);
+        return (string)$user->getUserId();
     }
 
     public function getUserData(string $userId): ?UserData

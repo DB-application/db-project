@@ -31,6 +31,11 @@ class Api implements ApiInterface
         return $this->workspaceAppService->createWorkspace($name, $ownerId);
     }
 
+    public function createDefaultWorkspace(string $ownerId): string
+    {
+        return $this->workspaceAppService->createDefaultWorkspace($ownerId);
+    }
+
     /**
      * @param string $id
      * @param string $name
@@ -47,7 +52,7 @@ class Api implements ApiInterface
     public function removeWorkspace(string $id): void
     {
         //TODO обработка исключений
-        $this->workspaceAppService->removeEvent($id);
+        $this->workspaceAppService->removeWorkspace($id);
     }
 
     public function getWorkspaceData(string $id): WorkspaceData
@@ -59,5 +64,25 @@ class Api implements ApiInterface
     public function getUserWorkspaces(string $userId): array
     {
         return $this->workspaceQueryService->getUserWorkspaces($userId);
+    }
+
+    public function inviteUser(string $workspaceId, string $userId): void
+    {
+        $this->workspaceAppService->inviteUser($workspaceId, $userId);
+    }
+
+    public function removeUser(string $workspaceId, string $userId): void
+    {
+        $this->workspaceAppService->removeUser($workspaceId, $userId);
+    }
+
+    public function updateInvitedUsers(string $workspaceId, array $invitedUserIds): void
+    {
+        $this->workspaceAppService->updateInvitedUsers($workspaceId, $invitedUserIds);
+    }
+
+    public function getWorkspaceUserIds(string $workspaceId): array
+    {
+        return $this->workspaceQueryService->getWorkspaceUserIds($workspaceId);
     }
 }

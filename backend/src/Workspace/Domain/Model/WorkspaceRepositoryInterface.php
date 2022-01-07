@@ -17,9 +17,10 @@ interface WorkspaceRepositoryInterface
     public function findByName(string $name): ?Workspace;
 
     /**
+     * @param string $ownerId
      * @return Workspace|null
      */
-    public function findDefaultWorkspace(): ?Workspace;
+    public function findDefaultWorkspace(string $ownerId): ?Workspace;
 
     /**
      * @param Workspace $workspace

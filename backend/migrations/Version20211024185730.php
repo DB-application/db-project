@@ -28,7 +28,8 @@ final class Version20211024185730 extends AbstractMigration
                 organizer_id VARCHAR(64) NOT NULL,
                 repetition_schedule INT,
                 is_repeatable TINYINT(1),
-                FOREIGN KEY (organizer_id) REFERENCES user (user_id)
+                FOREIGN KEY (organizer_id) REFERENCES user (user_id),
+                INDEX (organizer_id)
             );
 SQL
         );
