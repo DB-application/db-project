@@ -137,7 +137,7 @@ function NotesList() {
         <div className={styles.container}>
             <Button_IconAndText
                 icon={<PlusCircleIcon/>}
-                text={'Добавить заметку'}
+                text={I18n_get('Sidebar.AddNote')}
                 onClick={handleAddNote}
                 style={'primary'}
                 state={addButtonState}

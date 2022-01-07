@@ -5,11 +5,11 @@ import {Preloader} from "../common/preloader/Preloader";
 import {App} from "./App";
 import {useLayoutEffect} from "react";
 import {initUserDataAction} from "../currentUser/initUser";
-import {useTranslation} from "react-i18next";
-import {setTranslationFunction} from "../i18n/i18n_get";
 import {withRouter} from "react-router-dom";
 import {initRouterHistory} from "../core/router/router";
-import { setI18n } from "../i18n/language";
+import {useTranslation} from "react-i18next";
+import {setTranslationFunction} from "../i18n/i18n_get";
+import {setI18n} from "../i18n/language";
 
 const AppWrapper = withRouter(({history}) => {
     const {t, i18n} = useTranslation()
@@ -18,10 +18,13 @@ const AppWrapper = withRouter(({history}) => {
 
     useLayoutEffect(() => {
         initRouterHistory(history)
+        handleInitUser()
+    }, [handleInitUser])
+
+    useLayoutEffect(() => {
         setTranslationFunction(t)
         setI18n(i18n)
-        handleInitUser()
-    }, [t, handleInitUser])
+    }, [t, i18n])
 
     return (
         <div>

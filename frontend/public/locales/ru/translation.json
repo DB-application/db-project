@@ -10,8 +10,8 @@
     "LoginPlaceholder": "Логин",
     "EmailExist": "Пользователь с таким email-ом уже существует",
     "NicknameExist": "Пользователь с таким ником уже существует",
-    "NicknameRequired": "Поле nickname обязательно",
-    "NicknameInvalidFormat": "Невалидный формат nickname-а",
+    "NicknameRequired": "Поле имя пользователя обязательно",
+    "NicknameInvalidFormat": "Невалидный формат имени пользователя",
     "ShowPassword": "Показать пароль",
     "LoginLabel": "Вход",
     "Login": "Войти",
@@ -43,7 +43,10 @@
   "Workspace": {
     "SettingButtonTooltip": "Настройки",
     "CalendarButtonTooltip": "Календарь",
-    "ChatButtonTooltip": "Сообщения"
+    "ChatButtonTooltip": "Сообщения",
+    "UserProfile": "Профиль пользователя",
+    "Help": "Помощь",
+    "Logout": "Выйти"
   },
   "EditEventPopup": {
     "TitleEdit": "Редактирование события",
@@ -87,10 +90,14 @@
     "Collaborators": "Участники"
   },
   "Sidebar": {
-    "RemoveNote": "Удалить"
+    "RemoveNote": "Удалить",
+    "AddNote": "Добавить заметку",
+    "CreateWorkspace": "Создать новое",
+    "NewWorkspace": "Новое рабочее пространство"
   },
   "InviteUsersPopup": {
     "Title": "Приглашение пользователей",
+    "SearchPlaceholder": "Найти пользователя",
     "Invite": "Пригласить"
   },
   "EditWorkspacePopup": {
@@ -103,6 +110,13 @@
   "Common": {
     "InvitedUsersLabel": "Приглашенные пользователи",
     "InviteUsers": "Пригласить",
-    "OrganizerLabel": "Создатель"
+    "OrganizerLabel": "Создатель",
+    "Cancel": "Отмена"
+  },
+  "SettingsPopup": {
+    "UserProfile": "Профиль пользователя",
+    "Language": "Язык и регион",
+    "LanguageTitle": "Язык",
+    "LanguageDescription": "Измените язык, используемый в пользовательском интерфейсе."
   }
 }

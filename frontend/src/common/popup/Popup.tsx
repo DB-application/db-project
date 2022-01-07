@@ -4,6 +4,7 @@ import {Button_Text} from "../button/Button_Text";
 import {Button_Icon} from "../button/Button_Icon";
 import {CrossIcon} from "../../icons/CrossIcon";
 import {useEventHandler} from "../../core/hooks/useEventHandler";
+import {I18n_get} from "../../i18n/i18n_get";
 
 type PopupWithHeaderProps = {
     type: 'withHeader',
@@ -75,7 +76,7 @@ function PopupFooter({
         <div className={styles.popupFooter}>
             <Button_Text
                 onClick={closePopup}
-                text={'Отмена'}
+                text={I18n_get('Common.Cancel')}
                 style={'secondary'}
             />
             <div className={styles.generalButtons}>

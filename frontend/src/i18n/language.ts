@@ -20,8 +20,8 @@ function changeLanguage(language: LanguageType) {
         })
 }
 
-function getLanguage() {
-    return LocalStorage.getValue<string>(STORAGE_KEYS.LANGUAGE) || LANGUAGE.RU
+function getLanguage(): LanguageType {
+    return LocalStorage.getValue<LanguageType>(STORAGE_KEYS.LANGUAGE) || LANGUAGE.RU
 }
 
 function setI18n(fn: i18n) {

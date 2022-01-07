@@ -11,6 +11,7 @@ import {ListItem_IconAndText} from "../../../common/list/item/ListItem_IconAndTe
 import { ProfileIcon } from '../../../icons/ProfileIcon';
 import {GlobeIcon} from "../../../icons/GlobeIcon";
 import {getStylesWithMods} from "../../../core/styles/getStylesWithMods";
+import {I18n_get} from "../../../i18n/i18n_get";
 
 function generateItemClassName(activePage: SettingsPopupPageType, currentPage: SettingsPopupPageType) {
     return getStylesWithMods(styles.listItem, {
@@ -27,7 +28,7 @@ function PagesList() {
             id: 'userProfile',
             createBindingFn: () => <ListItem_IconAndText
                 icon={<ProfileIcon/>}
-                text={'Профиль'}
+                text={I18n_get('SettingsPopup.UserProfile')}
                 onClick={() => handleSetActivePage('profile')}
                 className={generateItemClassName(activePage, 'profile')}
             />
@@ -36,7 +37,7 @@ function PagesList() {
             id: 'language',
             createBindingFn: () => <ListItem_IconAndText
                 icon={<GlobeIcon/>}
-                text={'Язык и регион'}
+                text={I18n_get('SettingsPopup.Language')}
                 onClick={() => handleSetActivePage('language')}
                 className={generateItemClassName(activePage, 'language')}
             />

@@ -14,6 +14,7 @@ import {MoreAltIcon} from "../../../icons/MoreAltIcon";
 import {useRef} from "react";
 import {useEventHandler} from "../../../core/hooks/useEventHandler";
 import {editWorkspacePopupActions} from "../../viewmodel/editWorkspacePopup/editWorkspacePopup";
+import {I18n_get} from "../../../i18n/i18n_get";
 
 
 type WorkspacesListItemProps = {
@@ -89,8 +90,8 @@ function WorkspacePickerPopover() {
                 items={listItems}
             />
             <Button_Text
-                text={'Создать новое'}
-                onClick={() => handleCreateWorkspace('Новое рабочее пространство')}
+                text={I18n_get('Sidebar.CreateWorkspace')}
+                onClick={() => handleCreateWorkspace(I18n_get('Sidebar.NewWorkspace'))}
                 state={addWorkspaceButtonState}
                 style={'primary'}
                 className={styles.createButton}

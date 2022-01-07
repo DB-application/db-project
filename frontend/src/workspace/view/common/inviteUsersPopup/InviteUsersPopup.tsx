@@ -116,7 +116,7 @@ function SearchUsersField() {
             <SearchField
                 value={searchPattern}
                 onChange={handleSetSearchPattern}
-                placeholder={'Найти пользователя'}
+                placeholder={I18n_get('InviteUsersPopup.SearchPlaceholder')}
                 className={styles.searchField}
             />
         </div>

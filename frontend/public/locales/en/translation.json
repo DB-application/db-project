@@ -1,17 +1,122 @@
 {
   "LoginForm": {
-    "EmailInvalidFormat": "Невалидный формат email-а",
-    "EmailRequired": "email - обязательный параметр",
-    "PasswordInvalidFormat": "Невалидный формат пароля",
-    "PasswordRequired": "пароль - обязательный параметр",
+    "EmailInvalidFormat": "Invalid email format",
+    "EmailRequired": "email - required parameter",
+    "PasswordInvalidFormat": "Invalid password format",
+    "PasswordRequired": "password - required parameter",
     "EmailPlaceholder": "Email",
-    "PasswordPlaceholder": "Пароль",
-    "NicknamePlaceholder": "Имя пользователя",
-    "EmailExist": "Пользователь с таким email-ом уже существует",
-    "NicknameExist": "Пользователь с таким ником уже существует",
-    "NicknameRequired": "Поле nickname обязательно",
-    "NicknameInvalidFormat": "Невалидный формат nickname-а",
-    "ShowPassword": "Показать пароль",
-    "LoginLabel": "Вход"
+    "PasswordPlaceholder": "Password",
+    "NicknamePlaceholder": "Username",
+    "LoginPlaceholder": "Login",
+    "EmailExist": "User with this email already exists",
+    "NicknameExist": "User with this username already exists",
+    "NicknameRequired": "Username is required",
+    "NicknameInvalidFormat": "Invalid username format",
+    "ShowPassword": "Show password",
+    "LoginLabel": "Log in",
+    "Login": "Log into account",
+    "RegistrationLabel": "Registration",
+    "Registration": "Register",
+    "DontHaveAccount": "Don't have an account yet?",
+    "HaveAccount": "Already have an account?",
+    "RememberMe": "Remember me"
+  },
+  "ProfileSettings": {
+    "ProfileLabel": "Profile",
+    "FirstnameLabel": "First name",
+    "LastnameLabel": "Last name",
+    "NicknameLabel": "Nickname",
+    "EmailLabel": "Email",
+    "SaveInfo": "Save",
+    "PhoneLabel": "Phone number",
+    "InfoSuccessUpdate": "Data updated successfully",
+    "OldPassword": "Current password",
+    "NewPassword": "New password",
+    "ConfirmPassword": "Confirm password",
+    "PasswordLabel": "Change password",
+    "PasswordChangeButton": "Change",
+    "PasswordMustBeDifferent": "The new password must be different from the old one",
+    "PasswordIsDifferent": "Passwords are different",
+    "OldPasswordIsIncorrect": "Current password is incorrect",
+    "SuccessChangePassword": "Password changed successfully"
+  },
+  "Workspace": {
+    "SettingButtonTooltip": "Settings",
+    "CalendarButtonTooltip": "Calendar",
+    "ChatButtonTooltip": "Chat",
+    "UserProfile": "User profile",
+    "Help": "help",
+    "Logout": "Logout"
+  },
+  "EditEventPopup": {
+    "TitleEdit": "Editing an event",
+    "TitleAdd": "Create an event",
+    "TitleField": "Event name",
+    "DescriptionField": "Description of the event",
+    "PlaceField": "Place",
+    "StartField": "Start",
+    "EndField": "End",
+    "DateLabel": "Date:",
+    "TimeLabel": "Time:",
+    "SubmitButtonEdit": "Change",
+    "SubmitButtonCreate": "Create",
+    "RemoveButton": "Delete",
+    "AllDay": "All day",
+    "TitleRequired": "Name field is required",
+    "Repeat": "Repeat",
+    "RepeatableNone":  "Never",
+    "RepeatableEveryDay":  "Every day",
+    "RepeatableEveryWeek":  "Every week",
+    "RepeatableEveryMonth":  "Every month"
+  },
+  "Errors": {
+    "StandardError": "Oops, something went wrong. try again",
+    "EventStartBiggerEnd": "The beginning of the event must be earlier than the end",
+    "AddNote": "Error adding a new note"
+  },
+  "Success": {
+    "EventCreate": "Event created",
+    "EventEdit": "Event changed",
+    "EventRemoved": "Event deleted"
+  },
+  "ViewEventPopup": {
+    "InfoLabel": "Information",
+    "StartLabel": "Start",
+    "EndLabel": "End",
+    "PlaceLabel": "Place",
+    "TitleLabel": "Name",
+    "Description": "Description",
+    "OrganizationBy": "Organizer",
+    "Collaborators": "Collaborators"
+  },
+  "Sidebar": {
+    "RemoveNote": "Delete",
+    "AddNote": "Add note",
+    "CreateWorkspace": "Create new",
+    "NewWorkspace": "New workspace"
+  },
+  "InviteUsersPopup": {
+    "Title": "Invite users",
+    "SearchPlaceholder": "Find user",
+    "Invite": "Invite"
+  },
+  "EditWorkspacePopup": {
+    "Title": "Editing the workspace",
+    "SubmitButton": "Change",
+    "WorkspaceName": "Name",
+    "WorkspaceRequired": "Name field is required",
+    "RemoveButton": "Delete"
+  },
+  "Common": {
+    "InvitedUsersLabel": "Invited Users",
+    "InviteUsers": "Invite",
+    "OrganizerLabel": "The creator",
+    "Cancel": "Cancel"
+  },
+  "SettingsPopup": {
+    "UserProfile": "User profile",
+    "Language": "Language and Region",
+    "LanguageTitle": "Language",
+    "LanguageDescription": "Change the language used in the user interface."
   }
 }

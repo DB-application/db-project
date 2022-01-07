@@ -12,6 +12,7 @@ import {goToUrl} from "../../../../core/link/goToUrl";
 import {logoutAction} from "../../../../authentication/viewModel/actions/logoutAction";
 import {PopoverPortal} from "../../../../core/portal/PopoverPortal";
 import {settingsPopupActions} from "../../../viewmodel/settingsPopup/settingsPopup";
+import {I18n_get} from "../../../../i18n/i18n_get";
 
 type UserMenuPopoverProps = {
     onLogout: () => void,
@@ -28,7 +29,7 @@ function UserMenuPopover({
             id: 'profileSetting',
             createBindingFn: () => <ListItem_IconAndText
                 icon={<ProfileIcon />}
-                text={'Профиль пользователя'}
+                text={I18n_get('Workspace.UserProfile')}
                 onClick={() => {
                     handleOpenSettingsPopup('profile')
                     onClick()
@@ -40,7 +41,7 @@ function UserMenuPopover({
             id: 'help',
             createBindingFn: () => <ListItem_IconAndText
                 icon={<HelpCircleOutlineIcon/>}
-                text={'Помощь'}
+                text={I18n_get('Workspace.Help')}
                 onClick={() => {
                     goToUrl('/help')
                     onClick()
@@ -53,7 +54,7 @@ function UserMenuPopover({
             id: 'logout',
             createBindingFn: () => <ListItem_IconAndText
                 icon={<LogoutIcon />}
-                text={'Выйти'}
+                text={I18n_get('Workspace.Logout')}
                 onClick={() => {
                     onLogout()
                     onClick()
