@@ -14,7 +14,7 @@ const {
     updateItem: updateWorkspace,
     updateItems: updateWorkspaces,
 } = declareMapAtom<WorkspaceData>(
-    'sidebar.notes',
+    'sidebar.workspacesAtom',
     (workspace => workspace.id),
 )
 

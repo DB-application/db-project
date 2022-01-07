@@ -78,9 +78,7 @@ function WorkspacePickerPopover() {
             createBindingFn: () => <WorkspacesListItem
                 selected={workspace.id === currentWorkspace}
                 workspace={workspace}
-                onClick={() => {
-                    handleOpenWorkspace(workspace.id)
-                }}
+                onClick={() => handleOpenWorkspace(workspace.id)}
             />
         }
     })
