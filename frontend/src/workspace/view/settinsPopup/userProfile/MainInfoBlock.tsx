@@ -1,9 +1,12 @@
 import styles from './MainInfoBlock.module.css'
 import {useAction, useAtom} from "@reatom/react";
-import {TextField} from "../../common/textfield/TextField";
-import {profileSettingsActions, profileSettingsAtom} from "../model/profileSettings";
-import {Button_Text} from "../../common/button/Button_Text";
-import {I18n_get} from "../../i18n/i18n_get";
+import {
+    profileSettingsActions,
+    profileSettingsAtom
+} from '../../../viewmodel/settingsPopup/userProfile/profileSettings';
+import {I18n_get} from "../../../../i18n/i18n_get";
+import {TextField} from "../../../../common/textfield/TextField";
+import {Button_Text} from "../../../../common/button/Button_Text";
 
 function MainInfoBlock() {
     const {

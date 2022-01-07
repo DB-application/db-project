@@ -1,7 +1,7 @@
-import {currentUserAtom} from "../../authentication/viewModel/currentUserAtom";
 import {profileSettingsActions} from "./profileSettings";
 import {useAction, useAtom} from "@reatom/react";
 import {useLayoutEffect} from "react";
+import { currentUserAtom } from "../../../../authentication/viewModel/currentUserAtom";
 
 function useInitProfileSettings() {
     const userInfo = useAtom(currentUserAtom)

@@ -11,7 +11,7 @@ import {LogoutIcon} from "../../../../icons/LogoutIcon";
 import {goToUrl} from "../../../../core/link/goToUrl";
 import {logoutAction} from "../../../../authentication/viewModel/actions/logoutAction";
 import {PopoverPortal} from "../../../../core/portal/PopoverPortal";
-import {Router} from "../../../../core/router/router";
+import {settingsPopupActions} from "../../../viewmodel/settingsPopup/settingsPopup";
 
 type UserMenuPopoverProps = {
     onLogout: () => void,
@@ -22,6 +22,7 @@ function UserMenuPopover({
     onLogout,
     onClick,
 }: UserMenuPopoverProps) {
+    const handleOpenSettingsPopup = useAction(settingsPopupActions.open)
     const items: Array<ListItemProps|null> = [
         {
             id: 'profileSetting',
@@ -29,7 +30,7 @@ function UserMenuPopover({
                 icon={<ProfileIcon />}
                 text={'Профиль пользователя'}
                 onClick={() => {
-                    goToUrl(Router.Profile.url())
+                    handleOpenSettingsPopup('profile')
                     onClick()
                 }}
                 className={styles.listItem}

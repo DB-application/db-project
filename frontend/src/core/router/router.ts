@@ -4,7 +4,6 @@ const WORKSPACE = '/workspace'
 const CALENDAR = '/calendar'
 const NOTE = '/note'
 const CHAT = '/chat'
-const PROFILE = '/profile'
 const AUTH = '/auth'
 
 let RouterHistory: History|null = null
@@ -50,13 +49,6 @@ function openNote(noteId: string, push: boolean = false) {
     replaceUrl(generateNoteUrl(noteId), push)
 }
 
-function generateProfileUrl() {
-    return `${PROFILE}`
-}
-function openProfile(push: boolean = false) {
-    replaceUrl(generateProfileUrl(), push)
-}
-
 function generateAuthUrl() {
     return `${AUTH}`
 }
@@ -72,10 +64,6 @@ const Router = {
     Note: {
         open: openNote,
         url: generateNoteUrl,
-    },
-    Profile: {
-        open: openProfile,
-        url: generateProfileUrl,
     },
     Workspace: {
         open: openWorkspace,

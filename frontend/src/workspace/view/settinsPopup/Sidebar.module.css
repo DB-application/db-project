@@ -1,0 +1,16 @@
+.sidebarContainer {
+    width: 200px;
+    background-color: #f6f6f7;
+}
+
+.list {
+
+}
+
+.listItem {
+    padding: 0 8px;
+}
+
+.selectedItem {
+    background: rgba(55, 53, 47, 0.08);
+}

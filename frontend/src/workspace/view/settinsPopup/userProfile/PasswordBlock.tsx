@@ -1,9 +1,9 @@
 import {useAction, useAtom} from "@reatom/react";
-import {passwordSettingsAction, passwordSettingsAtom} from "../model/passwordSettings";
+import {passwordSettingsAction, passwordSettingsAtom } from "../../../viewmodel/settingsPopup/userProfile/passwordSettings";
 import styles from './PasswordBlock.module.css'
-import {TextField} from "../../common/textfield/TextField";
-import {Button_Text} from "../../common/button/Button_Text";
-import {I18n_get} from "../../i18n/i18n_get";
+import {I18n_get} from "../../../../i18n/i18n_get";
+import {TextField} from "../../../../common/textfield/TextField";
+import {Button_Text} from "../../../../common/button/Button_Text";
 
 function PasswordBlock() {
     const {

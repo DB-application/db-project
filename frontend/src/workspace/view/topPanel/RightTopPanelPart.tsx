@@ -3,14 +3,15 @@ import {SettingsIcon} from "../../../icons/SettingsIcon";
 import {I18n_get} from '../../../i18n/i18n_get';
 import {CalendarMonthOutlineIcon} from "../../../icons/CalendarMonthOutlineIcon";
 import {ChatLeftDotsIcon} from '../../../icons/ChatLeftDotsIcon';
-import {useRouteMatch} from 'react-router-dom'
 import styles from './RightTopPanelPart.module.css'
 import {UserMenu} from "./userMeno/UserMenu";
 import {Router} from "../../../core/router/router";
+import {useAction} from "@reatom/react";
+import {settingsPopupActions} from "../../viewmodel/settingsPopup/settingsPopup";
 
 
 function RightTopPanelPart() {
-    const {path} = useRouteMatch()
+    const handleOpenSettingsPopup = useAction(settingsPopupActions.open)
     return (
         <div className={styles.container}>
             <div className={styles.buttonsGroup}>
@@ -32,7 +33,7 @@ function RightTopPanelPart() {
                 />
                 <Button_Icon
                     icon={<SettingsIcon />}
-                    onClick={() => {}}
+                    onClick={() => handleOpenSettingsPopup('profile')}
                     tooltipText={I18n_get('Workspace.SettingButtonTooltip')}
                     className={styles.buttonsGroupButton}
                     size={'small'}

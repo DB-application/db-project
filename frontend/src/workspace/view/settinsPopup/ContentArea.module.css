@@ -1,0 +1,7 @@
+
+.contentArea {
+    box-shadow: 0px 0px 4px rgb(66 72 78 / 12%), 0px 2px 2px rgb(66 72 78 / 8%), 0px 0px 1px rgb(66 72 78 / 16%);
+    flex-grow: 1;
+    padding: 30px;
+    overflow: auto;
+}

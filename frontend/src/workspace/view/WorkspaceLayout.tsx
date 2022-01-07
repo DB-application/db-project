@@ -13,12 +13,16 @@ import {useAtomWithSelector} from "../../core/reatom/useAtomWithSelector";
 import {EditWorkspacePopup} from "./editWorkspacePopup/EditWorkspacePopup";
 import {inviteUsersPopupActions, inviteUsersPopupAtom} from "../viewmodel/calendar/inviteUsers/inviteUsers";
 import {InviteUsersPopup} from './common/inviteUsersPopup/InviteUsersPopup';
+import {settingsPopupActions, settingsPopupAtom} from "../viewmodel/settingsPopup/settingsPopup";
+import {SettingsPopup} from "./settinsPopup/SettingsPopup";
 
 function PopupsLayer() {
     const showEditWorkspacePopup = useAtomWithSelector(editWorkspacePopupAtom, x => x.opened)
     const showInviteUsers = useAtomWithSelector(inviteUsersPopupAtom, x => x.show)
+    const showSettingsPopup = useAtomWithSelector(settingsPopupAtom, x => x.opened)
     const handleCloseEditEventPopup = useAction(editWorkspacePopupActions.close)
     const handleCloseInviteUsersPopup = useAction(inviteUsersPopupActions.close)
+    const handleCloseSettingsPopup = useAction(settingsPopupActions.close)
 
     return (
         <>
@@ -31,6 +35,11 @@ function PopupsLayer() {
                 show={showInviteUsers}
                 close={handleCloseInviteUsersPopup}
                 binding={<InviteUsersPopup/>}
+            />
+            <PopupPortal
+                show={showSettingsPopup}
+                close={handleCloseSettingsPopup}
+                binding={<SettingsPopup />}
             />
         </>
     )

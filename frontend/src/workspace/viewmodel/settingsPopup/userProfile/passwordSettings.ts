@@ -1,11 +1,10 @@
 import {combine, declareAction} from "@reatom/core";
 import {toast} from "react-toastify";
-import {Button_State_Type} from "../../common/button/Button_Base";
-import {changePassword} from "../../currentUser/changePassword";
-import {I18n_get} from "../../i18n/i18n_get";
-import {declareAtomWithSetter} from "../../core/reatom/declareAtomWithSetter";
-import {processStandardError} from "../../core/error/processStandardError";
-
+import {Button_State_Type} from "../../../../common/button/Button_Base";
+import {processStandardError} from "../../../../core/error/processStandardError";
+import {declareAtomWithSetter} from "../../../../core/reatom/declareAtomWithSetter";
+import {changePassword} from "../../../../currentUser/changePassword";
+import {I18n_get} from "../../../../i18n/i18n_get";
 
 const [oldPasswordAtom, setOldPassword] = declareAtomWithSetter('passwordSettings.oldPassword', '')
 
