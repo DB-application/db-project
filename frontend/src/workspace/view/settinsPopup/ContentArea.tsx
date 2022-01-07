@@ -4,6 +4,7 @@ import {settingsPopupAtom, SettingsPopupPageType} from "../../viewmodel/settings
 import {Preloader} from "../../../common/preloader/Preloader";
 import {ProfileSettingsPage} from "./userProfile/ProfileSettingsPage";
 import {LanguagePage} from "./language/LanguagePage";
+import {CalendarSettingsPage} from "./calendar/CalendarSettingsPage";
 
 
 function getContentBinding(activePage: SettingsPopupPageType, isLoading: boolean): JSX.Element {
@@ -15,6 +16,8 @@ function getContentBinding(activePage: SettingsPopupPageType, isLoading: boolean
             return <ProfileSettingsPage/>
         case "language":
             return <LanguagePage/>
+        case "calendar":
+            return <CalendarSettingsPage/>
         default:
             throw new Error('unknown active page')
     }

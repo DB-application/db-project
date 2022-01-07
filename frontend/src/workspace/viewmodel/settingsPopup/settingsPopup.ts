@@ -2,7 +2,7 @@ import {combine, declareAction, declareAtom} from "@reatom/core";
 import {declareAtomWithSetter} from "../../../core/reatom/declareAtomWithSetter";
 import {userProfileAtom} from "./userProfile/userProfile";
 
-type SettingsPopupPageType = 'profile' | 'language'
+type SettingsPopupPageType = 'profile' | 'language' | 'calendar'
 
 
 const open = declareAction<SettingsPopupPageType>('settingsPopup.open')

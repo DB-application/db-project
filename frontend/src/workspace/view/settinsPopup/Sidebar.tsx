@@ -12,6 +12,7 @@ import { ProfileIcon } from '../../../icons/ProfileIcon';
 import {GlobeIcon} from "../../../icons/GlobeIcon";
 import {getStylesWithMods} from "../../../core/styles/getStylesWithMods";
 import {I18n_get} from "../../../i18n/i18n_get";
+import {CalendarMonthOutlineIcon} from "../../../icons/CalendarMonthOutlineIcon";
 
 function generateItemClassName(activePage: SettingsPopupPageType, currentPage: SettingsPopupPageType) {
     return getStylesWithMods(styles.listItem, {
@@ -40,6 +41,15 @@ function PagesList() {
                 text={I18n_get('SettingsPopup.Language')}
                 onClick={() => handleSetActivePage('language')}
                 className={generateItemClassName(activePage, 'language')}
+            />
+        },
+        {
+            id: 'calendar',
+            createBindingFn: () => <ListItem_IconAndText
+                icon={<CalendarMonthOutlineIcon/>}
+                text={I18n_get('SettingsPopup.Calendar')}
+                onClick={() => handleSetActivePage('calendar')}
+                className={generateItemClassName(activePage, 'calendar')}
             />
         }
     ]

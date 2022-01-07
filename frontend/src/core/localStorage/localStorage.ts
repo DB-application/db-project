@@ -1,9 +1,12 @@
-import {get, set} from "local-storage";
+import {get, set, remove} from "local-storage";
 
 type StorageKey = 'calendarDefaultView'
     | 'redirect_from'
     | 'workspaceId'
     | 'language'
+    | 'calendar_step'
+    | 'calendar_rtl'
+    | 'calendar_timeslots'
 
 type StorageKeys = {
     [item: string]: StorageKey,
@@ -14,6 +17,9 @@ const STORAGE_KEYS: StorageKeys = {
     REDIRECT_FROM: 'redirect_from',
     WORKSPACE_ID: 'workspaceId',
     LANGUAGE: 'language',
+    CALENDAR_STEP: 'calendar_step',
+    CALENDAR_RTL: 'calendar_rtl',
+    CALENDAR_TIMESLOTS: 'calendar_timeslots',
 }
 
 function setValue<T>(key: StorageKey, value: T) {
@@ -24,9 +30,14 @@ function getValue<T>(key: StorageKey): T {
     return get(key)
 }
 
+function removeValue(key: StorageKey) {
+    remove(key)
+}
+
 const LocalStorage = {
     setValue,
     getValue,
+    removeValue,
 }
 
 export {

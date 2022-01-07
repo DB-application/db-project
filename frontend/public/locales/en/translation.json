@@ -117,6 +117,14 @@
     "UserProfile": "User profile",
     "Language": "Language and Region",
     "LanguageTitle": "Language",
-    "LanguageDescription": "Change the language used in the user interface."
+    "LanguageDescription": "Change the language used in the user interface.",
+    "StepTitle": "Step",
+    "StepDescription": "Determines the selectable time increments in week and day views",
+    "RtlTitle": "Right-to-left mode",
+    "RtlDescription": "Switch the calendar to a right-to-left read direction.",
+    "TimeSlotsTitle": "Timeslots",
+    "TimeSlotsDescription": "The number of slots per \"section\" in the time grid views",
+    "Calendar": "Calendar",
+    "ResetCalendarSettings": "Reset calendar settings"
   }
 }
