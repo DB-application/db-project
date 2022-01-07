@@ -103,6 +103,29 @@ function deleteWorkspace(id: string): Promise<void> {
         })
 }
 
+function getInvitedUsers(workspaceId: string): Promise<Array<string>> {
+    return fetch('/workspace/get_invited_users', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            workspaceId,
+        })
+    })
+        .then(response => {
+            switch (response.status) {
+                case HttpStatus.OK:
+                    return response.json()
+                case HttpStatus.UNAUTHORIZED:
+                    goToAuth()
+                    return Promise.reject(response)
+                default:
+                    return Promise.reject(response)
+            }
+        })
+}
+
 
 
 const WorkspaceApi = {
@@ -110,6 +133,7 @@ const WorkspaceApi = {
     deleteWorkspace,
     getWorkspacesList,
     editWorkspace,
+    getInvitedUsers,
 }
 
 export type {

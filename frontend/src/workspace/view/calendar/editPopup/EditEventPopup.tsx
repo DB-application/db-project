@@ -12,14 +12,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import ReactDatePicker from 'react-datepicker';
 import {useAtomWithSelector} from "../../../../core/reatom/useAtomWithSelector";
 import {TextArea} from "../../../../common/textArea/TextArea";
-import {Checkbox_WithLabel} from "../../../../common/checkbox/Checkbox_WithLabel";
 import {WarningCircleIcon} from '../../../../icons/WarningCircleIcon';
 import {useRef} from "react";
 import {TooltipPortal} from "../../../../core/portal/TooltipPortal";
 import {ContainerWithPreloader} from "../../../../common/ContainerWithPreloader";
 import {InvitedUsersBlock} from '../../common/invitedUsersBlock/InvitedUsersBlock';
-import { RepeatableBlock } from './RepeatableBlock';
-import {calendarAtom} from "../../../viewmodel/calendar/calendar";
+import {RepeatableBlock} from './RepeatableBlock';
 import {authorizedCurrentUser} from "../../../../authentication/viewModel/currentUserAtom";
 
 type DateBlockProps = {

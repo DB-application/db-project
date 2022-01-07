@@ -3,6 +3,7 @@ import {get, set} from "local-storage";
 type StorageKey = 'calendarDefaultView'
     | 'redirect_from'
     | 'workspaceId'
+    | 'language'
 
 type StorageKeys = {
     [item: string]: StorageKey,
@@ -12,6 +13,7 @@ const STORAGE_KEYS: StorageKeys = {
     CALENDAR_DEFAULT_VIEW: 'calendarDefaultView',
     REDIRECT_FROM: 'redirect_from',
     WORKSPACE_ID: 'workspaceId',
+    LANGUAGE: 'language',
 }
 
 function setValue<T>(key: StorageKey, value: T) {

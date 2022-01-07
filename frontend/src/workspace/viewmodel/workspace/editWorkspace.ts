@@ -12,7 +12,6 @@ const editWorkspace = declareAsyncAction<EditWorkspacePayload, void>(
                 store.dispatch(workspacesActions.updateWorkspace({
                     id: currentWorkspace.id,
                     name: payload.name,
-                    invitedUsersIds: payload.invitedUsersIds,
                     ownerId: currentWorkspace.ownerId,
                 }))
             })

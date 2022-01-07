@@ -9,15 +9,17 @@ import {useTranslation} from "react-i18next";
 import {setTranslationFunction} from "../i18n/i18n_get";
 import {withRouter} from "react-router-dom";
 import {initRouterHistory} from "../core/router/router";
+import { setI18n } from "../i18n/language";
 
 const AppWrapper = withRouter(({history}) => {
-    const {t} = useTranslation()
+    const {t, i18n} = useTranslation()
     const isLoadingApp = useAtom(isLoadingAppAtom)
     const handleInitUser = useAction(initUserDataAction)
 
     useLayoutEffect(() => {
         initRouterHistory(history)
         setTranslationFunction(t)
+        setI18n(i18n)
         handleInitUser()
     }, [t, handleInitUser])
 

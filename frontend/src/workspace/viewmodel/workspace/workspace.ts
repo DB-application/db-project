@@ -4,7 +4,6 @@ import {declareMapAtom} from "../../../core/reatom/declareMapAtom";
 type WorkspaceData = {
     id: string,
     name: string,
-    invitedUsersIds: Array<string>,
     ownerId: string,
 }
 

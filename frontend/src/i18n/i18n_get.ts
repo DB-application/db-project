@@ -9,9 +9,11 @@ function I18n_get(messageId: string) {
     return t(messageId);
 }
 
+
 function setTranslationFunction(fn: TFunction) {
     t = fn
 }
+
 
 export {
     setTranslationFunction,

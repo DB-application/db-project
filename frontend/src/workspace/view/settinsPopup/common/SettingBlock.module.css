@@ -1,0 +1,27 @@
+.blockWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.info {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.title {
+    font-size: 16px;
+    line-height: 20px;
+    color: rgb(55, 53, 47);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.description {
+    font-size: 12px;
+    line-height: 16px;
+    color: rgba(55, 53, 47, 0.6);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

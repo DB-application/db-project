@@ -3,6 +3,7 @@ import {useAtomWithSelector} from "../../../core/reatom/useAtomWithSelector";
 import {settingsPopupAtom, SettingsPopupPageType} from "../../viewmodel/settingsPopup/settingsPopup";
 import {Preloader} from "../../../common/preloader/Preloader";
 import {ProfileSettingsPage} from "./userProfile/ProfileSettingsPage";
+import {LanguagePage} from "./language/LanguagePage";
 
 
 function getContentBinding(activePage: SettingsPopupPageType, isLoading: boolean): JSX.Element {
@@ -13,7 +14,7 @@ function getContentBinding(activePage: SettingsPopupPageType, isLoading: boolean
         case "profile":
             return <ProfileSettingsPage/>
         case "language":
-            return <div>Язык</div>
+            return <LanguagePage/>
         default:
             throw new Error('unknown active page')
     }

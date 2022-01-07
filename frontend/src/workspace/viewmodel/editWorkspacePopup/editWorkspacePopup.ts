@@ -4,19 +4,16 @@ import {WorkspaceData} from "../workspace/workspace";
 import {addToSet, removeFromSet} from "../../../common/immutable/set";
 import {declareAsyncAction} from "../../../core/reatom/declareAsyncAction";
 import {dispatchAsyncAction} from "../../../core/reatom/dispatchAsyncAction";
-import {loadAbsentUsers} from "../../../users/loadUsers";
 import {editWorkspace} from "../workspace/editWorkspace";
 import {deleteWorkspace} from "../workspace/deleteWorkspace";
+import {loadInvitedUsers} from "../workspace/loadInvitedUsers";
 
 
-const open = declareAsyncAction<WorkspaceData, void>(
+const open = declareAsyncAction<WorkspaceData, Array<string>>(
     'editWorkspacePopupAtom.opened',
     async (payload, store) => {
-        const invitedUsers = payload.invitedUsersIds
-        if (invitedUsers.length > 0) {
-            return dispatchAsyncAction(store, loadAbsentUsers, invitedUsers)
-        }
-        return Promise.resolve()
+        return dispatchAsyncAction(store, loadInvitedUsers, payload.id)
+            .then((users) => Promise.resolve(users))
     }
 )
 const close = declareAction('editWorkspacePopupAtom.close')
@@ -32,6 +29,7 @@ const [openedAtom, setOpenedAtom] = declareAtomWithSetter('editWorkspacePopupAto
 const addInvitedUsers = declareAction<Array<string>>('editWorkspacePopupAtom.addInvitedUsers')
 const removeInvitedUser = declareAction<string>('editWorkspacePopupAtom.removeInvitedUser')
 const invitedUsersAtom = declareAtom('editWorkspacePopupAtom.invitedUsers', new Set<string>(), on => [
+    on(open.done, (_, users) => new Set<string>(users)),
     on(addInvitedUsers, (state, userIds) => addToSet(state, userIds)),
     on(removeInvitedUser, (state, userId) => removeFromSet(state, [userId]))
 ])

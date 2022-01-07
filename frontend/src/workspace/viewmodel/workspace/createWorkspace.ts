@@ -16,7 +16,6 @@ const createWorkspace = declareAsyncAction<string, void>(
                 store.dispatch(workspacesActions.updateWorkspace({
                     id,
                     name,
-                    invitedUsersIds: [],
                     ownerId: currentUserId,
                 }))
                 store.dispatch(openWorkspace(id))
