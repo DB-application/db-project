@@ -68,12 +68,12 @@ function WorkspacesListItem({
 
 function WorkspacePickerPopover() {
     const currentWorkspace = useAtomWithSelector(sidebarAtom, x => x.currentWorkspace)
-    const workspaces = useAtomWithSelector(sidebarAtom, x => x.workspaces)
+    const workspacesList = useAtomWithSelector(sidebarAtom, x => x.workspacesList)
     const addWorkspaceButtonState = useAtomWithSelector(sidebarAtom, x => x.addWorkspaceButtonState)
     const handleOpenWorkspace = useAction(openWorkspace)
     const handleCreateWorkspace = useAction(createWorkspace)
 
-    const listItems: Array<ListItemProps|null> = Object.values(workspaces).map((workspace) => {
+    const listItems: Array<ListItemProps|null> = workspacesList.map((workspace) => {
         return {
             id: workspace.id,
             createBindingFn: () => <WorkspacesListItem

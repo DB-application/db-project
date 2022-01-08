@@ -1,5 +1,6 @@
 import {declareAtomWithSetter} from "../../../core/reatom/declareAtomWithSetter";
 import {declareMapAtom} from "../../../core/reatom/declareMapAtom";
+import {combine, map} from "@reatom/core";
 
 type WorkspaceData = {
     id: string,
@@ -19,6 +20,13 @@ const {
 
 const [currentWorkspaceAtom, setCurrentWorkspace] = declareAtomWithSetter<string>('currentWorkspaceAtom', '')
 
+const workspaceListAtom = map(
+    combine({
+        workspaces: workspacesAtom
+    }),
+    ({workspaces}) => Object.values(workspaces).sort((workspace1, workspace2) => workspace1.name < workspace2.name ? 1 : -1)
+)
+
 const workspacesActions = {
     removeWorkspace,
     updateWorkspace,
@@ -27,6 +35,7 @@ const workspacesActions = {
 
 export {
     workspacesAtom,
+    workspaceListAtom,
     currentWorkspaceAtom,
     setCurrentWorkspace,
     workspacesActions

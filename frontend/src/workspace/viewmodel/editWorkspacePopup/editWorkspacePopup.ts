@@ -73,11 +73,7 @@ const [isPopupLoadingAtom, setIsPopupLoading] = declareAtomWithSetter('editWorks
     on(open.done, () => false),
     on(open.fail, () => false),
     on(editWorkspace, () => true),
-    on(editWorkspace.done, () => false),
-    on(editWorkspace.fail, () => false),
     on(deleteWorkspace, () => true),
-    on(deleteWorkspace.done, () => false),
-    on(deleteWorkspace.fail, () => false),
 ])
 
 const submitButtonStateAtom = map(

@@ -93,7 +93,7 @@ function deleteWorkspace(id: string): Promise<void> {
         .then(response => {
             switch (response.status) {
                 case HttpStatus.OK:
-                    return response.json()
+                    return Promise.resolve()
                 case HttpStatus.UNAUTHORIZED:
                     goToAuth()
                     return Promise.reject(response)
