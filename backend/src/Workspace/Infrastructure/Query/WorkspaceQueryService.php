@@ -27,15 +27,13 @@ class WorkspaceQueryService implements WorkspaceQueryServiceInterface
 
     public function getWorkspaceData(string $workspaceId): ?WorkspaceData
     {
-        $const = static function (string $value)
-        {
-            return $value;
-        };
+        $workspaceTableAlias = 'w';
+        $workspaceTableJoinAlias = 'w.';
 
         $qb = $this->conn->createQueryBuilder();
-        $qb->from(WorkspaceTable::TABLE_NAME, 'e');
+        $qb->from(WorkspaceTable::TABLE_NAME, $workspaceTableAlias);
         $this->addWorkspaceFieldSelect($qb);
-        $qb->where("{$const(WorkspaceTable::ID)} = :id");
+        $qb->where($qb->expr()->eq($workspaceTableJoinAlias . WorkspaceTable::ID, ':id'));
         $query = $qb->getSQL();
         $result = $this->conn->executeQuery($query, ['id' => $workspaceId])->fetchAssociative();
 
@@ -80,7 +78,7 @@ class WorkspaceQueryService implements WorkspaceQueryServiceInterface
         $qb->select($workspaceUserTableJoinAlias . WorkspaceUserTable::USER_ID);
         $qb->where($qb->expr()->eq($workspaceUserTableJoinAlias . WorkspaceUserTable::WORKSPACE_ID, ':workspaceId'));
         $qb->setParameter('workspaceId', $workspaceId);
-        return $qb->execute()->fetchAllNumeric();
+        return $qb->fetchAssociative();
     }
 
 
