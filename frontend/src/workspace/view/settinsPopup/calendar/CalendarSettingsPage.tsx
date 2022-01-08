@@ -1,37 +1,27 @@
-import {useState} from "react";
 import {SettingBlock} from "../common/SettingBlock";
 import {I18n_get} from "../../../../i18n/i18n_get";
 import {SelectListItemProps, SelectWithDropdown} from "../../../../common/selectList/SelectWithDropdown";
-import {
-    getRtlFromLocalStorage,
-    getStepFromLocalStorage, getTimeslotsFromLocalStorage, resetSettings,
-    setRtlInLocalStorage,
-    setStepInLocalStorage, setTimeslotsInLocalStorage
-} from "./calendarSettingsChange";
 import {Checkbox} from "../../../../common/checkbox/Checkbox";
 import styles from './CalendarSettingsPage.module.css'
 import {Button_Text} from "../../../../common/button/Button_Text";
+import {useAction} from "@reatom/react";
+import {calendarSettingsAction, calendarSettingsAtom} from "../../../viewmodel/calendar/calendarSettings";
+import {useAtomWithSelector} from "../../../../core/reatom/useAtomWithSelector";
+import {PageHeader} from "../common/PageHeader";
+import {Toggle} from "../../../../common/toggle/Toggle";
 
 
 const allSteps = [5, 10, 15, 30, 45, 60]
 const allTimeSlots = [1, 2, 3, 4, 5, 6, 7]
 
-type StepBlockProps = {
-    setStep: (step: number) => void,
-    step: number
-}
 
-function StepBlock({
-    setStep,
-    step,
-}: StepBlockProps) {
+function StepBlock() {
+    const step = useAtomWithSelector(calendarSettingsAtom, x => x.step)
+    const handleSetStep = useAction(calendarSettingsAction.setStep)
     const items: Array<SelectListItemProps> = allSteps.map(stepItem => ({
         id: String(stepItem),
         text: String(stepItem),
-        onClick: () => {
-            setStep(stepItem)
-            setStepInLocalStorage(stepItem)
-        }
+        onClick: () => handleSetStep(stepItem)
     }))
 
     return (
@@ -47,47 +37,29 @@ function StepBlock({
     )
 }
 
-type RtlBlockProps = {
-    setRtl: (rtl: boolean) => void,
-    rtl: boolean,
-}
-
-function RtlBlock({
-    rtl,
-    setRtl,
-}: RtlBlockProps) {
+function RtlBlock() {
+    const rtl = useAtomWithSelector(calendarSettingsAtom, x => x.rtl)
+    const handleSetRtl = useAction(calendarSettingsAction.setRtl)
     return (
         <SettingBlock
             title={I18n_get('SettingsPopup.RtlTitle')}
             description={I18n_get('SettingsPopup.RtlDescription')}
-            binding={<Checkbox
+            binding={<Toggle
                 checked={rtl}
-                onCheckedChange={(checked) => {
-                    setRtl(checked)
-                    setRtlInLocalStorage(checked)
-                }}
+                onCheckedChange={(checked) => handleSetRtl(checked)}
             />}
             className={styles.block}
         />
     )
 }
 
-type TimeSlotsProps = {
-    setTimeSlots: (timeSlots: number) => void,
-    timeslots: number,
-}
-
-function TimeSlotsBlock({
-    setTimeSlots,
-    timeslots,
-}: TimeSlotsProps) {
+function TimeSlotsBlock() {
+    const timeslots = useAtomWithSelector(calendarSettingsAtom, x => x.timeslots)
+    const handleSetTimeslots = useAction(calendarSettingsAction.setTimeslots)
     const items: Array<SelectListItemProps> = allTimeSlots.map(timeslotItem => ({
         id: String(timeslotItem),
         text: String(timeslotItem),
-        onClick: () => {
-            setTimeSlots(timeslotItem)
-            setTimeslotsInLocalStorage(timeslotItem)
-        }
+        onClick: () => handleSetTimeslots(timeslotItem)
     }))
 
     return(
@@ -105,32 +77,18 @@ function TimeSlotsBlock({
 
 
 function CalendarSettingsPage() {
-    const [step, setStep] = useState<number>(getStepFromLocalStorage())
-    const [rtl, setRtl] = useState<boolean>(getRtlFromLocalStorage())
-    const [timeslots, setTimeSlots] = useState<number>(getTimeslotsFromLocalStorage())
-
+    const handleResetSettings = useAction(calendarSettingsAction.resetSettings)
     return (
         <>
-            <StepBlock
-                setStep={setStep}
-                step={step}
+            <PageHeader
+                title={I18n_get('SettingsPopup.Language')}
             />
-            <RtlBlock
-                rtl={rtl}
-                setRtl={setRtl}
-            />
-            <TimeSlotsBlock
-                setTimeSlots={setTimeSlots}
-                timeslots={timeslots}
-            />
+            <StepBlock/>
+            <RtlBlock/>
+            <TimeSlotsBlock/>
             <Button_Text
                 text={I18n_get('SettingsPopup.ResetCalendarSettings')}
-                onClick={() => {
-                    resetSettings()
-                    setTimeSlots(getTimeslotsFromLocalStorage())
-                    setStep(getStepFromLocalStorage())
-                    setRtl(getRtlFromLocalStorage())
-                }}
+                onClick={() => handleResetSettings()}
                 style={'secondary'}
             />
         </>

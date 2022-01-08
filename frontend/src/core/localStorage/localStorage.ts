@@ -7,6 +7,7 @@ type StorageKey = 'calendarDefaultView'
     | 'calendar_step'
     | 'calendar_rtl'
     | 'calendar_timeslots'
+    | 'start_on_monday'
 
 type StorageKeys = {
     [item: string]: StorageKey,
@@ -20,6 +21,7 @@ const STORAGE_KEYS: StorageKeys = {
     CALENDAR_STEP: 'calendar_step',
     CALENDAR_RTL: 'calendar_rtl',
     CALENDAR_TIMESLOTS: 'calendar_timeslots',
+    START_ON_MONDAY: 'start_on_monday',
 }
 
 function setValue<T>(key: StorageKey, value: T) {

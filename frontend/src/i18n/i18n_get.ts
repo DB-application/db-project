@@ -2,11 +2,11 @@ import {TFunction} from "i18next";
 
 let t: TFunction|null = null
 
-function I18n_get(messageId: string) {
+function I18n_get(messageId: string, options: Object = {}) {
     if (!t) {
         throw new Error('t function is not initialized')
     }
-    return t(messageId);
+    return t(messageId, options);
 }
 
 

@@ -2,6 +2,7 @@ import {combine} from "@reatom/core";
 import {declareAtomWithSetter} from "../../../core/reatom/declareAtomWithSetter";
 import {initCalendar} from "./initCalendar";
 import {declareMapAtom} from "../../../core/reatom/declareMapAtom";
+import {calendarSettingsAtom} from "./calendarSettings";
 
 type CalendarEventRepeatableType = 'none' | 'everyWeek' | 'everyDay' | 'everyMonth'
 
@@ -36,6 +37,7 @@ const [calendarLoadingAtom, setCalendarLoading] = declareAtomWithSetter<boolean>
 const calendarAtom = combine({
     events: eventsAtom,
     calendarLoading: calendarLoadingAtom,
+    calendarSettings: calendarSettingsAtom,
 })
 
 const calendarActions = {

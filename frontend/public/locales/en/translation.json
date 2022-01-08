@@ -125,6 +125,25 @@
     "TimeSlotsTitle": "Timeslots",
     "TimeSlotsDescription": "The number of slots per \"section\" in the time grid views",
     "Calendar": "Calendar",
-    "ResetCalendarSettings": "Reset calendar settings"
+    "ResetCalendarSettings": "Reset calendar settings",
+    "StartWeekTitle": "Start week on Monday",
+    "StartWeekDescription": "This will change how calendar in your app looks"
+  },
+  "Calendar": {
+    "Today": "Today",
+    "Back": "Back",
+    "Next": "Next",
+    "Month": "Month",
+    "Week": "Week",
+    "WorkWeek": "Work week",
+    "Day": "Day",
+    "Agenda": "Agenda",
+    "NoEvents": "There are no events in this range.",
+    "Date": "Date",
+    "Time": "Time",
+    "Event": "Event",
+    "Tomorrow": "Tomorrow",
+    "Yesterday": "Yesterday",
+    "More": "+{{count}} more"
   }
 }

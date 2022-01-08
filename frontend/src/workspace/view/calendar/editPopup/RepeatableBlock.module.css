@@ -8,3 +8,7 @@
     margin-right: 10px;
     font: 18px Roboto;
 }
+
+.item {
+    min-width: 200px;
+}
