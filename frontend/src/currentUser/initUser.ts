@@ -14,7 +14,6 @@ const initUserDataAction = declareAction((_, store) => {
         })
         .catch(() => {
             store.dispatch(setIsLoadingApp(false))
-            processStandardError()
         })
         .finally(() => {});
 });
