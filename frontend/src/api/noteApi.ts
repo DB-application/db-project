@@ -59,7 +59,7 @@ function createNote(noteData: CreateNoteData): Promise<{noteId: string}> {
 
 type EditNoteContentData = {
     noteId: string,
-    content: Object,
+    content: string,
 }
 
 function editNoteContent(payload: EditNoteContentData) {
@@ -110,7 +110,7 @@ function editNoteTitle(payload: EditTitleContentData) {
 }
 
 type NoteContent = {
-    content: JSONContent,
+    content: string,
     title: string,
 }
 
