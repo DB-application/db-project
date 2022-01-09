@@ -1,7 +1,6 @@
 import {Note} from "../workspace/viewmodel/notes/notes";
-import {generateUuid} from "../core/uuid/generateUuid";
 import {JSONContent} from "@tiptap/react";
-import { HttpStatus } from "../core/http/HttpStatus";
+import {HttpStatus} from "../core/http/HttpStatus";
 import {goToUrl} from "../core/link/goToUrl";
 
 
@@ -39,7 +38,7 @@ function getNotes(workspaceId: string): Promise<Array<Note>> {
     //     }, 1000)
     // })
     return fetch('/list/notes', {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -133,7 +132,7 @@ function editNoteTitle(payload: EditTitleContentData) {
     //     }, 1000)
     // })
     return fetch('/rename/note', {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -189,7 +188,7 @@ function getNoteContent(noteId: string): Promise<NoteContent> {
     //     }, 1000)
     // })
     return fetch('/get/note', {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
