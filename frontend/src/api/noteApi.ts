@@ -6,55 +6,58 @@ import {goToUrl} from "../core/link/goToUrl";
 
 
 function getNotes(workspaceId: string): Promise<Array<Note>> {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            if (workspaceId == '1') {
-                resolve([
-                    {
-                        noteId: '1',
-                        title: 'Заметка 1 Заметка 1 Заметка 1 ',
-                    },
-                    {
-                        noteId: '3',
-                        title: 'Заметка 3',
-                    },
-                    {
-                        noteId: '2',
-                        title: 'Заметка 2',
-                    },
-                ])
-            }
-            else {
-                resolve([
-                    {
-                        noteId: '1',
-                        title: 'Заметка 1 Заметка 1 Заметка 1 ',
-                    },
-                    {
-                        noteId: '3',
-                        title: 'Заметка 3',
-                    },
-                ])
-            }
-        }, 1000)
-    })
-    // return fetch('/notes', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    // })
-    //     .then(response => {
-    //         switch (response.status) {
-    //             case HttpStatus.OK:
-    //                 return response.json()
-    //             case HttpStatus.UNAUTHORIZED:
-    //                 goToUrl('/auth')
-    //                 return Promise.reject(response)
-    //             default:
-    //                 return Promise.reject(response)
+    // return new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         if (workspaceId == '1') {
+    //             resolve([
+    //                 {
+    //                     noteId: '1',
+    //                     title: 'Заметка 1 Заметка 1 Заметка 1 ',
+    //                 },
+    //                 {
+    //                     noteId: '3',
+    //                     title: 'Заметка 3',
+    //                 },
+    //                 {
+    //                     noteId: '2',
+    //                     title: 'Заметка 2',
+    //                 },
+    //             ])
     //         }
-    //     })
+    //         else {
+    //             resolve([
+    //                 {
+    //                     noteId: '1',
+    //                     title: 'Заметка 1 Заметка 1 Заметка 1 ',
+    //                 },
+    //                 {
+    //                     noteId: '3',
+    //                     title: 'Заметка 3',
+    //                 },
+    //             ])
+    //         }
+    //     }, 1000)
+    // })
+    return fetch('/list/notes', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            workspaceId,
+        })
+    })
+        .then(response => {
+            switch (response.status) {
+                case HttpStatus.OK:
+                    return response.json()
+                case HttpStatus.UNAUTHORIZED:
+                    goToUrl('/auth')
+                    return Promise.reject(response)
+                default:
+                    return Promise.reject(response)
+            }
+        })
 }
 
 type CreateNoteData = {
@@ -68,7 +71,11 @@ function createNote(noteData: CreateNoteData): Promise<{noteId: string}> {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(noteData)
+        body: JSON.stringify({
+            title: noteData.title,
+            workspaceId: noteData.workspaceId,
+            content: '',
+        })
     })
         .then(response => {
             switch (response.status) {
@@ -89,29 +96,29 @@ type EditNoteContentData = {
 }
 
 function editNoteContent(payload: EditNoteContentData) {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve(undefined)
-        }, 1000)
-    })
-    // return fetch('/edit/note_content', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(payload)
+    // return new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         resolve(undefined)
+    //     }, 1000)
     // })
-    //     .then(response => {
-    //         switch (response.status) {
-    //             case HttpStatus.OK:
-    //                 return Promise.resolve(response)
-    //             case HttpStatus.UNAUTHORIZED:
-    //                 goToUrl('/auth')
-    //                 return Promise.reject(response)
-    //             default:
-    //                 return Promise.reject(response)
-    //         }
-    //     })
+    return fetch('/edit/note', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => {
+            switch (response.status) {
+                case HttpStatus.OK:
+                    return Promise.resolve(response)
+                case HttpStatus.UNAUTHORIZED:
+                    goToUrl('/auth')
+                    return Promise.reject(response)
+                default:
+                    return Promise.reject(response)
+            }
+        })
 }
 
 type EditTitleContentData = {
@@ -120,29 +127,29 @@ type EditTitleContentData = {
 }
 
 function editNoteTitle(payload: EditTitleContentData) {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve(undefined)
-        }, 1000)
-    })
-    // return fetch('/edit/note_content', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(payload)
+    // return new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         resolve(undefined)
+    //     }, 1000)
     // })
-    //     .then(response => {
-    //         switch (response.status) {
-    //             case HttpStatus.OK:
-    //                 return Promise.resolve(response)
-    //             case HttpStatus.UNAUTHORIZED:
-    //                 goToUrl('/auth')
-    //                 return Promise.reject(response)
-    //             default:
-    //                 return Promise.reject(response)
-    //         }
-    //     })
+    return fetch('/rename/note', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => {
+            switch (response.status) {
+                case HttpStatus.OK:
+                    return Promise.resolve(response)
+                case HttpStatus.UNAUTHORIZED:
+                    goToUrl('/auth')
+                    return Promise.reject(response)
+                default:
+                    return Promise.reject(response)
+            }
+        })
 }
 
 type NoteContent = {
@@ -151,84 +158,84 @@ type NoteContent = {
 }
 
 function getNoteContent(noteId: string): Promise<NoteContent> {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve({
-                content: {
-                    type: 'doc',
-                    content: [
-                        {
-                            "type": "paragraph",
-                            "content": [
-                                {
-                                    "type": "text",
-                                    "text": "Example "
-                                },
-                                {
-                                    "type": "text",
-                                    "marks": [
-                                        {
-                                            "type": "bold"
-                                        }
-                                    ],
-                                    "text": "Text"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                title: 'Новая записка',
-            })
-        }, 1000)
-    })
-    // return fetch('/remove/note', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //         noteId,
-    //     })
+    // return new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         resolve({
+    //             content: {
+    //                 type: 'doc',
+    //                 content: [
+    //                     {
+    //                         "type": "paragraph",
+    //                         "content": [
+    //                             {
+    //                                 "type": "text",
+    //                                 "text": "Example "
+    //                             },
+    //                             {
+    //                                 "type": "text",
+    //                                 "marks": [
+    //                                     {
+    //                                         "type": "bold"
+    //                                     }
+    //                                 ],
+    //                                 "text": "Text"
+    //                             }
+    //                         ]
+    //                     }
+    //                 ]
+    //             },
+    //             title: 'Новая записка',
+    //         })
+    //     }, 1000)
     // })
-    //     .then(response => {
-    //         switch (response.status) {
-    //             case HttpStatus.OK:
-    //                 return Promise.resolve(response)
-    //             case HttpStatus.UNAUTHORIZED:
-    //                 goToUrl('/auth')
-    //                 return Promise.reject(response)
-    //             default:
-    //                 return Promise.reject(response)
-    //         }
-    //     })
+    return fetch('/get/note', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            noteId,
+        })
+    })
+        .then(response => {
+            switch (response.status) {
+                case HttpStatus.OK:
+                    return response.json()
+                case HttpStatus.UNAUTHORIZED:
+                    goToUrl('/auth')
+                    return Promise.reject(response)
+                default:
+                    return Promise.reject(response)
+            }
+        })
 }
 
 function removeNote(noteId: string) {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve(undefined)
-        }, 1000)
-    })
-    // return fetch('/remove/note', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //         noteId,
-    //     })
+    // return new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         resolve(undefined)
+    //     }, 1000)
     // })
-    //     .then(response => {
-    //         switch (response.status) {
-    //             case HttpStatus.OK:
-    //                 return Promise.resolve(response)
-    //             case HttpStatus.UNAUTHORIZED:
-    //                 goToUrl('/auth')
-    //                 return Promise.reject(response)
-    //             default:
-    //                 return Promise.reject(response)
-    //         }
-    //     })
+    return fetch('/remove/note', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            noteId,
+        })
+    })
+        .then(response => {
+            switch (response.status) {
+                case HttpStatus.OK:
+                    return Promise.resolve(response)
+                case HttpStatus.UNAUTHORIZED:
+                    goToUrl('/auth')
+                    return Promise.reject(response)
+                default:
+                    return Promise.reject(response)
+            }
+        })
 }
 
 const NotesApi = {
