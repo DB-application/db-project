@@ -5,38 +5,6 @@ import {goToUrl} from "../core/link/goToUrl";
 
 
 function getNotes(workspaceId: string): Promise<Array<Note>> {
-    // return new Promise((resolve, reject) => {
-    //     setTimeout(() => {
-    //         if (workspaceId == '1') {
-    //             resolve([
-    //                 {
-    //                     noteId: '1',
-    //                     title: 'Заметка 1 Заметка 1 Заметка 1 ',
-    //                 },
-    //                 {
-    //                     noteId: '3',
-    //                     title: 'Заметка 3',
-    //                 },
-    //                 {
-    //                     noteId: '2',
-    //                     title: 'Заметка 2',
-    //                 },
-    //             ])
-    //         }
-    //         else {
-    //             resolve([
-    //                 {
-    //                     noteId: '1',
-    //                     title: 'Заметка 1 Заметка 1 Заметка 1 ',
-    //                 },
-    //                 {
-    //                     noteId: '3',
-    //                     title: 'Заметка 3',
-    //                 },
-    //             ])
-    //         }
-    //     }, 1000)
-    // })
     return fetch('/list/notes', {
         method: 'POST',
         headers: {
@@ -95,11 +63,6 @@ type EditNoteContentData = {
 }
 
 function editNoteContent(payload: EditNoteContentData) {
-    // return new Promise((resolve, reject) => {
-    //     setTimeout(() => {
-    //         resolve(undefined)
-    //     }, 1000)
-    // })
     return fetch('/edit/note', {
         method: 'POST',
         headers: {
@@ -126,11 +89,6 @@ type EditTitleContentData = {
 }
 
 function editNoteTitle(payload: EditTitleContentData) {
-    // return new Promise((resolve, reject) => {
-    //     setTimeout(() => {
-    //         resolve(undefined)
-    //     }, 1000)
-    // })
     return fetch('/rename/note', {
         method: 'POST',
         headers: {
@@ -157,36 +115,6 @@ type NoteContent = {
 }
 
 function getNoteContent(noteId: string): Promise<NoteContent> {
-    // return new Promise((resolve, reject) => {
-    //     setTimeout(() => {
-    //         resolve({
-    //             content: {
-    //                 type: 'doc',
-    //                 content: [
-    //                     {
-    //                         "type": "paragraph",
-    //                         "content": [
-    //                             {
-    //                                 "type": "text",
-    //                                 "text": "Example "
-    //                             },
-    //                             {
-    //                                 "type": "text",
-    //                                 "marks": [
-    //                                     {
-    //                                         "type": "bold"
-    //                                     }
-    //                                 ],
-    //                                 "text": "Text"
-    //                             }
-    //                         ]
-    //                     }
-    //                 ]
-    //             },
-    //             title: 'Новая записка',
-    //         })
-    //     }, 1000)
-    // })
     return fetch('/get/note', {
         method: 'POST',
         headers: {
@@ -210,11 +138,6 @@ function getNoteContent(noteId: string): Promise<NoteContent> {
 }
 
 function removeNote(noteId: string) {
-    // return new Promise((resolve, reject) => {
-    //     setTimeout(() => {
-    //         resolve(undefined)
-    //     }, 1000)
-    // })
     return fetch('/remove/note', {
         method: 'POST',
         headers: {
