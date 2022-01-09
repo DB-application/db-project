@@ -7,6 +7,7 @@ import Highlight from '@tiptap/extension-highlight'
 import Table from '@tiptap/extension-table'
 import TableRow from '@tiptap/extension-table-row'
 import TableCell from '@tiptap/extension-table-cell'
+import Image from '@tiptap/extension-image'
 import TableHeader from '@tiptap/extension-table-header'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import StarterKit from '@tiptap/starter-kit'
@@ -19,7 +20,7 @@ import {noteActions, noteAtom} from "../../viewmodel/notes/note";
 import {InlineToolbar} from './InlineToolbar/InlineToolbar'
 import {AddBlockPopover} from "./AddBlockToolbar/AddBlockPopover";
 import 'tippy.js/animations/shift-away.css';
-import {TitleEditor} from "./TitleEditor/TitleEditor";
+import {TitleEditor} from "./TitleEditor/TitleEditor"
 
 
 function NoteEditor() {
@@ -50,6 +51,7 @@ function NoteEditor() {
             Table.configure({
                 resizable: true,
             }),
+            Image,
             TableRow,
             TableHeader,
             TableCell,

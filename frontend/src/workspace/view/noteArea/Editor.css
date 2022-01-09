@@ -160,3 +160,11 @@ blockquote {
     padding: 1rem 0;
     overflow-x: auto;
 }
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+img.ProseMirror-selectednode {
+    outline: 3px solid #68CEF8;
+}
