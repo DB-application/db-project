@@ -1,5 +1,5 @@
 import {useAction, useAtom} from "@reatom/react";
-import {inviteUsersPopupActions, InviteUsersPopupType} from "../../../viewmodel/calendar/inviteUsers/inviteUsers";
+import {inviteUsersPopupActions, InviteUsersPopupType} from "../../../viewmodel/inviteUsers/inviteUsers";
 import {usersAtom} from "../../../../users/usersAtom";
 import {UserData} from "../../../../common/UserData";
 import styles from "./InvitedUsersBlock.module.css";

@@ -1,4 +1,3 @@
-import ReactDOM from "react-dom";
 import {verify} from "../verify";
 import {joinClassNames} from "../styles/joinClassNames";
 import {Signal} from "../../common/signals/Signal";

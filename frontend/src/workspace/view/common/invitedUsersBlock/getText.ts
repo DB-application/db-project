@@ -1,4 +1,4 @@
-import {InviteUsersPopupType} from "../../../viewmodel/calendar/inviteUsers/inviteUsers";
+import {InviteUsersPopupType} from "../../../viewmodel/inviteUsers/inviteUsers";
 
 
 type InvitedUsersBlockTexts = {

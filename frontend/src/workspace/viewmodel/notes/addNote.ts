@@ -5,26 +5,26 @@ import {notesActions} from "./notes";
 import {Router} from "../../../core/router/router";
 import { toast } from "react-toastify";
 import {I18n_get} from "../../../i18n/i18n_get";
+import {currentWorkspaceAtom} from "../workspace/workspace";
+import {openNote} from "./openNote";
 
 
 const addNote = declareAsyncAction<void, void>(
     'addNote',
     (_, store) => {
-        const currentUserId = store.getState(authorizedCurrentUser).id
-
+        const workspaceId = store.getState(currentWorkspaceAtom)
         const noteTitle = 'Новая заметка'
 
         return NotesApi.createNote({
             title: noteTitle,
-            createdBy: currentUserId
+            workspaceId,
         })
             .then(({noteId}) => {
                 store.dispatch(notesActions.updateNote({
                     noteId,
                     title: noteTitle,
                 }))
-                store.dispatch(notesActions.setSelectedNote(noteId))
-                Router.Note.open(noteId)
+                store.dispatch(openNote(noteId))
                 return Promise.resolve()
             })
             .catch(() => {

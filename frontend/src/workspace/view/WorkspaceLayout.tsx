@@ -11,7 +11,7 @@ import {PopupPortal} from "../../core/portal/PopupPortal";
 import {editWorkspacePopupActions, editWorkspacePopupAtom} from "../viewmodel/editWorkspacePopup/editWorkspacePopup";
 import {useAtomWithSelector} from "../../core/reatom/useAtomWithSelector";
 import {EditWorkspacePopup} from "./editWorkspacePopup/EditWorkspacePopup";
-import {inviteUsersPopupActions, inviteUsersPopupAtom} from "../viewmodel/calendar/inviteUsers/inviteUsers";
+import {inviteUsersPopupActions, inviteUsersPopupAtom} from "../viewmodel/inviteUsers/inviteUsers";
 import {InviteUsersPopup} from './common/inviteUsersPopup/InviteUsersPopup';
 import {settingsPopupActions, settingsPopupAtom} from "../viewmodel/settingsPopup/settingsPopup";
 import {SettingsPopup} from "./settinsPopup/SettingsPopup";

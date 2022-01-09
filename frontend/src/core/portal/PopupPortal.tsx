@@ -5,8 +5,8 @@ import {popupAppearAnimation, popupHideAnimation} from "../../common/popup/popup
 import {verify} from "../verify";
 import {addToStack, appearPreviousPopup, hiddenPreviousPopup, isLastPopup, removeFromStack} from "./popupStack";
 import {useHtmlElementEventHandler} from "../hooks/useHtmlElementEventHandler";
-import {getExternalLayer, hideLowerLayers} from "../layers/externalLayers";
-import { useCloseLayer } from "./useCloseLayer";
+import {hideLowerLayers} from "../layers/externalLayers";
+import {useCloseLayer} from "./useCloseLayer";
 
 type PropsType = {
     binding: JSX.Element,
@@ -28,14 +28,13 @@ const PopupLayout = React.forwardRef<HTMLDivElement, PopupLayoutProps>((
     ref,
 ) => {
     const popupRef = ref as MutableRefObject<HTMLDivElement|null>
-    const popupLayerRef = useRef(getExternalLayer('popup') as HTMLDivElement)
 
-    useHtmlElementEventHandler('keydown', document.body, event => {
-        const keyboardEvent = event as KeyboardEvent
-        if (keyboardEvent.keyCode === 27) {
-            closePopup()
-        }
-    })
+    // useHtmlElementEventHandler('keydown', document.body, event => {
+    //     const keyboardEvent = event as KeyboardEvent
+    //     if (keyboardEvent.keyCode === 27) {
+    //         closePopup()
+    //     }
+    // })
 
     useCloseLayer(
         'popup',

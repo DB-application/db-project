@@ -1,14 +1,14 @@
 import {combine, declareAction, declareAtom, map} from "@reatom/core";
-import {declareAtomWithSetter} from "../../../../core/reatom/declareAtomWithSetter";
-import {declareAsyncAction} from "../../../../core/reatom/declareAsyncAction";
-import {EventsApi} from "../../../../api/eventsApi";
-import {dispatchAsyncAction} from "../../../../core/reatom/dispatchAsyncAction";
-import {loadAbsentUsers} from "../../../../users/loadUsers";
-import {editEventActions} from "../editPopup/editEvent";
-import {usersAtom} from "../../../../users/usersAtom";
-import {authorizedCurrentUser} from "../../../../authentication/viewModel/currentUserAtom";
-import {addToSet, removeFromSet} from "../../../../common/immutable/set";
-import {editWorkspacePopupActions} from "../../editWorkspacePopup/editWorkspacePopup";
+import {declareAtomWithSetter} from "../../../core/reatom/declareAtomWithSetter";
+import {declareAsyncAction} from "../../../core/reatom/declareAsyncAction";
+import {EventsApi} from "../../../api/eventsApi";
+import {dispatchAsyncAction} from "../../../core/reatom/dispatchAsyncAction";
+import {loadAbsentUsers} from "../../../users/loadUsers";
+import {editEventActions} from "../calendar/editPopup/editEvent";
+import {usersAtom} from "../../../users/usersAtom";
+import {authorizedCurrentUser} from "../../../authentication/viewModel/currentUserAtom";
+import {addToSet, removeFromSet} from "../../../common/immutable/set";
+import {editWorkspacePopupActions} from "../editWorkspacePopup/editWorkspacePopup";
 
 type InviteUsersPopupType = 'event' | 'workspace'
 

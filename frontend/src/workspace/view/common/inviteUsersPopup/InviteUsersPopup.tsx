@@ -3,7 +3,7 @@ import {I18n_get} from "../../../../i18n/i18n_get";
 import {Button_Text} from "../../../../common/button/Button_Text";
 import {useAtomWithSelector} from "../../../../core/reatom/useAtomWithSelector";
 import {useAction, useAtom} from "@reatom/react";
-import {inviteUsersPopupActions, inviteUsersPopupAtom} from "../../../viewmodel/calendar/inviteUsers/inviteUsers";
+import {inviteUsersPopupActions, inviteUsersPopupAtom} from "../../../viewmodel/inviteUsers/inviteUsers";
 import {useRef} from "react";
 import styles from "./InviteUsersPopup.module.css";
 import {UserData} from "../../../../common/UserData";

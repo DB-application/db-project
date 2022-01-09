@@ -1,6 +1,8 @@
 import {Note} from "../workspace/viewmodel/notes/notes";
 import {generateUuid} from "../core/uuid/generateUuid";
 import {JSONContent} from "@tiptap/react";
+import { HttpStatus } from "../core/http/HttpStatus";
+import {goToUrl} from "../core/link/goToUrl";
 
 
 function getNotes(workspaceId: string): Promise<Array<Note>> {
@@ -56,34 +58,29 @@ function getNotes(workspaceId: string): Promise<Array<Note>> {
 }
 
 type CreateNoteData = {
+    workspaceId: string,
     title: string,
-    createdBy: string,
 }
 
 function createNote(noteData: CreateNoteData): Promise<{noteId: string}> {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve({noteId: generateUuid()})
-        }, 1000)
+    return fetch('/create/note', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(noteData)
     })
-    // return fetch('/create/note', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(noteData)
-    // })
-    //     .then(response => {
-    //         switch (response.status) {
-    //             case HttpStatus.OK:
-    //                 return response.json()
-    //             case HttpStatus.UNAUTHORIZED:
-    //                 goToUrl('/auth')
-    //                 return Promise.reject(response)
-    //             default:
-    //                 return Promise.reject(response)
-    //         }
-    //     })
+        .then(response => {
+            switch (response.status) {
+                case HttpStatus.OK:
+                    return response.json()
+                case HttpStatus.UNAUTHORIZED:
+                    goToUrl('/auth')
+                    return Promise.reject(response)
+                default:
+                    return Promise.reject(response)
+            }
+        })
 }
 
 type EditNoteContentData = {
