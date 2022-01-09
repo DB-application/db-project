@@ -120,7 +120,7 @@ class Api implements ApiInterface
     public function renameNote(string $id, string $name): void
     {
         //TODO обработка исключений
-        $this->noteAppService->editNote($id, $name);
+        $this->noteAppService->renameNote($id, $name);
     }
 
     /**
