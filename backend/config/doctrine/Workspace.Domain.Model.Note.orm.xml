@@ -4,7 +4,7 @@
                   xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="App\Workspace\Domain\Model\User" table="workspace_user">
+    <entity name="App\Workspace\Domain\Model\Note" table="note">
         <id name="id" type="string" column="id"/>
         <field name="name" column="name" type="string"/>
         <field name="content" column="content" type="string"/>
