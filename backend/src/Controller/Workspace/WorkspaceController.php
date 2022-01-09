@@ -283,7 +283,7 @@ class WorkspaceController extends AbstractController
         foreach ($noteData as $note)
         {
             $data[] = [
-                'id' => $note->getId(),
+                'noteId' => $note->getId(),
                 'workspaceId' => $note->getWorkspaceId(),
                 'title' => $note->getTitle(),
             ];
