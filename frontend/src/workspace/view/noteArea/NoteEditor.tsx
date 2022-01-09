@@ -55,9 +55,7 @@ function NoteEditor() {
             TableCell,
         ],
         content: note.content,
-        onUpdate: ({ editor }) => {
-            handleSetNoteContent(editor.getJSON().content)
-        },
+        onUpdate: ({ editor }) => handleSetNoteContent(editor.getHTML()),
     })
 
     return (

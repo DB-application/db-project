@@ -1,36 +1,35 @@
-import {combine, declareAtom} from "@reatom/core";
-import {declareAtomWithSetter} from "../../../core/reatom/declareAtomWithSetter";
+import {combine, declareAction, declareAtom} from "@reatom/core";
 import {getNoteContent} from "./getNoteContent";
-import {JSONContent} from '@tiptap/react'
 import {editNoteTitle} from "./editNoteTitle";
-import {notesActions, sidebarNotesAtom} from "./notes";
+import {sidebarNotesAtom} from "./notes";
 import {verify} from "../../../core/verify";
-import {dispatchAsyncAction} from "../../../core/reatom/dispatchAsyncAction";
-import {declareAsyncAction} from "../../../core/reatom/declareAsyncAction";
+import {editNoteContent} from "./editNoteContent";
 
-const setNoteTitle = declareAsyncAction<string, string>(
+const setNoteTitle = declareAction<string>(
     'setNoteTitle',
     (title, store) => {
         const noteId = verify(store.getState(sidebarNotesAtom).selectedNote)
-        return dispatchAsyncAction(store, editNoteTitle, {noteId, title})
-            .then(() => {
-                store.dispatch(notesActions.updateNote({
-                    noteId,
-                    title
-                }))
-                return Promise.resolve(title)
-            })
+        store.dispatch(editNoteTitle({noteId, title}))
+    }
+)
+
+const setNoteContent = declareAction<string>(
+    'setNoteContent',
+    (content, store) => {
+        const noteId = verify(store.getState(sidebarNotesAtom).selectedNote)
+        store.dispatch(editNoteContent({content, noteId}))
     }
 )
 
 
-const [noteContentAtom, setNoteContent] = declareAtomWithSetter<JSONContent>('noteContent', {} as JSONContent, on => [
-    on(getNoteContent.done, (_, {content}) => content)
+const noteContentAtom = declareAtom<string>('noteContent', '', on => [
+    on(getNoteContent.done, (_, {content}) => content),
+    on(setNoteContent, (_, content) => content),
 ])
 
 const noteTitleAtom = declareAtom<string>('noteTitle', '', on => [
     on(getNoteContent.done, (_, {title}) => title),
-    on(setNoteTitle.done, (_, title) => title),
+    on(setNoteTitle, (_, title) => title),
 ])
 
 const selectedNoteLoadingAtom = declareAtom<boolean>('selectedNoteLoading', true, on => [
