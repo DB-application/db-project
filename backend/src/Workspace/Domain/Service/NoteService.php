@@ -28,11 +28,25 @@ class NoteService
 
     /**
      * @param NoteId $id
-     * @param string $name
      * @param string $content
      * @throws InvalidNoteIdException
      */
-    public function editNote(NoteId $id, string $name, string $content): void
+    public function editNote(NoteId $id, string $content): void
+    {
+        $note = $this->repository->findById($id);
+        if ($note === null)
+        {
+            throw new InvalidNoteIdException($id);
+        }
+        $note->setContent($content);
+    }
+
+    /**
+     * @param NoteId $id
+     * @param string $name
+     * @throws InvalidNoteIdException
+     */
+    public function renameNote(NoteId $id, string $name): void
     {
         $note = $this->repository->findById($id);
         if ($note === null)
@@ -40,7 +54,6 @@ class NoteService
             throw new InvalidNoteIdException($id);
         }
         $note->setName($name);
-        $note->setContent($content);
     }
 
     /**

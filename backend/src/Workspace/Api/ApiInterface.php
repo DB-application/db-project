@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Workspace\Api;
 
+use App\Workspace\App\Data\NoteData;
 use App\Workspace\App\Data\WorkspaceData;
 
 interface ApiInterface
@@ -65,4 +66,41 @@ interface ApiInterface
      * @return string[]
      */
     public function getWorkspaceUserIds(string $workspaceId): array;
+
+    /**
+     * @param string $name
+     * @param string $content
+     * @param string $workspaceId
+     * @return string
+     */
+    public function createNote(string $name, string $content, string $workspaceId): string;
+
+    /**
+     * @param string $id
+     * @param string $content
+     */
+    public function editNote(string $id, string $content): void;
+
+    /**
+     * @param string $id
+     * @param string $name
+     */
+    public function renameNote(string $id, string $name): void;
+
+    /**
+     * @param string $id
+     */
+    public function removeNote(string $id): void;
+
+    /**
+     * @param string $workspaceId
+     * @return NoteData[]
+     */
+    public function getWorkspaceNotes(string $workspaceId): array;
+
+    /**
+     * @param string $noteId
+     * @return NoteData
+     */
+    public function getNoteContentById(string $noteId): NoteData;
 }
