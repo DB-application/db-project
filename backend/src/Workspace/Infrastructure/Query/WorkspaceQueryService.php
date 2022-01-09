@@ -84,7 +84,7 @@ class WorkspaceQueryService implements WorkspaceQueryServiceInterface
         $qb->select($workspaceUserTableJoinAlias . WorkspaceUserTable::USER_ID);
         $qb->where($qb->expr()->eq($workspaceUserTableJoinAlias . WorkspaceUserTable::WORKSPACE_ID, ':workspaceId'));
         $qb->setParameter('workspaceId', $workspaceId);
-        return $qb->fetchAssociative();
+        return $qb->fetchFirstColumn();
     }
 
     public function getNotesByWorkspaceId(string $workspaceId): array
