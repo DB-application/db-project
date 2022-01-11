@@ -10,6 +10,7 @@ import {FormatHeader1Icon} from "../../../../icons/FormatHeader1Icon";
 import {FormatHeader2Icon} from "../../../../icons/FormatHeader2Icon";
 import {DoubleQuotesLIcon} from "../../../../icons/DoubleQuotesLIcon";
 import {TableIcon} from "../../../../icons/TableIcon";
+import {ImageIcon} from "../../../../icons/ImageIcon";
 
 type AddBlockPopoverProps = {
     editor: Editor,
@@ -18,6 +19,13 @@ type AddBlockPopoverProps = {
 function AddBlockPopover({
     editor,
 }: AddBlockPopoverProps) {
+    const addImage = () => {
+        const url = window.prompt('URL')
+        if (url) {
+            editor.chain().focus().setImage({ src: url }).run()
+        }
+    }
+
 
     const items: Array<ListItemProps> = [
         {
@@ -82,6 +90,15 @@ function AddBlockPopover({
                 onClick={() => editor.chain().focus().setBlockquote().run()}
                 className={styles.item}
             />,
+        },
+        {
+            id: 'image',
+            createBindingFn: () => <ListItem_IconAndText
+                icon={<ImageIcon />}
+                text={'Картинка'}
+                onClick={() => addImage()}
+                className={styles.item}
+            />
         },
         {
             id: 'table',

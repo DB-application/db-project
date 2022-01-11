@@ -3,8 +3,8 @@ import {useRouteMatch} from "react-router-dom";
 import {useAction} from "@reatom/react";
 import {sidebarNotesAtom} from "../../viewmodel/notes/notes";
 import {useEffect} from "react";
-import {openNote} from "../../viewmodel/notes/openNote";
 import {useAtomWithSelector} from "../../../core/reatom/useAtomWithSelector";
+import {getNoteContent} from "../../viewmodel/notes/getNoteContent";
 
 type NoteIdParams = {
     noteId: string;
@@ -12,14 +12,11 @@ type NoteIdParams = {
 
 function NoteAreaWrapper() {
     const {params} = useRouteMatch<NoteIdParams>()
-    const selectedNote = useAtomWithSelector(sidebarNotesAtom, x => x.selectedNote)
-    const handleOpenNote = useAction(openNote)
+    const handleGetNoteContent = useAction(getNoteContent)
 
     useEffect(() => {
-        if (params.noteId !== selectedNote) {
-            handleOpenNote(params.noteId)
-        }
-    }, [handleOpenNote, params.noteId])
+        handleGetNoteContent(params.noteId)
+    }, [handleGetNoteContent, params.noteId])
 
     return <NoteArea/>
 }
