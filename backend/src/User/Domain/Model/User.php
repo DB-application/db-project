@@ -3,11 +3,9 @@ declare(strict_types=1);
 
 namespace App\User\Domain\Model;
 
-use App\Common\Domain\Uuid;
-
 class User
 {
-    /** @var Uuid */
+    /** @var string */
     private $userId;
     /** @var string */
     private $email;
@@ -24,9 +22,13 @@ class User
     /** @var string|null */
     private $avatarUrl;
 
-    public function __construct(Uuid $userId, Email $email, Password $password, string $username, ?string $firstName = null, ?string $lastName = null, ?string $phone = null, ?string $avatarUrl = null)
+    public function __construct(UserId $userId, Email $email, Password $password, string $username, ?string $firstName = null, ?string $lastName = null, ?string $phone = null, ?string $avatarUrl = null)
     {
         $this->userId = $userId;
+        if ($email !== null)
+        {
+            $this->assertEmailValid($email);
+        }
         $this->email = $email;
         $this->password = $password;
         $this->firstName = $firstName;
@@ -38,12 +40,11 @@ class User
         }
         $this->phone = $phone;
         $this->avatarUrl = $avatarUrl;
-        $this->loginKey = $this->buildLoginKey();
     }
 
-    public function getUserId(): Uuid
+    public function getUserId(): UserId
     {
-        return $this->userId;
+        return new UserId($this->userId);
     }
 
     public function getEmail(): string

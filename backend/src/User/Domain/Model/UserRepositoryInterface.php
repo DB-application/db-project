@@ -19,15 +19,18 @@ interface UserRepositoryInterface
     public function findUserByEmailAndUsername(string $email, string $username): ?User;
 
     /**
-     * @param string $userId
-     * @return User
+     * @param UserId $userId
+     * @return User|null
      */
-    public function findUserById(string $userId): User;
+    public function findUserById(UserId $userId): ?User;
 
     /**
      * @param User $user
      */
     public function add(User $user): void;
 
-    public function update(): void;
+    /**
+     * @return UserId
+     */
+    public function nextId(): UserId;
 }

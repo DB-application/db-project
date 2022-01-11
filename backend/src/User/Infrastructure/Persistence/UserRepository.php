@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\User\Infrastructure\Persistence;
 
+use App\Common\Domain\UuidGenerator;
 use App\User\Domain\Model\User;
+use App\User\Domain\Model\UserId;
 use App\User\Domain\Model\UserRepositoryInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,7 +35,7 @@ class UserRepository implements UserRepositoryInterface
         return $this->repo->findOneBy(['email' => $email, 'username' => $username]);
     }
 
-    public function findUserById(string $userId): User
+    public function findUserById(UserId $userId): ?User
     {
         return $this->repo->findOneBy(['userId' => $userId]);
     }
@@ -41,11 +43,10 @@ class UserRepository implements UserRepositoryInterface
     public function add(User $user): void
     {
         $this->em->persist($user);
-        $this->em->flush();
     }
 
-    public function update(): void
+    public function nextId(): UserId
     {
-        $this->em->flush();
+        return new UserId(UuidGenerator::generateUuid());
     }
 }

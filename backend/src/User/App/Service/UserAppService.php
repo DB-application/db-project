@@ -3,34 +3,39 @@ declare(strict_types=1);
 
 namespace App\User\App\Service;
 
-use App\Common\Domain\Uuid;
-use App\Common\Domain\UuidGenerator;
+use App\Common\App\Transaction\MultiBlockingOperationExecutorInterface;
+use App\Common\App\Transaction\TransactionInterface;
 use App\Common\Exception\UserNotAuthenticated;
 use App\Security\UserAuthenticator;
 use App\User\App\Data\AuthenticateUserRequestInterface;
 use App\User\App\Data\UserData;
+use App\User\App\Lock\LockNames;
 use App\User\App\Query\UserQueryServiceInterface;
-use App\User\Domain\Exception\InvalidUserEmailException;
-use App\User\Domain\Exception\InvalidUserPasswordException;
 use App\User\Domain\Model\Email;
-use App\User\Domain\Model\Password;
-use App\User\Domain\Model\User;
-use App\User\Domain\Model\UserRepositoryInterface;
+use App\User\Domain\Model\UserId;
+use App\User\Domain\Service\UserService;
 
 class UserAppService
 {
-    /** @var UserRepositoryInterface */
-    private $repository;
+    /** @var UserService */
+    private $userService;
     /** @var UserQueryServiceInterface */
     private $userQueryService;
     /** @var UserAuthenticator */
     private $authenticator;
+    /** @var TransactionInterface */
+    private $transaction;
+    /** @var MultiBlockingOperationExecutorInterface */
+    private $blockingOperatorExecutor;
 
-    public function __construct(UserRepositoryInterface $repository, UserQueryServiceInterface $userQueryService, UserAuthenticator $authenticator)
+
+    public function __construct(UserService $userService, UserQueryServiceInterface $userQueryService, UserAuthenticator $authenticator, TransactionInterface $transaction, MultiBlockingOperationExecutorInterface $blockingOperationExecutor)
     {
         $this->authenticator = $authenticator;
-        $this->repository = $repository;
+        $this->userService = $userService;
         $this->userQueryService = $userQueryService;
+        $this->transaction = $transaction;
+        $this->blockingOperatorExecutor = $blockingOperationExecutor;
     }
 
     /**
@@ -38,19 +43,15 @@ class UserAppService
      * @param string $password
      * @param string $username
      * @return string
-     * @throws InvalidUserEmailException
      */
     public function createUser(string $email, string $password, string $username): string
     {
-        // TODO: обернуть в транзакцию
-        $user = $this->repository->findUserByEmailAndUserName($email, $username);
-        if ($user !== null)
-        {
-            throw new InvalidUserEmailException('User with this email already exist');
-        }
-        $user = new User(new Uuid(UuidGenerator::generateUuid()), new Email($email), new Password($password), $username);
-        $this->repository->add($user);
-        return (string)$user->getUserId();
+        return (string)$this->transaction->execute(
+            function () use ($email, $password, $username): UserId
+            {
+                return $this->userService->createUser($email, $password, $username);
+            }
+        );
     }
 
     public function getUserData(string $userId): ?UserData
@@ -69,15 +70,14 @@ class UserAppService
 
     public function updateUserData(UserData $userData): void
     {
-        //TODO: обернуть в транзакцию
-        $user = $this->repository->findUserById($userData->getUserId());
-        $user->setPhone($userData->getPhone());
-        $user->setUsername($userData->getUsername());
-        $user->setLastName($userData->getLastName());
-        $user->setFirstName($userData->getFirstName());
-        $user->setEmail(new Email($userData->getEmail()));
-        $user->setAvatarUrl($userData->getAvatarUrl());
-        $this->repository->update();
+        $operation = $this->blockingOperatorExecutor->execute(
+            [LockNames::getUserId($userData->getUserId())],
+            function () use ($userData): void
+            {
+                $this->userService->updateUserData(new UserId($userData->getUserId()), $userData->getUsername(), $userData->getPhone(), $userData->getFirstName(), $userData->getLastName(), new Email($userData->getEmail()), $userData->getAvatarUrl());
+            }
+        );
+        $this->transaction->execute($operation);
     }
 
     /**
@@ -101,16 +101,14 @@ class UserAppService
 
     public function changeUserPassword(string $userId, string $newPassword, string $oldPassword): void
     {
-        $user = $this->repository->findUserById($userId);
-        if ($user->getPassword() === $oldPassword)
-        {
-            $user->setPassword(new Password($newPassword));
-            $this->repository->update();
-        }
-        else
-        {
-            throw new InvalidUserPasswordException();
-        }
+        $operation = $this->blockingOperatorExecutor->execute(
+            [LockNames::getUserId($userId)],
+            function () use ($userId, $newPassword, $oldPassword): void
+            {
+                $this->userService->changeUserPassword(new UserId($userId), $newPassword, $oldPassword);
+            }
+        );
+        $this->transaction->execute($operation);
     }
 
     //TODO: УДАЛИТь
