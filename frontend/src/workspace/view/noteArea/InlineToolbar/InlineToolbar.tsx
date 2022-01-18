@@ -12,6 +12,9 @@ import {TypeUnderlineIcon} from "../../../../icons/TypeUnderlineIcon";
 import {FormatClearIcon} from "../../../../icons/FormatClearIcon";
 import {BxHighlightIcon} from "../../../../icons/BxHighlightIcon";
 import {LinkIcon} from "../../../../icons/LinkIcon";
+import {PopoverPortal} from "../../../../core/portal/PopoverPortal";
+import {useRef, useState} from "react";
+import {UrlSwitchButton} from "./UrlSwitch";
 
 type InlineToolbarProps ={
     editor: Editor,
@@ -26,19 +29,6 @@ function Divider() {
 function InlineToolbar({
     editor,
 }: InlineToolbarProps,) {
-    const _setLink = () => {
-        const previousUrl = editor.getAttributes('link').href
-        const url = window.prompt('URL', previousUrl)
-        if (url === null) {
-            return
-        }
-        if (url === '') {
-            editor.chain().focus().extendMarkRange('link').unsetLink().run()
-            return
-        }
-        editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
-    }
-
     return (
         <BubbleMenu
             editor={editor}
@@ -78,10 +68,8 @@ function InlineToolbar({
                     icon={<BxHighlightIcon />}
                     className={styles.switcher}
                 />
-                <SwitchButton
-                    checked={editor.isActive('link')}
-                    onCheckedChange={() => _setLink()}
-                    icon={<LinkIcon />}
+                <UrlSwitchButton
+                    editor={editor}
                     className={styles.switcher}
                 />
                 <Divider/>

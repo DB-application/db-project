@@ -44,13 +44,6 @@ function RegistrationLayout() {
     const handleSetNicknameError = useAction(registrationPageAction.setNicknameError)
     const handleSubmitForm = useAction(registrationPageAction.submitRegistrationForm)
 
-    const onSubmit = () => {
-        handleSetEmailError(isValidEmail(email))
-        handleSetPasswordError(isValidPassword(password))
-        handleSetNicknameError(isValidNickname(nickname))
-        handleSubmitForm()
-    }
-
     return (
         <div className={styles.loginLayout}>
             <div className={styles.formContainer}>
@@ -65,7 +58,7 @@ function RegistrationLayout() {
                     errorText={nicknameError && getNicknameErrorText(nicknameError)}
                     placeholder={I18n_get('LoginForm.NicknamePlaceholder')}
                     className={styles.nickNameField}
-                    onEnter={onSubmit}
+                    onEnter={handleSubmitForm}
                 />
                 <FormField
                     type={'text'}
@@ -75,7 +68,7 @@ function RegistrationLayout() {
                     placeholder={I18n_get('LoginForm.EmailPlaceholder')}
                     errorText={emailError && getEmailErrorText(emailError)}
                     className={styles.emailField}
-                    onEnter={onSubmit}
+                    onEnter={handleSubmitForm}
                 />
                 <FormField
                     type={'password'}
@@ -85,11 +78,11 @@ function RegistrationLayout() {
                     errorText={passwordError && getPasswordErrorText(passwordError)}
                     placeholder={I18n_get('LoginForm.PasswordPlaceholder')}
                     className={styles.passwordField}
-                    onEnter={onSubmit}
+                    onEnter={handleSubmitForm}
                 />
                 <Button_Text
                     text={I18n_get('LoginForm.Registration')}
-                    onClick={onSubmit}
+                    onClick={handleSubmitForm}
                     className={styles.submitButton}
                     size={'large'}
                     state={submitButtonState}

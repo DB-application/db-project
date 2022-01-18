@@ -43,12 +43,14 @@ const submitButtonStateAtom = map(
     combine({
         loginError: loginErrorAtom,
         passwordError: passwordErrorAtom,
+        login: loginAtom,
+        password: passwordAtom,
         isLoading: isLoadingAtom,
     }),
-    ({loginError, passwordError, isLoading}) => {
+    ({loginError, passwordError, login, password, isLoading}) => {
         return isLoading
             ? 'preloader'
-            : !!loginError || !!passwordError
+            : !!loginError || !!passwordError || !login || !password
                 ? 'disabled'
                 : 'normal'
     }

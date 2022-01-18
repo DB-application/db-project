@@ -91,9 +91,7 @@ function TimePickerPopover({
     const hours = useMemo(() => generateDigits(hoursStep, 24), [hoursStep])
     const minutes = useMemo(() => generateDigits(minutesStep, 60), [minutesStep])
 
-    useEventHandler('mousedown', popoverRef, event => {
-        event.preventDefault()
-    })
+    useEventHandler('mousedown', popoverRef, event => event.preventDefault())
 
     return(
         <div ref={popoverRef}>
@@ -175,9 +173,7 @@ function TimePicker({
                 <TextField
                     value={inputValue}
                     onFocus={() => setPopoverOpened(true)}
-                    onChange={value => {
-                        setInputValue(value)
-                    }}
+                    onChange={setInputValue}
                     onBlur={onBlur}
                     disabled={disabled}
                     inputClassName={styles.input}

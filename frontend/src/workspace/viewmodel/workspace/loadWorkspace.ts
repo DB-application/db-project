@@ -3,6 +3,7 @@ import {dispatchAsyncAction} from "../../../core/reatom/dispatchAsyncAction";
 import {initNotes} from "../notes/initNotes";
 import {setCurrentWorkspace} from "./workspace";
 import {LocalStorage, STORAGE_KEYS} from "../../../core/localStorage/localStorage";
+import {Router} from "../../../core/router/router";
 
 const openWorkspace = declareAsyncAction<string, void>(
     'openWorkspace',

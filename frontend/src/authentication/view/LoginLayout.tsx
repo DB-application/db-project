@@ -45,12 +45,6 @@ function LoginLayout() {
     const handleSetRememberMe = useAction(loginPageActions.setRememberMe)
     const handleSubmitForm = useAction(loginPageActions.submitLogin)
 
-    const onSubmit = () => {
-        handleSetLoginError(isValidLogin(login))
-        handleSetPasswordError(isValidPassword(password))
-        handleSubmitForm()
-    }
-
     return (
         <div className={styles.loginLayout}>
             <div className={styles.formContainer}>
@@ -62,7 +56,7 @@ function LoginLayout() {
                     onBlur={() => handleSetLoginError(isValidLogin(login))}
                     value={login}
                     onChange={value => handleSetLogin(value)}
-                    onEnter={onSubmit}
+                    onEnter={handleSubmitForm}
                     placeholder={I18n_get('LoginForm.LoginPlaceholder')}
                     errorText={loginError && getLoginErrorText(loginError)}
                     className={styles.emailField}
@@ -72,20 +66,20 @@ function LoginLayout() {
                     value={password}
                     onChange={value => handleSetPassword(value)}
                     onBlur={() => handleSetPasswordError(isValidPassword(password))}
-                    onEnter={onSubmit}
+                    onEnter={handleSubmitForm}
                     errorText={passwordError && getPasswordErrorText(passwordError)}
                     placeholder={I18n_get('LoginForm.PasswordPlaceholder')}
                     className={styles.passwordField}
                 />
-                <Checkbox_WithLabel
-                    checked={rememberMe}
-                    onCheckedChange={handleSetRememberMe}
-                    label={I18n_get('LoginForm.RememberMe')}
-                    className={styles.showPasswordCheckbox}
-                />
+                {/*<Checkbox_WithLabel*/}
+                {/*    checked={rememberMe}*/}
+                {/*    onCheckedChange={handleSetRememberMe}*/}
+                {/*    label={I18n_get('LoginForm.RememberMe')}*/}
+                {/*    className={styles.showPasswordCheckbox}*/}
+                {/*/>*/}
                 <Button_Text
                     text={I18n_get('LoginForm.Login')}
-                    onClick={onSubmit}
+                    onClick={handleSubmitForm}
                     className={styles.submitButton}
                     size={'large'}
                     state={submitButtonState}

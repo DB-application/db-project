@@ -30,12 +30,15 @@ const submitButtonStateAtom = map(
         emailError: emailErrorAtom,
         nicknameError: nicknameErrorAtom,
         passwordError: passwordErrorAtom,
+        email: emailAtom,
+        password: passwordAtom,
+        nickname: nicknameAtom,
         isLoading: isLoadingAtom,
     }),
-    ({emailError, nicknameError, passwordError, isLoading}) => {
+    ({emailError, nicknameError, passwordError, nickname, email, password, isLoading}) => {
         return isLoading
             ? 'preloader'
-            : !!emailError || !!nicknameError || !!passwordError
+            : !!emailError || !!nicknameError || !!passwordError || !nickname || !email || !password
                 ? 'disabled'
                 : 'normal'
     }

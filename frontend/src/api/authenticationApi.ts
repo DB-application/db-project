@@ -17,7 +17,7 @@ function registration(email: string, password: string, nickname: string): Promis
                 case HttpStatus.OK:
                     return Promise.resolve(response)
                 default:
-                    return Promise.reject(response.status)
+                    return Promise.reject(response)
             }
         })
 }

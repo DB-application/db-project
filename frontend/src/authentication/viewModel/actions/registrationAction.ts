@@ -1,8 +1,9 @@
 import {declareAction} from "@reatom/core";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import {AuthenticationApi} from "../../../api/authenticationApi";
-import {loginPageActions} from "../loginPageData";
 import {processStandardError} from "../../../core/error/processStandardError";
+import {HttpStatus} from "../../../core/http/HttpStatus";
+import {registrationPageAction} from "../registrationPageData";
 
 
 type RegistrationActionPayload = {
@@ -18,9 +19,16 @@ const registrationAction = declareAction<RegistrationActionPayload>(
                 toast.success('Регистрация прошла успешно')
                 setTimeout(() => window.location.reload(), 1000)
             })
-            .catch(processStandardError)
+            .catch(err => {
+                if (err.status && err.status == HttpStatus.UNAUTHORIZED) {
+                    store.dispatch(registrationPageAction.setEmailError('taken'))
+                    store.dispatch(registrationPageAction.setNicknameError('taken'))
+                    return
+                }
+                processStandardError()
+            })
             .finally(() => {
-                store.dispatch(loginPageActions.setIsLoading(false))
+                store.dispatch(registrationPageAction.setIsLoading(false))
             })
     }
 )

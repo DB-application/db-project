@@ -1,7 +1,6 @@
 import {SettingBlock} from "../common/SettingBlock";
 import {I18n_get} from "../../../../i18n/i18n_get";
 import {SelectListItemProps, SelectWithDropdown} from "../../../../common/selectList/SelectWithDropdown";
-import {Checkbox} from "../../../../common/checkbox/Checkbox";
 import styles from './CalendarSettingsPage.module.css'
 import {Button_Text} from "../../../../common/button/Button_Text";
 import {useAction} from "@reatom/react";
@@ -12,7 +11,7 @@ import {Toggle} from "../../../../common/toggle/Toggle";
 
 
 const allSteps = [5, 10, 15, 30, 45, 60]
-const allTimeSlots = [1, 2, 3, 4, 5, 6, 7]
+const allTimeSlots = [1, 2, 3, 4, 5, 6, 7, 8]
 
 
 function StepBlock() {

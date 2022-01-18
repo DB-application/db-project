@@ -20,18 +20,26 @@ code {
 }
 
 .tooltip-layer {
-  z-index: 62;
+  z-index: 10002;
 }
 
 .popup-layer {
-  z-index: 60;
+  z-index: 10000;
 }
 
 .popover-layer {
-  z-index: 61;
+  z-index: 10001;
 }
 .external-layer {
   position: relative;
   left: 0;
   top: 0;
+}
+.external-layer {
+  position: relative;
+  left: 0;
+  top: 0;
+}
+.popover-layer {
+  z-index: 10002;
 }

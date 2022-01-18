@@ -6,6 +6,7 @@ import {processStandardError} from "../../../core/error/processStandardError";
 import {goToUrl} from "../../../core/link/goToUrl";
 import {Router} from "../../../core/router/router";
 import {LocalStorage, STORAGE_KEYS} from "../../../core/localStorage/localStorage";
+import {HttpStatus} from "../../../core/http/HttpStatus";
 
 type LoginActionPayload = {
     login: string;
@@ -22,7 +23,9 @@ const loginAction = declareAction<LoginActionPayload>(
                 setTimeout(() => goToUrl(redirectToUrl), 1000)
             })
             .catch(err => {
-                if (err.status && err.status === 401) {
+                if (err.status && err.status === HttpStatus.UNAUTHORIZED) {
+                    store.dispatch(loginPageActions.setLoginError('unknown_login'))
+                    store.dispatch(loginPageActions.setPasswordError('wrong_password'))
                     toast.error('Введен неверный логин или пароль')
                     return
                 }

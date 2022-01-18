@@ -1,6 +1,7 @@
 import {getStylesWithMods} from "../../../../core/styles/getStylesWithMods";
-import { joinClassNames } from "../../../../core/styles/joinClassNames";
+import {joinClassNames} from "../../../../core/styles/joinClassNames";
 import styles from './SwitchButton.module.css'
+import React, {MutableRefObject} from "react";
 
 type SwitchButtonProps = {
     checked: boolean,
@@ -9,26 +10,29 @@ type SwitchButtonProps = {
     icon: JSX.Element
 }
 
-function SwitchButton({
-    onCheckedChange,
-    className,
-    icon,
-    checked,
-}: SwitchButtonProps) {
+const SwitchButton = React.forwardRef<HTMLButtonElement, SwitchButtonProps>(
+    ({
+        className,
+        icon,
+        checked,
+        onCheckedChange,
+    }, ref) => {
+        const buttonRef = ref as MutableRefObject<HTMLButtonElement|null>
+        const buttonClassName = getStylesWithMods(styles.button, {
+            [styles.checked]: checked,
+        })
 
-    const buttonClassName = getStylesWithMods(styles.button, {
-        [styles.checked]: checked,
-    })
-
-    return(
-        <button
-            className={joinClassNames(buttonClassName, className)}
-            onClick={() => onCheckedChange(!checked)}
-        >
-            {icon}
-        </button>
-    )
-}
+        return(
+            <button
+                ref={buttonRef}
+                className={joinClassNames(buttonClassName, className)}
+                onClick={() => onCheckedChange(!checked)}
+            >
+                {icon}
+            </button>
+        )
+    }
+)
 
 export {
     SwitchButton

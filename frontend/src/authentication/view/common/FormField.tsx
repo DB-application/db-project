@@ -1,5 +1,5 @@
 import styles from './FormField.module.css'
-import {useRef, useState} from "react";
+import {useMemo, useRef, useState} from "react";
 import {joinClassNames} from "../../../core/styles/joinClassNames";
 import {getStylesWithMods} from "../../../core/styles/getStylesWithMods";
 import {EyeIcon} from "../../../icons/EyeIcon";
@@ -21,9 +21,19 @@ type FieldProps = {
     onChange: (value: string) => void,
     onBlur: () => void,
     onEnter?: () => void,
-    errorText: string | null,
     placeholder: string,
-    className?: string,
+    errorText: string | null,
+}
+
+type InputProps = {
+    inputType: 'text' | 'password',
+    showIcon?: JSX.Element,
+    value: string,
+    onChange: (value: string) => void,
+    onBlur: () => void,
+    onEnter?: () => void,
+    placeholder: string,
+    errorText: string | null,
 }
 
 type ShowPasswordIconProps = {
@@ -49,86 +59,107 @@ function ShowPasswordIcon({
     )
 }
 
+function ErrorBlock({errorText}: {errorText: string}) {
+    return <div className={styles.errorText}>
+        {errorText}
+    </div>
+}
+
+function InputField({
+    onBlur,
+    placeholder,
+    onEnter,
+    onChange,
+    inputType,
+    value,
+    showIcon,
+    errorText,
+}: InputProps) {
+    const ref = useRef<HTMLInputElement|null>(null)
+    const [focus, setFocus] = useState(false)
+    const [hover, setHover] = useState(false)
+
+    const _onInput = () => ref.current && onChange(ref.current.value)
+    const _onKeyDown = (e: any) => e.code === 'Enter' && onEnter && onEnter()
+
+    const _onFocus = () => setFocus(true)
+    const _onBlur = () => {
+        setFocus(false)
+        onBlur()
+    }
+    const _mouseOver = () => setHover(true)
+    const _mouseOut = () => setHover(false)
+
+    const containerClassname = getStylesWithMods(styles.inputContainer, {
+        [styles.inputContainerFocus]: focus,
+        [styles.inputContainerHover]: hover,
+        [styles.inputContainerError]: !!errorText,
+    })
+
+    return (
+        <div
+            className={containerClassname}
+        >
+            <input
+                ref={ref}
+                className={styles.input}
+                onBlur={_onBlur}
+                onMouseOver={_mouseOver}
+                onMouseOut={_mouseOut}
+                onFocus={_onFocus}
+                onKeyDown={_onKeyDown}
+                onInput={_onInput}
+                type={inputType}
+                value={value}
+                placeholder={placeholder}
+            />
+            {showIcon}
+        </div>
+    )
+}
+
 function PasswordField({
     value,
     onChange,
     onBlur,
-    className,
     placeholder,
     onEnter,
+    errorText,
 }: FieldProps) {
-    const ref = useRef<HTMLInputElement>(null)
     const [showPassword, setShowPassword] = useState<boolean>(false)
 
-    function _onInput() {
-        if (ref.current) {
-            onChange(ref.current.value)
-        }
-    }
-
-    function _onKeyDown(e: any) {
-        if (e.code === 'Enter') {
-            onEnter && onEnter()
-        }
-    }
-
-    return (
-        <div className={styles.inputContainer}>
-            <input
-                ref={ref}
-                className={className}
-                onBlur={onBlur}
-                onKeyDown={_onKeyDown}
-                onInput={_onInput}
-                type={showPassword
-                    ? 'text'
-                    : 'password'}
-                value={value}
-                placeholder={placeholder}
-            />
-            <ShowPasswordIcon
-                showPassword={showPassword}
-                onClick={() => setShowPassword(!showPassword)}
-            />
-        </div>
-    )
+    return <InputField
+        inputType={showPassword ? 'text' : 'password'}
+        showIcon={<ShowPasswordIcon
+            showPassword={showPassword}
+            onClick={() => setShowPassword(!showPassword)}
+        />}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        placeholder={placeholder}
+        onEnter={onEnter}
+        errorText={errorText}
+    />
 }
 
 function TextField({
     value,
     onChange,
     onBlur,
-    className,
     placeholder,
     onEnter,
+    errorText,
 }: FieldProps) {
-    const ref = useRef<HTMLInputElement>(null)
-
-    function _onInput() {
-        if (ref.current) {
-            onChange(ref.current.value)
-        }
-    }
-
-    function _onKeyDown(e: any) {
-        if (e.code === 'Enter') {
-            onEnter && onEnter()
-        }
-    }
-    return(
-        <div className={styles.inputContainer}>
-            <input
-                ref={ref}
-                className={className}
-                onBlur={onBlur}
-                onInput={_onInput}
-                onKeyDown={_onKeyDown}
-                type={'text'}
-                value={value}
-                placeholder={placeholder}
-            />
-        </div>
-    )
+    return <InputField
+        inputType={'text'}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        placeholder={placeholder}
+        onEnter={onEnter}
+        errorText={errorText}
+    />
 }
 
 function FormField(props: FormFieldProps) {
@@ -143,34 +174,32 @@ function FormField(props: FormFieldProps) {
         onEnter,
     } = props
 
-    const inputClassNames = getStylesWithMods(styles.input, {
-        [styles.inputError]: !!errorText,
-    })
-
-    const fieldProps: FieldProps = {
-        errorText,
+    const fieldProps: FieldProps = useMemo(() => ({
         onChange,
         onBlur,
         value,
         placeholder,
         onEnter,
-        className: inputClassNames,
-    }
+        errorText,
+    }), [errorText, value, placeholder, onEnter, errorText, onBlur, onChange])
+
+    const inputBinding = useMemo(() => {
+        switch (type) {
+            case "text":
+                return <TextField {...fieldProps} />
+            case "password":
+                return <PasswordField {...fieldProps} />
+            default:
+                throw new Error(`unknown input type ${type}`)
+        }
+    }, [fieldProps])
 
     return (
         <div
             className={joinClassNames(styles.fieldContainer, className)}
         >
-            {
-                type === 'text'
-                    ? <TextField {...fieldProps} />
-                    : <PasswordField {...fieldProps} />
-            }
-            {
-                errorText && <div className={styles.errorText}>
-                    {errorText}
-                </div>
-            }
+            {inputBinding}
+            {errorText && <ErrorBlock errorText={errorText} />}
         </div>
     )
 }

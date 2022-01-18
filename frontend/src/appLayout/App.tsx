@@ -18,6 +18,7 @@ function App() {
                 <Route path={[Router.Workspace.url()]}>
                     <WorkspaceLayout />
                 </Route>
+                <Redirect to={Router.Workspace.url()} />
             </Switch>
         </>
     )

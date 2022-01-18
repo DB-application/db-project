@@ -37,19 +37,19 @@ function UserMenuPopover({
                 className={styles.listItem}
             />,
         },
-        {
-            id: 'help',
-            createBindingFn: () => <ListItem_IconAndText
-                icon={<HelpCircleOutlineIcon/>}
-                text={I18n_get('Workspace.Help')}
-                onClick={() => {
-                    goToUrl('/help')
-                    onClick()
-                }}
-                className={styles.listItem}
-            />,
-        },
-        null,
+        // {
+        //     id: 'help',
+        //     createBindingFn: () => <ListItem_IconAndText
+        //         icon={<HelpCircleOutlineIcon/>}
+        //         text={I18n_get('Workspace.Help')}
+        //         onClick={() => {
+        //             goToUrl('/help')
+        //             onClick()
+        //         }}
+        //         className={styles.listItem}
+        //     />,
+        // },
+        // null,
         {
             id: 'logout',
             createBindingFn: () => <ListItem_IconAndText

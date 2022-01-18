@@ -15,6 +15,7 @@ import {useRef} from "react";
 import {useEventHandler} from "../../../core/hooks/useEventHandler";
 import {editWorkspacePopupActions} from "../../viewmodel/editWorkspacePopup/editWorkspacePopup";
 import {I18n_get} from "../../../i18n/i18n_get";
+import {Router} from "../../../core/router/router";
 
 
 type WorkspacesListItemProps = {
@@ -79,7 +80,10 @@ function WorkspacePickerPopover() {
             createBindingFn: () => <WorkspacesListItem
                 selected={workspace.id === currentWorkspace}
                 workspace={workspace}
-                onClick={() => handleOpenWorkspace(workspace.id)}
+                onClick={() => {
+                    Router.Workspace.open()
+                    handleOpenWorkspace(workspace.id)
+                }}
             />
         }
     })

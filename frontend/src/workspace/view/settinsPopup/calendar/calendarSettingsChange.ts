@@ -3,7 +3,7 @@ import {LocalStorage, STORAGE_KEYS} from "../../../../core/localStorage/localSto
 const CALENDAR_DEFAULT_SETTINGS = {
     STEP: 30,
     RTL: false,
-    TIMESLOTS: 1,
+    TIMESLOTS: 2,
     START_ON_MONDAY: false,
 }
 
