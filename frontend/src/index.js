@@ -10,7 +10,7 @@ import {isLoadingAppAtom} from "./appLayout/isLoadingApp";
 import {AppWrapper} from "./appLayout/AppWrapper";
 import i18n from "./i18n";
 import {initExternalLayer} from "./core/layers/externalLayers";
-import {workspaceLoadingAtom} from "./workspace/viewmodel/workspaceLoading";
+import {workspaceLayoutAtom} from "./workspace/viewmodel/workspaceLoading";
 import {notesAtom} from "./workspace/viewmodel/notes/notes";
 import {usersAtom} from "./users/usersAtom";
 import {usersLoadingAtom} from "./users/loadUsers";
@@ -22,7 +22,7 @@ const store = createStore(
         userAtom: currentUserAtom,
         usersLoadingAtom,
         isLoadingAppAtom,
-        workspaceLoadingAtom,
+        workspaceLayoutAtom,
         notesAtom,
         usersAtom,
         languageAtom,

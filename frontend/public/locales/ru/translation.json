@@ -88,7 +88,9 @@
     "RemoveNote": "Удалить",
     "AddNote": "Добавить заметку",
     "CreateWorkspace": "Создать новое",
-    "NewWorkspace": "Новое рабочее пространство"
+    "NewWorkspace": "Новое рабочее пространство",
+    "HidePanel": "Скрыть панель",
+    "ShowPanel": "Открыть панель"
   },
   "InviteUsersPopup": {
     "Title": "Приглашение пользователей",

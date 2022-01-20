@@ -1,6 +1,22 @@
+.container {
+    padding: 20px 10px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
 .sidebar {
     display: flex;
     flex-direction: column;
     background-color: #f6f6f7;
     overflow: auto;
+}
+
+.sidebar:hover .hidePanelButton {
+    display: flex;
+}
+
+.hidePanelButton {
+    display: none;
 }

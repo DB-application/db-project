@@ -1,6 +1,7 @@
 import {initNotes} from "./notes/initNotes";
 import {combine, declareAtom, map} from "@reatom/core";
 import {openWorkspace} from "./workspace/loadWorkspace";
+import {declareAtomWithSetter} from "../../core/reatom/declareAtomWithSetter";
 
 const notesLoadingAtom = declareAtom('notesLoading', true, on => [
     on(initNotes, () => true),
@@ -19,6 +20,21 @@ const workspaceLoadingAtom = map(
     ({notesLoading, workspacesLoading}) => (notesLoading || workspacesLoading),
 )
 
+const [showSidebarAtom, setShowSidebar] = declareAtomWithSetter(
+    'workspace.showSidebarAtom',
+    true
+)
+
+const workspaceLayoutAtom = combine({
+    workspaceLoading: workspaceLoadingAtom,
+    showSidebar: showSidebarAtom,
+})
+
+const workspaceLayoutActions = {
+    setShowSidebar,
+}
+
 export {
-    workspaceLoadingAtom,
+    workspaceLayoutAtom,
+    workspaceLayoutActions,
 }

@@ -93,7 +93,9 @@
     "RemoveNote": "Delete",
     "AddNote": "Add note",
     "CreateWorkspace": "Create new",
-    "NewWorkspace": "New workspace"
+    "NewWorkspace": "New workspace",
+    "HidePanel": "Hide sidebar",
+    "ShowPanel": "Show sidebar"
   },
   "InviteUsersPopup": {
     "Title": "Invite users",

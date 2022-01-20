@@ -3,8 +3,8 @@ import {TopPanel} from "./topPanel/TopPanel";
 import {Sidebar} from "./sidebar/Sidebar";
 import {WorkArea} from './workArea/WorkArea';
 import {useEffect} from "react";
-import {useAction, useAtom} from "@reatom/react";
-import {workspaceLoadingAtom} from "../viewmodel/workspaceLoading";
+import {useAction} from "@reatom/react";
+import {workspaceLayoutAtom} from "../viewmodel/workspaceLoading";
 import {Preloader} from "../../common/preloader/Preloader";
 import {initWorkspaces} from "../viewmodel/workspace/initWorkspaces";
 import {PopupPortal} from "../../core/portal/PopupPortal";
@@ -59,13 +59,20 @@ function WorkspaceContent() {
 
 function WorkspaceLayout() {
     const handleInitWorkspaces = useAction(initWorkspaces)
-    const workspaceLoading = useAtom(workspaceLoadingAtom)
+    const showSidebar = useAtomWithSelector(workspaceLayoutAtom, x => x.showSidebar)
+    const workspaceLoading = useAtomWithSelector(workspaceLayoutAtom, x => x.workspaceLoading)
     useEffect(() => {
         handleInitWorkspaces()
     }, [handleInitWorkspaces])
 
     return (
-        <div className={styles.workspaceWrapper}>
+        <div
+            className={styles.workspaceWrapper}
+            style={{
+                gridTemplateColumns: `${showSidebar ? '240px' : '0'} 1fr`,
+                gridTemplateRows: '64px 1fr',
+            }}
+        >
             {workspaceLoading
                 ? <Preloader />
                 : <WorkspaceContent />

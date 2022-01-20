@@ -5,6 +5,10 @@ import {AvatarWrapper} from "../../../common/avatar/Avatar";
 import {useRef, useState} from "react";
 import {PopoverPortal} from "../../../core/portal/PopoverPortal";
 import {WorkspacePickerPopover} from './WorkspacePickerPopover';
+import {useAction} from "@reatom/react";
+import {workspaceLayoutActions} from "../../viewmodel/workspaceLoading";
+import {Button_Icon} from '../../../common/button/Button_Icon';
+import { ArrowLeft } from '../../../icons/ArrowLeft';
 
 
 const getWorkspaceName = (name: string) => {
@@ -54,9 +58,9 @@ function WorkspacePicker() {
 function WorkspaceBlock() {
 
     return (
-        <div className={styles.container}>
+        <>
             <WorkspacePicker />
-        </div>
+        </>
     )
 }
 
