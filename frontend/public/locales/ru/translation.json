@@ -2,8 +2,6 @@
   "LoginForm": {
     "EmailInvalidFormat": "Невалидный формат email-а",
     "EmailRequired": "email - обязательный параметр",
-    "PasswordInvalidFormat": "Невалидный формат пароля",
-    "PasswordRequired": "пароль - обязательный параметр",
     "EmailPlaceholder": "Email",
     "PasswordPlaceholder": "Пароль",
     "NicknamePlaceholder": "Имя пользователя",
@@ -35,9 +33,6 @@
     "ConfirmPassword": "Подтвердить пароль",
     "PasswordLabel": "Изменение пароля",
     "PasswordChangeButton": "Изменить",
-    "PasswordMustBeDifferent": "Новый пароль должен отличаться от старого",
-    "PasswordIsDifferent": "Пароли отличаются",
-    "OldPasswordIsIncorrect": "Текущий пароль неверный",
     "SuccessChangePassword": "Пароль успешно изменен"
   },
   "Workspace": {
@@ -111,7 +106,14 @@
     "InvitedUsersLabel": "Приглашенные пользователи",
     "InviteUsers": "Пригласить",
     "OrganizerLabel": "Создатель",
-    "Cancel": "Отмена"
+    "Cancel": "Отмена",
+    "PasswordInvalidFormat": "Ваш пароль должен содержать символы верхнего и нижнего регистров, а так же цифры.",
+    "PasswordRequired": "Пароль - обязательный параметр",
+    "WrongPassword": "Пароль неверный",
+    "TooEasyPassword": "Слишком простой пароль",
+    "PasswordMustBeDifferent": "Новый пароль должен отличаться от старого",
+    "PasswordIsDifferent": "Пароли отличаются",
+    "OldPasswordIsIncorrect": "Текущий пароль неверный"
   },
   "SettingsPopup": {
     "UserProfile": "Профиль пользователя",

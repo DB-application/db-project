@@ -1,11 +1,12 @@
+import { checkEmailFormat } from "../../../common/validate/checkEmail";
+import {checkPasswordComplexity, checkPasswordFormat } from "../../../common/validate/checkPassword";
 import {
     EmailErrorType,
     LoginErrorType,
     NicknameErrorType,
     PasswordErrorType
 } from "../../viewModel/field/FieldErrorTypes";
-import {checkPasswordComplexity, checkPasswordFormat} from "./checkPassword";
-import {checkEmailFormat} from "./checkEmail";
+
 
 
 function isValidEmail(email: string): EmailErrorType|null {

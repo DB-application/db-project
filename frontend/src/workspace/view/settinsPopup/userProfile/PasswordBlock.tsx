@@ -4,12 +4,16 @@ import styles from './PasswordBlock.module.css'
 import {I18n_get} from "../../../../i18n/i18n_get";
 import {TextField} from "../../../../common/textfield/TextField";
 import {Button_Text} from "../../../../common/button/Button_Text";
+import {getPasswordErrorText} from "../../../viewmodel/settingsPopup/userProfile/getPasswordErrorText";
 
 function PasswordBlock() {
     const {
         newPassword,
         oldPassword,
         confirmPassword,
+        confirmPasswordError,
+        oldPasswordError,
+        newPasswordError,
         saveButtonState,
     } = useAtom(passwordSettingsAtom)
     const handleSetOldPassword = useAction(passwordSettingsAction.setOldPassword)
@@ -26,6 +30,7 @@ function PasswordBlock() {
                 type={'password'}
                 value={oldPassword}
                 onChange={handleSetOldPassword}
+                errorText={getPasswordErrorText(oldPasswordError)}
                 description={I18n_get("ProfileSettings.OldPassword")}
                 className={styles.fieldBlock}
             />
@@ -33,6 +38,7 @@ function PasswordBlock() {
                 type={'password'}
                 value={newPassword}
                 onChange={handleSetNewPassword}
+                errorText={getPasswordErrorText(newPasswordError)}
                 description={I18n_get("ProfileSettings.NewPassword")}
                 className={styles.fieldBlock}
             />
@@ -40,6 +46,7 @@ function PasswordBlock() {
                 type={'password'}
                 value={confirmPassword}
                 onChange={handleSetConfirmPassword}
+                errorText={getPasswordErrorText(confirmPasswordError)}
                 description={I18n_get("ProfileSettings.ConfirmPassword")}
                 className={styles.fieldBlock}
             />

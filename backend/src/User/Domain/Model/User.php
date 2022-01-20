@@ -44,7 +44,7 @@ class User
 
     public function getUserId(): UserId
     {
-        return new UserId($this->userId);
+        return $this->userId;
     }
 
     public function getEmail(): string
@@ -115,6 +115,11 @@ class User
     public function setAvatarUrl(?string $avatarUrl): void
     {
         $this->avatarUrl = $avatarUrl;
+    }
+
+    private function assertEmailValid(Email $email): void
+    {
+        //TODO сделать валидацию email
     }
 
     private function assertPhoneValid(string $phone): void

@@ -34,13 +34,13 @@ function getLoginErrorText(loginError: LoginErrorType): string | null {
 function getPasswordErrorText(passwordError: PasswordErrorType): string | null {
     switch (passwordError) {
         case 'invalid_format':
-            return I18n_get('LoginForm.PasswordInvalidFormat')
+            return I18n_get('Common.PasswordInvalidFormat')
         case 'empty':
-            return I18n_get('LoginForm.PasswordRequired')
+            return I18n_get('Common.PasswordRequired')
         case "wrong_password":
-            return I18n_get('LoginForm.WrongPassword')
+            return I18n_get('Common.WrongPassword')
         case "too_easy":
-            return I18n_get('LoginForm.TooEasyPassword')
+            return I18n_get('Common.TooEasyPassword')
         default:
             return null
     }

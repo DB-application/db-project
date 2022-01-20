@@ -102,7 +102,7 @@ function UserMenu() {
                     onLogout={logout}
                     onClick={() => setPopoverOpened(false)}
                 />}
-                align={'right'}
+                align={'center'}
             />
         </>
     )

@@ -111,7 +111,14 @@
     "InvitedUsersLabel": "Invited Users",
     "InviteUsers": "Invite",
     "OrganizerLabel": "The creator",
-    "Cancel": "Cancel"
+    "Cancel": "Cancel",
+    "PasswordInvalidFormat": "Your password must contain upper and lower case characters and numbers.",
+    "PasswordRequired": "Password - required parameter",
+    "WrongPassword": "Wrong password",
+    "TooEasyPassword": "Too simple password",
+    "PasswordMustBeDifferent": "The new password must be different from the old one",
+    "PasswordIsDifferent": "Passwords are different",
+    "OldPasswordIsIncorrect": "The current password is incorrect"
   },
   "SettingsPopup": {
     "UserProfile": "User profile",
