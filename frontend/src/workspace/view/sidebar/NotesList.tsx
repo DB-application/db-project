@@ -16,6 +16,9 @@ import {addNote} from "../../viewmodel/notes/addNote";
 import {sidebarAtom} from "../../viewmodel/sidebar/sidebar";
 import {useAtomWithSelector} from "../../../core/reatom/useAtomWithSelector";
 import {removeNote} from "../../viewmodel/notes/removeNote";
+import {declareAtom} from "@reatom/core";
+import {Button_State_Type} from "../../../common/button/Button_Base";
+import {createWorkspace} from "../../viewmodel/workspace/createWorkspace";
 
 type NotesListItemProps = {
     id: string,
@@ -33,6 +36,12 @@ type NotesListItemWrapperProps = {
 type NoteContextMenuProps = {
     id: string,
 }
+
+const addNoteButtonStateAtom = declareAtom<Button_State_Type>('addNoteButtonState', 'normal', on => [
+    on(addNote, () => 'preloader'),
+    on(addNote.done, () => 'normal'),
+    on(addNote.fail, () => 'normal'),
+])
 
 function NoteContextMenu({
     id,
@@ -129,7 +138,7 @@ const NotesListItemWrapper = ({
 
 function NotesList() {
     const notes = useAtom(orderedNotesAtom)
-    const addButtonState = useAtomWithSelector(sidebarAtom, x => x.addNoteButtonState)
+    const addButtonState = useAtom(addNoteButtonStateAtom)
     const selectedNote = useAtom(selectedNoteAtom)
     const handleAddNote = useAction(addNote)
 

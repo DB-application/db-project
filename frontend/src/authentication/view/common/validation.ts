@@ -33,9 +33,9 @@ function isValidPassword(password: string): PasswordErrorType|null {
     if (!checkPasswordFormat(password)) {
         return 'invalid_format'
     }
-    if (!checkPasswordComplexity(password)) {
-        return 'too_easy'
-    }
+    // if (!checkPasswordComplexity(password)) {
+    //     return 'too_easy'
+    // }
     return null
 }
 

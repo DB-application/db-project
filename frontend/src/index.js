@@ -19,7 +19,7 @@ import {languageAtom} from "./appLayout/language";
 
 const store = createStore(
     combine({
-        userAtom: currentUserAtom,
+        currentUserAtom,
         usersLoadingAtom,
         isLoadingAppAtom,
         workspaceLayoutAtom,

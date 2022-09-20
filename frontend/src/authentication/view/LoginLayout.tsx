@@ -4,7 +4,6 @@ import styles from "./LoginLayout.module.css";
 import {FormField} from "./common/FormField";
 import {isValidLogin, isValidPassword} from "./common/validation";
 import {getLoginErrorText, getPasswordErrorText} from "./common/getErrorText";
-import {Checkbox_WithLabel} from "../../common/checkbox/Checkbox_WithLabel";
 import {Button_Text} from "../../common/button/Button_Text";
 import {I18n_get} from "../../i18n/i18n_get";
 import {useAtomWithSelector} from "../../core/reatom/useAtomWithSelector";

@@ -4,12 +4,12 @@ import {BxCheckIcon} from "../../icons/BxCheckIcon";
 import { useRef } from "react";
 import {useEventHandler} from "../../core/hooks/useEventHandler";
 import {getStylesWithMods} from "../../core/styles/getStylesWithMods";
+import {StyledComponent} from "../../core/styles/StyledComponent";
 
-type CheckboxProps = {
+type CheckboxProps = StyledComponent<{
     checked: boolean,
     onCheckedChange: (value: boolean) => void,
-    className?: string,
-}
+}>
 
 function Checkbox({
     checked,

@@ -1,13 +1,13 @@
 import {Checkbox} from "./Checkbox";
 import styles from "./Checkbox_WithLabel.module.css"
 import {joinClassNames} from "../../core/styles/joinClassNames";
+import {StyledComponent} from "../../core/styles/StyledComponent";
 
-type Checkbox_WithLabelProps = {
+type Checkbox_WithLabelProps = StyledComponent<{
     checked: boolean,
     onCheckedChange: (value: boolean) => void,
     label: string,
-    className?: string,
-}
+}>
 
 function Checkbox_WithLabel({
     checked,

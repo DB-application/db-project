@@ -8,15 +8,23 @@ import {
 } from "../../common/popover/getPopoverPosition";
 import {popoverAppearAnimation} from "../../common/popover/popoverHideAnimation";
 
-
-function useAppearPopover(
+type UseAppearPopoverProps = {
     show: boolean,
     controlRef: RefObject<HTMLElement|null>,
     popoverRef: RefObject<HTMLElement|null>,
     align: PopoverAlign,
     side: PopoverSide,
     animation: (element: HTMLElement) => Promise<any>
-) {
+}
+
+function useAppearPopover({
+    show,
+    controlRef,
+    popoverRef,
+    align,
+    side,
+    animation
+}: UseAppearPopoverProps) {
     const appearedRef = useRef<boolean>(false)
     useLayoutEffect(() => {
         if (show && !appearedRef.current) {

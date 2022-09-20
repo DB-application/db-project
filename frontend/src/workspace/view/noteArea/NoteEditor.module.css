@@ -2,12 +2,6 @@
     outline: none;
 }
 
-.noteContainerWrapper {
-    position: relative;
-    overflow: auto;
-    width: 100%;
-}
-
 .noteContainer {
     width: 80%;
     max-width: 720px;

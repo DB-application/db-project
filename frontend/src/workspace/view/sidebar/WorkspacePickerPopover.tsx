@@ -5,7 +5,7 @@ import {WorkspaceData} from "../../viewmodel/workspace/workspace";
 import styles from './WorkspacePickerPopover.module.css'
 import {BxCheckIcon} from "../../../icons/BxCheckIcon";
 import {AvatarWrapper} from "../../../common/avatar/Avatar";
-import {useAction} from "@reatom/react";
+import {useAction, useAtom} from "@reatom/react";
 import {openWorkspace} from "../../viewmodel/workspace/loadWorkspace";
 import {createWorkspace} from "../../viewmodel/workspace/createWorkspace";
 import {Button_Text} from "../../../common/button/Button_Text";
@@ -16,6 +16,8 @@ import {useEventHandler} from "../../../core/hooks/useEventHandler";
 import {editWorkspacePopupActions} from "../../viewmodel/editWorkspacePopup/editWorkspacePopup";
 import {I18n_get} from "../../../i18n/i18n_get";
 import {Router} from "../../../core/router/router";
+import {declareAtom} from "@reatom/core";
+import {Button_State_Type} from "../../../common/button/Button_Base";
 
 
 type WorkspacesListItemProps = {
@@ -67,10 +69,16 @@ function WorkspacesListItem({
     )
 }
 
+const addWorkspaceButtonStateAtom = declareAtom<Button_State_Type>('addWorkspaceButtonStateAtom', 'normal', on => [
+    on(createWorkspace, () => 'preloader'),
+    on(createWorkspace.done, () => 'normal'),
+    on(createWorkspace.fail, () => 'normal'),
+])
+
 function WorkspacePickerPopover() {
     const currentWorkspace = useAtomWithSelector(sidebarAtom, x => x.currentWorkspace)
     const workspacesList = useAtomWithSelector(sidebarAtom, x => x.workspacesList)
-    const addWorkspaceButtonState = useAtomWithSelector(sidebarAtom, x => x.addWorkspaceButtonState)
+    const addWorkspaceButtonState = useAtom(addWorkspaceButtonStateAtom)
     const handleOpenWorkspace = useAction(openWorkspace)
     const handleCreateWorkspace = useAction(createWorkspace)
 

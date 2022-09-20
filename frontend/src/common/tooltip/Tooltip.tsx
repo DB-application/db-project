@@ -5,7 +5,6 @@ import {getPopoverPosition, PopoverAlign, PopoverSide} from "../popover/getPopov
 
 type PropsType = {
     text: string,
-    elementRef: RefObject<any>,
     side?: PopoverSide,
     align?: PopoverAlign,
 }
@@ -13,9 +12,8 @@ type PropsType = {
 const Tooltip = React.forwardRef<HTMLDivElement|null, PropsType>(
     ({
         text,
-        elementRef,
-         side = 'bottom',
-         align = 'center',
+        side = 'bottom',
+        align = 'center',
      }, ref
 ) => {
     return(

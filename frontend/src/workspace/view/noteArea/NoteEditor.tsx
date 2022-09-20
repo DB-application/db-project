@@ -61,7 +61,7 @@ function NoteEditor() {
     })
 
     return (
-        <div className={styles.noteContainerWrapper}>
+        <>
             <TitleEditor
                 value={note.title}
                 onBlur={title => note.title !== title && handleSetNoteTitle(title)}
@@ -72,7 +72,7 @@ function NoteEditor() {
                 {editor && <InlineToolbar editor={editor} />}
                 {editor && <AddBlockPopover editor={editor} />}
             </div>
-        </div>
+        </>
     )
 }
 

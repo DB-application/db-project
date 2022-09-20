@@ -1,4 +1,4 @@
-import React, {RefObject, useEffect, useRef, useState} from "react";
+import React, {RefObject, useCallback, useEffect, useRef, useState} from "react";
 import {Portal} from "./Portal";
 import {PopoverContainer} from "../../common/popover/PopoverContainer";
 import {PopoverAlign, PopoverSide} from "../../common/popover/getPopoverPosition";
@@ -36,11 +36,18 @@ function PopoverPortal({
         return () => setHiddenComplete(false)
     }, [setHiddenComplete])
 
-    const closePopover = async () => {
+    const closePopover = useCallback(async () => {
         popoverRef && popoverRef.current && await popoverHideAnimation(popoverRef.current)
         setHiddenComplete(true)
-    }
-    useAppearPopover(show, elementRef, popoverRef, align, side, popoverAppearAnimation)
+    }, [popoverRef])
+    useAppearPopover({
+        show,
+        controlRef: elementRef,
+        popoverRef,
+        align,
+        side,
+        animation: popoverAppearAnimation,
+    })
     if (!show) {
         if (hiddenComplete) {
             return null
@@ -56,9 +63,7 @@ function PopoverPortal({
             children={<PopoverContainer
                 control={elementRef}
                 content={content}
-                closePopover={() => {
-                    setShow(false)
-                }}
+                closePopover={() => setShow(false)}
                 align={align}
                 side={side}
                 ref={popoverRef}

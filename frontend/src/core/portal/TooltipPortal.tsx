@@ -1,4 +1,4 @@
-import {RefObject, useRef, useState} from "react";
+import {RefObject, useCallback, useRef, useState} from "react";
 import {useEventHandler} from "../hooks/useEventHandler";
 import {Portal} from "./Portal";
 import {Tooltip} from "../../common/tooltip/Tooltip";
@@ -24,23 +24,30 @@ function TooltipPortal({
     const tooltipRef = useRef<HTMLDivElement|null>(null)
     const [show, setShow] = useState(false)
 
-    useAppearPopover(show, elementRef, tooltipRef, align, side, tooltipAppearAnimation)
+    useAppearPopover({
+        show,
+        controlRef: elementRef,
+        popoverRef: tooltipRef,
+        align,
+        side,
+        animation: tooltipAppearAnimation
+    })
 
-    const _closeTooltipWithAnimation = async () => {
+    const _closeTooltipWithAnimation = useCallback(async () => {
         tooltipRef && tooltipRef.current && await tooltipHideAnimation(tooltipRef.current)
         setShow(false)
-    }
+    }, [tooltipRef])
 
     let appearTimer: NodeJS.Timeout
 
-    function appearTooltip() {
+    const appearTooltip = useCallback(() => {
         appearTimer = setTimeout(() => setShow(true), 400)
-    }
+    }, [])
 
-    function closeTooltip() {
+    const closeTooltip = useCallback(() => {
         clearTimeout(appearTimer)
         _closeTooltipWithAnimation()
-    }
+    }, [])
 
     useEventHandler('mouseenter', elementRef, appearTooltip)
     useEventHandler('mouseleave', elementRef, closeTooltip)
@@ -55,7 +62,6 @@ function TooltipPortal({
             parentId={'tooltip'}
             children={<Tooltip
                 text={text}
-                elementRef={elementRef}
                 align={align}
                 side={side}
                 ref={tooltipRef}
