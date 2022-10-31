@@ -20,7 +20,7 @@ const registrationAction = declareAction<RegistrationActionPayload>(
                 setTimeout(() => window.location.reload(), 1000)
             })
             .catch(err => {
-                if (err.status && err.status == HttpStatus.UNAUTHORIZED) {
+                if (err.status && err.status === HttpStatus.UNAUTHORIZED) {
                     store.dispatch(registrationPageAction.setEmailError('taken'))
                     store.dispatch(registrationPageAction.setNicknameError('taken'))
                     return

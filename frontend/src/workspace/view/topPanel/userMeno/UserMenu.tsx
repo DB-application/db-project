@@ -2,13 +2,11 @@ import {AvatarWrapper} from "../../../../common/avatar/Avatar";
 import {useAction, useAtom} from "@reatom/react";
 import {authorizedCurrentUser} from "../../../../authentication/viewModel/currentUserAtom";
 import styles from "./UserMenu.module.css";
-import React, {useRef, useState} from "react";
-import {List_Base, ListItemProps} from "../../../../common/list/List_Base";
-import {ListItem_IconAndText} from "../../../../common/list/item/ListItem_IconAndText";
+import {useRef, useState} from "react";
+import {ListBase, ListItemProps} from "../../../../common/list/ListBase";
+import {ListItemIconAndText} from "../../../../common/list/item/ListItemIconAndText";
 import {ProfileIcon} from "../../../../icons/ProfileIcon";
-import {HelpCircleOutlineIcon} from "../../../../icons/HelpCircleOutlineIcon";
 import {LogoutIcon} from "../../../../icons/LogoutIcon";
-import {goToUrl} from "../../../../core/link/goToUrl";
 import {logoutAction} from "../../../../authentication/viewModel/actions/logoutAction";
 import {PopoverPortal} from "../../../../core/portal/PopoverPortal";
 import {settingsPopupActions} from "../../../viewmodel/settingsPopup/settingsPopup";
@@ -27,7 +25,7 @@ function UserMenuPopover({
     const items: Array<ListItemProps|null> = [
         {
             id: 'profileSetting',
-            createBindingFn: () => <ListItem_IconAndText
+            createBindingFn: () => <ListItemIconAndText
                 icon={<ProfileIcon />}
                 text={I18n_get('Workspace.UserProfile')}
                 onClick={() => {
@@ -39,7 +37,7 @@ function UserMenuPopover({
         },
         // {
         //     id: 'help',
-        //     createBindingFn: () => <ListItem_IconAndText
+        //     createBindingFn: () => <ListItemIconAndText
         //         icon={<HelpCircleOutlineIcon/>}
         //         text={I18n_get('Workspace.Help')}
         //         onClick={() => {
@@ -52,7 +50,7 @@ function UserMenuPopover({
         // null,
         {
             id: 'logout',
-            createBindingFn: () => <ListItem_IconAndText
+            createBindingFn: () => <ListItemIconAndText
                 icon={<LogoutIcon />}
                 text={I18n_get('Workspace.Logout')}
                 onClick={() => {
@@ -66,7 +64,7 @@ function UserMenuPopover({
 
     return (
         <div className={styles.userMenuPopover}>
-            <List_Base
+            <ListBase
                 items={items}
            />
         </div>

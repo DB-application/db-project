@@ -1,24 +1,21 @@
 import {useAction, useAtom} from "@reatom/react";
 import {notesActions, orderedNotesAtom, selectedNoteAtom} from "../../viewmodel/notes/notes";
 import styles from './NotesList.module.css'
-import {Button_Icon} from "../../../common/button/Button_Icon";
+import {ButtonIcon} from "../../../common/button/ButtonIcon";
 import {MoreAltIcon} from "../../../icons/MoreAltIcon";
 import {useMemo, useRef, useState} from "react";
 import {PopoverPortal} from "../../../core/portal/PopoverPortal";
-import {List_Base, ListItemProps} from "../../../common/list/List_Base";
-import {ListItem_IconAndText} from "../../../common/list/item/ListItem_IconAndText";
+import {ListBase, ListItemProps} from "../../../common/list/ListBase";
+import {ListItemIconAndText} from "../../../common/list/item/ListItemIconAndText";
 import {I18n_get} from "../../../i18n/i18n_get";
 import {DeleteBinLineIcon} from "../../../icons/DeleteBinLineIcon";
 import {getStylesWithMods} from "../../../core/styles/getStylesWithMods";
 import {PlusCircleIcon} from "../../../icons/PlusCircleIcon";
-import {Button_IconAndText} from "../../../common/button/Button_IconAndText";
+import {ButtonIconAndText} from "../../../common/button/ButtonIconAndText";
 import {addNote} from "../../viewmodel/notes/addNote";
-import {sidebarAtom} from "../../viewmodel/sidebar/sidebar";
-import {useAtomWithSelector} from "../../../core/reatom/useAtomWithSelector";
 import {removeNote} from "../../viewmodel/notes/removeNote";
 import {declareAtom} from "@reatom/core";
-import {Button_State_Type} from "../../../common/button/Button_Base";
-import {createWorkspace} from "../../viewmodel/workspace/createWorkspace";
+import {Button_State_Type} from "../../../common/button/ButtonBase";
 
 type NotesListItemProps = {
     id: string,
@@ -54,7 +51,7 @@ function NoteContextMenu({
         return [
             {
                 id: 'remove',
-                createBindingFn: () => <ListItem_IconAndText
+                createBindingFn: () => <ListItemIconAndText
                     icon={<DeleteBinLineIcon />}
                     text={I18n_get('Sidebar.RemoveNote')}
                     onClick={() => {
@@ -66,12 +63,12 @@ function NoteContextMenu({
             },
 
         ]
-    }, [])
+    }, [handleRemoveNote, id])
 
     return (
         <>
             <div ref={ref} className={styles.contextMenu}>
-                <Button_Icon
+                <ButtonIcon
                     icon={<MoreAltIcon />}
                     onClick={() => setPopoverOpened(true)}
                     style={'link'}
@@ -82,7 +79,7 @@ function NoteContextMenu({
                 elementRef={ref}
                 show={popoverOpened}
                 setShow={setPopoverOpened}
-                content={<List_Base items={items} />}
+                content={<ListBase items={items} />}
             />
         </>
     )
@@ -144,7 +141,7 @@ function NotesList() {
 
     return (
         <div className={styles.container}>
-            <Button_IconAndText
+            <ButtonIconAndText
                 icon={<PlusCircleIcon/>}
                 text={I18n_get('Sidebar.AddNote')}
                 onClick={handleAddNote}

@@ -1,5 +1,5 @@
 import { checkEmailFormat } from "../../../common/validate/checkEmail";
-import {checkPasswordComplexity, checkPasswordFormat } from "../../../common/validate/checkPassword";
+import {checkPasswordFormat } from "../../../common/validate/checkPassword";
 import {
     EmailErrorType,
     LoginErrorType,

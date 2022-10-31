@@ -37,7 +37,7 @@ const loadAbsentUsers = declareAsyncAction<Array<string>, Array<UserData>>('load
     }
 )
 
-const [usersLoadingAtom, setUsersLoading] = declareAtomWithSetter('usersLoading', false, on => [
+const [usersLoadingAtom] = declareAtomWithSetter('usersLoading', false, on => [
     on(loadUsers, () => true),
     on(loadUsers.done, () => false),
     on(loadUsers.fail, () => false),

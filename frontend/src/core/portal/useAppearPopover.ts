@@ -6,7 +6,6 @@ import {
     PopoverAlign,
     PopoverSide
 } from "../../common/popover/getPopoverPosition";
-import {popoverAppearAnimation} from "../../common/popover/popoverHideAnimation";
 
 type UseAppearPopoverProps = {
     show: boolean,
@@ -47,7 +46,7 @@ function useAppearPopover({
             appearedRef.current = false
         }
 
-    }, [show, controlRef, popoverRef, popoverRef.current, side, align])
+    }, [show, controlRef, popoverRef, popoverRef.current, side, align, animation])
 }
 
 export {

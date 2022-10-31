@@ -1,6 +1,6 @@
-import React, {MutableRefObject, RefObject, useEffect, useMemo, useRef} from 'react'
+import React from 'react'
 import styles from './Tooltip.module.css'
-import {getPopoverPosition, PopoverAlign, PopoverSide} from "../popover/getPopoverPosition";
+import {PopoverAlign, PopoverSide} from "../popover/getPopoverPosition";
 
 
 type PropsType = {

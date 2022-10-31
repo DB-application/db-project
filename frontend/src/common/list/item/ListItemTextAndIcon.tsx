@@ -1,6 +1,6 @@
-import {ListItem_Base} from "./ListItem_Base";
+import {ListItemBase} from "./ListItemBase";
 
-type ListItem_TextAndIconProps = {
+type ListItemTextAndIconProps = {
     icon: JSX.Element,
     text: string,
     className?: string,
@@ -8,14 +8,14 @@ type ListItem_TextAndIconProps = {
     tooltipText?: string,
 }
 
-function ListItem_TextAndIcon({
+function ListItemTextAndIcon({
     icon,
     text,
     tooltipText,
     onClick,
     className,
-}: ListItem_TextAndIconProps) {
-    return <ListItem_Base
+}: ListItemTextAndIconProps) {
+    return <ListItemBase
         iconRight={icon}
         text={text}
         className={className}
@@ -25,9 +25,9 @@ function ListItem_TextAndIcon({
 }
 
 export {
-    ListItem_TextAndIcon,
+    ListItemTextAndIcon,
 }
 
 export type {
-    ListItem_TextAndIconProps,
+    ListItemTextAndIconProps,
 }

@@ -1,8 +1,6 @@
-import {Button_Base, Button_Size_Type, Button_State_Type, Button_Style_Type} from "./Button_Base";
-import React, {ForwardedRef} from "react";
+import {ButtonBase, Button_Size_Type, Button_State_Type, Button_Style_Type} from "./ButtonBase";
 
-
-type Button_TextAndIconProps = {
+type ButtonIconAndTextProps = {
     icon: JSX.Element,
     text: string,
     onClick: () => void,
@@ -14,10 +12,10 @@ type Button_TextAndIconProps = {
     spacing?: boolean,
 }
 
-function Button_TextAndIcon(props: Button_TextAndIconProps) {
-    return <Button_Base
+function ButtonIconAndText(props: ButtonIconAndTextProps) {
+    return <ButtonBase
+        leftIcon={props.icon}
         text={props.text}
-        rightIcon={props.icon}
         className={props.className}
         size={props.size}
         state={props.state}
@@ -29,5 +27,5 @@ function Button_TextAndIcon(props: Button_TextAndIconProps) {
 }
 
 export {
-    Button_TextAndIcon,
+    ButtonIconAndText,
 }

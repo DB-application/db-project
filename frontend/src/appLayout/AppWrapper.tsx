@@ -19,7 +19,7 @@ const AppWrapper = withRouter(({history}) => {
     useLayoutEffect(() => {
         initRouterHistory(history)
         handleInitUser()
-    }, [handleInitUser])
+    }, [handleInitUser, history])
 
     useLayoutEffect(() => {
         setTranslationFunction(t)

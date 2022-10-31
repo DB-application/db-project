@@ -1,6 +1,6 @@
 import {useAtom} from "@reatom/react";
 import {currentUserAtom} from "../authentication/viewModel/currentUserAtom";
-import {Redirect, Switch, useRouteMatch} from "react-router-dom";
+import {Redirect, Switch} from "react-router-dom";
 import {Router} from "../core/router/router";
 import {LocalStorage, STORAGE_KEYS} from "../core/localStorage/localStorage";
 import {useLocation} from "react-router";

@@ -1,9 +1,7 @@
 import {NoteArea} from "./NoteArea";
 import {useRouteMatch} from "react-router-dom";
 import {useAction} from "@reatom/react";
-import {sidebarNotesAtom} from "../../viewmodel/notes/notes";
 import {useEffect} from "react";
-import {useAtomWithSelector} from "../../../core/reatom/useAtomWithSelector";
 import {getNoteContent} from "../../viewmodel/notes/getNoteContent";
 
 type NoteIdParams = {

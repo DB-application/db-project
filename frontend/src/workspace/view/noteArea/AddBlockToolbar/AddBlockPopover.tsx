@@ -2,8 +2,8 @@ import {Editor, FloatingMenu} from '@tiptap/react'
 import styles from './AddBlockPopover.module.css'
 import {UnorderedListIcon} from "../../../../icons/UnorderedListIcon";
 import {OrderedListIcon} from "../../../../icons/OrderedListIcon";
-import {List_Base, ListItemProps} from "../../../../common/list/List_Base";
-import {ListItem_IconAndText} from "../../../../common/list/item/ListItem_IconAndText";
+import {ListBase, ListItemProps} from "../../../../common/list/ListBase";
+import {ListItemIconAndText} from "../../../../common/list/item/ListItemIconAndText";
 import {ListCheckIcon} from "../../../../icons/ListCheckIcon";
 import {CodeSlashIcon} from "../../../../icons/CodeSlashIcon";
 import {FormatHeader1Icon} from "../../../../icons/FormatHeader1Icon";
@@ -30,7 +30,7 @@ function AddBlockPopover({
     const items: Array<ListItemProps> = [
         {
             id: 'head_1',
-            createBindingFn: () => <ListItem_IconAndText
+            createBindingFn: () => <ListItemIconAndText
                 icon={<FormatHeader1Icon />}
                 text={'Заголовок 1'}
                 onClick={() => editor.chain().focus().setHeading({level: 1}).run()}
@@ -39,7 +39,7 @@ function AddBlockPopover({
         },
         {
             id: 'head_2',
-            createBindingFn: () => <ListItem_IconAndText
+            createBindingFn: () => <ListItemIconAndText
                 icon={<FormatHeader2Icon />}
                 text={'Заголовок 2'}
                 onClick={() => editor.chain().focus().setHeading({level: 2}).run()}
@@ -48,7 +48,7 @@ function AddBlockPopover({
         },
         {
             id: 'bulleted_list',
-            createBindingFn: () => <ListItem_IconAndText
+            createBindingFn: () => <ListItemIconAndText
                 icon={<UnorderedListIcon/>}
                 text={'Маркированный список'}
                 onClick={() => editor.chain().focus().toggleBulletList().run()}
@@ -57,7 +57,7 @@ function AddBlockPopover({
         },
         {
             id: 'ordered_list',
-            createBindingFn: () => <ListItem_IconAndText
+            createBindingFn: () => <ListItemIconAndText
                 icon={<OrderedListIcon/>}
                 text={'Нумерованный список'}
                 onClick={() => editor.chain().focus().toggleOrderedList().run()}
@@ -66,7 +66,7 @@ function AddBlockPopover({
         },
         {
             id: 'task_list',
-            createBindingFn: () => <ListItem_IconAndText
+            createBindingFn: () => <ListItemIconAndText
                 icon={<ListCheckIcon/>}
                 text={'Список заданий'}
                 onClick={() => editor.chain().focus().toggleTaskList().run()}
@@ -75,7 +75,7 @@ function AddBlockPopover({
         },
         {
             id: 'code_block',
-            createBindingFn: () => <ListItem_IconAndText
+            createBindingFn: () => <ListItemIconAndText
                 icon={<CodeSlashIcon/>}
                 text={'Блок кода'}
                 onClick={() => editor.chain().focus().setCodeBlock().run()}
@@ -84,7 +84,7 @@ function AddBlockPopover({
         },
         {
             id: 'blockquote',
-            createBindingFn: () => <ListItem_IconAndText
+            createBindingFn: () => <ListItemIconAndText
                 icon={<DoubleQuotesLIcon/>}
                 text={'Цитата'}
                 onClick={() => editor.chain().focus().setBlockquote().run()}
@@ -93,7 +93,7 @@ function AddBlockPopover({
         },
         {
             id: 'image',
-            createBindingFn: () => <ListItem_IconAndText
+            createBindingFn: () => <ListItemIconAndText
                 icon={<ImageIcon />}
                 text={'Картинка'}
                 onClick={() => addImage()}
@@ -102,7 +102,7 @@ function AddBlockPopover({
         },
         {
             id: 'table',
-            createBindingFn: () => <ListItem_IconAndText
+            createBindingFn: () => <ListItemIconAndText
                 icon={<TableIcon/>}
                 text={'Таблица'}
                 onClick={() => editor.chain().focus().insertTable().run()}
@@ -121,7 +121,7 @@ function AddBlockPopover({
             }}
         >
             <div className={styles.container}>
-                <List_Base
+                <ListBase
                     items={items}
                 />
             </div>

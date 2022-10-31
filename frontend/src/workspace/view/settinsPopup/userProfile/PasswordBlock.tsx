@@ -3,7 +3,7 @@ import {passwordSettingsAction, passwordSettingsAtom } from "../../../viewmodel/
 import styles from './PasswordBlock.module.css'
 import {I18n_get} from "../../../../i18n/i18n_get";
 import {TextField} from "../../../../common/textfield/TextField";
-import {Button_Text} from "../../../../common/button/Button_Text";
+import {ButtonText} from "../../../../common/button/ButtonText";
 import {getPasswordErrorText} from "../../../viewmodel/settingsPopup/userProfile/getPasswordErrorText";
 
 function PasswordBlock() {
@@ -50,7 +50,7 @@ function PasswordBlock() {
                 description={I18n_get("ProfileSettings.ConfirmPassword")}
                 className={styles.fieldBlock}
             />
-            <Button_Text
+            <ButtonText
                 state={saveButtonState}
                 text={I18n_get("ProfileSettings.PasswordChangeButton")}
                 onClick={handleSubmitChange}

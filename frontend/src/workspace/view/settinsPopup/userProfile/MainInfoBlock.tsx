@@ -6,7 +6,7 @@ import {
 } from '../../../viewmodel/settingsPopup/userProfile/profileSettings';
 import {I18n_get} from "../../../../i18n/i18n_get";
 import {TextField} from "../../../../common/textfield/TextField";
-import {Button_Text} from "../../../../common/button/Button_Text";
+import {ButtonText} from "../../../../common/button/ButtonText";
 
 function MainInfoBlock() {
     const {
@@ -61,7 +61,7 @@ function MainInfoBlock() {
                 description={I18n_get('ProfileSettings.PhoneLabel')}
                 className={styles.fieldBlock}
             />
-            <Button_Text
+            <ButtonText
                 text={I18n_get('ProfileSettings.SaveInfo')}
                 onClick={handleSaveInfo}
                 className={styles.saveButton}

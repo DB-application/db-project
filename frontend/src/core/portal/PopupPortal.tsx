@@ -4,7 +4,6 @@ import styles from './PopupPortal.module.css'
 import {popupAppearAnimation, popupHideAnimation} from "../../common/popup/popupHideAnimation";
 import {verify} from "../verify";
 import {addToStack, appearPreviousPopup, hiddenPreviousPopup, isLastPopup, removeFromStack} from "./popupStack";
-import {useHtmlElementEventHandler} from "../hooks/useHtmlElementEventHandler";
 import {hideLowerLayers} from "../layers/externalLayers";
 import {useCloseLayer} from "./useCloseLayer";
 

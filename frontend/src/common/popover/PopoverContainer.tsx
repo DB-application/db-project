@@ -1,9 +1,7 @@
-import React, {MutableRefObject, RefObject, useRef} from "react"
+import React, {MutableRefObject, RefObject} from "react"
 import {PopoverAlign, PopoverSide} from "./getPopoverPosition"
 import styles from './Popover.module.css'
-import {verify} from "../../core/verify";
 import {useCloseLayer} from "../../core/portal/useCloseLayer";
-import {getExternalLayer} from "../../core/layers/externalLayers";
 
 type PropsType = {
     control: RefObject<any>,

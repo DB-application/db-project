@@ -181,7 +181,7 @@ function FormField(props: FormFieldProps) {
         placeholder,
         onEnter,
         errorText,
-    }), [errorText, value, placeholder, onEnter, errorText, onBlur, onChange])
+    }), [errorText, value, placeholder, onEnter, onBlur, onChange])
 
     const inputBinding = useMemo(() => {
         switch (type) {
@@ -192,7 +192,7 @@ function FormField(props: FormFieldProps) {
             default:
                 throw new Error(`unknown input type ${type}`)
         }
-    }, [fieldProps])
+    }, [fieldProps, type])
 
     return (
         <div

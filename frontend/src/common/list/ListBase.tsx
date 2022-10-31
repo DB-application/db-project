@@ -1,4 +1,4 @@
-import styles from './List_Base.module.css'
+import styles from './ListBase.module.css'
 import {joinClassNames} from "../../core/styles/joinClassNames";
 
 
@@ -28,7 +28,7 @@ function ListItemWrapper({
     )
 }
 
-function List_Base({
+function ListBase({
     items,
     className,
 }: ListProps) {
@@ -47,7 +47,7 @@ function List_Base({
 }
 
 export {
-    List_Base,
+    ListBase,
 }
 
 export type {

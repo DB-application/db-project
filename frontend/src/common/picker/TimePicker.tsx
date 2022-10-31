@@ -1,9 +1,9 @@
 import styles from './TimePicker.module.css'
 import {joinClassNames} from "../../core/styles/joinClassNames";
 import {useCallback, useMemo, useRef, useState} from "react";
-import {Button_Text} from "../button/Button_Text";
-import {ListItem_Text} from "../list/item/ListItem_Text";
-import {List_Base, ListItemProps} from "../list/List_Base";
+import {ButtonText} from "../button/ButtonText";
+import {ListItemText} from "../list/item/ListItemText";
+import {ListBase, ListItemProps} from "../list/ListBase";
 import {PopoverPortal} from "../../core/portal/PopoverPortal";
 import {getStylesWithMods} from "../../core/styles/getStylesWithMods";
 import {serializeNumber} from './converters';
@@ -26,7 +26,7 @@ type TimePickerProps = {
     disabled?: boolean,
 }
 
-type TimePickerPopover = {
+type TimePickerPopoverType = {
     onSubmit: () => void,
     currentTime: TimeType,
     setCurrentTime: (time: TimeType) => void,
@@ -55,7 +55,7 @@ function TimePickerList({
 }: TimePickerListProps) {
     const items: Array<ListItemProps> = digits.map(digit => ({
         id: String(digit),
-        createBindingFn: () => <ListItem_Text
+        createBindingFn: () => <ListItemText
             text={String(digit)}
             onClick={() => onSelect(digit)}
             className={getStylesWithMods(styles.listItem, {
@@ -65,7 +65,7 @@ function TimePickerList({
     }))
 
     return (
-        <List_Base
+        <ListBase
             items={items}
             className={styles.timeList}
         />
@@ -78,7 +78,7 @@ function TimePickerPopover({
     setCurrentTime,
     minutesStep = 1,
     hoursStep = 1,
-}: TimePickerPopover) {
+}: TimePickerPopoverType) {
     const popoverRef = useRef<HTMLDivElement|null>(null)
     const setHour = useCallback((hour: number) => {
         setCurrentTime({...currentTime, hours: hour})
@@ -108,7 +108,7 @@ function TimePickerPopover({
                 />
             </div>
             <div className={styles.bottomPanel}>
-                <Button_Text
+                <ButtonText
                     text={'Now'}
                     onClick={() => {
                         const now = new Date()
@@ -121,7 +121,7 @@ function TimePickerPopover({
                     size={'small'}
                     style={'link'}
                 />
-                <Button_Text
+                <ButtonText
                     text={'Ok'}
                     size={'small'}
                     onClick={onSubmit}

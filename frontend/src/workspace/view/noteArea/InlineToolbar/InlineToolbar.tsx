@@ -11,9 +11,6 @@ import styles from './InlineToolbar.module.css'
 import {TypeUnderlineIcon} from "../../../../icons/TypeUnderlineIcon";
 import {FormatClearIcon} from "../../../../icons/FormatClearIcon";
 import {BxHighlightIcon} from "../../../../icons/BxHighlightIcon";
-import {LinkIcon} from "../../../../icons/LinkIcon";
-import {PopoverPortal} from "../../../../core/portal/PopoverPortal";
-import {useRef, useState} from "react";
 import {UrlSwitchButton} from "./UrlSwitch";
 
 type InlineToolbarProps ={

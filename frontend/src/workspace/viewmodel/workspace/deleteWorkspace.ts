@@ -1,6 +1,6 @@
 import {declareAsyncAction} from "../../../core/reatom/declareAsyncAction";
 import {WorkspaceApi} from "../../../api/workspaceApi";
-import {currentWorkspaceAtom, workspaceListAtom, workspacesActions, workspacesAtom} from "./workspace";
+import {currentWorkspaceAtom, workspaceListAtom, workspacesActions} from "./workspace";
 import {openWorkspace} from "./loadWorkspace";
 
 

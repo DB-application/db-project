@@ -2,7 +2,7 @@ import {SettingBlock} from "../common/SettingBlock";
 import {I18n_get} from "../../../../i18n/i18n_get";
 import {SelectListItemProps, SelectWithDropdown} from "../../../../common/selectList/SelectWithDropdown";
 import styles from './CalendarSettingsPage.module.css'
-import {Button_Text} from "../../../../common/button/Button_Text";
+import {ButtonText} from "../../../../common/button/ButtonText";
 import {useAction} from "@reatom/react";
 import {calendarSettingsAction, calendarSettingsAtom} from "../../../viewmodel/calendar/calendarSettings";
 import {useAtomWithSelector} from "../../../../core/reatom/useAtomWithSelector";
@@ -85,7 +85,7 @@ function CalendarSettingsPage() {
             <StepBlock/>
             <RtlBlock/>
             <TimeSlotsBlock/>
-            <Button_Text
+            <ButtonText
                 text={I18n_get('SettingsPopup.ResetCalendarSettings')}
                 onClick={() => handleResetSettings()}
                 style={'secondary'}

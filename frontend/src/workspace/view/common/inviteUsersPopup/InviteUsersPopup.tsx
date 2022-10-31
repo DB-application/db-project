@@ -1,6 +1,6 @@
 import {Popup} from "../../../../common/popup/Popup";
 import {I18n_get} from "../../../../i18n/i18n_get";
-import {Button_Text} from "../../../../common/button/Button_Text";
+import {ButtonText} from "../../../../common/button/ButtonText";
 import {useAtomWithSelector} from "../../../../core/reatom/useAtomWithSelector";
 import {useAction, useAtom} from "@reatom/react";
 import {inviteUsersPopupActions, inviteUsersPopupAtom} from "../../../viewmodel/inviteUsers/inviteUsers";
@@ -153,7 +153,7 @@ function InviteUsersPopup() {
         type={'withHeaderAndFooter'}
         headerText={I18n_get('InviteUsersPopup.Title')}
         content={<ContentWrapper/>}
-        acceptButton={<Button_Text
+        acceptButton={<ButtonText
             text={I18n_get('InviteUsersPopup.Invite')}
             onClick={handleSubmit}
             style={'primary'}

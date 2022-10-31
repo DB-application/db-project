@@ -1,4 +1,4 @@
-import {CSSProperties, useMemo, useRef} from "react";
+import {useMemo, useRef} from "react";
 import {Preloader} from "./preloader/Preloader";
 
 type ContainerWithPreloaderProps = {

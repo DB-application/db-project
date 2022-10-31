@@ -3,4 +3,10 @@
     flex-direction: column;
     background-color: #f6f6f7;
     overflow: auto;
+    width: 240px;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+.sidebarHidden {
+    margin-left: -240px;
 }

@@ -1,6 +1,6 @@
 import {combine, declareAction} from "@reatom/core";
 import {toast} from "react-toastify";
-import {Button_State_Type} from "../../../../common/button/Button_Base";
+import {Button_State_Type} from "../../../../common/button/ButtonBase";
 import {processStandardError} from "../../../../core/error/processStandardError";
 import {declareAtomWithSetter} from "../../../../core/reatom/declareAtomWithSetter";
 import {changePassword} from "../../../../currentUser/changePassword";

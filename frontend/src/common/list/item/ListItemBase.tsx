@@ -1,10 +1,10 @@
-import styles from './ListItem_Base.module.css'
+import styles from './ListItemBase.module.css'
 import React, {useRef} from "react";
 import {joinClassNames} from "../../../core/styles/joinClassNames";
 import {useEventHandler} from "../../../core/hooks/useEventHandler";
 import {TooltipPortal} from "../../../core/portal/TooltipPortal";
 
-type ListItem_BaseProps = {
+type ListItemBaseProps = {
     iconLeft?: JSX.Element,
     text: string,
     iconRight?: JSX.Element,
@@ -13,21 +13,9 @@ type ListItem_BaseProps = {
     tooltipText?: string,
 }
 
-type ItemIconProps = {
-    binding: JSX.Element,
-    className: string,
-}
-
 type ItemTextProps = {
     text: string,
     className: string,
-}
-
-function _ItemIcon({
-    className,
-    binding,
-}: ItemIconProps) {
-    return (<div className={className}>{binding}</div>)
 }
 
 function _ItemText({
@@ -37,14 +25,14 @@ function _ItemText({
     return (<div className={className}>{text}</div>)
 }
 
-function ListItem_Base({
+function ListItemBase({
     iconLeft,
     text,
     iconRight,
     className,
     onClick,
     tooltipText,
-}: ListItem_BaseProps) {
+}: ListItemBaseProps) {
     const itemRef = useRef<HTMLDivElement|null>(null)
 
     const itemClassName = joinClassNames(styles.item, className)
@@ -72,9 +60,9 @@ function ListItem_Base({
 }
 
 export {
-    ListItem_Base,
+    ListItemBase,
 }
 
 export type {
-    ListItem_BaseProps,
+    ListItemBaseProps,
 }

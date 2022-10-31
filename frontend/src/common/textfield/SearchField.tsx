@@ -3,7 +3,6 @@ import {useRef} from "react";
 import {verify} from "../../core/verify";
 import {getStylesWithMods} from "../../core/styles/getStylesWithMods";
 import {joinClassNames} from "../../core/styles/joinClassNames";
-import {PlusCircleIcon} from "../../icons/PlusCircleIcon";
 import {SearchIcon} from "../../icons/SearchIcon";
 
 type SearchFieldProps = {

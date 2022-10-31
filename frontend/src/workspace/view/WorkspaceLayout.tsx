@@ -50,8 +50,10 @@ function WorkspaceContent() {
     return(
         <>
             <TopPanel />
-            <Sidebar />
-            <WorkArea />
+            <div className={styles.workArea}>
+                <Sidebar />
+                <WorkArea />
+            </div>
             <PopupsLayer />
         </>
     )
@@ -59,7 +61,6 @@ function WorkspaceContent() {
 
 function WorkspaceLayout() {
     const handleInitWorkspaces = useAction(initWorkspaces)
-    const showSidebar = useAtomWithSelector(workspaceLayoutAtom, x => x.showSidebar)
     const workspaceLoading = useAtomWithSelector(workspaceLayoutAtom, x => x.workspaceLoading)
     useEffect(() => {
         handleInitWorkspaces()
@@ -68,10 +69,6 @@ function WorkspaceLayout() {
     return (
         <div
             className={styles.workspaceWrapper}
-            style={{
-                gridTemplateColumns: `${showSidebar ? '240px' : '0'} 1fr`,
-                gridTemplateRows: '64px 1fr',
-            }}
         >
             {workspaceLoading
                 ? <Preloader />

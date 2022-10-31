@@ -1,6 +1,6 @@
 import {useAtomWithSelector} from "../../../core/reatom/useAtomWithSelector";
 import {sidebarAtom} from "../../viewmodel/sidebar/sidebar";
-import {List_Base, ListItemProps} from "../../../common/list/List_Base";
+import {ListBase, ListItemProps} from "../../../common/list/ListBase";
 import {WorkspaceData} from "../../viewmodel/workspace/workspace";
 import styles from './WorkspacePickerPopover.module.css'
 import {BxCheckIcon} from "../../../icons/BxCheckIcon";
@@ -8,8 +8,8 @@ import {AvatarWrapper} from "../../../common/avatar/Avatar";
 import {useAction, useAtom} from "@reatom/react";
 import {openWorkspace} from "../../viewmodel/workspace/loadWorkspace";
 import {createWorkspace} from "../../viewmodel/workspace/createWorkspace";
-import {Button_Text} from "../../../common/button/Button_Text";
-import {Button_Icon} from "../../../common/button/Button_Icon";
+import {ButtonText} from "../../../common/button/ButtonText";
+import {ButtonIcon} from "../../../common/button/ButtonIcon";
 import {MoreAltIcon} from "../../../icons/MoreAltIcon";
 import {useRef} from "react";
 import {useEventHandler} from "../../../core/hooks/useEventHandler";
@@ -17,7 +17,7 @@ import {editWorkspacePopupActions} from "../../viewmodel/editWorkspacePopup/edit
 import {I18n_get} from "../../../i18n/i18n_get";
 import {Router} from "../../../core/router/router";
 import {declareAtom} from "@reatom/core";
-import {Button_State_Type} from "../../../common/button/Button_Base";
+import {Button_State_Type} from "../../../common/button/ButtonBase";
 
 
 type WorkspacesListItemProps = {
@@ -58,7 +58,7 @@ function WorkspacesListItem({
             <div className={styles.name}>
                 {workspace.name}
             </div>
-            <Button_Icon
+            <ButtonIcon
                 icon={<MoreAltIcon />}
                 onClick={() => handleOpenEditWorkspacePopup(workspace)}
                 style={'link'}
@@ -98,10 +98,10 @@ function WorkspacePickerPopover() {
 
     return (
         <div className={styles.pickerContainer}>
-            <List_Base
+            <ListBase
                 items={listItems}
             />
-            <Button_Text
+            <ButtonText
                 text={I18n_get('Sidebar.CreateWorkspace')}
                 onClick={() => handleCreateWorkspace(I18n_get('Sidebar.NewWorkspace'))}
                 state={addWorkspaceButtonState}

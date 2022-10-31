@@ -4,7 +4,7 @@ import styles from "./LoginLayout.module.css";
 import {FormField} from "./common/FormField";
 import {isValidLogin, isValidPassword} from "./common/validation";
 import {getLoginErrorText, getPasswordErrorText} from "./common/getErrorText";
-import {Button_Text} from "../../common/button/Button_Text";
+import {ButtonText} from "../../common/button/ButtonText";
 import {I18n_get} from "../../i18n/i18n_get";
 import {useAtomWithSelector} from "../../core/reatom/useAtomWithSelector";
 import {loginFormActions} from "../viewModel/loginFormMode";
@@ -35,13 +35,11 @@ function LoginLayout() {
     const passwordError = useAtomWithSelector(loginPageDataAtom, x => x.passwordError)
     const loginError = useAtomWithSelector(loginPageDataAtom, x => x.loginError)
     const submitButtonState = useAtomWithSelector(loginPageDataAtom, x => x.submitButtonState)
-    const rememberMe = useAtomWithSelector(loginPageDataAtom, x => x.rememberMe)
 
     const handleSetLogin = useAction(loginPageActions.setLogin)
     const handleSetPassword = useAction(loginPageActions.setPassword)
     const handleSetLoginError = useAction(loginPageActions.setLoginError)
     const handleSetPasswordError = useAction(loginPageActions.setPasswordError)
-    const handleSetRememberMe = useAction(loginPageActions.setRememberMe)
     const handleSubmitForm = useAction(loginPageActions.submitLogin)
 
     return (
@@ -70,13 +68,13 @@ function LoginLayout() {
                     placeholder={I18n_get('LoginForm.PasswordPlaceholder')}
                     className={styles.passwordField}
                 />
-                {/*<Checkbox_WithLabel*/}
+                {/*<CheckboxWithLabel*/}
                 {/*    checked={rememberMe}*/}
                 {/*    onCheckedChange={handleSetRememberMe}*/}
                 {/*    label={I18n_get('LoginForm.RememberMe')}*/}
                 {/*    className={styles.showPasswordCheckbox}*/}
                 {/*/>*/}
-                <Button_Text
+                <ButtonText
                     text={I18n_get('LoginForm.Login')}
                     onClick={handleSubmitForm}
                     className={styles.submitButton}

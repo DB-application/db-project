@@ -4,7 +4,7 @@ import {RightTopPanelPart} from "./RightTopPanelPart";
 import {useAtomWithSelector} from "../../../core/reatom/useAtomWithSelector";
 import {workspaceLayoutActions, workspaceLayoutAtom} from "../../viewmodel/workspaceLoading";
 import {useAction} from "@reatom/react";
-import {Button_Icon} from "../../../common/button/Button_Icon";
+import {ButtonIcon} from "../../../common/button/ButtonIcon";
 import {MenuBurgerIcon} from "../../../icons/MenuBurgerIcon";
 
 function TopPanel() {
@@ -12,7 +12,7 @@ function TopPanel() {
     const handleSetShowSidebar = useAction(workspaceLayoutActions.setShowSidebar)
     return (
         <div className={styles.topPanel}>
-            <Button_Icon
+            <ButtonIcon
                 icon={<MenuBurgerIcon />}
                 onClick={() => handleSetShowSidebar(!showSidebar)}
                 style={"link"}

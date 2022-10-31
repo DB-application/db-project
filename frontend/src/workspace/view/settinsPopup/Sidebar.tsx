@@ -1,13 +1,13 @@
 import styles from './Sidebar.module.css'
-import {useAction, useAtom} from "@reatom/react";
+import {useAction} from "@reatom/react";
 import {useAtomWithSelector} from "../../../core/reatom/useAtomWithSelector";
 import {
     settingsPopupActions,
     settingsPopupAtom,
     SettingsPopupPageType
 } from "../../viewmodel/settingsPopup/settingsPopup";
-import {List_Base, ListItemProps} from "../../../common/list/List_Base";
-import {ListItem_IconAndText} from "../../../common/list/item/ListItem_IconAndText";
+import {ListBase, ListItemProps} from "../../../common/list/ListBase";
+import {ListItemIconAndText} from "../../../common/list/item/ListItemIconAndText";
 import { ProfileIcon } from '../../../icons/ProfileIcon';
 import {GlobeIcon} from "../../../icons/GlobeIcon";
 import {getStylesWithMods} from "../../../core/styles/getStylesWithMods";
@@ -27,7 +27,7 @@ function PagesList() {
     const listItems: Array<ListItemProps|null> = [
         {
             id: 'userProfile',
-            createBindingFn: () => <ListItem_IconAndText
+            createBindingFn: () => <ListItemIconAndText
                 icon={<ProfileIcon/>}
                 text={I18n_get('SettingsPopup.UserProfile')}
                 onClick={() => handleSetActivePage('profile')}
@@ -36,7 +36,7 @@ function PagesList() {
         },
         {
             id: 'language',
-            createBindingFn: () => <ListItem_IconAndText
+            createBindingFn: () => <ListItemIconAndText
                 icon={<GlobeIcon/>}
                 text={I18n_get('SettingsPopup.Language')}
                 onClick={() => handleSetActivePage('language')}
@@ -45,7 +45,7 @@ function PagesList() {
         },
         {
             id: 'calendar',
-            createBindingFn: () => <ListItem_IconAndText
+            createBindingFn: () => <ListItemIconAndText
                 icon={<CalendarMonthOutlineIcon/>}
                 text={I18n_get('SettingsPopup.Calendar')}
                 onClick={() => handleSetActivePage('calendar')}
@@ -56,7 +56,7 @@ function PagesList() {
 
     return (
         <div className={styles.list}>
-            <List_Base items={listItems}/>
+            <ListBase items={listItems}/>
         </div>
     )
 }

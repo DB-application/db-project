@@ -1,4 +1,4 @@
-import styles from './Button_Base.module.css'
+import styles from './ButtonBase.module.css'
 import {joinClassNames} from "../../core/styles/joinClassNames"
 import {PreloaderIcon} from '../preloader/Preloader'
 import {getStylesWithMods} from '../../core/styles/getStylesWithMods'
@@ -12,7 +12,7 @@ type Button_State_Type = 'normal' | 'disabled' | 'preloader'
 
 type Button_Style_Type = 'primary' | 'secondary' | 'link' | 'danger'
 
-type Button_BaseProps = {
+type ButtonBaseProps = {
     leftIcon?: JSX.Element,
     text?: string,
     rightIcon?: JSX.Element,
@@ -25,13 +25,13 @@ type Button_BaseProps = {
     spacing?: boolean,
 }
 
-function _Text({text}: {text: string}) {
+function Text({text}: {text: string}) {
     return(
         <div className={styles.text}>{text}</div>
     )
 }
 
-function _Icon({
+function Icon({
     icon,
     className,
 }: {icon: JSX.Element, className: string}) {
@@ -40,7 +40,7 @@ function _Icon({
     )
 }
 
-function Button_Base(props: Button_BaseProps) {
+function ButtonBase(props: ButtonBaseProps) {
     const ref = useRef<HTMLButtonElement|null>(null)
     const {
         leftIcon,
@@ -94,8 +94,8 @@ function Button_Base(props: Button_BaseProps) {
         >
             {state === 'preloader' && <PreloaderIcon className={styles.preloader} />}
             {state !== 'preloader' && leftIcon && React.cloneElement(leftIcon, {className: styles.leftIcon})}
-            {state !== 'preloader' && text && <_Text text={text} />}
-            {state !== 'preloader' && rightIcon && <_Icon icon={rightIcon} className={styles.rightIcon}/>}
+            {state !== 'preloader' && text && <Text text={text} />}
+            {state !== 'preloader' && rightIcon && <Icon icon={rightIcon} className={styles.rightIcon}/>}
             <TooltipPortal
                 elementRef={ref}
                 showTooltip={!!tooltipText}
@@ -107,12 +107,12 @@ function Button_Base(props: Button_BaseProps) {
 }
 
 export {
-    Button_Base,
+    ButtonBase,
 }
 
 export type {
     Button_Size_Type,
-    Button_BaseProps,
+    ButtonBaseProps,
     Button_State_Type,
     Button_Style_Type,
 }

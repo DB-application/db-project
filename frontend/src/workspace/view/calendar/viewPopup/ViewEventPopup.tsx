@@ -61,7 +61,7 @@ function InvitedUsersBlock() {
     )
 }
 
-type InfoDataBlock = {
+type InfoDataBlockType = {
     description: string,
     value: string,
 }
@@ -69,7 +69,7 @@ type InfoDataBlock = {
 function InfoDataBlock({
     value,
     description,
-}: InfoDataBlock) {
+}: InfoDataBlockType) {
     return (
         <div className={styles.infoContainer}>
             <div className={styles.infoTitle}>

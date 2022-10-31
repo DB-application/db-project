@@ -1,5 +1,5 @@
 import {withRouter} from "react-router-dom";
-import {Button_Base, Button_BaseProps, Button_Size_Type, Button_State_Type, Button_Style_Type} from "./Button_Base";
+import {ButtonBase, ButtonBaseProps, Button_Size_Type, Button_State_Type, Button_Style_Type} from "./ButtonBase";
 import {RouteComponentProps} from "react-router";
 
 
@@ -18,7 +18,7 @@ type ButtonWithLinkProps = {
 
 const ButtonWithLink = withRouter(({history, ...props}: RouteComponentProps<any> & ButtonWithLinkProps) => {
 
-    return <Button_Base
+    return <ButtonBase
         text={props.text}
         className={props.className}
         state={props.state}

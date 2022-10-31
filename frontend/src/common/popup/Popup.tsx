@@ -1,7 +1,7 @@
 import React, {useRef} from "react";
 import styles from './Popup.module.css'
-import {Button_Text} from "../button/Button_Text";
-import {Button_Icon} from "../button/Button_Icon";
+import {ButtonText} from "../button/ButtonText";
+import {ButtonIcon} from "../button/ButtonIcon";
 import {CrossIcon} from "../../icons/CrossIcon";
 import {useEventHandler} from "../../core/hooks/useEventHandler";
 import {I18n_get} from "../../i18n/i18n_get";
@@ -56,7 +56,7 @@ function PopupHeader({
     return (
         <div className={styles.popupHeader}>
             <div className={styles.popupTitle}>{headerText}</div>
-            <Button_Icon
+            <ButtonIcon
                 icon={<CrossIcon/>}
                 size={'small'}
                 onClick={closePopup}
@@ -74,7 +74,7 @@ function PopupFooter({
 }: PopupFooterProps) {
     return (
         <div className={styles.popupFooter}>
-            <Button_Text
+            <ButtonText
                 onClick={closePopup}
                 text={I18n_get('Common.Cancel')}
                 style={'secondary'}

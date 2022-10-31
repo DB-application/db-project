@@ -3,7 +3,7 @@ import styles from "./LoginLayout.module.css";
 import {FormField} from "./common/FormField";
 import {isValidEmail, isValidNickname, isValidPassword} from "./common/validation";
 import {getEmailErrorText, getNicknameErrorText, getPasswordErrorText} from "./common/getErrorText";
-import {Button_Text} from "../../common/button/Button_Text";
+import {ButtonText} from "../../common/button/ButtonText";
 import {I18n_get} from "../../i18n/i18n_get";
 import {useAtomWithSelector} from "../../core/reatom/useAtomWithSelector";
 import {registrationPageAction, registrationPageAtom} from "../viewModel/registrationPageData";
@@ -80,7 +80,7 @@ function RegistrationLayout() {
                     className={styles.passwordField}
                     onEnter={handleSubmitForm}
                 />
-                <Button_Text
+                <ButtonText
                     text={I18n_get('LoginForm.Registration')}
                     onClick={handleSubmitForm}
                     className={styles.submitButton}

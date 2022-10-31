@@ -17,9 +17,9 @@ function checkPasswordComplexity(password: string): boolean {
     let is_b = false
     let is_d = false
     for (let i = 0; i < password.length; i++) {
-        if (!is_s && s_letters.indexOf(password[i]) != -1) is_s = true
-        else if (!is_b && b_letters.indexOf(password[i]) != -1) is_b = true
-        else if (!is_d && digits.indexOf(password[i]) != -1) is_d = true
+        if (!is_s && s_letters.indexOf(password[i]) !== -1) is_s = true
+        else if (!is_b && b_letters.indexOf(password[i]) !== -1) is_b = true
+        else if (!is_d && digits.indexOf(password[i]) !== -1) is_d = true
     }
     let rating = 0
     if (is_s) rating++

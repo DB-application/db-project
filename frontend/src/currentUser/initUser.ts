@@ -1,6 +1,5 @@
 import {declareAction} from "@reatom/core";
 import {currentUserActions} from "../authentication/viewModel/currentUserAtom";
-import {processStandardError} from "../core/error/processStandardError";
 import {CurrentUserApi} from "../api/currentUserApi";
 import {setIsLoadingApp} from "../appLayout/isLoadingApp";
 import {usersActions} from "../users/usersAtom";

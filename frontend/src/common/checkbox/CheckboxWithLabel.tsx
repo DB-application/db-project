@@ -1,20 +1,20 @@
 import {Checkbox} from "./Checkbox";
-import styles from "./Checkbox_WithLabel.module.css"
+import styles from "./CheckboxWithLabel.module.css"
 import {joinClassNames} from "../../core/styles/joinClassNames";
 import {StyledComponent} from "../../core/styles/StyledComponent";
 
-type Checkbox_WithLabelProps = StyledComponent<{
+type CheckboxWithLabelProps = StyledComponent<{
     checked: boolean,
     onCheckedChange: (value: boolean) => void,
     label: string,
 }>
 
-function Checkbox_WithLabel({
+function CheckboxWithLabel({
     checked,
     onCheckedChange,
     label,
     className,
-}: Checkbox_WithLabelProps) {
+}: CheckboxWithLabelProps) {
 
     function _onClick() {
         onCheckedChange(!checked)
@@ -37,5 +37,5 @@ function Checkbox_WithLabel({
 }
 
 export {
-    Checkbox_WithLabel,
+    CheckboxWithLabel,
 }

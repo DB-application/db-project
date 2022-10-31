@@ -1,6 +1,6 @@
 import styles from './EditEventPopup.module.css'
 import {Popup} from "../../../../common/popup/Popup";
-import {Button_Text} from "../../../../common/button/Button_Text";
+import {ButtonText} from "../../../../common/button/ButtonText";
 import {useAction, useAtom} from "@reatom/react";
 import {editEventActions, editEventAtom} from '../../../viewmodel/calendar/editPopup/editEvent';
 import {TextField} from "../../../../common/textfield/TextField";
@@ -97,7 +97,6 @@ function Content() {
         start,
         end,
         description,
-        mode,
         endError,
         titleError,
         place,
@@ -185,7 +184,7 @@ function EditEventPopup() {
             ? I18n_get('EditEventPopup.TitleEdit')
             : I18n_get('EditEventPopup.TitleAdd')}
         content={<ContentWrapper />}
-        acceptButton={<Button_Text
+        acceptButton={<ButtonText
             text={mode === 'edit'
                 ? I18n_get('EditEventPopup.SubmitButtonEdit')
                 : I18n_get('EditEventPopup.SubmitButtonCreate')}
@@ -195,7 +194,7 @@ function EditEventPopup() {
         />}
         closePopup={handleClosePopup}
         extraButton={mode === 'edit'
-            ? <Button_Text
+            ? <ButtonText
                 text={I18n_get('EditEventPopup.RemoveButton')}
                 onClick={handleRemove}
                 state={submitButtonState}

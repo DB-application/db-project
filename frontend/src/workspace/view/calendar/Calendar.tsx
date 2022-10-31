@@ -16,7 +16,7 @@ import {getRepeatableEvents} from './repeatableEvents';
 import {languageAtom} from "../../../appLayout/language";
 import {I18n_get} from "../../../i18n/i18n_get";
 import {LANGUAGE} from "../../../i18n/language";
-import {useLayoutEffect} from "react";
+import './Calendar.css'
 
 function getAllEvents(events: Array<CalendarEvent>) {
     return events.reduce((accumulate: Array<CalendarEvent>, event) => {

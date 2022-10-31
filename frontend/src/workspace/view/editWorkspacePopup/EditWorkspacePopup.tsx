@@ -3,7 +3,7 @@ import {useAction, useAtom} from "@reatom/react";
 import {editWorkspacePopupActions, editWorkspacePopupAtom} from "../../viewmodel/editWorkspacePopup/editWorkspacePopup";
 import {Popup} from "../../../common/popup/Popup";
 import {I18n_get} from "../../../i18n/i18n_get";
-import {Button_Text} from "../../../common/button/Button_Text";
+import {ButtonText} from "../../../common/button/ButtonText";
 import {ContainerWithPreloader} from "../../../common/ContainerWithPreloader";
 import styles from './EditWorkspacePopup.module.css'
 import {TextField} from "../../../common/textfield/TextField";
@@ -62,14 +62,14 @@ function EditWorkspacePopup() {
         type={'withHeaderAndFooter'}
         headerText={I18n_get('EditWorkspacePopup.Title')}
         content={<ContentWrapper />}
-        acceptButton={<Button_Text
+        acceptButton={<ButtonText
             text={I18n_get('EditWorkspacePopup.SubmitButton')}
             onClick={handleSubmit}
             style={'primary'}
             state={submitButtonState}
         />}
         closePopup={handleClosePopup}
-        extraButton={<Button_Text
+        extraButton={<ButtonText
             text={I18n_get('EditWorkspacePopup.RemoveButton')}
             onClick={handleRemove}
             state={submitButtonState}

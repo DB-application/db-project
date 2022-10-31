@@ -1,4 +1,4 @@
-import {Button_Icon} from "../../../common/button/Button_Icon";
+import {ButtonIcon} from "../../../common/button/ButtonIcon";
 import {SettingsIcon} from "../../../icons/SettingsIcon";
 import {I18n_get} from '../../../i18n/i18n_get';
 import {CalendarMonthOutlineIcon} from "../../../icons/CalendarMonthOutlineIcon";
@@ -15,7 +15,7 @@ function RightTopPanelPart() {
     return (
         <div className={styles.container}>
             <div className={styles.buttonsGroup}>
-                <Button_Icon
+                <ButtonIcon
                     icon={<ChatLeftDotsIcon/>}
                     onClick={Router.Chat.open}
                     tooltipText={I18n_get('Workspace.ChatButtonTooltip')}
@@ -23,7 +23,7 @@ function RightTopPanelPart() {
                     style={'link'}
                     className={styles.buttonsGroupButton}
                 />
-                <Button_Icon
+                <ButtonIcon
                     icon={<CalendarMonthOutlineIcon />}
                     onClick={Router.Calendar.open}
                     tooltipText={I18n_get('Workspace.CalendarButtonTooltip')}
@@ -31,7 +31,7 @@ function RightTopPanelPart() {
                     style={'link'}
                     className={styles.buttonsGroupButton}
                 />
-                <Button_Icon
+                <ButtonIcon
                     icon={<SettingsIcon />}
                     onClick={() => handleOpenSettingsPopup('profile')}
                     tooltipText={I18n_get('Workspace.SettingButtonTooltip')}

@@ -4,10 +4,10 @@ import {usersAtom} from "../../../../users/usersAtom";
 import {UserData} from "../../../../common/UserData";
 import styles from "./InvitedUsersBlock.module.css";
 import {I18n_get} from "../../../../i18n/i18n_get";
-import {Button_IconAndText} from "../../../../common/button/Button_IconAndText";
+import {ButtonIconAndText} from "../../../../common/button/ButtonIconAndText";
 import {PlusCircleIcon} from "../../../../icons/PlusCircleIcon";
 import {UserInfo} from "../../../../common/userInfo/UserInfo";
-import {Button_Text} from "../../../../common/button/Button_Text";
+import {ButtonText} from "../../../../common/button/ButtonText";
 
 type UsersListItemProps = {
     user: UserData,
@@ -35,7 +35,7 @@ function UsersListItem({
                 size={'small'}
             />
             {!isOrganizer
-                ? <Button_Text
+                ? <ButtonText
                     text={'Удалить'}
                     onClick={() => removeUserCallback(user.id)}
                     style={'link'}
@@ -98,7 +98,7 @@ function InvitedUsersBlock({
         <div className={styles.contentBlock}>
             <div className={styles.fieldDescription}>
                 {I18n_get('Common.InvitedUsersLabel')}
-                <Button_IconAndText
+                <ButtonIconAndText
                     icon={<PlusCircleIcon />}
                     text={I18n_get('Common.InviteUsers')}
                     onClick={() => handleInviteUsersPopupOpen(popupType)}

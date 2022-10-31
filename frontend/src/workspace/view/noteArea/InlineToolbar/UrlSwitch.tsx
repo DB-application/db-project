@@ -5,7 +5,7 @@ import {PopoverPortal} from "../../../../core/portal/PopoverPortal";
 import {Editor} from "@tiptap/react";
 import styles from './UrlSwitch.module.css'
 import {TextField} from "../../../../common/textfield/TextField";
-import {Button_Text} from "../../../../common/button/Button_Text";
+import {ButtonText} from "../../../../common/button/ButtonText";
 
 type SwitchButtonProps = {
     editor: Editor,
@@ -24,7 +24,7 @@ function UrlPopover({setUrl}: UrlPopoverProps) {
                 value={input}
                 onChange={setInput}
             />
-            <Button_Text
+            <ButtonText
                 text={'Применить'}
                 onClick={() => setUrl(input)}
                 style={"link"}

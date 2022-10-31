@@ -1,8 +1,8 @@
-import {Button_Base, Button_Size_Type, Button_State_Type, Button_Style_Type} from "./Button_Base";
+import {ButtonBase, Button_Size_Type, Button_State_Type, Button_Style_Type} from "./ButtonBase";
 import React from "react";
 
 
-type Button_TextProps = {
+type ButtonTextProps = {
     text: string,
     onClick: () => void,
     className?: string,
@@ -13,8 +13,8 @@ type Button_TextProps = {
     spacing?: boolean,
 }
 
-function Button_Text(props: Button_TextProps) {
-    return <Button_Base
+function ButtonText(props: ButtonTextProps) {
+    return <ButtonBase
         text={props.text}
         className={props.className}
         size={props.size}
@@ -27,5 +27,5 @@ function Button_Text(props: Button_TextProps) {
 }
 
 export {
-    Button_Text,
+    ButtonText,
 }

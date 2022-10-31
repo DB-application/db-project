@@ -1,6 +1,6 @@
 import {combine, declareAction} from "@reatom/core";
 import {declareAtomWithSetter} from "../../../../core/reatom/declareAtomWithSetter";
-import {Button_State_Type} from "../../../../common/button/Button_Base";
+import {Button_State_Type} from "../../../../common/button/ButtonBase";
 import {setUserInfo} from "../../../../currentUser/setUserData";
 import {I18n_get} from "../../../../i18n/i18n_get";
 import {toast} from "react-toastify";

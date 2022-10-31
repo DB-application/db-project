@@ -1,17 +1,16 @@
 import {PopoverPortal} from "../../core/portal/PopoverPortal";
-import {ListItem_TextProps} from "../list/item/ListItem_Text";
-import {List_Base, ListItemProps} from "../list/List_Base";
+import {ListItemTextProps} from "../list/item/ListItemText";
+import {ListBase, ListItemProps} from "../list/ListBase";
 import {BxCheckIcon} from "../../icons/BxCheckIcon";
-import {ListItem_Base} from "../list/item/ListItem_Base";
+import {ListItemBase} from "../list/item/ListItemBase";
 import {useRef, useState} from "react";
-import {Button_Text} from "../button/Button_Text";
 import {verify} from "../../core/verify";
 import {joinClassNames} from "../../core/styles/joinClassNames";
 import styles from './SelectWithDropdown.module.css'
-import {Button_TextAndIcon} from "../button/Button_TextAndIcon";
+import {ButtonTextAndIcon} from "../button/ButtonTextAndIcon";
 import {AngleDownIcon} from "../../icons/AngleDown";
 
-type SelectListItemProps = ListItem_TextProps & {
+type SelectListItemProps = ListItemTextProps & {
     id: string,
 }
 
@@ -35,7 +34,7 @@ function SelectWithDropdown({
             : undefined
         return {
             id: item.id,
-            createBindingFn: () => <ListItem_Base
+            createBindingFn: () => <ListItemBase
                 text={item.text}
                 tooltipText={item.tooltipText}
                 className={joinClassNames(item.className, styles.item)}
@@ -51,7 +50,7 @@ function SelectWithDropdown({
     return (
         <>
             <div ref={buttonRef} className={styles.selectButton}>
-                <Button_TextAndIcon
+                <ButtonTextAndIcon
                     text={verify(items.find(item => item.id === selected)).text}
                     onClick={() => setPopoverOpened(true)}
                     size={'small'}
@@ -64,7 +63,7 @@ function SelectWithDropdown({
                 elementRef={buttonRef}
                 show={popoverOpened}
                 setShow={setPopoverOpened}
-                content={<List_Base
+                content={<ListBase
                     items={remappedItems}
                 />}
                 align={'left'}

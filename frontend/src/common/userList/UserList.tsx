@@ -1,6 +1,6 @@
 import {UserData} from "../UserData";
 import styles from './UserList.module.css'
-import {List_Base, ListItemProps} from "../list/List_Base";
+import {ListBase, ListItemProps} from "../list/ListBase";
 import {UserInfo} from "../userInfo/UserInfo";
 import {PopoverPortal} from "../../core/portal/PopoverPortal";
 import {useRef, useState} from "react";
@@ -64,7 +64,7 @@ function UserList({
         />
     }))
 
-    return <List_Base
+    return <ListBase
         items={items}
         className={className}
     />

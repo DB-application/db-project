@@ -1,5 +1,4 @@
 import {Note} from "../workspace/viewmodel/notes/notes";
-import {JSONContent} from "@tiptap/react";
 import {HttpStatus} from "../core/http/HttpStatus";
 import {goToUrl} from "../core/link/goToUrl";
 
