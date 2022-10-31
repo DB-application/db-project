@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('check docker-compose') {
             steps {
-                sh 'docker-compose --version'
+                sh '/usr/local/bin/docker-compose --version'
             }
         }
         stage('clean data') {
@@ -13,8 +13,8 @@ pipeline {
         }
         stage('build') {
             steps {
-                sh 'docker-compose up -d --wait'
-                sh 'docker-compose ps'
+                sh '/usr/local/bin/docker-compose up -d --wait'
+                sh '/usr/local/bin/docker-compose ps'
             }
         }
     }
