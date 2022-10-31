@@ -4,7 +4,7 @@ pipeline {
         stage('clean data') {
             steps {
                 sh 'docker --version'
-                sh 'docker-compose --version'
+                sh 'docker compose --version'
             }
         }
     }
