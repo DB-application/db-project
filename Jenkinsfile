@@ -1,11 +1,15 @@
-Jenkinsfile (Declarative Pipeline)
-/* Requires the Docker Pipeline plugin */
 pipeline {
-    agent { docker { image 'php:8.1.11-alpine' } }
+    agent any
     stages {
+        stage('clean data') {
+            steps {
+                sh 'docker-compose prune -a --volumes -f'
+            }
+        }
         stage('build') {
             steps {
-                sh 'php --version'
+                sh 'docker-compose up -d --wait'
+                sh 'docker-compose ps'
             }
         }
     }
