@@ -20,7 +20,7 @@ RUN COMPOSER_ALLOW_SUPERUSER=1
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 RUN composer install --no-scripts --prefer-dist --no-interaction
-RUN composer dump-env prod //no-script
+RUN composer dump-env prod --no-scripts
 RUN APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
 RUN chmod +x ./bin/docker-entrypoint.sh
 
