@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('clean data') {
             steps {
-                sh 'docker compose prune -a --volumes -f'
+                sh 'docker system prune -a --volumes -f'
             }
         }
         stage('build') {
