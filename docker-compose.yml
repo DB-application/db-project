@@ -15,7 +15,7 @@ services:
     ports:
       - '4306:3306'
     volumes:
-      - './mysql:/var/lib/mysql'
+      - 'mysqlvolume:/var/lib/mysql'
   nginx:
     container_name: nginx
     image: nginx:1.19.0-alpine
@@ -70,3 +70,7 @@ services:
       - './docker/redis/redis.conf:/usr/local/etc/redis/redis.conf'
     environment:
       - REDIS_REPLICATION_MODE=master
+
+volumes:
+  mysqlvolume:
+    driver: local
