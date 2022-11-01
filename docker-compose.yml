@@ -5,7 +5,7 @@ services:
     container_name: my_sql
     build:
       context: .
-      dockerfile: docker/mysql/Dockerfile
+      dockerfile: docker/my_sql/Dockerfile
     command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: secret
