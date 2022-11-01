@@ -1,5 +1,4 @@
 FROM mysql:8.0
-WORKDIR /usr/src
-RUN chmod -R 777 /usr/src/mysql 
+RUN chmod -R 777 ./mysql 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["mysqld"]
