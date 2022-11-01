@@ -16,7 +16,7 @@ WORKDIR /usr/src/backend
 COPY --chown=1000:1000 backend /usr/src/backend
 
 RUN PATH=$PATH:/usr/src/backend/vendor/bin:bin
-RUN COMPOSER_ALLOW_SUPERUSER=1
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 RUN composer install --no-scripts --prefer-dist --no-interaction
