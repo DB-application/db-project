@@ -13,7 +13,7 @@ pipeline {
         }
         stage('build') {
             steps {
-                sh '/usr/local/bin/docker-compose up --build'
+                sh '/usr/local/bin/docker-compose up  -d --build'
                 sh '/usr/local/bin/docker-compose ps'
             }
         }
