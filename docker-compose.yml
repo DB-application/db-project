@@ -3,10 +3,8 @@ version: '3.8'
 services:
   database:
     container_name: my_sql
-    build:
-      context: .
-      dockerfile: docker/my_sql/Dockerfile
-    command: -c "chmod 777 /var/lib/mysql --default-authentication-plugin=mysql_native_password"
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: db_project
@@ -14,8 +12,6 @@ services:
       MYSQL_PASSWORD: symfony
     ports:
       - '4306:3306'
-    volumes:
-      - 'mysqlvolume:/var/lib/mysql'
   nginx:
     container_name: nginx
     image: nginx:1.19.0-alpine
@@ -70,7 +66,3 @@ services:
       - './docker/redis/redis.conf:/usr/local/etc/redis/redis.conf'
     environment:
       - REDIS_REPLICATION_MODE=master
-
-volumes:
-  mysqlvolume:
-    driver: local
