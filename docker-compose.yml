@@ -3,7 +3,9 @@ version: '3.8'
 services:
   database:
     container_name: my_sql
-    image: mysql:8.0
+    build:
+      context: .
+      dockerfile: docker/my_sql/Dockerfile
     command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: secret
@@ -12,6 +14,8 @@ services:
       MYSQL_PASSWORD: symfony
     ports:
       - '4306:3306'
+    volumes:
+      - './mysql:/var/lib/mysql'
   nginx:
     container_name: nginx
     image: nginx:1.19.0-alpine
