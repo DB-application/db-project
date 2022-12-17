@@ -30,6 +30,7 @@ services:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
+    image: "notion/backend"
     volumes:
       - './backend/src:/usr/src/backend/src'
       - './backend/migrations:/usr/src/backend/migrations'
@@ -50,6 +51,7 @@ services:
     build:
       context: .
       dockerfile: docker/react/Dockerfile
+    image: "notion/frontend"
     volumes:
       - './frontend/src:/usr/src/frontend/src'
       - './frontend/public:/usr/src/frontend/public'
