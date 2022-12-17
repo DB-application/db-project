@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    dockerCred = credentials('docker-hub')
+    DOCKERHUB_CREDENTIALS = credentials('docker-hub')
   }
   agent any
   stages {
@@ -16,7 +16,7 @@ pipeline {
     }
     stage('Deploy Image') {
         steps {
-            sh 'echo $dockerhub_PSW | docker login -u dockerhub_USR --password-stdin'
+            sh 'echo $DOCKERHUB_CREDENTIALS_USR | docker login -u $DOCKERHUB_CREDENTIALS_USR  --password-stdin'
             sh '/usr/local/bin/docker-compose push'
         }
     }
