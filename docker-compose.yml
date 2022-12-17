@@ -30,7 +30,7 @@ services:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
-    image: "backend"
+    image: "maratnureev/backend"
     volumes:
       - './backend/src:/usr/src/backend/src'
       - './backend/migrations:/usr/src/backend/migrations'
@@ -51,7 +51,7 @@ services:
     build:
       context: .
       dockerfile: docker/react/Dockerfile
-    image: "frontend"
+    image: "maratnureev/frontend"
     volumes:
       - './frontend/src:/usr/src/frontend/src'
       - './frontend/public:/usr/src/frontend/public'
