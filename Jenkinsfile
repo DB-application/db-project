@@ -16,7 +16,7 @@ pipeline {
     }
     stage('Deploy Image') {
         steps {
-            sh 'echo $DOCKERHUB_CREDENTIALS_USR | docker login -u $DOCKERHUB_CREDENTIALS_USR  --password-stdin'
+            sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR  --password-stdin'
             sh '/usr/local/bin/docker-compose push'
         }
     }
