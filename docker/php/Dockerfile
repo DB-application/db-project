@@ -13,7 +13,8 @@ RUN docker-php-ext-enable apcu
 
 WORKDIR /usr/src/backend
 
-COPY --chown=1000:1000 backend /usr/src/backend
+COPY backend /usr/src/backend
+RUN chmod 777 -R /usr/src/backend
 
 RUN PATH=$PATH:/usr/src/backend/vendor/bin:bin
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -23,5 +24,6 @@ RUN composer install --no-scripts --prefer-dist --no-interaction
 RUN composer dump-env prod --no-scripts
 RUN chmod +x ./bin/docker-entrypoint.sh
 RUN sed -i -e 's/\r$//' ./bin/docker-entrypoint.sh
+RUN sed -i -e 's/\r$//' ./bin/console
 
 ENTRYPOINT ["./bin/docker-entrypoint.sh"]
