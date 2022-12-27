@@ -22,5 +22,6 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 RUN composer install --no-scripts --prefer-dist --no-interaction
 RUN composer dump-env prod --no-scripts
 RUN chmod +x ./bin/docker-entrypoint.sh
+RUN sed -i -e 's/\r$//' ./bin/docker-entrypoint.sh
 
 ENTRYPOINT ["./bin/docker-entrypoint.sh"]
